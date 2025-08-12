@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1\Client;
 
+use App\Http\Resources\v1\Contact\ContactResource;
 use App\Http\Resources\v1\File\FileResource;
 use App\Http\Resources\v1\Vacancy\ClientVacancyResource;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class ClientResource extends JsonResource
                 'INN' => $this->INN,
                 'KPP' => $this->KPP,
             ],
-            // 'contacts' => ContactResource::collection($this->contacts),
+            'contacts' => ContactResource::collection($this->contacts),
             'contact_persons' => $this->contactPersons,
             'vacancies' => ClientVacancyResource::collection($this->vacancies),
             // 'candidates' => $this->candidates,

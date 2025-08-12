@@ -7,6 +7,7 @@ use App\Models\Candidate;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class DeleteAction
 {
@@ -22,17 +23,9 @@ class DeleteAction
     {
         try {
             $candidate = Candidate::findOrFail($id);
-            // $photo = $candidate->photo;
+            $candidate->files()->delete();
 
-            // if ($photo) {
-            //     $filePath = $photo->path;
-
-            //     if ($filePath && Storage::disk('public')->exists($filePath)) {
-            //         Storage::disk('public')->delete($filePath);
-            //     }
-
-            //     $photo->delete();
-            // }
+            Storage::disk('public')->deleteDirectory("candidates/$candidate->id");
 
             $candidate->delete();
 

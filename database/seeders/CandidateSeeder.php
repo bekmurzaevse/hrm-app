@@ -2,16 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Http\UploadedFile;
 
 class CandidateSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-
     public function run(): void
     {
         $candidate1 = Candidate::create([
@@ -21,7 +22,7 @@ class CandidateSeeder extends Seeder
             'birth_date' => '1994-12-25',
             'gender' => 'male',
             'citizenship' => 'USA',
-            'status' => 'active',
+            'status' => 'New',
             'workplace' => 'Microsoft',
             'position' => 'General Director & Founder',
             'city' => 'California',
@@ -33,8 +34,13 @@ class CandidateSeeder extends Seeder
             'user_id' => User::inRandomOrder()->first()->id,
         ]);
 
-        // $photo = UploadedFile::fake()->image('aybek.jpg');
-        // $path = FileUploadHelper::file($photo, 'candidate_photo');
+        $file = UploadedFile::fake()->create('passport.pdf', 1024, 'application/pdf');
+
+        $uploadedFiles = FileUploadHelper::files([$file], "candidates/$candidate1->id");
+
+        array_map(function ($file) use ($candidate1) {
+                $candidate1->files()->create($file);
+            }, $uploadedFiles);
 
         $candidate2 = Candidate::create([
             'first_name' => 'Murk',
@@ -43,7 +49,7 @@ class CandidateSeeder extends Seeder
             'birth_date' => '1960-10-14',
             'gender' => 'male',
             'citizenship' => 'USA',
-            'status' => 'active',
+            'status' => 'New',
             'workplace' => 'META',
             'position' => 'General Director & Founder',
             'city' => 'California',
@@ -55,8 +61,12 @@ class CandidateSeeder extends Seeder
             'user_id' => User::inRandomOrder()->first()->id,
         ]);
 
-        // $photo = UploadedFile::fake()->image('zina.jpg');
-        // $path = FileUploadHelper::file($photo, 'candidate_photo');
+        $file = UploadedFile::fake()->create('Metrika.pdf', 1024, 'application/pdf');
 
+        $uploadedFiles = FileUploadHelper::files([$file], "candidates/$candidate2->id");
+
+        array_map(function ($file) use ($candidate2) {
+                $candidate2->files()->create($file);
+            }, $uploadedFiles);
     }
 }

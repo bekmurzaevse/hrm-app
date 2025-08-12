@@ -30,8 +30,8 @@ Route::prefix('clients')->group(function () {
     Route::get('/', [ClientController::class, 'index']);
     Route::get('/{id}', [ClientController::class, 'show']);
     Route::post('/create', [ClientController::class, 'create']);
-    // Route::put('/update/{id}', [ClientController::class, 'update']);
-    // Route::delete('/delete/{id}', [ClientController::class, 'delete']);
+    Route::put('/update/{id}', [ClientController::class, 'update']);
+    Route::delete('/delete/{id}', [ClientController::class, 'delete']);
 });
 
 // Vacancies

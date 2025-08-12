@@ -23,7 +23,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
-            'status' => 'required|string|in:Vip,Regular,Problematic',
+            'status' => 'nullable|string|in:Vip,Regular,Problematic',
             'leader' => 'required|string|max:50',
             'contact_person' => 'required|string|max:50',
             'user_id' => 'required|exists:users,id',

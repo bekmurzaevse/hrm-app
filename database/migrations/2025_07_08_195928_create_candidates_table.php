@@ -18,7 +18,8 @@ return new class extends Migration {
             $table->string('birth_date');
             $table->enum('gender', ['male', 'female']);
             $table->string('citizenship');
-            $table->enum('status', ['active', 'in_search', 'conflictfull', 'employed'])->default('active')->nullable();
+            // $table->enum('status', ['active', 'in_search', 'conflictfull', 'employed'])->default('active')->nullable();
+            $table->enum('status', ['New', 'Connected', 'Interview', 'Suitable', 'Reject'])->default('New')->nullable();
             $table->string('workplace')->nullable();
             $table->string('position');
             $table->string('city');

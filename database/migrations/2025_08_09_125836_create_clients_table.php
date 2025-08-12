@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->enum('status', ['Vip', 'Regular', 'Problematic'])->default('Regular')->nullable();
+            $table->enum('status', ['Active', 'Potential', 'Inactive'])->default('Active')->nullable();
             $table->string('leader');
             $table->string('contact_person');
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();

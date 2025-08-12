@@ -46,7 +46,6 @@ class FileUploadHelper
             'path' => $savedPath,
             'name' => $file->getClientOriginalName(),
             'size' => $file->getSize(),
-            'extension' => $file->extension(),
         ] : [];
     }
 }

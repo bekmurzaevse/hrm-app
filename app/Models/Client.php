@@ -59,4 +59,9 @@ class Client extends Model
         return $this->morphMany(File::class, 'fileable');
     }
 
+    public function contacts(): MorphMany
+    {
+        return $this->morphMany(Contact::class, 'contactable');
+    }
+
 }

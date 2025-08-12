@@ -4,10 +4,12 @@ namespace App\Actions\v1\Candidate;
 
 use App\Dto\Candidate\UpdateDto;
 use App\Exceptions\ApiResponseException;
+use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class UpdateAction
 {
@@ -44,18 +46,16 @@ class UpdateAction
                 'user_id' => $dto->userId,
             ]);
 
-            // if (Storage::disk('public')->exists($candidate->photo->path)) {
-            //     Storage::disk('public')->delete($candidate->photo->path);
-            // }
+            if ($dto->files) {
+                Storage::disk('public')->deleteDirectory("candidates/$candidate->id");
+                $candidate->files()->delete();
 
-            // $path = FileUploadHelper::file($dto->photo, 'photo');
+                $uploadedFiles = FileUploadHelper::files($dto->files, "candidates/$candidate->id");
 
-            // $candidate->photo()->update([
-            //     'name' => $dto->photo->getClientOriginalName(),
-            //     'path' => $path,
-            //     'type' => "candidate_photo",
-            //     'size' => $dto->photo->getSize(),
-            // ]);
+                array_map(function ($file) use ($candidate) {
+                    $candidate->files()->create($file);
+                }, $uploadedFiles);
+            }
 
             return static::toResponse(
                 message: "$id - id li candidate jan'alandi",
