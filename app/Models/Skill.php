@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Skill extends Model
@@ -11,8 +12,6 @@ class Skill extends Model
 
     protected $fillable = [
         'title',
-        'degree',
-        'candidate_id',
         'description',
     ];
 
@@ -26,5 +25,14 @@ class Skill extends Model
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Summary of skillable
+     * @return MorphTo<Model, Skill>
+     */
+    public function skillable(): MorphTo
+    {
+        return $this->morphTo();
     }
 }

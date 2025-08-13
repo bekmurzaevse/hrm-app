@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\v1\CandidateController;
 use App\Http\Controllers\v1\ClientController;
+use App\Http\Controllers\v1\UserController;
 use App\Http\Controllers\v1\VacancyController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,13 +44,13 @@ Route::prefix('vacancies')->group(function () {
     Route::delete('/delete/{id}', [VacancyController::class, 'delete']);
 });
 
-// Route::prefix('users')->group(function () {
-//     Route::get('/', [UserController::class, 'index']);
-//     Route::get('/{id}', [UserController::class, 'show']);
-//     Route::post('/create', [UserController::class, 'create']);
-//     Route::put('/update/{id}', [UserController::class, 'update']);
-//     Route::delete('/delete/{id}', [UserController::class, 'delete']);
-// });
+Route::prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::get('/{id}', [UserController::class, 'show']);
+    Route::post('/create', [UserController::class, 'create']);
+    Route::put('/update/{id}', [UserController::class, 'update']);
+    Route::delete('/delete/{id}', [UserController::class, 'delete']);
+});
 
 // Route::prefix('deals')->group(function () {
 //     Route::get('/', [DealsController::class, 'index']);

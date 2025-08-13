@@ -32,6 +32,10 @@ class File extends Model
         ];
     }
 
+    /**
+     * Summary of fileable
+     * @return MorphTo<Model, File>
+     */
     public function fileable(): MorphTo
     {
         return $this->morphTo();
