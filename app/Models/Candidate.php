@@ -44,6 +44,10 @@ class Candidate extends Model
         ];
     }
 
+    /**
+     * Summary of user
+     * @return BelongsTo<User, Candidate>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -58,34 +62,49 @@ class Candidate extends Model
         return $this->morphMany(Contact::class, 'contactable');
     }
 
-    public function languages(): HasMany
-    {
-        return $this->hasMany(Language::class);
-    }
-
-    public function skills(): HasMany
-    {
-        return $this->hasMany(Skill::class);
-    }
-
+    /**
+     * Summary of educations
+     * @return HasMany<Education, Candidate>
+     */
     public function educations(): HasMany
     {
         return $this->hasMany(Education::class);
     }
 
+    /**
+     * Summary of interactions
+     * @return HasMany<Interaction, Candidate>
+     */
     public function interactions(): HasMany
     {
         return $this->hasMany(Interaction::class);
     }
 
+    /**
+     * Summary of workExperience
+     * @return HasMany<WorkExperience, Candidate>
+     */
     public function workExperience(): HasMany
     {
         return $this->hasMany(WorkExperience::class);
     }
 
+    /**
+     * Summary of files
+     * @return MorphMany<File, Candidate>
+     */
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'fileable');
     }
 
+    public function skills(): MorphMany
+    {
+        return $this->morphMany(Skill::class, 'skillable')->where('type', 'skill');
+    }
+
+    public function languages(): MorphMany
+    {
+        return $this->morphMany(Skill::class, 'skillable')->where('type', 'language');
+    }
 }

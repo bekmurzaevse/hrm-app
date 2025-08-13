@@ -29,11 +29,19 @@ class Interaction extends Model
         ];
     }
 
+    /**
+     * Summary of candidate
+     * @return BelongsTo<Candidate, Interaction>
+     */
     public function candidate(): BelongsTo
     {
         return $this->belongsTo(Candidate::class);
     }
 
+    /**
+     * Summary of user
+     * @return BelongsTo<User, Interaction>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

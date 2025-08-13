@@ -27,7 +27,11 @@ class Type extends Model
         ];
     }
 
-    public function interactions(): HasMany 
+    /**
+     * Summary of interactions
+     * @return HasMany<Interaction, Type>
+     */
+    public function interactions(): HasMany
     {
         return $this->hasMany(Interaction::class);
     }

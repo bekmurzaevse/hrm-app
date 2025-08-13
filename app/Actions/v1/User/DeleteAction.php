@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Actions\v1\Client;
+namespace App\Actions\v1\User;
 
 use App\Exceptions\ApiResponseException;
-use App\Models\Client;
+use App\Models\User;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Storage;
 
 class DeleteAction
 {
@@ -22,20 +21,19 @@ class DeleteAction
     public function __invoke(int $id): JsonResponse
     {
         try {
-            $client = Client::findOrFail($id);
+            $user = User::findOrFail($id);
 
-            $client->files()->delete();
-
-            Storage::disk('public')->deleteDirectory("clients/$client->id");
-
-            $client->delete();
+            $user->delete();
 
             return static::toResponse(
-                message: "$id - id li client o'shirildi",
+                message: "$id - id li user o'shirildi",
             );
         } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('Client Not Found', 404);
+            throw new ApiResponseException('User Not Found', 404);
         }
     }
+
+
+
 
 }
