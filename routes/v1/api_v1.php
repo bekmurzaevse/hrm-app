@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\v1\CandidateController;
 use App\Http\Controllers\v1\ClientController;
+use App\Http\Controllers\v1\UserController;
 use App\Http\Controllers\v1\VacancyController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,8 @@ Route::get('/', function () {
 Route::prefix('candidates')->group(function () {
     Route::get('/', [CandidateController::class, 'index']);
     Route::get('/{id}', [CandidateController::class, 'show']);
+    Route::post('/{id}/upload', [CandidateController::class, 'upload']);
+    Route::get('/{id}/download/{fileId}', [CandidateController::class, 'download']);
     Route::post('/create', [CandidateController::class, 'create']);
     Route::put('/update/{id}', [CandidateController::class, 'update']);
     Route::delete('/delete/{id}', [CandidateController::class, 'delete']);
@@ -29,6 +32,8 @@ Route::prefix('candidates')->group(function () {
 Route::prefix('clients')->group(function () {
     Route::get('/', [ClientController::class, 'index']);
     Route::get('/{id}', [ClientController::class, 'show']);
+    Route::get('/{id}/download/{fileId}', [ClientController::class, 'download']);
+    Route::post('/{id}/upload', [ClientController::class, 'upload']);
     Route::post('/create', [ClientController::class, 'create']);
     Route::put('/update/{id}', [ClientController::class, 'update']);
     Route::delete('/delete/{id}', [ClientController::class, 'delete']);
@@ -43,13 +48,13 @@ Route::prefix('vacancies')->group(function () {
     Route::delete('/delete/{id}', [VacancyController::class, 'delete']);
 });
 
-// Route::prefix('users')->group(function () {
-//     Route::get('/', [UserController::class, 'index']);
-//     Route::get('/{id}', [UserController::class, 'show']);
-//     Route::post('/create', [UserController::class, 'create']);
-//     Route::put('/update/{id}', [UserController::class, 'update']);
-//     Route::delete('/delete/{id}', [UserController::class, 'delete']);
-// });
+Route::prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::get('/{id}', [UserController::class, 'show']);
+    Route::post('/create', [UserController::class, 'create']);
+    Route::put('/update/{id}', [UserController::class, 'update']);
+    Route::delete('/delete/{id}', [UserController::class, 'delete']);
+});
 
 // Route::prefix('deals')->group(function () {
 //     Route::get('/', [DealsController::class, 'index']);

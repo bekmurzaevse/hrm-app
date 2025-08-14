@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('skills', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('candidate_id')->constrained('candidates')->restrictOnDelete()->cascadeOnUpdate();
+            $table->enum('type', ['skill', 'language']);
             $table->string('description')->nullable();
+            $table->morphs('skillable');
             $table->softDeletes();
             $table->timestamps();
         });

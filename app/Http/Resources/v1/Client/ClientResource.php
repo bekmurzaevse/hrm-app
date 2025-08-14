@@ -30,6 +30,7 @@ class ClientResource extends JsonResource
             'contact_persons' => $this->contactPersons,
             'vacancies' => ClientVacancyResource::collection($this->vacancies),
             // 'candidates' => $this->candidates,
+            // 'files' => FileResource::collection($this->files),
             'files' => FileResource::collection($this->files),
         ];
     }

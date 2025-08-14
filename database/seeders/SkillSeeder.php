@@ -13,16 +13,15 @@ class SkillSeeder extends Seeder
      */
     public function run(): void
     {
-        Skill::create([
-            'title' => 'Переговоры',
-            'candidate_id' => Candidate::inRandomOrder()->first()->id,
-            'description' => 'description',
-        ]);
-
-        Skill::create([
+        Candidate::inRandomOrder()->first()->skills()->create([
             'title' => 'CRM',
-            'candidate_id' => Candidate::inRandomOrder()->first()->id,
-            'description' => 'description',
+            'type' => 'skill',
+            'description' => 'test',
+        ]);
+        Candidate::inRandomOrder()->first()->skills()->create([
+            'title' => 'B2B',
+            'type' => 'skill',
+            'description' => 'test',
         ]);
     }
 }

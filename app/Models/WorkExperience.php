@@ -30,10 +30,14 @@ class WorkExperience extends Model
         ];
     }
 
+    /**
+     * Summary of candidate
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Candidate, WorkExperience>
+     */
     public function candidate()
     {
         return $this->belongsTo(Candidate::class);
     }
 
-    
+
 }
