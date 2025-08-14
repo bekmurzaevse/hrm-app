@@ -22,6 +22,8 @@ Route::get('/', function () {
 Route::prefix('candidates')->group(function () {
     Route::get('/', [CandidateController::class, 'index']);
     Route::get('/{id}', [CandidateController::class, 'show']);
+    Route::post('/{id}/upload', [CandidateController::class, 'upload']);
+    Route::get('/{id}/download/{fileId}', [CandidateController::class, 'download']);
     Route::post('/create', [CandidateController::class, 'create']);
     Route::put('/update/{id}', [CandidateController::class, 'update']);
     Route::delete('/delete/{id}', [CandidateController::class, 'delete']);
@@ -30,6 +32,8 @@ Route::prefix('candidates')->group(function () {
 Route::prefix('clients')->group(function () {
     Route::get('/', [ClientController::class, 'index']);
     Route::get('/{id}', [ClientController::class, 'show']);
+    Route::get('/{id}/download/{fileId}', [ClientController::class, 'download']);
+    Route::post('/{id}/upload', [ClientController::class, 'upload']);
     Route::post('/create', [ClientController::class, 'create']);
     Route::put('/update/{id}', [ClientController::class, 'update']);
     Route::delete('/delete/{id}', [ClientController::class, 'delete']);

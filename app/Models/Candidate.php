@@ -100,7 +100,8 @@ class Candidate extends Model
 
     public function skills(): MorphMany
     {
-        return $this->morphMany(Skill::class, 'skillable')->where('type', 'skill');
+        return $this->morphMany(Skill::class, 'skillable');
+        // ->where('type', 'skill');
     }
 
     public function languages(): MorphMany

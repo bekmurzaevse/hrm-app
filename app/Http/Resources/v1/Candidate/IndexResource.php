@@ -16,10 +16,10 @@ class IndexResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'candidates_count' => Candidate::count(),
-            'suitable_count' => Candidate::where('status','Suitable')->count(),
-            'interview_count' => Candidate::where('status','Interview')->count(),
-            'reject_count' => Candidate::where('status','Reject')->count(),
+            // 'candidates_count' => Candidate::count(),
+            // 'suitable_count' => Candidate::where('status','Suitable')->count(),
+            // 'interview_count' => Candidate::where('status','Interview')->count(),
+            // 'reject_count' => Candidate::where('status','Reject')->count(),
             'full_name' => $this->first_name . ' ' . $this->last_name . ' ' . $this->patronymic,
             'age' => now()->year - $this->birth_date->year,
             'status' => $this->status,
