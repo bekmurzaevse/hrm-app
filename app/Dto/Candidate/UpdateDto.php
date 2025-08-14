@@ -13,7 +13,7 @@ readonly class UpdateDto
         public string $birthDate,
         public string $gender,
         public string $citizenship,
-        public string $status,
+        public ?string $status,
         public ?string $workplace,
         public string $position,
         public string $city,
@@ -25,6 +25,8 @@ readonly class UpdateDto
         public ?string $description,
         public int $userId,
         public ?array $files,
+        public ?array $skills,
+        public ?array $languages,
     ) {}
 
     /**
@@ -52,6 +54,8 @@ readonly class UpdateDto
             experience: $request->experience,
             description: $request->description,
             userId: $request->user_id,
+            skills: $request->skills,
+            languages: $request->langs,
             files: $request->file('files'),
         );
     }

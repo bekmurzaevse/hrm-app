@@ -49,6 +49,24 @@ class CreateAction
             }, $uploadedFiles);
         }
 
+        if ($dto->skills){
+            array_map(function ($skill) use ($candidate) {
+                $candidate->skills()->create([
+                    'title' => $skill,
+                    'type' => 'skill',
+                ]);
+            }, $dto->skills);
+        }
+
+        if ($dto->languages){
+            foreach ($dto->languages as $lan){
+                $candidate->skills()->create([
+                    'title' => $lan,
+                    // 'type' => 'language',
+                ]);
+            }
+        }
+
         return static::toResponse(
             message: 'Candidate created'
         );

@@ -28,7 +28,7 @@ class UpdateRequest extends FormRequest
             'birth_date' => 'required|string',
             'gender' => 'required|in:male,female',
             'citizenship' => 'required|string',
-            'status' => 'required|in:active,in_search,conflictfull,employed',
+            'status' => 'nullable|in:active,in_search,conflictfull,employed',
             'workplace' => 'nullable|string',
             'position' => 'required|string',
             'city' => 'required|string',
@@ -41,6 +41,10 @@ class UpdateRequest extends FormRequest
             'description' => 'nullable|string',
             'files' => 'nullable|array|max:5',
             'files.*' => 'required|file|mimes:pdf|max:4096',
+            'skills' => 'nullable|array',
+            'skills.*' => 'required|string',
+            'langs' => 'nullable|array',
+            'langs.*' => 'required|string',
         ];
     }
 }

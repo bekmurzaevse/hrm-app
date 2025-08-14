@@ -4,15 +4,20 @@ namespace App\Http\Controllers\v1;
 
 use App\Actions\v1\Client\CreateAction;
 use App\Actions\v1\Client\DeleteAction;
+use App\Actions\v1\Client\DownloadAction;
 use App\Actions\v1\Client\IndexAction;
 use App\Actions\v1\Client\ShowAction;
 use App\Actions\v1\Client\UpdateAction;
+use App\Actions\v1\Client\UploadAction;
 use App\Dto\Client\CreateDto;
 use App\Dto\Client\UpdateDto;
+use App\Dto\Client\UploadDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Client\CreateRequest;
 use App\Http\Requests\v1\Client\UpdateRequest;
+use App\Http\Requests\v1\Client\UploadRequest;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ClientController extends Controller
 {
@@ -59,6 +64,30 @@ class ClientController extends Controller
     public function delete(int $id, DeleteAction $action): JsonResponse
     {
         return $action($id);
+    }
+
+    /**
+     * Summary of upload
+     * @param int $id
+     * @param \App\Http\Requests\v1\Client\UploadRequest $request
+     * @param \App\Actions\v1\Client\UploadAction $action
+     * @return JsonResponse
+     */
+    public function upload(int $id, UploadRequest $request, UploadAction $action): JsonResponse
+    {
+        return $action($id, UploadDto::from($request));
+    }
+
+    /**
+     * Summary of download
+     * @param int $id
+     * @param int $fileId
+     * @param \App\Actions\v1\Client\DownloadAction $action
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function download(int $id, int $fileId, DownloadAction $action): StreamedResponse
+    {
+        return $action($id, $fileId);
     }
 
 }
