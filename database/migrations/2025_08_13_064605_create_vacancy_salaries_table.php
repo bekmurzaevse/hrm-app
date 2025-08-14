@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('vacancy_id')->constrained('vacancies')->cascadeOnDelete()->restrictOnUpdate();
             $table->unsignedInteger('salary_from');
             $table->unsignedInteger('salary_to');
-            $table->enum('curency', ['RUB', 'USD', 'EUR']);
+            $table->enum('currency', ['RUB', 'USD', 'EUR']);
             $table->enum('period', ['hour', 'day', 'week', 'month']);
             $table->text('bonus')->nullable();
             $table->string('probation')->nullable();

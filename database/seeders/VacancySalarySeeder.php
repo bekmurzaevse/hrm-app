@@ -37,8 +37,8 @@ class VacancySalarySeeder extends Seeder
 
         VacancySalary::create([
             'vacancy_id' => 3,
-            'salary_from' => 50,
-            'salary_to' => 70,
+            'salary_from' => 50000,
+            'salary_to' => 70000,
             'currency' => 'EUR',
             'period' => 'month',
             'bonus' => 'Quarterly bonuses based on team performance.',

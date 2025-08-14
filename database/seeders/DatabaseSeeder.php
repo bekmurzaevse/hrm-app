@@ -33,6 +33,12 @@ class DatabaseSeeder extends Seeder
             ClientSeeder::class,
             ContactPersonSeeder::class,
             VacancySeeder::class,
+            VacancyContactSeeder::class,
+            AddSeeder::class,
+            CandidateAssignmentSeeder::class,
+            TagSeeder::class,
+            VacancyDetailSeeder::class,
+            VacancySalarySeeder::class,
         ]);
     }
 }
