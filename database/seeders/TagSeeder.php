@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Tag;
-use App\Models\Vacancy;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TagSeeder extends Seeder
@@ -41,14 +39,5 @@ class TagSeeder extends Seeder
                 'updated_at' => now()->subMinutes(20),
             ],
         ]);
-
-        $vacancies = Vacancy::all();
-        $tags = Tag::pluck('id')->toArray();
-
-        foreach ($vacancies as $vacancy) {
-            $randomTags = collect($tags)->random(rand(1, 3))->toArray();
-            $vacancy->tags()->sync($randomTags);
-        }
-
     }
 }
