@@ -15,13 +15,9 @@ class SkillSeeder extends Seeder
     {
         Candidate::inRandomOrder()->first()->skills()->create([
             'title' => 'CRM',
-            'type' => 'skill',
-            'description' => 'test',
         ]);
         Candidate::inRandomOrder()->first()->skills()->create([
             'title' => 'B2B',
-            'type' => 'skill',
-            'description' => 'test',
         ]);
     }
 }

@@ -10,7 +10,7 @@ class Language extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'titlr',
+        'title',
         'degree',
         'candidate_id',
         'description',

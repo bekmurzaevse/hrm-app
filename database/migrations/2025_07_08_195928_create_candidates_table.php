@@ -18,13 +18,17 @@ return new class extends Migration {
             $table->string('birth_date');
             $table->enum('gender', ['male', 'female']);
             $table->string('citizenship');
-            // $table->enum('status', ['active', 'in_search', 'conflictfull', 'employed'])->default('active')->nullable();
-            $table->enum('status', ['new', 'connected', 'interview', 'suitable', 'reject'])->default('new')->nullable();
-            $table->string('workplace')->nullable();
-            $table->string('position');
+            $table->string('country_residence');
+            $table->string('region');
             $table->string('city');
             $table->string('address');
-            $table->double('salary')->default(0);
+            $table->text('family_info')->nullable();
+            $table->enum('family_status', ['married', 'unmarried', 'divorced']);
+            $table->enum('status', ['active', 'in_search', 'employed']);
+            $table->string('workplace')->nullable();
+            $table->string('position');
+
+            // $table->double('salary')->default(0);
             $table->double('desired_salary')->default(0);
             $table->string('source')->nullable();
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
