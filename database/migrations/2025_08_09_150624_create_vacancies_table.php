@@ -20,14 +20,9 @@ return new class extends Migration {
             $table->enum('work_schedule', ['full_time', 'flexible', 'remote', 'shift']);
             $table->enum('work_experience', ['no_experience', 'one_to_three', 'three_to_six', 'over_six']);
             $table->enum('education', ['secondary', 'secondary_vocational', 'incomplete_higher', 'higher']);
-            $table->enum('status', ['open', 'in_progress', 'closed', 'paused']);
-            $table->enum('priority', ['low', 'medium', 'high']);
-            $table->date('deadline');
-            $table->foreignId('manager_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('recruiter_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('created_by')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
-            $table->text('comment')->nullable();
+            $table->enum('status', ['not_active', 'open', 'closed', 'not_closed'])->default('not_active');
             $table->unsignedTinyInteger('position_count')->default(1);
+            $table->foreignId('created_by')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->softDeletes();
             $table->timestamps();
         });

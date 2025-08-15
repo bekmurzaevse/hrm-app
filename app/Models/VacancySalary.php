@@ -46,15 +46,17 @@ class VacancySalary extends Model
 
                 if (isset($attributes['salary_from']) && isset($attributes['salary_to'])) {
                     if ($attributes['salary_to'] === 0) {
-                        return $attributes['salary_from'] . ' ' . $currency;
+                        return $attributes['salary_from'] . ' ' . $currency; // 1000 RUB
                     }
 
-                    return $attributes['salary_from'] . ' - ' . $attributes['salary_to'] . ' ' . $currency;
+                    return $attributes['salary_from'] . '-' . $attributes['salary_to'] . ' ' . $currency; // 1000-2000 RUB
                 }
             },
             set: function ($value) {
+                // Remove non-numeric characters except spaces and hyphens
                 $value = preg_replace('/[^0-9\s-]/', '', $value);
 
+                // Split the value into parts based on the hyphen
                 $parts = explode('-', $value);
 
                 $from = (int) trim($parts[0]);
