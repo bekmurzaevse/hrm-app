@@ -15,12 +15,6 @@ class CandidateCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
-            'cards' => [
-                'candidates_count' => Candidate::count(),
-                'suitable_count' => Candidate::where('status','Suitable')->count(),
-                'interview_count' => Candidate::where('status','Interview')->count(),
-                'reject_count' => Candidate::where('status','Reject')->count(),
-            ],
             'items' => IndexResource::collection($this->collection),
             'pagination' => [
                 'current_page' => $this->currentPage(),

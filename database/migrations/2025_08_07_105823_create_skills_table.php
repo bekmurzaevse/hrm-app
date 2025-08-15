@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('skills', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->enum('type', ['skill', 'language']);
-            $table->string('description')->nullable();
             $table->morphs('skillable');
             $table->softDeletes();
             $table->timestamps();
