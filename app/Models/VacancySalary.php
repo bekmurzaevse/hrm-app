@@ -22,6 +22,8 @@ class VacancySalary extends Model
         'probation_salary',
     ];
 
+    // TODO: Currency not sure, maybe should be enum
+
     /**
      * Summary of casts
      * @return array{created_at: string, updated_at: string}
@@ -53,20 +55,64 @@ class VacancySalary extends Model
                 }
             },
             set: function ($value) {
-                // Remove non-numeric characters except spaces and hyphens
-                $value = preg_replace('/[^0-9\s-]/', '', $value);
-
                 // Split the value into parts based on the hyphen
+                $value = trim($value);
                 $parts = explode('-', $value);
 
-                $from = (int) trim($parts[0]);
+                $from = trim($parts[0]);
 
-                $to = isset($parts[1]) ? (int) trim($parts[1]) : 0;
+                $to = isset($parts[1]) ? trim($parts[1]) : 0;
 
                 return [
                     'salary_from' => $from,
                     'salary_to' => $to,
                 ];
+            }
+        );
+    }
+
+    /**
+     * Summary of salaryDetail
+     * @return Attribute
+     */
+    protected function salaryDetail(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $salary = $this->salary;
+                $period = $this->period;
+
+                return $salary . ' ' . $period; // 1000 RUB В месяц, 1000-2000 RUB В месяц
+            }
+        );
+    }
+
+    /**
+     * Summary of period
+     * @return Attribute
+     */
+    protected function period(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                $map = [
+                    'hour' => 'В час',
+                    'day' => 'В день',
+                    'week' => 'В неделю',
+                    'month' => 'В месяц',
+                ];
+
+                return $map[$value];
+            },
+            set: function ($value) {
+                $map = [
+                    'В час' => 'hour',
+                    'В день' => 'day',
+                    'В неделю' => 'week',
+                    'В месяц' => 'month',
+                ];
+
+                return $map[$value];
             }
         );
     }

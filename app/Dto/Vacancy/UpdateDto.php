@@ -8,25 +8,22 @@ use Date;
 readonly class UpdateDto
 {
     public function __construct(
-        public int $clientId,
         public string $title,
-        public ?string $description,
-        public string $city,
+        public int $clientId,
+        public ?string $salary,
+        public ?string $salaryPeriod,
+        // TODO: Implement Salary Currency
+        public ?string $department,
+        public ?string $city,
         public string $typeEmployment,
-        public ?Date $temporaryFrom,
-        public ?Date $temporaryTo,
-        public float $salaryMin,
-        public float $salaryMax,
-        public string $salaryPeriod,
-        public int $createdBy,
+        public string $workSchedule,
+        public string $workExperience,
+        public string $education,
+        public ?string $bonus,
+        public ?string $probation,
+        public ?string $probationSalary,
         public string $status,
-        public ?int $probationPeriodValue,
-        public ?string $probationPeriodUnit,
-        public ?float $probationSalaryAmount,
-        public ?string $probationSalaryPeriod,
-        public int $experienceMin,
-        public ?int $experienceMax,
-        public int $employeeCount,
+        public int $positionCount,
     ) {
     }
 
@@ -38,25 +35,21 @@ readonly class UpdateDto
     public static function from(UpdateRequest $request): self
     {
         return new self(
-            clientId: $request->client_id,
             title: $request->title,
-            description: $request->description,
+            clientId: $request->client_id,
+            salary: $request->salary,
+            salaryPeriod: $request->period,
+            department: $request->department,
             city: $request->city,
             typeEmployment: $request->type_employment,
-            temporaryFrom: $request->temporary_from,
-            temporaryTo: $request->temporary_to,
-            salaryMin: $request->salary_min,
-            salaryMax: $request->salary_max,
-            salaryPeriod: $request->salary_period,
-            createdBy: $request->created_by,
+            workSchedule: $request->work_schedule,
+            workExperience: $request->work_experience,
+            education: $request->education,
+            bonus: $request->bonus,
+            probation: $request->probation,
+            probationSalary: $request->probation_salary,
             status: $request->status,
-            probationPeriodValue: $request->probation_period_value,
-            probationPeriodUnit: $request->probation_period_unit,
-            probationSalaryAmount: $request->probation_salary_amount,
-            probationSalaryPeriod: $request->probation_salary_period,
-            experienceMin: $request->experience_min,
-            experienceMax: $request->experience_max,
-            employeeCount: $request->employee_count
+            positionCount: $request->position_count,
         );
     }
 }
