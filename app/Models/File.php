@@ -17,7 +17,6 @@ class File extends Model
         'attachable_type',
         'attachable_id',
         'size',
-        'description',
     ];
 
     /**

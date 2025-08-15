@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Candidate;
+use App\Models\Language;
 use Illuminate\Database\Seeder;
 
 class LanguageSeeder extends Seeder
@@ -12,14 +13,16 @@ class LanguageSeeder extends Seeder
      */
     public function run(): void
     {
-        Candidate::inRandomOrder()->first()->skills()->create([
+        Language::create([
             'title' => 'English',
-            'type' => 'language',
+            'degree' => 'B2',
+            'candidate_id' => Candidate::inRandomOrder()->first()->id,
             'description' => 'test',
         ]);
-        Candidate::inRandomOrder()->first()->skills()->create([
+        Language::create([
             'title' => 'Russian',
-            'type' => 'language',
+            'degree' => 'A2',
+            'candidate_id' => Candidate::inRandomOrder()->first()->id,
             'description' => 'test',
         ]);
     }

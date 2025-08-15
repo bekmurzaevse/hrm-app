@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Candidate extends Model
@@ -20,6 +21,10 @@ class Candidate extends Model
         'birth_date',
         'gender',
         'citizenship',
+        'country_residence',
+        'region',
+        'family_status',
+        'family_info',
         'status',
         'workplace',
         'position',
@@ -101,11 +106,10 @@ class Candidate extends Model
     public function skills(): MorphMany
     {
         return $this->morphMany(Skill::class, 'skillable');
-        // ->where('type', 'skill');
     }
 
-    public function languages(): MorphMany
+    public function photo(): MorphOne
     {
-        return $this->morphMany(Skill::class, 'skillable')->where('type', 'language');
+        return $this->morphOne(File::class, 'fileable')->where('type', 'photo');
     }
 }

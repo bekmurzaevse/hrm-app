@@ -26,12 +26,18 @@ class CreateAction
             'birth_date' => $dto->birthDate,
             'gender' => $dto->gender,
             'citizenship' => $dto->citizenship,
+
+            'country_residence' => $dto->countryResidence,
+            'region' => $dto->region,
+            'family_status' => $dto->familyStatus,
+            'family_info' => $dto->familyInfo,
+
             'status' => $dto->status,
             'workplace' => $dto->workplace,
             'position' => $dto->position,
             'city' => $dto->city,
             'address' => $dto->address,
-            'salary' => $dto->salary,
+            // 'salary' => $dto->salary,
             'desired_salary' => $dto->desiredSalary,
             'source' => $dto->source,
             'experience' => $dto->experience,
@@ -41,31 +47,43 @@ class CreateAction
 
         $candidate = Candidate::create($data);
 
-        if ($dto->files){
-            $uploadedFiles = FileUploadHelper::files($dto->files, "candidates/{$candidate->id}");
+        if ($dto->photo) {
+            $photo = $dto->photo;
+            $data = FileUploadHelper::file($photo, "candidatesPhotos/{$candidate->id}");
 
-            array_map(function ($file) use ($candidate) {
-                $candidate->files()->create($file);
-            }, $uploadedFiles);
+            $candidate->photo()->create([
+                'name' => $photo->getClientOriginalName(),
+                'path' => $data['path'],
+                'type' => "photo",
+                'size' => $photo->getSize(),
+            ]);
         }
 
-        if ($dto->skills){
-            array_map(function ($skill) use ($candidate) {
-                $candidate->skills()->create([
-                    'title' => $skill,
-                    'type' => 'skill',
-                ]);
-            }, $dto->skills);
-        }
+        // if ($dto->files){
+        //     $uploadedFiles = FileUploadHelper::files($dto->files, "candidates/{$candidate->id}");
 
-        if ($dto->languages){
-            foreach ($dto->languages as $lan){
-                $candidate->skills()->create([
-                    'title' => $lan,
-                    // 'type' => 'language',
-                ]);
-            }
-        }
+        //     array_map(function ($file) use ($candidate) {
+        //         $candidate->files()->create($file);
+        //     }, $uploadedFiles);
+        // }
+
+        // if ($dto->skills){
+        //     array_map(function ($skill) use ($candidate) {
+        //         $candidate->skills()->create([
+        //             'title' => $skill,
+        //             'type' => 'skill',
+        //         ]);
+        //     }, $dto->skills);
+        // }
+
+        // if ($dto->languages){
+        //     foreach ($dto->languages as $lan){
+        //         $candidate->skills()->create([
+        //             'title' => $lan,
+        //             // 'type' => 'language',
+        //         ]);
+        //     }
+        // }
 
         return static::toResponse(
             message: 'Candidate created'
