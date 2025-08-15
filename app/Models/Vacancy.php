@@ -23,6 +23,7 @@ class Vacancy extends Model
         'work_schedule',
         'work_experience',
         'education',
+        'satus',
         'position_count',
         'created_by',
     ];
@@ -175,6 +176,28 @@ class Vacancy extends Model
     }
 
     /**
+     * Summary of status
+     * @return Attribute
+     */
+    protected function status(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => [
+                'not_active' => 'Не активна',
+                'open' => 'Открыта',
+                'closed' => 'Закрыта',
+                'not_closed' => 'Не закрыта',
+            ][$value],
+            set: fn($value) => [
+                'Не активна' => 'not_active',
+                'Открыта' => 'open',
+                'Закрыта' => 'closed',
+                'Не закрыта' => 'not_closed',
+            ][$value]
+        );
+    }
+
+    /**
      * Summary of creator
      * @return BelongsTo<User, Vacancy>
      */
@@ -219,5 +242,5 @@ class Vacancy extends Model
         return $this->morphMany(related: Skill::class, name: 'skillable');
     }
 
-    // TODO: Implement OneToOne relationships for Project
+    // TODO: Implement OneToOne relationships for Project, MorphMany for Documents
 }
