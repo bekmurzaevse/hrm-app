@@ -20,62 +20,28 @@ class SkillSeeder extends Seeder
             'title' => 'B2B',
         ]);
 
-        Vacancy::find(1)->skills()->createMany([
-            [
-                'title' => 'Продажи',
-                'description' => 'test',
-            ],
-            [
-                'title' => 'CRM',
-                'description' => 'test',
-            ],
-            [
-                'title' => 'Переговоры',
-                'description' => 'test',
-            ],
-            [
-                'title' => 'B2B',
-                'description' => 'test',
-            ],
+        $vacancy = Vacancy::find(1);
+        $vacancy->skills()->createMany([
+            ['title' => 'Продажи'],
+            ['title' => 'CRM'],
+            ['title' => 'Переговоры'],
+            ['title' => 'B2B'],
         ]);
 
-        Vacancy::find(2)->skills()->createMany([
-            [
-                'title' => 'PHP',
-                'description' => 'test',
-            ],
-            [
-                'title' => 'Laravel',
-                'description' => 'test',
-            ],
-            [
-                'title' => 'MySQL',
-                'description' => 'test',
-            ],
-            [
-                'title' => 'Docker',
-                'description' => 'test',
-            ],
+        $vacancy = Vacancy::find(2);
+        $vacancy->skills()->createMany([
+            ['title' => 'PHP'],
+            ['title' => 'Laravel'],
+            ['title' => 'MySQL'],
+            ['title' => 'Docker'],
         ]);
 
-        Vacancy::find(3)->skills()->createMany([
-            [
-                'title' => 'Продажи',
-                'description' => 'test',
-            ],
-            [
-                'title' => 'CRM',
-                'description' => 'test',
-            ],
-            [
-                'title' => 'Маркетинг',
-                'description' => 'test',
-            ],
-            [
-                'title' => 'Аналитика',
-                'description' => 'test',
-            ],
+        $vacancy = Vacancy::find(3);
+        $vacancy->skills()->createMany([
+            ['title' => 'Продажи'],
+            ['title' => 'CRM'],
+            ['title' => 'Маркетинг'],
+            ['title' => 'Аналитика'],
         ]);
-
     }
 }

@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->enum('work_schedule', ['full_time', 'flexible', 'remote', 'shift']);
             $table->enum('work_experience', ['no_experience', 'one_to_three', 'three_to_six', 'over_six']);
             $table->enum('education', ['secondary', 'secondary_vocational', 'incomplete_higher', 'higher']);
-            $table->enum('status', ['not_active', 'open', 'closed', 'not_closed'])->default('');
+            $table->enum('status', ['not_active', 'open', 'closed', 'not_closed'])->default('not_active');
             $table->unsignedTinyInteger('position_count')->default(1);
             $table->foreignId('created_by')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->softDeletes();

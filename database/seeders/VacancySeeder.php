@@ -21,7 +21,7 @@ class VacancySeeder extends Seeder
             'work_schedule' => 'Полный день',
             'work_experience' => '3-6 лет',
             'education' => 'Высшее',
-            'status' => 'open',
+            'status' => 'Открыта',
             'position_count' => 2,
             'created_by' => 1,
         ]);
@@ -35,7 +35,7 @@ class VacancySeeder extends Seeder
             'work_schedule' => 'Удаленная работа',
             'work_experience' => '1-3 года',
             'education' => 'Неоконченное высшее',
-            'status' => 'not_active',
+            'status' => 'Не активна',
             'position_count' => 1,
             'created_by' => 1,
         ]);
@@ -49,7 +49,7 @@ class VacancySeeder extends Seeder
             'work_schedule' => 'Гибкий график',
             'work_experience' => 'Без опыта',
             'education' => 'Среднее специальное',
-            'status' => 'closed',
+            'status' => 'Закрыта',
             'position_count' => 5,
             'created_by' => 1,
         ]);
