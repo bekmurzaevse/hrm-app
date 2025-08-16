@@ -46,6 +46,10 @@ Route::prefix('vacancies')->group(function () {
     Route::post('/create', [VacancyController::class, 'create']);
     Route::put('/update/{id}', [VacancyController::class, 'update']);
     Route::delete('/delete/{id}', [VacancyController::class, 'delete']);
+    //File
+    Route::get('/{id}/download/{fileId}', [VacancyController::class, 'download']);
+    Route::post('/{id}/upload', [VacancyController::class, 'upload']);
+    Route::delete('/{id}/delete/{fileId}', [VacancyController::class, 'deleteFile']);
 });
 
 Route::prefix('users')->group(function () {
