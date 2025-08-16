@@ -6,6 +6,7 @@ use App\Http\Resources\v1\Candidate\CandidateCollection;
 use App\Models\Candidate;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
+
 use Illuminate\Support\Facades\Cache;
 
 class IndexAction

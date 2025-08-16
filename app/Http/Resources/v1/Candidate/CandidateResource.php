@@ -8,6 +8,7 @@ use App\Http\Resources\v1\File\FileResource;
 use App\Http\Resources\v1\Interaction\InteractionResource;
 use App\Http\Resources\v1\Language\LanguageResource;
 use App\Http\Resources\v1\Photo\PhotoResource;
+use App\Http\Resources\v1\Skill\SkillResource;
 use App\Http\Resources\v1\WorkExperience\WorkExperienceResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -32,8 +33,8 @@ class CandidateResource extends JsonResource
                 'status' => $this->status,
             ],
             'contacts' => ContactResource::collection($this->contacts),
-            // 'skills' => $this->skills,
-            // 'languages' => LanguageResource::collection($this->languages),
+            'skills' => SkillResource::collection($this->skills),
+            'languages' => LanguageResource::collection($this->languages),
             'info' => [
                 'source' => $this->source,
                 'created_by' => $this->user,
@@ -45,7 +46,7 @@ class CandidateResource extends JsonResource
             // 'salary' => $this->salary,
             'desired_salary' => $this->desired_salary,
             'esucations' => EducationResource::collection($this->educations),
-            // 'files' => FileResource::collection($this->files),
+            'files' => FileResource::collection($this->files()->where('type', null)->get()),
             'photo' => new PhotoResource($this->photo),
             'description' => $this->description,
         ];

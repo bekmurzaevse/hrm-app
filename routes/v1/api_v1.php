@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\v1\CandidateController;
 use App\Http\Controllers\v1\ClientController;
+use App\Http\Controllers\v1\InteractionController;
+use App\Http\Controllers\v1\TypeController;
 use App\Http\Controllers\v1\UserController;
 use App\Http\Controllers\v1\VacancyController;
 use Illuminate\Support\Facades\Route;
@@ -22,8 +24,31 @@ Route::get('/', function () {
 Route::prefix('candidates')->group(function () {
     Route::get('/', [CandidateController::class, 'index']);
     Route::get('/{id}', [CandidateController::class, 'show']);
+
     Route::post('/{id}/upload', [CandidateController::class, 'upload']);
     Route::get('/{id}/download/{fileId}', [CandidateController::class, 'download']);
+    Route::post('/{id}/deleteFile/{fileId}', [CandidateController::class, 'deleteFile']);
+
+    Route::post('/{id}/experience/create', [CandidateController::class, 'experienceCreate']);
+    Route::post('/{id}/experience/update/{workId}', [CandidateController::class, 'experienceUpdate']);
+    Route::delete('/experience/delete/{id}', [CandidateController::class, 'experienceDelete']);
+
+    Route::post('/{id}/languages/create', [CandidateController::class, 'languageCreate']);
+    Route::put('/{id}/languages/update/{langId}', [CandidateController::class, 'languageUpdate']);
+    Route::delete('/languages/delete/{id}', [CandidateController::class, 'languageDelete']);
+
+    Route::post('/{id}/skills/create', [CandidateController::class, 'skillCreate']);
+    Route::post('/{id}/skills/update/{skillId}', [CandidateController::class, 'skillUpdate']);
+    Route::delete('{id}/skills/delete/{skillId}', [CandidateController::class, 'skillDelete']);
+
+    Route::post('/{id}/educations/create', [CandidateController::class, 'educationCreate']);
+    Route::post('/{id}/educations/update/{educationId}', [CandidateController::class, 'educationUpdate']);
+    Route::delete('/educations/delete/{id}', [CandidateController::class, 'educationDelete']);
+
+    Route::post('/{id}/contacts/create', [CandidateController::class, 'contactCreate']);
+    Route::put('/{id}/contacts/update/{contactId}', [CandidateController::class, 'contactUpdate']);
+    Route::delete('/{id}/contacts/delete/{contactId}', [CandidateController::class, 'contactUDelete']);
+
     Route::post('/create', [CandidateController::class, 'create']);
     Route::put('/update/{id}', [CandidateController::class, 'update']);
     Route::delete('/delete/{id}', [CandidateController::class, 'delete']);
@@ -56,13 +81,21 @@ Route::prefix('users')->group(function () {
     Route::delete('/delete/{id}', [UserController::class, 'delete']);
 });
 
-// Route::prefix('deals')->group(function () {
-//     Route::get('/', [DealsController::class, 'index']);
-//     Route::get('/{id}', [DealsController::class, 'show']);
-//     Route::post('/create', [DealsController::class, 'create']);
-//     Route::put('/update/{id}', [DealsController::class, 'update']);
-//     Route::delete('/delete/{id}', [DealsController::class, 'delete']);
-// });
+Route::prefix('types')->group(function () {
+    Route::get('/', [TypeController::class, 'index']);
+    Route::get('/{id}', [TypeController::class, 'show']);
+    Route::post('/create', [TypeController::class, 'create']);
+    Route::put('/update/{id}', [TypeController::class, 'update']);
+    Route::delete('/delete/{id}', [TypeController::class, 'delete']);
+});
+
+Route::prefix('interactions')->group(function () {
+    Route::get('/', [InteractionController::class, 'index']);
+    Route::get('/{id}', [InteractionController::class, 'show']);
+    Route::post('/create', [InteractionController::class, 'create']);
+    Route::put('/update/{id}', [InteractionController::class, 'update']);
+    Route::delete('/delete/{id}', [InteractionController::class, 'delete']);
+});
 
 // Route::prefix('interactions')->group(function () {
 //     Route::get('/', [InterActionController::class, 'index']);
