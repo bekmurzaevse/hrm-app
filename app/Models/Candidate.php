@@ -58,10 +58,6 @@ class Candidate extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Summary of contacts
-     * @return MorphMany<Contact, Candidate>
-     */
     public function contacts(): MorphMany
     {
         return $this->morphMany(Contact::class, 'contactable');
@@ -101,6 +97,7 @@ class Candidate extends Model
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'fileable');
+        // ->where('type', null);
     }
 
     public function skills(): MorphMany
@@ -111,5 +108,10 @@ class Candidate extends Model
     public function photo(): MorphOne
     {
         return $this->morphOne(File::class, 'fileable')->where('type', 'photo');
+    }
+
+    public function languages(): HasMany
+    {
+        return $this->hasMany(Language::class);
     }
 }
