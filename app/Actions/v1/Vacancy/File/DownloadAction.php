@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\v1\Vacancy;
+namespace App\Actions\v1\Vacancy\File;
 
 use App\Exceptions\ApiResponseException;
 use App\Models\File;

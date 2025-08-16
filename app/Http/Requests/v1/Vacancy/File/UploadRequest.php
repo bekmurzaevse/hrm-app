@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\v1\Vacancy;
+namespace App\Http\Requests\v1\Vacancy\File;
 
 use Illuminate\Foundation\Http\FormRequest;
 

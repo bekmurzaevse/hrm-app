@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\v1;
 
 use App\Actions\v1\Vacancy\DeleteAction;
-use App\Actions\v1\Vacancy\DeleteFileAction;
-use App\Actions\v1\Vacancy\DownloadAction;
+use App\Actions\v1\Vacancy\File\DeleteFileAction;
+use App\Actions\v1\Vacancy\File\DownloadAction;
 use App\Actions\v1\Vacancy\UpdateAction;
 use App\Actions\v1\Vacancy\CreateAction;
 use App\Actions\v1\Vacancy\ShowAction;
-use App\Actions\v1\Vacancy\UploadAction;
-use App\Dto\Vacancy\UploadDto;
+use App\Actions\v1\Vacancy\File\UploadAction;
+use App\Dto\Vacancy\File\UploadDto;
 use App\Dto\Vacancy\CreateDto;
 use App\Dto\Vacancy\UpdateDto;
 use App\Http\Controllers\Controller;
 use App\Actions\v1\Vacancy\IndexAction;
 use App\Http\Requests\v1\Vacancy\CreateRequest;
 use App\Http\Requests\v1\Vacancy\UpdateRequest;
-use App\Http\Requests\v1\Vacancy\UploadRequest;
+use App\Http\Requests\v1\Vacancy\File\UploadRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -81,7 +81,7 @@ class VacancyController extends Controller
      * Summary of download
      * @param int $id
      * @param int $fileId
-     * @param \App\Actions\v1\Vacancy\DownloadAction $action
+     * @param \App\Actions\v1\Vacancy\File\DownloadAction $action
      * @return BinaryFileResponse
      */
     public function download(int $id, int $fileId, DownloadAction $action): BinaryFileResponse
@@ -92,8 +92,8 @@ class VacancyController extends Controller
     /**
      * Summary of upload
      * @param int $id
-     * @param \App\Http\Requests\v1\Vacancy\UploadRequest $request
-     * @param \App\Actions\v1\Vacancy\UploadAction $action
+     * @param \App\Http\Requests\v1\Vacancy\File\UploadRequest $request
+     * @param \App\Actions\v1\Vacancy\File\UploadAction $action
      * @return JsonResponse
      */
     public function upload(int $id, UploadRequest $request, UploadAction $action): JsonResponse
@@ -105,7 +105,7 @@ class VacancyController extends Controller
      * Summary of deleteFile
      * @param int $id
      * @param int $fileId
-     * @param \App\Actions\v1\Vacancy\DeleteFileAction $action
+     * @param \App\Actions\v1\Vacancy\File\DeleteFileAction $action
      * @return JsonResponse
      */
     public function deleteFile(int $id, int $fileId, DeleteFileAction $action): JsonResponse

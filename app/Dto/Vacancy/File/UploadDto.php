@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Dto\Vacancy;
+namespace App\Dto\Vacancy\File;
 
-use App\Http\Requests\v1\Vacancy\UploadRequest;
+use App\Http\Requests\v1\Vacancy\File\UploadRequest;
 use Illuminate\Http\UploadedFile;
 
 readonly class UploadDto
@@ -15,7 +15,7 @@ readonly class UploadDto
 
     /**
      * Summary of from
-     * @param \App\Http\Requests\v1\Vacancy\UploadRequest $request
+     * @param \App\Http\Requests\v1\Vacancy\File\UploadRequest $request
      * @return UploadDto
      */
     public static function from(UploadRequest $request): self

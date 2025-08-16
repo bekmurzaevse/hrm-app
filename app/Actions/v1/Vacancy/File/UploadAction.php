@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Actions\v1\Vacancy;
+namespace App\Actions\v1\Vacancy\File;
 
-use App\Dto\Vacancy\UploadDto;
+use App\Dto\Vacancy\File\UploadDto;
 use App\Helpers\FileUploadHelper;
 use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
@@ -15,7 +15,7 @@ class UploadAction
     /**
      * Summary of __invoke
      * @param int $id
-     * @param \App\Dto\Vacancy\UploadDto $dto
+     * @param \App\Dto\Vacancy\File\UploadDto $dto
      * @return JsonResponse
      */
     public function __invoke(int $id, UploadDto $dto): JsonResponse
