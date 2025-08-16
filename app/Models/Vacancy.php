@@ -242,5 +242,14 @@ class Vacancy extends Model
         return $this->morphMany(related: Skill::class, name: 'skillable');
     }
 
-    // TODO: Implement OneToOne relationships for Project, MorphMany for Documents
+    /**
+     * Summary of files
+     * @return MorphMany<File, Vacancy>
+     */
+    public function files(): MorphMany
+    {
+        return $this->morphMany(related: File::class, name: 'fileable');
+    }
+
+    // TODO: Implement OneToOne relationships for Project
 }

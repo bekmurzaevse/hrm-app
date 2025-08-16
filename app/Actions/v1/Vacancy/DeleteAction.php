@@ -7,6 +7,7 @@ use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class DeleteAction
 {
@@ -21,9 +22,18 @@ class DeleteAction
     public function __invoke(int $id): JsonResponse
     {
         try {
-            $vacnacy = Vacancy::findOrFail($id);
+            $vacancy = Vacancy::findOrFail($id);
 
-            $vacnacy->delete();
+            $vacancy->vacancyDetail()->delete();
+            $vacancy->vacancySalary()->delete();
+            $vacancy->skills()->delete();
+
+
+            if (Storage::disk('public')->exists('vacancies/' . $vacancy->id)) {
+                Storage::disk('public')->deleteDirectory("vacancies/" . $vacancy->id);
+            }
+            $vacancy->files()->delete();
+            $vacancy->delete();
 
             return static::toResponse(
                 message: "id-{$id} Vacancy Deleted",
@@ -33,3 +43,4 @@ class DeleteAction
         }
     }
 }
+

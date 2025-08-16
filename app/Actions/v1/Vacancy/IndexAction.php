@@ -19,8 +19,13 @@ class IndexAction
     public function __invoke(): JsonResponse
     {
         $key = 'vacancies:' . app()->getLocale() . ':' . md5(request()->fullUrl());
+
         $vacancy = Cache::remember($key, now()->addDay(), function () {
-            return Vacancy::paginate(10);
+            return Vacancy::with([
+                'client:id,name',
+                'createdBy:id,first_name,last_name,patronymic',
+                'vacancySalary:id,vacancy_id,salary_from,salary_to,currency'
+            ])->paginate(10);
         });
 
         return static::toResponse(

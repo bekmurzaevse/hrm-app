@@ -22,25 +22,16 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'client_id' => 'required|exists:clients,id',
             'title' => 'required|string|min:2|max:255',
-            'description' => 'nullable|string|min:2|max:1000',
-            'city' => 'required|string|min:2|max:255',
-            'type_employment' => 'required|in:office,remote,temporary,internship',
-            'temporary_from' => 'nullable|date',
-            'temporary_to' => 'nullable|date',
-            'salary_min' => 'required|numeric',
-            'salary_max' => 'required|numeric',
-            'salary_period' => 'required|in:month,weak,day,hour',
-            'created_by' => 'required|exists:users,id',
-            'status' => 'required|in:in_active,open,closed,not_closed',
-            'probation_period_value' => 'nullable|integer',
-            'probation_period_unit' => 'nullable|in:day,days,month,months',
-            'probation_salary_amount' => 'nullable|numeric',
-            'probation_salary_period' => 'nullable|in:hour,day,week,month',
-            'experience_min' => 'required|integer',
-            'experience_max' => 'nullable|integer',
-            'employee_count' => 'required|integer',
+            'client_id' => 'required|exists:clients,id',
+            'department' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'type_employment' => 'required|in:В офисе,Удаленно,Временная занятость,Стажировка,Гибридная работа',
+            'work_schedule' => 'required|in:Полный день,Гибкий график,Удаленная работа,Сменный график',
+            'work_experience' => 'required|in:Без опыта,1-3 года,1-3 года,Более 6 лет',
+            'education' => 'required|in:Среднее,Среднее специальное,Неоконченное высшее,Высшее',
+            'status' => 'required|in:Не активна,Открыта,Закрыта,Не закрыта',
+            'position_count' => 'required|integer|min:1',
         ];
     }
 }

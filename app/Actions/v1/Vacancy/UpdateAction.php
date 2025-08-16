@@ -26,27 +26,32 @@ class UpdateAction
             $vacancy = Vacancy::findOrFail($id);
 
             $vacancy->update([
-                'client_id' => $dto->clientId,
                 'title' => $dto->title,
-                'description' => $dto->description,
+                'client_id' => $dto->clientId,
+                'department' => $dto->department,
                 'city' => $dto->city,
                 'type_employment' => $dto->typeEmployment,
-                'temporary_from' => $dto->temporaryFrom,
-                'temporary_to' => $dto->temporaryTo,
-                'salary_min' => $dto->salaryMin,
-                'salary_max' => $dto->salaryMax,
-                'salary_period' => $dto->salaryPeriod,
-                'created_by' => $dto->createdBy,
+                'work_schedule' => $dto->workSchedule,
+                'work_experience' => $dto->workExperience,
+                'education' => $dto->education,
                 'status' => $dto->status,
-                'probation_period_value' => $dto->probationPeriodValue,
-                'probation_period_unit' => $dto->probationPeriodUnit,
-                'probation_salary_amount' => $dto->probationSalaryAmount,
-                'probation_salary_period' => $dto->probationSalaryPeriod,
-                'experience_min' => $dto->experienceMin,
-                'experience_max' => $dto->experienceMax,
-                'employee_count' => $dto->employeeCount
+                'position_count' => $dto->positionCount,
+                'created_by' => 1, // TODO: Replace with authenticated user ID
             ]);
 
+            if (!is_null($dto->salary)) {
+                $vacancy->vacancySalary()->updateOrCreate(
+                    ['vacancy_id' => $id],
+                    [
+                        'salary' => $dto->salary,
+                        'period' => $dto->salaryPeriod,
+                        'currency' => 'USD', // TODO: Implement Salary Currency
+                        'bonus' => $dto->bonus,
+                        'probation' => $dto->probation,
+                        'probation_salary' => $dto->probationSalary,
+                    ]
+                );
+            }
 
             return static::toResponse(
                 message: "id-{$id} Vacancy updated",

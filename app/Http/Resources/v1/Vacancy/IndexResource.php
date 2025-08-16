@@ -16,16 +16,16 @@ class IndexResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => [
-                'title' => $this->title,
-                'count' => $this->employee_count,
-                'type' => $this->type_employment,
-                'experience' => $this->experience,
-            ],
-            'client' => $this->client->name,
-            'salary' => $this->salary,
+            'title' => $this->title,
+            'client_name' => $this->client->name,
+            'salary' => $this->vacancySalary?->salary,
             'city' => $this->city,
-            'created_by' => $this->createdBy->name,
+            'created_by' => sprintf(
+                '%s %s.%s',
+                $this->createdBy->last_name,
+                mb_substr($this->createdBy->first_name, 0, 1, 'UTF-8'),
+                mb_substr($this->createdBy->patronymic, 0, 1, 'UTF-8')
+            ),
             'created_at' => $this->created_at->format('Y-m-d'),
             'status' => $this->status,
         ];
