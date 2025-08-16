@@ -5,7 +5,6 @@ namespace App\Actions\v1\Vacancy;
 use App\Dto\Vacancy\UpdateDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Vacancy;
-use App\Models\VacancySalary;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -41,16 +40,11 @@ class UpdateAction
             ]);
 
             if (!is_null($dto->salary)) {
-                $salary = new VacancySalary();
-                $salary->salary = $dto->salary;
-                $salary->period = $dto->salaryPeriod;
-
                 $vacancy->vacancySalary()->updateOrCreate(
                     ['vacancy_id' => $id],
                     [
-                        'salary_from' => $salary->salary_from,
-                        'salary_to' => $salary->salary_to,
-                        'period' => $salary->period,
+                        'salary' => $dto->salary,
+                        'period' => $dto->salaryPeriod,
                         'currency' => 'USD', // TODO: Implement Salary Currency
                         'bonus' => $dto->bonus,
                         'probation' => $dto->probation,

@@ -13,6 +13,7 @@ class VacancySalary extends Model
 
     protected $fillable = [
         'vacancy_id',
+        'salary',
         'salary_from',
         'salary_to',
         'currency',
