@@ -50,6 +50,12 @@ Route::prefix('vacancies')->group(function () {
     Route::get('/{id}/download/{fileId}', [VacancyController::class, 'download']);
     Route::post('/{id}/upload', [VacancyController::class, 'upload']);
     Route::delete('/{id}/delete/{fileId}', [VacancyController::class, 'deleteFile']);
+    // Salary
+    Route::put('/{id}/salary/change', [VacancyController::class, 'changeSalary']);
+    // Detail
+    Route::put('/{id}/detail/change', [VacancyController::class, 'changeDetail']);
+    // Skills
+    Route::post('/{id}/skills/create', [VacancyController::class, 'createSkills']);
 });
 
 Route::prefix('users')->group(function () {
