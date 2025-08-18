@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Dto\Project;
+
+use App\Http\Requests\v1\Project\CreateStageRequest;
+
+readonly class CreateStageDto
+{
+    public function __construct(
+        public int $stageId,
+        public string $title,
+        public ?string $description,
+        public int $executorId,
+        public string $deadline
+    ) {
+    }
+
+
+    public static function from(CreateStageRequest $request): self
+    {
+        return new self(
+            stageId: $request->stage_id,
+            title: $request->title,
+            description: $request->description,
+            executorId: $request->executor_id,
+            deadline: $request->deadline
+        );
+    }
+}

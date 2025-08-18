@@ -1,0 +1,164 @@
+<?php
+
+namespace App\Models;
+
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+
+class Project extends Model
+{
+    protected $fillable = [
+        'title',
+        'client_id',
+        'vacancy_id',
+        'deadline',
+        'contract_number',
+        'contract_budget',
+        'contract_currency',
+        'description',
+        'comment',
+        'created_by',
+        'status'
+    ];
+
+    /**
+     * Summary of casts
+     * @return array{created_at: string, deadline: string, updated_at: string}
+     */
+    protected function casts(): array
+    {
+        return [
+            'deadline' => 'date',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
+
+    /**
+     * Summary of appends
+     * @var array
+     */
+    protected $appends = [
+        'progress',
+        'performers_fio'
+    ];
+
+    /**
+     * Summary of getProgressAttribute
+     * @return string
+     */
+    public function getProgressAttribute(): string
+    {
+        $total = $this->stages->count();
+        $completed = $this->stages->where('status', 'completed')->count();
+        $response = $total !== 0 ? round(($completed / $total) * 100) . "%" : "0%";
+        return $response;
+    }
+
+    /**
+     * Summary of getPerformersFioAttribute
+     */
+    public function getPerformersFioAttribute()
+    {
+        return $this->performers->map(function ($user) {
+            return sprintf(
+                '%s %s.%s',
+                $user->last_name,
+                mb_substr($user->first_name, 0, 1, 'UTF-8'),
+                mb_substr($user->patronymic, 0, 1, 'UTF-8')
+            );
+        });
+    }
+
+    /**
+     * Summary of getStatusAttribute
+     * @return string
+     */
+    public function getStatusAttribute(): string
+    {
+        return [
+            'in_progress' => 'В работе',
+            'cancelled' => 'Отменен',
+        ][$this->attributes['status']];
+    }
+
+    /**
+     * Summary of deadline
+     * @return Attribute
+     */
+    protected function deadline(): Attribute
+    {
+        return Attribute::make(
+            set: fn($value) => Carbon::createFromFormat('m-d-Y', $value),
+        );
+    }
+
+    /**
+     * Summary of client
+     * @return BelongsTo<Client, Project>
+     */
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    /**
+     * Summary of vacancy
+     * @return BelongsTo<Vacancy, Project>
+     */
+    public function vacancy(): BelongsTo
+    {
+        return $this->belongsTo(Vacancy::class);
+    }
+
+    /**
+     * Summary of createdBy
+     * @return BelongsTo<User, Project>
+     */
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * Summary of stages
+     * @return HasMany<Stage, Project>
+     */
+    public function stages(): HasMany
+    {
+        return $this->hasMany(Stage::class);
+    }
+
+    /**
+     * Summary of inProgressStage
+     * @return HasOne<Stage, Project>
+     */
+    public function inProgressStage(): HasOne
+    {
+        return $this->hasOne(Stage::class)->where('status', 'in_progress');
+    }
+
+    /**
+     * Summary of performers
+     * @return BelongsToMany<User, Project> Pivot
+     */
+    public function performers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'project_user', 'project_id', 'user_id');
+    }
+
+    /**
+     * Summary of files
+     * @return MorphMany<File, Project>
+     */
+    public function files(): MorphMany
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
+}
