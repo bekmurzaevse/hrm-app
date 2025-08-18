@@ -12,6 +12,7 @@ class Interaction extends Model
 
     protected $fillable = [
         'value',
+        'type_id',
         'user_id',
         'candidate_id',
         'description',

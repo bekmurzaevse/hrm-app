@@ -41,6 +41,9 @@ class CreateAction
             'desired_salary' => $dto->desiredSalary,
             'source' => $dto->source,
             'experience' => $dto->experience,
+            'short_summary' => $dto->shortSummary,
+            'achievments' => $dto->achievments,
+            'comment' => $dto->comment,
             'description' => $dto->description,
             'user_id' => $dto->userId,
         ];

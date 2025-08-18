@@ -7,6 +7,7 @@ use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class UploadAction
 {
@@ -24,9 +25,14 @@ class UploadAction
 
         $uploadedFiles = FileUploadHelper::files($dto->files, "candidates/{$candidate->id}");
 
-        array_map(function ($file) use ($candidate) {
-            $candidate->files()->create($file);
-        }, $uploadedFiles);
+        foreach ($uploadedFiles as $file) {
+            $candidate->files()->create([
+                'name' => $file['name'],
+                'path' => $file['path'],
+                'type' => null,
+                'size' => $file['size'],
+            ]);
+        }
 
         return static::toResponse(
             message: 'Uploaded files to candidate ' . $candidate->id

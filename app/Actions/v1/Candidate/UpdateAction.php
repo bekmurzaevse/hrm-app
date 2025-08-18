@@ -33,29 +33,53 @@ class UpdateAction
                 'birth_date' => $dto->birthDate,
                 'gender' => $dto->gender,
                 'citizenship' => $dto->citizenship,
+
+                'country_residence' => $dto->countryResidence,
+                'region' => $dto->region,
+                'family_status' => $dto->familyStatus,
+                'family_info' => $dto->familyInfo,
+
                 'status' => $dto->status,
                 'workplace' => $dto->workplace,
                 'position' => $dto->position,
                 'city' => $dto->city,
                 'address' => $dto->address,
-                'salary' => $dto->salary,
+                // 'salary' => $dto->salary,
                 'desired_salary' => $dto->desiredSalary,
                 'source' => $dto->source,
-                'experience' => $dto->experience ?? null,
-                'description' => $dto->description ?? null,
+                'experience' => $dto->experience,
+                'short_summary' => $dto->shortSummary,
+                'achievments' => $dto->achievments,
+                'comment' => $dto->comment,
+                'description' => $dto->description,
                 'user_id' => $dto->userId,
             ]);
 
-            if ($dto->files) {
-                Storage::disk('public')->deleteDirectory("candidates/$candidate->id");
-                $candidate->files()->delete();
+            if ($dto->photo) {
+                if (Storage::disk('public')->exists($candidate->photo->path)) {
+                    Storage::disk('public')->delete($candidate->photo->path);
+                }
 
-                $uploadedFiles = FileUploadHelper::files($dto->files, "candidates/$candidate->id");
+                $data = FileUploadHelper::file($dto->photo, "candidatesPhotos/{$candidate->id}");
 
-                array_map(function ($file) use ($candidate) {
-                    $candidate->files()->create($file);
-                }, $uploadedFiles);
+                $candidate->photo()->update([
+                    'name' => $dto->photo->getClientOriginalName(),
+                    'path' => $data['path'],
+                    'type' => "photo",
+                    'size' => $dto->photo->getSize(),
+                ]);
             }
+
+            // if ($dto->files) {
+            //     Storage::disk('public')->deleteDirectory("candidates/$candidate->id");
+            //     $candidate->files()->delete();
+
+            //     $uploadedFiles = FileUploadHelper::files($dto->files, "candidates/$candidate->id");
+
+            //     array_map(function ($file) use ($candidate) {
+            //         $candidate->files()->create($file);
+            //     }, $uploadedFiles);
+            // }
 
             return static::toResponse(
                 message: "$id - id li candidate jan'alandi",

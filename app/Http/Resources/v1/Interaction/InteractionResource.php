@@ -20,7 +20,7 @@ class InteractionResource extends JsonResource
             'created_at' => $this->created_at->format('Y-m-d'),
             'value' => $this->value,
             'description' => $this->description,
-            'user' => $this->user->name,
+            'user' => $this->user->first_name . ' ' . $this->user->last_name,
         ];
     }
 }

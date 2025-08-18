@@ -20,7 +20,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->string('INN')->unique();
             $table->string('KPP')->unique();
-            $table->integer('employee_count')->nullable();
+            // $table->integer('employee_count')->nullable();
+            $table->enum('employee_count', ['-50', '50-250', '250+']);
             $table->string('source');
             $table->string('activity')->nullable();
             $table->string('city');

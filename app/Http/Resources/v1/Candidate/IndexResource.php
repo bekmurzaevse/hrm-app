@@ -2,7 +2,8 @@
 
 namespace App\Http\Resources\v1\Candidate;
 
-use App\Models\Candidate;
+use App\Http\Resources\v1\Interaction\LastContactResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,20 +17,16 @@ class IndexResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            // 'candidates_count' => Candidate::count(),
-            // 'suitable_count' => Candidate::where('status','Suitable')->count(),
-            // 'interview_count' => Candidate::where('status','Interview')->count(),
-            // 'reject_count' => Candidate::where('status','Reject')->count(),
             'full_name' => $this->first_name . ' ' . $this->last_name . ' ' . $this->patronymic,
-            'age' => now()->year - $this->birth_date->year,
+            'age' => Carbon::parse($this->birth_date)->age,
             'status' => $this->status,
             'workplace' => $this->workplace,
             'position' => $this->position,
-            'last_contact' => $this->updated_at->format('Y-m-d') ?? $this->created_at->format('Y-m-d'),
+            'last_contact' => new LastContactResource($this->interactions()->orderBy('created_at', 'desc')->first()),
             'city' => $this->city,
             'experience' => $this->experience,
             'source' => $this->source,
-            'salary' => $this->salary,
+            'desired_salary' => $this->desired_salary,
         ];
     }
 }

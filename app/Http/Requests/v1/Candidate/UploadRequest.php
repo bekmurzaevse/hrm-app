@@ -23,7 +23,7 @@ class UploadRequest extends FormRequest
     {
         return [
             'files' => 'required|array|max:5',
-            'files.*' => 'required|file|mimes:pdf|max:4096',
+            'files.*' => 'required|file|mimetypes:application/pdf|max:4096',
         ];
     }
 }

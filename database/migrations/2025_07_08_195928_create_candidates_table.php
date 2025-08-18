@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('first_name');
             $table->string('last_name');
             $table->string('patronymic');
-            $table->string('birth_date');
+            $table->date('birth_date');
             $table->enum('gender', ['male', 'female']);
             $table->string('citizenship');
             $table->string('country_residence');
@@ -27,12 +27,15 @@ return new class extends Migration {
             $table->enum('status', ['active', 'in_search', 'employed']);
             $table->string('workplace')->nullable();
             $table->string('position');
-
-            // $table->double('salary')->default(0);
             $table->double('desired_salary')->default(0);
             $table->string('source')->nullable();
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
-            $table->text('experience')->nullable();
+            $table->double('experience')->nullable();
+
+            $table->text('short_summary')->nullable();
+            $table->text('achievments')->nullable();
+            $table->text('comment')->nullable();
+
             $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
