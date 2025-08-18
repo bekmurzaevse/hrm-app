@@ -30,7 +30,7 @@ Route::prefix('candidates')->group(function () {
     Route::post('/{id}/deleteFile/{fileId}', [CandidateController::class, 'deleteFile']);
 
     Route::post('/{id}/experience/create', [CandidateController::class, 'experienceCreate']);
-    Route::post('/{id}/experience/update/{workId}', [CandidateController::class, 'experienceUpdate']);
+    Route::put('/{id}/experience/update/{workId}', [CandidateController::class, 'experienceUpdate']);
     Route::delete('/experience/delete/{id}', [CandidateController::class, 'experienceDelete']);
 
     Route::post('/{id}/languages/create', [CandidateController::class, 'languageCreate']);
@@ -38,11 +38,11 @@ Route::prefix('candidates')->group(function () {
     Route::delete('/languages/delete/{id}', [CandidateController::class, 'languageDelete']);
 
     Route::post('/{id}/skills/create', [CandidateController::class, 'skillCreate']);
-    Route::post('/{id}/skills/update/{skillId}', [CandidateController::class, 'skillUpdate']);
+    Route::put('/{id}/skills/update/{skillId}', [CandidateController::class, 'skillUpdate']);
     Route::delete('{id}/skills/delete/{skillId}', [CandidateController::class, 'skillDelete']);
 
     Route::post('/{id}/educations/create', [CandidateController::class, 'educationCreate']);
-    Route::post('/{id}/educations/update/{educationId}', [CandidateController::class, 'educationUpdate']);
+    Route::put('/{id}/educations/update/{educationId}', [CandidateController::class, 'educationUpdate']);
     Route::delete('/educations/delete/{id}', [CandidateController::class, 'educationDelete']);
 
     Route::post('/{id}/contacts/create', [CandidateController::class, 'contactCreate']);

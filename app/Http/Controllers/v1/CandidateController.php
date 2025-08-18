@@ -53,6 +53,7 @@ use App\Http\Requests\v1\Candidate\UpdateSkillRequest;
 use App\Http\Requests\v1\Candidate\UpdateWorkExperienceRequest;
 use App\Http\Requests\v1\Candidate\UploadRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CandidateController extends Controller
@@ -63,9 +64,9 @@ class CandidateController extends Controller
      * @param \App\Actions\v1\Candidate\IndexAction $action
      * @return JsonResponse
      */
-    public function index(IndexAction $action): JsonResponse
+    public function index(IndexAction $action, Request $request): JsonResponse
     {
-        return $action();
+        return $action($request);
     }
 
     /**
@@ -223,7 +224,7 @@ class CandidateController extends Controller
     {
         return $action($id, $contactId);
     }
-    
+
 
 
 

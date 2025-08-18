@@ -13,10 +13,7 @@ return new class extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->id();
-            $table->string('value');
-            $table->foreignId('type_id')->constrained('types')->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('candidate_id')->constrained('candidates')->restrictOnDelete()->cascadeOnUpdate();
+            $table->string('title');
             $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();

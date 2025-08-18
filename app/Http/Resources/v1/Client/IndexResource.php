@@ -17,10 +17,6 @@ class IndexResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            // 'clients_count' => Client::count(),
-            // 'active_count' => Client::where('status', 'Active')->count(),
-            // 'potential_count' => Client::where('status', 'Potential')->count(),
-            // 'inactive_count' => Client::where('status', 'Inactive')->count(),
             'name' => $this->name,
             'leader' => $this->leader,
             'status' => $this->status,

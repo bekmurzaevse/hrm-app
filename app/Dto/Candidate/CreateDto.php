@@ -26,12 +26,12 @@ readonly class CreateDto
         // public string $salary,
         public string $desiredSalary,
         public ?string $source,
-        public ?string $experience,
+        public ?float $experience,
+        public ?string $shortSummary,
+        public ?string $achievments,
+        public ?string $comment,
         public ?string $description,
         public int $userId,
-        // public ?array $files,
-        // public ?array $skills,
-        // public ?array $languages,
         public ?UploadedFile $photo,
     ) {
     }
@@ -63,11 +63,11 @@ readonly class CreateDto
             desiredSalary: $request->desired_salary,
             source: $request->source,
             experience: $request->experience,
+            shortSummary: $request->short_summary,
+            achievments: $request->achievments,
+            comment: $request->comment,
             description: $request->description,
             userId: $request->user_id,
-            // skills: $request->skills,
-            // languages: $request->langs,
-            // files: $request->file('files'),
             photo: $request->file('photo'),
         );
     }
