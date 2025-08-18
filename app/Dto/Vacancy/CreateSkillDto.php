@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Dto\Vacancy\Skill;
+namespace App\Dto\Vacancy;
 
-use App\Http\Requests\v1\Vacancy\Skill\CreateRequest;
+use App\Http\Requests\v1\Vacancy\CreateSkillRequest;
 
-readonly class CreateDto
+readonly class CreateSkillDto
 {
     public function __construct(
         public array $titles,
@@ -12,7 +12,7 @@ readonly class CreateDto
     }
 
 
-    public static function from(CreateRequest $request): self
+    public static function from(CreateSkillRequest $request): self
     {
         return new self(
             titles: $request->titles,

@@ -73,13 +73,9 @@ Route::prefix('vacancies')->group(function () {
     Route::put('/update/{id}', [VacancyController::class, 'update']);
     Route::delete('/delete/{id}', [VacancyController::class, 'delete']);
     //File
-    Route::get('/{id}/download/{fileId}', [VacancyController::class, 'download']);
-    Route::post('/{id}/upload', [VacancyController::class, 'upload']);
+    Route::get('/{id}/download/{fileId}', [VacancyController::class, 'downloadFile']);
+    Route::post('/{id}/upload', [VacancyController::class, 'uploadFile']);
     Route::delete('/{id}/delete/{fileId}', [VacancyController::class, 'deleteFile']);
-    // Salary
-    Route::put('/{id}/salary/change', [VacancyController::class, 'changeSalary']);
-    // Detail
-    Route::put('/{id}/detail/change', [VacancyController::class, 'changeDetail']);
     // Skills
     Route::post('/{id}/skills/create', [VacancyController::class, 'createSkills']);
 });

@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Actions\v1\Vacancy\Skill;
+namespace App\Actions\v1\Vacancy;
 
-use App\Dto\Vacancy\Skill\CreateDto;
+use App\Dto\Vacancy\CreateSkillDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class CreateAction
+class CreateSkillAction
 {
     use ResponseTrait;
 
     /**
      * Summary of __invoke
-     * @param \App\Dto\Vacancy\Skill\CreateDto $dto
+     * @param \App\Dto\Vacancy\CreateSkillDto $dto
      * @return JsonResponse
      */
-    public function __invoke(int $id, CreateDto $dto): JsonResponse
+    public function __invoke(int $id, CreateSkillDto $dto): JsonResponse
     {
         try {
             $vacancy = Vacancy::findOrFail($id);

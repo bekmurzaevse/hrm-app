@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Actions\v1\Vacancy\CreateSkillAction;
 use App\Actions\v1\Vacancy\DeleteAction;
-use App\Actions\v1\Vacancy\File\DeleteFileAction;
-use App\Actions\v1\Vacancy\File\DownloadAction;
-use App\Actions\v1\Vacancy\Skill\CreateAction as SkillCreateAction;
+use App\Actions\v1\Vacancy\DownloadFileAction;
+use App\Actions\v1\Vacancy\DeleteFileAction;
 use App\Actions\v1\Vacancy\UpdateAction;
 use App\Actions\v1\Vacancy\CreateAction;
 use App\Actions\v1\Vacancy\ShowAction;
-use App\Actions\v1\Vacancy\File\UploadAction;
-use App\Dto\Vacancy\File\UploadDto;
+use App\Actions\v1\Vacancy\UploadFileAction;
 use App\Dto\Vacancy\CreateDto;
-use App\Dto\Vacancy\Skill\CreateDto as SkillCreateDto;
+use App\Dto\Vacancy\CreateSkillDto;
 use App\Dto\Vacancy\UpdateDto;
+use App\Dto\Vacancy\UploadFileDto;
 use App\Http\Controllers\Controller;
 use App\Actions\v1\Vacancy\IndexAction;
 use App\Http\Requests\v1\Vacancy\CreateRequest;
-use App\Http\Requests\v1\Vacancy\Skill\CreateRequest as SkillCreateRequest;
+use App\Http\Requests\v1\Vacancy\CreateSkillRequest;
 use App\Http\Requests\v1\Vacancy\UpdateRequest;
-use App\Http\Requests\v1\Vacancy\File\UploadRequest;
+use App\Http\Requests\v1\Vacancy\UploadFileRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -81,34 +81,34 @@ class VacancyController extends Controller
     }
 
     /**
-     * Summary of download
+     * Summary of downloadFile
      * @param int $id
      * @param int $fileId
-     * @param \App\Actions\v1\Vacancy\File\DownloadAction $action
+     * @param \App\Actions\v1\Vacancy\DownloadFileAction $action
      * @return BinaryFileResponse
      */
-    public function download(int $id, int $fileId, DownloadAction $action): BinaryFileResponse
+    public function downloadFile(int $id, int $fileId, DownloadFileAction $action): BinaryFileResponse
     {
         return $action($id, $fileId);
     }
 
     /**
-     * Summary of upload
+     * Summary of uploadFile
      * @param int $id
-     * @param \App\Http\Requests\v1\Vacancy\File\UploadRequest $request
-     * @param \App\Actions\v1\Vacancy\File\UploadAction $action
+     * @param \App\Http\Requests\v1\Vacancy\UploadFileRequest $request
+     * @param \App\Actions\v1\Vacancy\UploadFileAction $action
      * @return JsonResponse
      */
-    public function upload(int $id, UploadRequest $request, UploadAction $action): JsonResponse
+    public function uploadFile(int $id, UploadFileRequest $request, UploadFileAction $action): JsonResponse
     {
-        return $action($id, UploadDto::from($request));
+        return $action($id, UploadFileDto::from($request));
     }
 
     /**
      * Summary of deleteFile
      * @param int $id
      * @param int $fileId
-     * @param \App\Actions\v1\Vacancy\File\DeleteFileAction $action
+     * @param \App\Actions\v1\Vacancy\DeleteFileAction $action
      * @return JsonResponse
      */
     public function deleteFile(int $id, int $fileId, DeleteFileAction $action): JsonResponse
@@ -116,15 +116,8 @@ class VacancyController extends Controller
         return $action($id, $fileId);
     }
 
-    /**
-     * Summary of createSkills
-     * @param int $id
-     * @param \App\Http\Requests\v1\Vacancy\Skill\CreateRequest $request
-     * @param \App\Actions\v1\Vacancy\Skill\CreateAction $action
-     * @return JsonResponse
-     */
-    public function createSkills(int $id, SkillCreateRequest $request, SkillCreateAction $action): JsonResponse
+    public function createSkills(int $id, CreateSkillRequest $request, CreateSkillAction $action): JsonResponse
     {
-        return $action($id, SkillCreateDto::from($request));
+        return $action($id, CreateSkillDto::from($request));
     }
 }

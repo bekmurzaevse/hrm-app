@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Dto\Vacancy\File;
+namespace App\Dto\Vacancy;
 
-use App\Http\Requests\v1\Vacancy\File\UploadRequest;
+use App\Http\Requests\v1\Vacancy\UploadFileRequest;
 use Illuminate\Http\UploadedFile;
 
-readonly class UploadDto
+readonly class UploadFileDto
 {
     public function __construct(
         public UploadedFile $file,
@@ -15,10 +15,10 @@ readonly class UploadDto
 
     /**
      * Summary of from
-     * @param \App\Http\Requests\v1\Vacancy\File\UploadRequest $request
-     * @return UploadDto
+     * @param \App\Http\Requests\v1\Vacancy\UploadFileRequest $request
+     * @return UploadFileDto
      */
-    public static function from(UploadRequest $request): self
+    public static function from(UploadFileRequest $request): self
     {
         return new self(
             file: $request->file('file'),
