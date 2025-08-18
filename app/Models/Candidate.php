@@ -34,6 +34,10 @@ class Candidate extends Model
         'desired_salary',
         'source',
         'user_id',
+        'short_summary',
+        'achievments',
+        'comment',
+        'description',
     ];
 
     /**

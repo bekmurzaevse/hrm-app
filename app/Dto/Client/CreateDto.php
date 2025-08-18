@@ -14,7 +14,7 @@ readonly class CreateDto
         public int $userId,
         public string $INN,
         public string $KPP,
-        public ?int $employeeCount,
+        public string $employeeCount,
         public string $source,
         public ?string $activity,
         public string $city,

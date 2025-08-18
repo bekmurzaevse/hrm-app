@@ -35,7 +35,10 @@ class CandidateSeeder extends Seeder
             // 'salary' => 250000,
             'desired_salary' => 300000,
             'source' => 'Linkedin',
-            'experience' => '1-3 year',
+            'experience' => 1,
+            'short_summary' => 'test test',
+            'achievments' => 'Sport',
+            'comment' => 'comments',
             'user_id' => User::inRandomOrder()->first()->id,
         ]);
 
@@ -81,7 +84,10 @@ class CandidateSeeder extends Seeder
             // 'salary' => 360000,
             'desired_salary' => 450000,
             'source' => 'Linkedin',
-            'experience' => '5-7 year',
+            'experience' => 5,
+            'short_summary' => '222 test test',
+            'achievments' => '222 Sport',
+            'comment' => '222 comments',
             'user_id' => User::inRandomOrder()->first()->id,
         ]);
 

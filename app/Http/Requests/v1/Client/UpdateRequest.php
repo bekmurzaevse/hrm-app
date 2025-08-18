@@ -29,7 +29,7 @@ class UpdateRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
             'INN' => 'required|string',
             'KPP' => 'required|string',
-            'employee_count' => 'nullable|integer',
+            'employee_count' => 'nullable|string|in:-50,50-250,250+',
             'source' => 'required|string',
             'activity' => 'required|string',
             'city' => 'required|string',

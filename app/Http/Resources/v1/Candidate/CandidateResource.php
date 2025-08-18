@@ -10,6 +10,7 @@ use App\Http\Resources\v1\Language\LanguageResource;
 use App\Http\Resources\v1\Photo\PhotoResource;
 use App\Http\Resources\v1\Skill\SkillResource;
 use App\Http\Resources\v1\WorkExperience\WorkExperienceResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,22 +23,28 @@ class CandidateResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // dd($this->photo);
         return [
             'main_info' => [
                 'full_name' => $this->first_name . ' ' . $this->last_name . ' ' . $this->patronymic,
                 'birth_date' => $this->birth_date->format('Y-m-d'),
-                'age' => now()->year - $this->birth_date->year,
+                // 'age' => now()->year - $this->birth_date->year,
+                // Carbon::now()->subYears($request->from)
+                'age' => Carbon::parse($this->birth_date)->age,
                 'citizen' => $this->citizen,
                 'gender' => $this->gender,
                 'status' => $this->status,
+            ],
+            'about' => [
+                'short_summary' => $this->short_summary,
+                'achievments' => $this->achievments,
+                'comment' => $this->comment,
             ],
             'contacts' => ContactResource::collection($this->contacts),
             'skills' => SkillResource::collection($this->skills),
             'languages' => LanguageResource::collection($this->languages),
             'info' => [
                 'source' => $this->source,
-                'created_by' => $this->user,
+                'created_by' => $this->user->first_name . ' ' . $this->user->last_name,
                 'created_at' => $this->created_at->format('Y-m-d'),
                 'updated_at' => $this->updated_at->format('Y-m-d'),
             ],

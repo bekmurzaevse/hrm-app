@@ -4,7 +4,7 @@ namespace App\Http\Requests\v1\Candidate;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UploadRequest extends FormRequest
+class IndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class UploadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'files' => 'required|array|max:5',
-            'files.*' => 'required|file|mimetypes:application/pdf|max:4096',
+            // 'gender' => 'nullable|string|in:male,female',
+            // 'age' => 'nullable|integer',
         ];
     }
 }
