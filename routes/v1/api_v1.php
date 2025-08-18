@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\v1\CandidateController;
 use App\Http\Controllers\v1\ClientController;
+use App\Http\Controllers\v1\ProjectController;
 use App\Http\Controllers\v1\InteractionController;
 use App\Http\Controllers\v1\TypeController;
 use App\Http\Controllers\v1\UserController;
@@ -71,6 +72,30 @@ Route::prefix('vacancies')->group(function () {
     Route::post('/create', [VacancyController::class, 'create']);
     Route::put('/update/{id}', [VacancyController::class, 'update']);
     Route::delete('/delete/{id}', [VacancyController::class, 'delete']);
+    //File
+    Route::get('/{id}/download/{fileId}', [VacancyController::class, 'download']);
+    Route::post('/{id}/upload', [VacancyController::class, 'upload']);
+    Route::delete('/{id}/delete/{fileId}', [VacancyController::class, 'deleteFile']);
+    // Salary
+    Route::put('/{id}/salary/change', [VacancyController::class, 'changeSalary']);
+    // Detail
+    Route::put('/{id}/detail/change', [VacancyController::class, 'changeDetail']);
+    // Skills
+    Route::post('/{id}/skills/create', [VacancyController::class, 'createSkills']);
+});
+
+// Projects
+Route::prefix('projects')->group(function () {
+    Route::get('/', [ProjectController::class, 'index']);
+    Route::get('/{id}', [ProjectController::class, 'show']);
+    Route::post('/create', [ProjectController::class, 'create']);
+    Route::put('/update/{id}', [ProjectController::class, 'update']);
+    // File
+    Route::get('/{id}/download/{fileId}', [ProjectController::class, 'downloadFile']);
+    Route::post('/{id}/upload', [ProjectController::class, 'uploadFile']);
+    Route::delete('/{id}/delete/{fileId}', [ProjectController::class, 'deleteFile']);
+    // Stage
+    Route::post('/{id}/stage/create', [ProjectController::class, 'createStage']);
 });
 
 Route::prefix('users')->group(function () {

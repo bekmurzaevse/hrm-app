@@ -36,6 +36,11 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             VacancyDetailSeeder::class,
             VacancySalarySeeder::class,
+            ProjectSeeder::class,
+            StageSeeder::class,
+            StageCompletionSeeder::class,
+            StageTaskSeeder::class,
+            ProjectUserSeeder::class
         ]);
     }
 }
