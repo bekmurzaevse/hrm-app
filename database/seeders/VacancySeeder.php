@@ -26,6 +26,17 @@ class VacancySeeder extends Seeder
             'status' => 'Открыта',
             'position_count' => 2,
             'created_by' => 1,
+            'salary' => "60000-80000",
+            'currency' => 'USD',
+            'period' => 'В месяц',
+            'bonus' => 'Performance-based bonuses available.',
+            'probation' => '6 months',
+            'probation_salary' => 55000,
+            'description' => 'Develop and maintain web applications.',
+            'requirements' => 'Bachelor\'s degree in Computer Science or related field. Experience with PHP and Laravel.',
+            'responsibilities' => 'Write clean, scalable code. Collaborate with front-end developers and other team members.',
+            'work_conditions' => 'Full-time position. Remote work available.',
+            'benefits' => 'Health insurance, paid time off, and professional development opportunities.',
         ]);
 
 
@@ -69,6 +80,17 @@ class VacancySeeder extends Seeder
             'status' => 'Не активна',
             'position_count' => 1,
             'created_by' => 1,
+            'salary' => "70000-80000",
+            'currency' => 'RUB',
+            'period' => 'В неделю',
+            'bonus' => 'Annual performance bonus based on company profits.',
+            'probation' => '3 months',
+            'probation_salary' => 65000,
+            'description' => 'Manage and oversee the company\'s financial operations.',
+            'requirements' => 'Bachelor\'s degree in Finance or Accounting. CPA preferred.',
+            'responsibilities' => 'Prepare financial reports, budgets, and forecasts. Ensure compliance with financial regulations.',
+            'work_conditions' => 'Full-time position. Office-based with occasional remote work.',
+            'benefits' => 'Competitive salary, retirement plan, and health benefits.',
         ]);
 
         $file1 = UploadedFile::fake()->create('PHP_разработчик_требования.pdf', 1024, 'application/pdf');
@@ -111,6 +133,17 @@ class VacancySeeder extends Seeder
             'status' => 'Закрыта',
             'position_count' => 5,
             'created_by' => 1,
+            'salary' => "50000",
+            'currency' => 'EUR',
+            'period' => 'В месяц',
+            'bonus' => 'Quarterly bonuses based on team performance.',
+            'probation' => '3 months',
+            'probation_salary' => 45000,
+            'description' => 'Lead the marketing team to develop and implement marketing strategies.',
+            'requirements' => 'Bachelor\'s degree in Marketing or Business. Proven experience in a marketing role.',
+            'responsibilities' => 'Conduct market research, manage campaigns, and analyze performance metrics.',
+            'work_conditions' => 'Full-time position. Hybrid work model available.',
+            'benefits' => 'Flexible working hours, health insurance, and professional growth opportunities.',
         ]);
 
         $file1 = UploadedFile::fake()->create('Маркетинг_стажер_требования.pdf', 1024, 'application/pdf');

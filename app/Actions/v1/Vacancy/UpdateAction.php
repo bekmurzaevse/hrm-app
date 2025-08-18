@@ -37,21 +37,17 @@ class UpdateAction
                 'status' => $dto->status,
                 'position_count' => $dto->positionCount,
                 'created_by' => 1, // TODO: Replace with authenticated user ID
+                'salary' => $dto->salary,
+                'period' => $dto->period,
+                'bonus' => $dto->bonus,
+                'probation' => $dto->probation,
+                'probation_salary' => $dto->probationSalary,
+                'description' => $dto->description,
+                'requirements' => $dto->requirements,
+                'responsibilities' => $dto->responsibilities,
+                'work_conditions' => $dto->workConditions,
+                'benefits' => $dto->benefits,
             ]);
-
-            if (!is_null($dto->salary)) {
-                $vacancy->vacancySalary()->updateOrCreate(
-                    ['vacancy_id' => $id],
-                    [
-                        'salary' => $dto->salary,
-                        'period' => $dto->salaryPeriod,
-                        'currency' => 'USD', // TODO: Implement Salary Currency
-                        'bonus' => $dto->bonus,
-                        'probation' => $dto->probation,
-                        'probation_salary' => $dto->probationSalary,
-                    ]
-                );
-            }
 
             return static::toResponse(
                 message: "id-{$id} Vacancy updated",

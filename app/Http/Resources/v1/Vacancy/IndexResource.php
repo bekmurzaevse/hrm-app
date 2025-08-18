@@ -17,15 +17,11 @@ class IndexResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'position_count' => $this->position_count,
             'client_name' => $this->client->name,
-            'salary' => $this->vacancySalary?->salary,
-            'city' => $this->city,
-            'created_by' => sprintf(
-                '%s %s.%s',
-                $this->createdBy->last_name,
-                mb_substr($this->createdBy->first_name, 0, 1, 'UTF-8'),
-                mb_substr($this->createdBy->patronymic, 0, 1, 'UTF-8')
-            ),
+            'salary' => $this->salary,
+            'city' => $this?->city,
+            'created_by' => $this->creator,
             'created_at' => $this->created_at->format('Y-m-d'),
             'status' => $this->status,
         ];

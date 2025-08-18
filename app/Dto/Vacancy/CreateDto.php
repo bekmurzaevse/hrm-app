@@ -3,7 +3,6 @@
 namespace App\Dto\Vacancy;
 
 use App\Http\Requests\v1\Vacancy\CreateRequest;
-use Date;
 
 readonly class CreateDto
 {
@@ -18,10 +17,24 @@ readonly class CreateDto
         public string $education,
         public string $status,
         public int $positionCount,
+        public string $salary,
+        public string $period,
+        public ?string $bonus,
+        public ?string $probation,
+        public ?int $probationSalary,
+        public string $description,
+        public string $requirements,
+        public string $responsibilities,
+        public string $workConditions,
+        public ?string $benefits,
     ) {
     }
 
-
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Vacancy\CreateRequest $request
+     * @return CreateDto
+     */
     public static function from(CreateRequest $request): self
     {
         return new self(
@@ -35,6 +48,16 @@ readonly class CreateDto
             education: $request->education,
             status: $request->status,
             positionCount: $request->position_count,
+            salary: $request->salary,
+            period: $request->period,
+            bonus: $request->bonus,
+            probation: $request->probation,
+            probationSalary: $request->probation_salary,
+            description: $request->description,
+            requirements: $request->requirements,
+            responsibilities: $request->responsibilities,
+            workConditions: $request->work_conditions,
+            benefits: $request->benefits,
         );
     }
 }

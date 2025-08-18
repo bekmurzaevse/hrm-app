@@ -32,6 +32,16 @@ class CreateRequest extends FormRequest
             'education' => 'required|in:Среднее,Среднее специальное,Неоконченное высшее,Высшее',
             'status' => 'required|in:Не активна,Открыта,Закрыта,Не закрыта',
             'position_count' => 'required|integer|min:1',
+            'salary' => 'required|regex:/^\d+(-\d+)?$/',
+            'period' => 'required|in:В час,В день,В неделю,В месяц',
+            'bonus' => 'nullable|string|max:1000',
+            'probation' => 'nullable|string|max:255',
+            'probation_salary' => 'nullable|regex:/^[0-9]+$/',
+            'description' => 'required|string|max:1000',
+            'requirements' => 'required|string|max:1000',
+            'responsibilities' => 'required|string|max:1000',
+            'work_conditions' => 'required|string|max:1000',
+            'benefits' => 'nullable|string|max:1000',
         ];
     }
 }

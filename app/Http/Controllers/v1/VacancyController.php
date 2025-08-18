@@ -5,8 +5,6 @@ namespace App\Http\Controllers\v1;
 use App\Actions\v1\Vacancy\DeleteAction;
 use App\Actions\v1\Vacancy\File\DeleteFileAction;
 use App\Actions\v1\Vacancy\File\DownloadAction;
-use App\Actions\v1\Vacancy\Salary\ChangeAction;
-use App\Actions\v1\Vacancy\Detail\ChangeAction as DetailChangeAction;
 use App\Actions\v1\Vacancy\Skill\CreateAction as SkillCreateAction;
 use App\Actions\v1\Vacancy\UpdateAction;
 use App\Actions\v1\Vacancy\CreateAction;
@@ -14,15 +12,11 @@ use App\Actions\v1\Vacancy\ShowAction;
 use App\Actions\v1\Vacancy\File\UploadAction;
 use App\Dto\Vacancy\File\UploadDto;
 use App\Dto\Vacancy\CreateDto;
-use App\Dto\Vacancy\Salary\ChangeDto;
-use App\Dto\Vacancy\Detail\ChangeDto as DetailChangeDto;
 use App\Dto\Vacancy\Skill\CreateDto as SkillCreateDto;
 use App\Dto\Vacancy\UpdateDto;
 use App\Http\Controllers\Controller;
 use App\Actions\v1\Vacancy\IndexAction;
 use App\Http\Requests\v1\Vacancy\CreateRequest;
-use App\Http\Requests\v1\Vacancy\Salary\ChangeRequest;
-use App\Http\Requests\v1\Vacancy\Detail\ChangeRequest as DetailChangeRequest;
 use App\Http\Requests\v1\Vacancy\Skill\CreateRequest as SkillCreateRequest;
 use App\Http\Requests\v1\Vacancy\UpdateRequest;
 use App\Http\Requests\v1\Vacancy\File\UploadRequest;
@@ -120,30 +114,6 @@ class VacancyController extends Controller
     public function deleteFile(int $id, int $fileId, DeleteFileAction $action): JsonResponse
     {
         return $action($id, $fileId);
-    }
-
-    /**
-     * Summary of changeSalary
-     * @param int $id
-     * @param \App\Actions\v1\Vacancy\Salary\ChangeAction $action
-     * @param \App\Http\Requests\v1\Vacancy\Salary\ChangeRequest $request
-     * @return JsonResponse
-     */
-    public function changeSalary(int $id, ChangeAction $action, ChangeRequest $request): JsonResponse
-    {
-        return $action($id, ChangeDto::from($request));
-    }
-
-    /**
-     * Summary of changeDetail
-     * @param int $id
-     * @param \App\Actions\v1\Vacancy\Detail\ChangeAction $action
-     * @param \App\Http\Requests\v1\Vacancy\Detail\ChangeRequest $request
-     * @return JsonResponse
-     */
-    public function changeDetail(int $id, DetailChangeAction $action, DetailChangeRequest $request): JsonResponse
-    {
-        return $action($id, DetailChangeDto::from($request));
     }
 
     /**
