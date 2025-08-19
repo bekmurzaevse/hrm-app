@@ -30,10 +30,20 @@ class CreateAction
             'status' => $dto->status,
             'position_count' => $dto->positionCount,
             'created_by' => 1, // TODO: Replace with authenticated user ID
+            'salary' => $dto->salary,
+            'period' => $dto->period,
+            'bonus' => $dto->bonus,
+            'probation' => $dto->probation,
+            'probation_salary' => $dto->probationSalary,
+            'description' => $dto->description,
+            'requirements' => $dto->requirements,
+            'responsibilities' => $dto->responsibilities,
+            'work_conditions' => $dto->workConditions,
+            'benefits' => $dto->benefits,
+            // TODO: Add skills if exists in request
         ];
 
         Vacancy::create($data);
-
 
         return static::toResponse(
             message: 'Vacancy created'

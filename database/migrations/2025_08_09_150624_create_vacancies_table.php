@@ -23,6 +23,18 @@ return new class extends Migration {
             $table->enum('status', ['not_active', 'open', 'closed', 'not_closed'])->default('not_active');
             $table->unsignedTinyInteger('position_count')->default(1);
             $table->foreignId('created_by')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
+            $table->unsignedInteger('salary_from');
+            $table->unsignedInteger('salary_to');
+            $table->enum('currency', ['RUB', 'USD', 'EUR']);
+            $table->enum('period', ['hour', 'day', 'week', 'month']);
+            $table->text('bonus')->nullable();
+            $table->string('probation')->nullable();
+            $table->unsignedInteger('probation_salary')->nullable();
+            $table->text('description');
+            $table->text('requirements');
+            $table->text('responsibilities');
+            $table->text('work_conditions');
+            $table->text('benefits')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -21,15 +21,16 @@ class IndexAction
         $key = 'vacancies:' . app()->getLocale() . ':' . md5(request()->fullUrl());
 
         $vacancy = Cache::remember($key, now()->addDay(), function () {
+            // TODO: add filters, sorting by created_at desc
+
             return Vacancy::with([
                 'client:id,name',
                 'createdBy:id,first_name,last_name,patronymic',
-                'vacancySalary:id,vacancy_id,salary_from,salary_to,currency'
             ])->paginate(10);
         });
 
         return static::toResponse(
-            message: 'Successfully received',
+            message: 'Successfully Received',
             data: new VacancyCollection($vacancy)
         );
     }

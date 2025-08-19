@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1\Vacancy\Salary;
+namespace App\Http\Requests\v1\Vacancy;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChangeRequest extends FormRequest
+class CreateSkillRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class ChangeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'salary' => 'nullable|regex:/^\d+(-\d+)?$/',
-            'period' => 'nullable|in:В час,В день,В неделю,В месяц',
-            'bonus' => 'nullable|string|max:1000',
-            'probation' => 'nullable|string|max:255',
-            'probation_salary' => 'nullable|regex:/^[0-9]+$/',
+            'titles' => 'required|array',
+            'titles.*' => 'required|string|max:255',
         ];
     }
 }

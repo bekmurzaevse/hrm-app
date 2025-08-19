@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1\Vacancy\Detail;
+namespace App\Http\Requests\v1\Vacancy;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChangeRequest extends FormRequest
+class UpdateSkillRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,7 @@ class ChangeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => 'required|string|max:1000',
-            'requirements' => 'required|string|max:1000',
-            'responsibilities' => 'required|string|max:1000',
-            'work_conditions' => 'required|string|max:1000',
-            'benefits' => 'required|string|max:1000',
+            'title' => 'required|string',
         ];
     }
 }

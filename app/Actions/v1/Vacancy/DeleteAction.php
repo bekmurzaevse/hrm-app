@@ -24,10 +24,7 @@ class DeleteAction
         try {
             $vacancy = Vacancy::findOrFail($id);
 
-            $vacancy->vacancyDetail()->delete();
-            $vacancy->vacancySalary()->delete();
             $vacancy->skills()->delete();
-
 
             if (Storage::disk('public')->exists('vacancies/' . $vacancy->id)) {
                 Storage::disk('public')->deleteDirectory("vacancies/" . $vacancy->id);
