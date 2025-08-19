@@ -7,6 +7,7 @@ use App\Actions\v1\Vacancy\DeleteAction;
 use App\Actions\v1\Vacancy\DeleteSkillAction;
 use App\Actions\v1\Vacancy\DownloadFileAction;
 use App\Actions\v1\Vacancy\DeleteFileAction;
+use App\Actions\v1\Vacancy\ShowFileAction;
 use App\Actions\v1\Vacancy\UpdateAction;
 use App\Actions\v1\Vacancy\CreateAction;
 use App\Actions\v1\Vacancy\ShowAction;
@@ -25,6 +26,7 @@ use App\Http\Requests\v1\Vacancy\UpdateRequest;
 use App\Http\Requests\v1\Vacancy\UpdateSkillRequest;
 use App\Http\Requests\v1\Vacancy\UploadFileRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class VacancyController extends Controller
@@ -92,6 +94,18 @@ class VacancyController extends Controller
      * @return BinaryFileResponse
      */
     public function downloadFile(int $id, int $fileId, DownloadFileAction $action): BinaryFileResponse
+    {
+        return $action($id, $fileId);
+    }
+
+    /**
+     * Summary of showFile
+     * @param int $id
+     * @param int $fileId
+     * @param \App\Actions\v1\Vacancy\ShowFileAction $action
+     * @return Response
+     */
+    public function showFile(int $id, int $fileId, ShowFileAction $action): Response
     {
         return $action($id, $fileId);
     }

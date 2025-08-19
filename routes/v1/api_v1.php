@@ -74,6 +74,7 @@ Route::prefix('vacancies')->group(function () {
     Route::delete('/delete/{id}', [VacancyController::class, 'delete']);
     //File
     Route::get('/{id}/download/{fileId}', [VacancyController::class, 'downloadFile']);
+    Route::get('/{id}/file/{fileId}', [VacancyController::class, 'showFile']);
     Route::post('/{id}/upload', [VacancyController::class, 'uploadFile']);
     Route::delete('/{id}/delete/{fileId}', [VacancyController::class, 'deleteFile']);
     // Skills

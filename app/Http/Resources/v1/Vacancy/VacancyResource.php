@@ -62,7 +62,7 @@ class VacancyResource extends JsonResource
                     // TODO: add creator of File
                     'created_at' => $file->created_at->format('Y-m-d'),
                     'download_url' => $fileExists ? url('/api/v1/vacancies/' . $this->id . '/download/' . $file->id) : null,
-                    // TODO: Show File url
+                    'show_url' => $fileExists ? url('/api/v1/vacancies/' . $this->id . '/file/' . $file->id) : null,
                 ];
             }),
         ];
