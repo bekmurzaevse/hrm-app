@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->enum('status', ['completed', 'in_progress', 'waiting'])->default('waiting');
             $table->foreignId('project_id')->constrained('projects')->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('executor_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

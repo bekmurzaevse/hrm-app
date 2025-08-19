@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->enum('priority', ['low', 'medium', 'high']);
             $table->date('deadline');
             $table->foreignId('created_by')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

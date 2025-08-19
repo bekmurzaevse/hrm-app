@@ -16,14 +16,14 @@ class IndexResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'client_name' => $this->client->name,
-            'vacancy_title' => $this->vacancy->title,
-            'status' => $this->inProgressStage->title,
+            'client_name' => $this->client?->name,
+            'vacancy_title' => $this->vacancy?->title,
+            'status' => $this->inProgressStage?->title,
             'created_at' => $this->created_at->format('Y-m-d'),
             'deadline' => $this->deadline->format('Y-m-d'),
             'performers' => $this->performers_fio,
             'contract_number' => $this->contract_number,
-            'contract_budget' => $this->contract_budget . ' ' . $this->contract_currency,
+            'contract_budget' => $this->contract_budget !== null ? ($this->contract_budget . ' ' . $this->contract_currency) : null,
             'progress' => $this->progress,
             'comment' => $this->comment,
         ];

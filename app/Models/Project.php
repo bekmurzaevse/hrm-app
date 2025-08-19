@@ -10,9 +10,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'title',
         'client_id',
@@ -41,22 +44,13 @@ class Project extends Model
     }
 
     /**
-     * Summary of appends
-     * @var array
-     */
-    protected $appends = [
-        'progress',
-        'performers_fio'
-    ];
-
-    /**
      * Summary of getProgressAttribute
      * @return string
      */
     public function getProgressAttribute(): string
     {
         $total = $this->stages->count();
-        $completed = $this->stages->where('status', 'completed')->count();
+        $completed = $this->stages->where('status', 'Завершен')->count();
         $response = $total !== 0 ? round(($completed / $total) * 100) . "%" : "0%";
         return $response;
     }
@@ -160,5 +154,14 @@ class Project extends Model
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'fileable');
+    }
+
+    /**
+     * Summary of closeProject
+     * @return HasOne<ProjectClosure, Project>
+     */
+    public function closeProject(): HasOne
+    {
+        return $this->hasOne(ProjectClosure::class);
     }
 }

@@ -21,6 +21,7 @@ class IndexAction
         $key = 'projects:' . app()->getLocale() . ':' . md5(request()->fullUrl());
 
         $projects = Cache::remember($key, now()->addDay(), function () {
+            // TODO: add filters, sorting by created_at desc
             return Project::with([
                 'client:id,name',
                 'inProgressStage',

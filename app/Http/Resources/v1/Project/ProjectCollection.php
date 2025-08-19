@@ -14,7 +14,18 @@ class ProjectCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
+        $totalProjects = $this->count();
+        $inProgressProjects = $this->where('status', 'В работе')->count();
+        $completedProjects = $this->where('status', 'Отменен')->count();
+        $totalPrice = $this->sum('contract_budget');
+
         return [
+            'cards' => [
+                'total' => $totalProjects,
+                'in_progress' => $inProgressProjects,
+                'completed' => $completedProjects,
+                'total_price' => $totalPrice,
+            ],
             'items' => IndexResource::collection($this->collection),
             'pagination' => [
                 'current_page' => $this->currentPage(),

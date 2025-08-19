@@ -92,13 +92,21 @@ Route::prefix('projects')->group(function () {
     Route::get('/', [ProjectController::class, 'index']);
     Route::get('/{id}', [ProjectController::class, 'show']);
     Route::post('/create', [ProjectController::class, 'create']);
+    Route::patch('/{id}/create-contract', [ProjectController::class, 'createContract']);
+    Route::put('/{id}/update-performers', [ProjectController::class, 'updatePerformers']);
     Route::put('/update/{id}', [ProjectController::class, 'update']);
+    Route::patch('/{id}/close', [ProjectController::class, 'closeProject']);
     // File
     Route::get('/{id}/download/{fileId}', [ProjectController::class, 'downloadFile']);
+    Route::get('/{id}/file/{fileId}', [ProjectController::class, 'showFile']);
     Route::post('/{id}/upload', [ProjectController::class, 'uploadFile']);
     Route::delete('/{id}/delete/{fileId}', [ProjectController::class, 'deleteFile']);
     // Stage
     Route::post('/{id}/stage/create', [ProjectController::class, 'createStage']);
+    Route::patch('/stage/{stageId}/update', [ProjectController::class, 'updateStage']);
+    Route::patch('/stage/{stageId}/require', [ProjectController::class, 'setRequireStage']);
+    Route::patch('/stage/{stageId}/complete', [ProjectController::class, 'completeStage']);
+    Route::delete('/stage/delete/{stageId}', [ProjectController::class, 'deleteStage']);
 });
 
 Route::prefix('users')->group(function () {

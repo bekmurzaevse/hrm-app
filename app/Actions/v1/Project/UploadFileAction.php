@@ -14,6 +14,13 @@ class UploadFileAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param \App\Dto\Project\UploadFileDto $dto
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(int $id, UploadFileDto $dto): JsonResponse
     {
         try {

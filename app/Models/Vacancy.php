@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -345,5 +346,12 @@ class Vacancy extends Model
         return $this->morphMany(related: File::class, name: 'fileable');
     }
 
-    // TODO: Implement OneToOne relationships for Project
+    /**
+     * Summary of project
+     * @return HasOne<Project, Vacancy>
+     */
+    public function project(): HasOne
+    {
+        return $this->hasOne(related: Project::class, foreignKey: 'vacancy_id');
+    }
 }
