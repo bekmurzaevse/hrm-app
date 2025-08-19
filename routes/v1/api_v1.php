@@ -95,6 +95,7 @@ Route::prefix('projects')->group(function () {
     Route::put('/update/{id}', [ProjectController::class, 'update']);
     // File
     Route::get('/{id}/download/{fileId}', [ProjectController::class, 'downloadFile']);
+    Route::get('/{id}/file/{fileId}', [ProjectController::class, 'showFile']);
     Route::post('/{id}/upload', [ProjectController::class, 'uploadFile']);
     Route::delete('/{id}/delete/{fileId}', [ProjectController::class, 'deleteFile']);
     // Stage

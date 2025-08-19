@@ -41,22 +41,13 @@ class Project extends Model
     }
 
     /**
-     * Summary of appends
-     * @var array
-     */
-    protected $appends = [
-        'progress',
-        'performers_fio'
-    ];
-
-    /**
      * Summary of getProgressAttribute
      * @return string
      */
     public function getProgressAttribute(): string
     {
         $total = $this->stages->count();
-        $completed = $this->stages->where('status', 'completed')->count();
+        $completed = $this->stages->where('status', 'Завершен')->count();
         $response = $total !== 0 ? round(($completed / $total) * 100) . "%" : "0%";
         return $response;
     }

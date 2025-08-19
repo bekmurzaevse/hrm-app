@@ -7,6 +7,7 @@ use App\Actions\v1\Project\CreateStageAction;
 use App\Actions\v1\Project\DownloadFileAction;
 use App\Actions\v1\Project\IndexAction;
 use App\Actions\v1\Project\ShowAction;
+use App\Actions\v1\Project\ShowFileAction;
 use App\Actions\v1\Project\UpdateAction;
 use App\Actions\v1\Project\UploadFileAction;
 use App\Actions\v1\Project\DeleteFileAction;
@@ -20,6 +21,7 @@ use App\Http\Requests\v1\Project\CreateStageRequest;
 use App\Http\Requests\v1\Project\UpdateRequest;
 use App\Http\Requests\v1\Project\UploadFileRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ProjectController extends Controller
@@ -76,6 +78,18 @@ class ProjectController extends Controller
      * @return BinaryFileResponse
      */
     public function downloadFile(int $id, int $fileId, DownloadFileAction $action): BinaryFileResponse
+    {
+        return $action($id, $fileId);
+    }
+
+    /**
+     * Summary of showFile
+     * @param int $id
+     * @param int $fileId
+     * @param \App\Actions\v1\Project\ShowFileAction $action
+     * @return Response
+     */
+    public function showFile(int $id, int $fileId, ShowFileAction $action): Response
     {
         return $action($id, $fileId);
     }
