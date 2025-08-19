@@ -40,10 +40,10 @@ class CreateAction
             'responsibilities' => $dto->responsibilities,
             'work_conditions' => $dto->workConditions,
             'benefits' => $dto->benefits,
+            // TODO: Add skills if exists in request
         ];
 
         Vacancy::create($data);
-
 
         return static::toResponse(
             message: 'Vacancy created'

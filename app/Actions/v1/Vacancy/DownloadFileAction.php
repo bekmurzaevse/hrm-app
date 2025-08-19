@@ -10,6 +10,13 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class DownloadFileAction
 {
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param int $fileId
+     * @throws \App\Exceptions\ApiResponseException
+     * @return BinaryFileResponse
+     */
     public function __invoke(int $id, int $fileId): BinaryFileResponse
     {
         try {

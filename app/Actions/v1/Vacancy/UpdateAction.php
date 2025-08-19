@@ -47,6 +47,7 @@ class UpdateAction
                 'responsibilities' => $dto->responsibilities,
                 'work_conditions' => $dto->workConditions,
                 'benefits' => $dto->benefits,
+                // TODO: Add skills if exists in request
             ]);
 
             return static::toResponse(

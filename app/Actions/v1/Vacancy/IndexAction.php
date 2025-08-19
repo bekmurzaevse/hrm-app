@@ -30,7 +30,7 @@ class IndexAction
         });
 
         return static::toResponse(
-            message: 'Successfully received',
+            message: 'Successfully Received',
             data: new VacancyCollection($vacancy)
         );
     }

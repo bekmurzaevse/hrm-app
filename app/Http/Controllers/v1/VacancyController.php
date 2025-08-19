@@ -4,21 +4,25 @@ namespace App\Http\Controllers\v1;
 
 use App\Actions\v1\Vacancy\CreateSkillAction;
 use App\Actions\v1\Vacancy\DeleteAction;
+use App\Actions\v1\Vacancy\DeleteSkillAction;
 use App\Actions\v1\Vacancy\DownloadFileAction;
 use App\Actions\v1\Vacancy\DeleteFileAction;
 use App\Actions\v1\Vacancy\UpdateAction;
 use App\Actions\v1\Vacancy\CreateAction;
 use App\Actions\v1\Vacancy\ShowAction;
+use App\Actions\v1\Vacancy\UpdateSkillAction;
 use App\Actions\v1\Vacancy\UploadFileAction;
 use App\Dto\Vacancy\CreateDto;
 use App\Dto\Vacancy\CreateSkillDto;
 use App\Dto\Vacancy\UpdateDto;
+use App\Dto\Vacancy\UpdateSkillDto;
 use App\Dto\Vacancy\UploadFileDto;
 use App\Http\Controllers\Controller;
 use App\Actions\v1\Vacancy\IndexAction;
 use App\Http\Requests\v1\Vacancy\CreateRequest;
 use App\Http\Requests\v1\Vacancy\CreateSkillRequest;
 use App\Http\Requests\v1\Vacancy\UpdateRequest;
+use App\Http\Requests\v1\Vacancy\UpdateSkillRequest;
 use App\Http\Requests\v1\Vacancy\UploadFileRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -116,8 +120,40 @@ class VacancyController extends Controller
         return $action($id, $fileId);
     }
 
+    /**
+     * Summary of createSkills
+     * @param int $id
+     * @param \App\Http\Requests\v1\Vacancy\CreateSkillRequest $request
+     * @param \App\Actions\v1\Vacancy\CreateSkillAction $action
+     * @return JsonResponse
+     */
     public function createSkills(int $id, CreateSkillRequest $request, CreateSkillAction $action): JsonResponse
     {
         return $action($id, CreateSkillDto::from($request));
+    }
+
+    /**
+     * Summary of updateSkill
+     * @param int $id
+     * @param int $skillId
+     * @param \App\Http\Requests\v1\Vacancy\UpdateSkillRequest $request
+     * @param \App\Actions\v1\Vacancy\UpdateSkillAction $action
+     * @return JsonResponse
+     */
+    public function updateSkill(int $id, int $skillId, UpdateSkillRequest $request, UpdateSkillAction $action): JsonResponse
+    {
+        return $action($id, $skillId, UpdateSkillDto::from($request));
+    }
+
+    /**
+     * Summary of deleteSkill
+     * @param int $id
+     * @param int $skillId
+     * @param \App\Actions\v1\Vacancy\DeleteSkillAction $action
+     * @return JsonResponse
+     */
+    public function deleteSkill(int $id, int $skillId, DeleteSkillAction $action): JsonResponse
+    {
+        return $action($id, $skillId);
     }
 }

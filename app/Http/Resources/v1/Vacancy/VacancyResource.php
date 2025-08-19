@@ -57,9 +57,10 @@ class VacancyResource extends JsonResource
                 return [
                     'id' => $file->id,
                     'name' => $file->name,
-                    'size' => round($file->size / 1024, 2) . ' KB',
                     'type' => $file->type,
+                    'size' => round($file->size / 1024, 2) . ' KB',
                     // TODO: add creator of File
+                    'created_at' => $file->created_at->format('Y-m-d'),
                     'download_url' => $fileExists ? url('/api/v1/vacancies/' . $this->id . '/download/' . $file->id) : null,
                     // TODO: Show File url
                 ];

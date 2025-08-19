@@ -78,6 +78,8 @@ Route::prefix('vacancies')->group(function () {
     Route::delete('/{id}/delete/{fileId}', [VacancyController::class, 'deleteFile']);
     // Skills
     Route::post('/{id}/skills/create', [VacancyController::class, 'createSkills']);
+    Route::put('/{id}/skills/update/{skillId}', [VacancyController::class, 'updateSkill']);
+    Route::delete('/{id}/skills/delete/{skillId}', [VacancyController::class, 'deleteSkill']);
 });
 
 // Projects
