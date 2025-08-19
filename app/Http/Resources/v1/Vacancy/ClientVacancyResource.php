@@ -17,10 +17,10 @@ class ClientVacancyResource extends JsonResource
         return [
             'title' => $this->title,
             'status' => $this->status,
-            'salary' => $this->salary,
-            'user' => $this->user,
+            'salary' => $this->vacancySalary->salary_from . '-' . $this->vacancySalary->salary_to,
+            // 'user' => $this->user,
             // 'vacancies' => $this->pvacancies,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->format('Y-m-d'),
         ];
     }
 }

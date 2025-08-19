@@ -20,14 +20,24 @@ class ClientSeeder extends Seeder
             'status' => 'Active',
             'leader' => 'Bill Gates',
             'contact_person' => 'Bazarbay',
+
+            'person_position' => 'Pavel Durov',
+            'person_phone' => '12343234',
+            'person_email' => 'durov@gmailcom',
+
+            'phone' => '9998833',
+            'email' => 'company@gmail.com',
+            'address' => 'Nukus',
+
             'user_id' => User::inRandomOrder()->first()->id,
             'INN' => '111222333',
-            'KPP' => '333222',
+            // 'KPP' => '333222',
             'employee_count' => '-50',
             'source' => 'Facebook',
-            'city' => 'Moscow',
+            // 'city' => 'Moscow',
             'activity' => 'Programming',
             'description' => 'test',
+            'notes' => 'notes',
         ]);
 
         $client1->contacts()->create([
@@ -53,14 +63,24 @@ class ClientSeeder extends Seeder
             'status' => 'Potential',
             'leader' => 'Ilon Musk',
             'contact_person' => 'Piyshenbay',
+
+            'person_position' => 'Pavel Durov',
+            'person_phone' => '12343234',
+            'person_email' => 'durov@gmailcom',
+
+            'phone' => '9998833',
+            'email' => 'company@gmail.com',
+            'Address' => 'Nukus',
+
             'user_id' => User::inRandomOrder()->first()->id,
             'INN' => '222333444',
-            'KPP' => '666777',
+            // 'KPP' => '666777',
             'employee_count' => '50-250',
             'source' => 'X',
-            'city' => 'Nukus',
+            // 'city' => 'Nukus',
             'activity' => 'Design',
             'description' => 'test',
+            'notes' => 'test',
         ]);
 
         $client2->contacts()->create([

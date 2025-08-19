@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\v1\Client;
 
-use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

@@ -24,25 +24,27 @@ class CreateAction
             'status' => $dto->status,
             'leader' => $dto->leader,
             'contact_person' => $dto->contactPerson,
+
+            'person_position' => $dto->personPosition,
+            'person_phone' => $dto->personPhone,
+            'person_email' => $dto->personEmail,
+
+            'phone' => $dto->phone,
+            'email' => $dto->email,
+            'address' => $dto->address,
+
             'user_id' => $dto->userId,
             'INN' => $dto->INN,
-            'KPP' => $dto->KPP,
+            // 'KPP' => $dto->KPP,
             'employee_count' => $dto->employeeCount,
             'source' => $dto->source,
             'activity' => $dto->activity,
-            'city' => $dto->city,
+            // 'city' => $dto->city,
             'description' => $dto->description,
+            'notes' => $dto->notes,
         ];
 
         $client = Client::create($data);
-
-        if ($dto->files){
-            $uploadedFiles = FileUploadHelper::files($dto->files, "clients/{$client->id}");
-
-            array_map(function ($file) use ($client) {
-                $client->files()->create($file);
-            }, $uploadedFiles);
-        }
 
         return static::toResponse(
             message: "Client created"

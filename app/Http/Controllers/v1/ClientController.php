@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v1;
 
 use App\Actions\v1\Client\CreateAction;
 use App\Actions\v1\Client\DeleteAction;
+use App\Actions\v1\Client\DeleteFileAction;
 use App\Actions\v1\Client\DownloadAction;
 use App\Actions\v1\Client\IndexAction;
 use App\Actions\v1\Client\ShowAction;
@@ -38,6 +39,12 @@ class ClientController extends Controller
         return $action($id);
     }
 
+    /**
+     * Summary of create
+     * @param \App\Http\Requests\v1\Client\CreateRequest $request
+     * @param \App\Actions\v1\Client\CreateAction $action
+     * @return JsonResponse
+     */
     public function create(CreateRequest $request, CreateAction $action): JsonResponse
     {
         return $action(CreateDto::from($request));
@@ -86,6 +93,11 @@ class ClientController extends Controller
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function download(int $id, int $fileId, DownloadAction $action): StreamedResponse
+    {
+        return $action($id, $fileId);
+    }
+
+    public function deleteFile(int $id, int $fileId, DeleteFileAction $action): JsonResponse
     {
         return $action($id, $fileId);
     }

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Actions\v1\Candidate;
+namespace App\Actions\v1\Client;
 
 use App\Exceptions\ApiResponseException;
-use App\Models\Candidate;
+use App\Models\Client;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -13,20 +13,26 @@ class DeleteFileAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param int $fileId
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(int $id, int $fileId): JsonResponse
     {
-
         try {
-            $candidate = Candidate::findOrFail($id);
+            $client = Client::findOrFail($id);
 
-            $file = $candidate->files()->where('id', $fileId)->firstOrFail();
+            $file = $client->files()->where('id', $fileId)->firstOrFail();
 
             if (Storage::disk('public')->exists($file->path)) {
                 Storage::disk('public')->delete($file->path);
             }
 
             // $candidate->files()->where('id', $fileId)->delete();
-            $candidate->files()->findOrFail($fileId)->delete();
+            $client->files()->findOrFail($fileId)->delete();
 
             return static::toResponse(
                 message: "$id - id li file o'shirildi",
