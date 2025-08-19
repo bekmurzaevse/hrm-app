@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Actions\v1\Project;
+
+use App\Dto\Project\UpdateStageDto;
+use App\Exceptions\ApiResponseException;
+use App\Models\Stage;
+use App\Traits\ResponseTrait;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
+
+class UpdateStageAction
+{
+    use ResponseTrait;
+
+    /**
+     * Summary of __invoke
+     * @param \App\Dto\Project\UpdateStageDto $dto
+     * @return JsonResponse
+     */
+    public function __invoke(int $stageId, UpdateStageDto $dto): JsonResponse
+    {
+        try {
+            $stage = Stage::findOrFail($stageId);
+
+            $data = [
+                'title' => $dto->title,
+                'description' => $dto->description,
+                'deadline' => $dto->deadline,
+                'executor_id' => $dto->executorId,
+            ];
+            // TODO: add StageDetail, stageOrder
+
+            $stage->update($data);
+
+            return static::toResponse(
+                message: 'Stage updated'
+            );
+        } catch (ModelNotFoundException $e) {
+            throw new ApiResponseException("Stage Not Found", 404);
+        }
+    }
+}

@@ -100,6 +100,10 @@ Route::prefix('projects')->group(function () {
     Route::delete('/{id}/delete/{fileId}', [ProjectController::class, 'deleteFile']);
     // Stage
     Route::post('/{id}/stage/create', [ProjectController::class, 'createStage']);
+    Route::patch('/stage/{stageId}/update', [ProjectController::class, 'updateStage']);
+    Route::patch('/stage/{stageId}/require', [ProjectController::class, 'setRequireStage']);
+    Route::patch('/stage/{stageId}/complete', [ProjectController::class, 'completeStage']);
+    Route::delete('/stage/delete/{stageId}', [ProjectController::class, 'deleteStage']);
 });
 
 Route::prefix('users')->group(function () {

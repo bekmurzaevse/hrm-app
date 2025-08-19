@@ -2,23 +2,31 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Actions\v1\Project\CompleteStageAction;
 use App\Actions\v1\Project\CreateAction;
 use App\Actions\v1\Project\CreateStageAction;
+use App\Actions\v1\Project\DeleteStageAction;
 use App\Actions\v1\Project\DownloadFileAction;
 use App\Actions\v1\Project\IndexAction;
+use App\Actions\v1\Project\SetRequireStageAction;
 use App\Actions\v1\Project\ShowAction;
 use App\Actions\v1\Project\ShowFileAction;
 use App\Actions\v1\Project\UpdateAction;
+use App\Actions\v1\Project\UpdateStageAction;
 use App\Actions\v1\Project\UploadFileAction;
 use App\Actions\v1\Project\DeleteFileAction;
+use App\Dto\Project\CompleteStageDto;
 use App\Dto\Project\CreateDto;
 use App\Dto\Project\CreateStageDto;
 use App\Dto\Project\UpdateDto;
+use App\Dto\Project\UpdateStageDto;
 use App\Dto\Project\UploadFileDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\Project\CompleteStageRequest;
 use App\Http\Requests\v1\Project\CreateRequest;
 use App\Http\Requests\v1\Project\CreateStageRequest;
 use App\Http\Requests\v1\Project\UpdateRequest;
+use App\Http\Requests\v1\Project\UpdateStageRequest;
 use App\Http\Requests\v1\Project\UploadFileRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -128,5 +136,54 @@ class ProjectController extends Controller
     public function createStage(int $id, CreateStageRequest $request, CreateStageAction $action): JsonResponse
     {
         return $action($id, CreateStageDto::from($request));
+    }
+
+    /**
+     * Summary of updateStage
+     * @param int $id
+     * @param int $stageId
+     * @param \App\Http\Requests\v1\Project\UpdateStageRequest $request
+     * @param \App\Actions\v1\Project\UpdateStageAction $action
+     * @return JsonResponse
+     */
+    public function updateStage(int $stageId, UpdateStageRequest $request, UpdateStageAction $action): JsonResponse
+    {
+        return $action($stageId, UpdateStageDto::from($request));
+    }
+
+    /**
+     * Summary of setRequireStage
+     * @param int $id
+     * @param int $stageId
+     * @param \App\Actions\v1\Project\SetRequireStageAction $action
+     * @return JsonResponse
+     */
+    public function setRequireStage(int $stageId, SetRequireStageAction $action): JsonResponse
+    {
+        return $action($stageId);
+    }
+
+    /**
+     * Summary of completeStage
+     * @param int $stageId
+     * @param \App\Http\Requests\v1\Project\CompleteStageRequest $request
+     * @param \App\Actions\v1\Project\CompleteStageAction $action
+     * @return JsonResponse
+     */
+    public function completeStage(int $stageId, CompleteStageRequest $request, CompleteStageAction $action): JsonResponse
+    {
+        return $action($stageId, CompleteStageDto::from($request));
+    }
+
+    /**
+     * Summary of deleteStage
+     * @param int $id
+     * @param int $stageId
+     * @param \App\Actions\v1\Project\DeleteStageAction $action
+     * @return JsonResponse
+     */
+    public function deleteStage(int $stageId, DeleteStageAction $action): JsonResponse
+    {
+        return $action($stageId);
     }
 }

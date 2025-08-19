@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Stage extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'title',
         'description',
@@ -32,12 +36,6 @@ class Stage extends Model
             'updated_at' => 'datetime',
         ];
     }
-
-    /**
-     * Summary of appends
-     * @var array
-     */
-    protected $appends = ['executor_fio'];
 
     /**
      * Summary of getExecutorFioAttribute
@@ -101,5 +99,14 @@ class Stage extends Model
     public function stageTasks(): HasMany
     {
         return $this->hasMany(StageTask::class);
+    }
+
+    /**
+     * Summary of stageCompletions
+     * @return HasOne<StageCompletion, Stage>
+     */
+    public function stageCompletion(): HasOne
+    {
+        return $this->hasOne(StageCompletion::class);
     }
 }
