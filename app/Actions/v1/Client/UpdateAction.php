@@ -31,26 +31,34 @@ class UpdateAction
                 'status' => $dto->status,
                 'leader' => $dto->leader,
                 'contact_person' => $dto->contactPerson,
+
+                'person_position' => $dto->personPosition,
+                'person_phone' => $dto->personPhone,
+                'person_email' => $dto->personEmail,
+
+                'phone' => $dto->phone,
+                'email' => $dto->email,
+                'address' => $dto->address,
+
                 'user_id' => $dto->userId,
                 'INN' => $dto->INN,
-                'KPP' => $dto->KPP,
                 'employee_count' => $dto->employeeCount,
                 'source' => $dto->source,
-                'city' => $dto->city,
                 'activity' => $dto->activity,
                 'description' => $dto->description,
+                'notes' => $dto->notes,
             ]);
 
-            if ($dto->files) {
-                Storage::disk('public')->deleteDirectory("clients/$client->id");
-                $client->files()->delete();
+            // if ($dto->files) {
+            //     Storage::disk('public')->deleteDirectory("clients/$client->id");
+            //     $client->files()->delete();
 
-                $uploadedFiles = FileUploadHelper::files($dto->files, "clients/$client->id");
+            //     $uploadedFiles = FileUploadHelper::files($dto->files, "clients/$client->id");
 
-                array_map(function ($file) use ($client) {
-                    $client->files()->create($file);
-                }, $uploadedFiles);
-            }
+            //     array_map(function ($file) use ($client) {
+            //         $client->files()->create($file);
+            //     }, $uploadedFiles);
+            // }
 
             return static::toResponse(
                 message: "$id - id li client jan'alandi",

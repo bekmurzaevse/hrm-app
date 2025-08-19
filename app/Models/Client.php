@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,14 +18,19 @@ class Client extends Model
         'status',
         'leader',
         'contact_person',
+        'person_position',
+        'person_phone',
+        'person_email',
+        'phone',
+        'email',
+        'address',
         'user_id',
         'INN',
-        'KPP',
         'employee_count',
         'source',
-        'city',
         'activity',
         'description',
+        'notes',
     ];
 
     /**
@@ -78,6 +84,11 @@ class Client extends Model
     public function contacts(): MorphMany
     {
         return $this->morphMany(Contact::class, 'contactable');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

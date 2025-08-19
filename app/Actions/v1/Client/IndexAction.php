@@ -20,7 +20,7 @@ class IndexAction
     {
         $key = 'clients:' . app()->getLocale() . ':' . md5(request()->fullUrl());
         $clients = Cache::remember($key, now()->addDay(), function () {
-            return Client::paginate(10);
+            return Client::with('contacts')->paginate(10);
         });
 
         return static::toResponse(

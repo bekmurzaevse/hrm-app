@@ -21,6 +21,8 @@ class IndexResource extends JsonResource
             'status' => $this->status,
             'email' => $this->email,
             'phone' => $this->phone,
+            'created_at' => $this->created_at->format('Y-m-d'),
+            'updated_at' => $this->updated_at->format('Y-m-d'),
         ];
     }
 }

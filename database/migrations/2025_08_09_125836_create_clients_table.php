@@ -17,15 +17,22 @@ return new class extends Migration
             $table->enum('status', ['Active', 'Potential', 'Inactive'])->default('Active')->nullable();
             $table->string('leader');
             $table->string('contact_person');
+
+            $table->string('person_position');
+            $table->string('person_phone');
+            $table->string('person_email')->nullable();
+
+            $table->string('phone');
+            $table->string('email')->nullable();
+            $table->text('address');
+
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->string('INN')->unique();
-            $table->string('KPP')->unique();
-            // $table->integer('employee_count')->nullable();
             $table->enum('employee_count', ['-50', '50-250', '250+']);
             $table->string('source');
             $table->string('activity')->nullable();
-            $table->string('city');
             $table->text('description')->nullable();
+            $table->text('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

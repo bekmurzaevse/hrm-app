@@ -24,14 +24,31 @@ class ClientResource extends JsonResource
                 'activity' => $this->activity,
                 'employee_count' => $this->employee_count,
                 'INN' => $this->INN,
-                'KPP' => $this->KPP,
+                // 'KPP' => $this->KPP,
+                'description' => $this->description,
             ],
-            'contacts' => ContactResource::collection($this->contacts),
-            'contact_persons' => $this->contactPersons,
+            // 'contacts' => ContactResource::collection($this->contacts),
+            // 'contact_persons' => $this->contactPersons,
+
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'address' => $this->address,
+
+            'contact_person' => [
+                'full_name' => $this->contact_person,
+                'position' => $this->person_position,
+                'phone' => $this->person_phone,
+                'email' => $this->person_email,
+            ],
+            'info' => [
+                'source' => $this->source,
+                'created_by' => $this->user->first_name . ' ' . $this->user->last_name . ' ' . $this->user->patronymic,
+                'created_at' => $this->created_at->format('Y-m-d'),
+                'updated_at' => $this->updated_at->format('Y-m-d'),
+            ],
             'vacancies' => ClientVacancyResource::collection($this->vacancies),
-            // 'candidates' => $this->candidates,
-            // 'files' => FileResource::collection($this->files),
             'files' => FileResource::collection($this->files),
+            'notes' => $this->notes,
         ];
     }
 }

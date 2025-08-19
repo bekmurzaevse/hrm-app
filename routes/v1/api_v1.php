@@ -58,8 +58,12 @@ Route::prefix('candidates')->group(function () {
 Route::prefix('clients')->group(function () {
     Route::get('/', [ClientController::class, 'index']);
     Route::get('/{id}', [ClientController::class, 'show']);
-    Route::get('/{id}/download/{fileId}', [ClientController::class, 'download']);
-    Route::post('/{id}/upload', [ClientController::class, 'upload']);
+
+    Route::get('/{id}/files/download/{fileId}', [ClientController::class, 'download']);
+    Route::post('/{id}/files/upload', [ClientController::class, 'upload']);
+    Route::delete('/{id}/files/deleteFile/{fileId}', [ClientController::class, 'deleteFile']);
+
+
     Route::post('/create', [ClientController::class, 'create']);
     Route::put('/update/{id}', [ClientController::class, 'update']);
     Route::delete('/delete/{id}', [ClientController::class, 'delete']);
