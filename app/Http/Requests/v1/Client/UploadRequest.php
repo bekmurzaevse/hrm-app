@@ -14,6 +14,16 @@ class UploadRequest extends FormRequest
         return true;
     }
 
+    protected array $allowedMimes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/vnd.ms-powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ];
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,7 +33,8 @@ class UploadRequest extends FormRequest
     {
         return [
             'files' => 'required|array|max:5',
-            'files.*' => 'required|file|mimes:pdf|max:4096',
+            'files.*' => 'required|file|max:4096|mimetypes:' . implode(',', $this->allowedMimes),
+
         ];
     }
 }
