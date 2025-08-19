@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\v1\Vacancy;
+namespace App\Http\Resources\v1\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ClientVacancyResource extends JsonResource
+class ProjectResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +15,8 @@ class ClientVacancyResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'title' => $this->title,
-            'status' => $this->status,
-            'salary' => $this->salary,
-            'created_at' => $this->created_at->format('Y-m-d'),
+            // 'in_progress' => $this->where('status', 'in_progress')->count(),
+            // 'cancelled' => $this->last_name,
         ];
     }
 }

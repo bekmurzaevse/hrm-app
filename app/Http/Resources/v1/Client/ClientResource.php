@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\v1\Client;
 
-use App\Http\Resources\v1\Contact\ContactResource;
 use App\Http\Resources\v1\File\FileResource;
 use App\Http\Resources\v1\Vacancy\ClientVacancyResource;
 use Illuminate\Http\Request;
@@ -17,6 +16,10 @@ class ClientResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        // $sum = 0;
+        // foreach ($this->projects as $project) {
+        //     $sum += $project->first()->contract_budget;
+        // }
         return [
             'main_info' => [
                 'name' => $this->name,
@@ -46,7 +49,15 @@ class ClientResource extends JsonResource
                 'created_at' => $this->created_at->format('Y-m-d'),
                 'updated_at' => $this->updated_at->format('Y-m-d'),
             ],
+            'stats' => [
+                'all_vacancies' => $this->vacancies()->count(),
+                'open_vacancies' => $this->vacancies()->where('status', 'open')->count(),
+                'close_vacancies' => $this->vacancies()->where('status', 'closed')->count(),
+                // 'all_sum' => $this->projects()->all()->sum('contract_budget'),
+                // 'all_sum' => $sum,
+            ],
             'vacancies' => ClientVacancyResource::collection($this->vacancies),
+            'projects' => ProjectResource::collection($this->projects),
             'files' => FileResource::collection($this->files),
             'notes' => $this->notes,
         ];

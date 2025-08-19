@@ -25,7 +25,9 @@ class ShowAction
         try {
             $key = 'clients:show:' . app()->getLocale() . ':' . md5(request()->fullUrl());
             $client = Cache::remember($key, now()->addDay(), function () use ($id) {
-                return Client::findOrFail($id);
+                return Client::with([
+                    // 'projects.executor'
+                ])->findOrFail($id);
             });
 
             return static::toResponse(
