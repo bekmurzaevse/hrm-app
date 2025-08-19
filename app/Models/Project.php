@@ -155,4 +155,13 @@ class Project extends Model
     {
         return $this->morphMany(File::class, 'fileable');
     }
+
+    /**
+     * Summary of closeProject
+     * @return HasOne<ProjectClosure, Project>
+     */
+    public function closeProject(): HasOne
+    {
+        return $this->hasOne(ProjectClosure::class);
+    }
 }

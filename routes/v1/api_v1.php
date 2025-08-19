@@ -92,7 +92,10 @@ Route::prefix('projects')->group(function () {
     Route::get('/', [ProjectController::class, 'index']);
     Route::get('/{id}', [ProjectController::class, 'show']);
     Route::post('/create', [ProjectController::class, 'create']);
+    Route::patch('/{id}/create-contract', [ProjectController::class, 'createContract']);
+    Route::put('/{id}/update-performers', [ProjectController::class, 'updatePerformers']);
     Route::put('/update/{id}', [ProjectController::class, 'update']);
+    Route::patch('/{id}/close', [ProjectController::class, 'closeProject']);
     // File
     Route::get('/{id}/download/{fileId}', [ProjectController::class, 'downloadFile']);
     Route::get('/{id}/file/{fileId}', [ProjectController::class, 'showFile']);
