@@ -13,7 +13,6 @@ return new class extends Migration {
         Schema::create('stage_completions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('stage_id')->constrained('stages')->restrictOnDelete()->cascadeOnUpdate();
-            ;
             $table->unsignedInteger('candidate_count');
             $table->text('comment')->nullable();
             $table->foreignId('completed_by')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
