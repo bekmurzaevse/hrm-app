@@ -62,31 +62,10 @@ class CreateAction
             ]);
         }
 
-        // if ($dto->files){
-        //     $uploadedFiles = FileUploadHelper::files($dto->files, "candidates/{$candidate->id}");
-
-        //     array_map(function ($file) use ($candidate) {
-        //         $candidate->files()->create($file);
-        //     }, $uploadedFiles);
-        // }
-
-        // if ($dto->skills){
-        //     array_map(function ($skill) use ($candidate) {
-        //         $candidate->skills()->create([
-        //             'title' => $skill,
-        //             'type' => 'skill',
-        //         ]);
-        //     }, $dto->skills);
-        // }
-
-        // if ($dto->languages){
-        //     foreach ($dto->languages as $lan){
-        //         $candidate->skills()->create([
-        //             'title' => $lan,
-        //             // 'type' => 'language',
-        //         ]);
-        //     }
-        // }
+        logActivity(
+            "Кандидат создан!",
+            "Кандидат {$dto->firstName} {$dto->lastName} {$dto->patronymic} был добавлен в систему."
+        );
 
         return static::toResponse(
             message: 'Candidate created'

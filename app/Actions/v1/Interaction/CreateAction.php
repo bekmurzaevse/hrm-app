@@ -21,7 +21,9 @@ class CreateAction
             'description' => $dto->description,
         ];
 
-        Interaction::create($data);
+        $interaction = Interaction::create($data);
+
+        logActivity("Interaction Created!", "$interaction->value добавлен!");
 
         return static::toResponse(
             message: "Interaction created"

@@ -19,6 +19,8 @@ class AddContactAction
             'value' => $dto->value,
         ]);
 
+        logActivity("Added contact to candidate!", "к $candidate->first_name $candidate->last_name $candidate->patronymic $dto->title=$dto->value  добавлен контакт!");
+
         return static::toResponse(
             message: 'Contact added!'
         );

@@ -46,6 +46,8 @@ class CreateAction
 
         $client = Client::create($data);
 
+        logActivity("Client Created!", "$client->name добавлен!");
+
         return static::toResponse(
             message: "Client created"
         );

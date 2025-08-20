@@ -12,11 +12,15 @@ class IndexAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @return JsonResponse
+     */
     public function __invoke(): JsonResponse
     {
         $key = 'users:' . app()->getLocale() . ':' . md5(request()->fullUrl());
         $users = Cache::remember($key, now()->addDay(), function () {
-            return User::paginate(10);
+            return User::with(['projects'])->paginate(10);
         });
 
         return static::toResponse(

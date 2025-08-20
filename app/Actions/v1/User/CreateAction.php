@@ -22,6 +22,8 @@ class CreateAction
             'first_name' => $dto->firstName,
             'last_name' => $dto->lastName,
             'patronymic' => $dto->patronymic,
+            'birth_date' => $dto->birthDate,
+            'address' => $dto->address,
             'position' => $dto->position,
             'phone' => $dto->phone,
             'email' => $dto->email,

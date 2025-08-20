@@ -26,7 +26,7 @@ class ShowAction
         try {
             $key = 'candidates:show:' . app()->getLocale() . ':' . md5(request()->fullUrl());
             $candidate = Cache::remember($key, now()->addDay(), function () use ($id) {
-                return Candidate::findOrFail($id);
+                return Candidate::with(['interactions.type', 'interactions.user'])->findOrFail($id);
             });
 
             return static::toResponse(

@@ -21,8 +21,17 @@ class DeleteLanguageAction
     public function __invoke(int $id): JsonResponse
     {
         try {
-            Language::findOrFail($id)->delete();
+            $language = Language::findOrFail($id);
 
+            $languageName = $language->name ?? "ID {$id}";
+
+            $language->delete();
+
+            // 🔹 Log yozish
+            logActivity(
+                "Язык удалён!",
+                "У кандидата был удалён язык: {$languageName} (ID {$id})."
+            ); 
             return static::toResponse(
                 message: "$id - id li Language o'shirildi!",
             );

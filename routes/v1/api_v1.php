@@ -116,6 +116,9 @@ Route::prefix('projects')->group(function () {
 Route::prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index']);
     Route::get('/{id}', [UserController::class, 'show']);
+
+    Route::put('/{id}/updateStatus', [UserController::class, 'updateStatus']);
+
     Route::post('/create', [UserController::class, 'create']);
     Route::put('/update/{id}', [UserController::class, 'update']);
     Route::delete('/delete/{id}', [UserController::class, 'delete']);

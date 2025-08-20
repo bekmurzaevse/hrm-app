@@ -21,7 +21,15 @@ class DeleteEducationAction
     public function __invoke(int $id): JsonResponse
     {
         try {
-            Education::findOrFail($id)->delete();
+            $education = Education::findOrFail($id);
+
+            $eduInfo = $education->institution ?? "Образование #{$id}";
+            $education->delete();
+
+            logActivity(
+                "Образование удалено!",
+                "У кандидата (ID {$education->candidate_id}) было удалено образование: {$eduInfo} (ID {$id})."
+            );
 
             return static::toResponse(
                 message: "$id - id li file o'shirildi",

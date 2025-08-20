@@ -55,6 +55,8 @@ class UpdateAction
                 'user_id' => $dto->userId,
             ]);
 
+            logActivity("Candidate Updated!", "$dto->firstName $dto->lastName $dto->patronymic обновлено!");
+
             if ($dto->photo) {
                 if (Storage::disk('public')->exists($candidate->photo->path)) {
                     Storage::disk('public')->delete($candidate->photo->path);

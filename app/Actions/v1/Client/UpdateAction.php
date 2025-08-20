@@ -60,6 +60,8 @@ class UpdateAction
             //     }, $uploadedFiles);
             // }
 
+            logActivity("Client Updated!", "$client->name обновлено!");
+
             return static::toResponse(
                 message: "$id - id li client jan'alandi",
                 // data: new CandidateResource($candidate)
