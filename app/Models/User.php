@@ -51,21 +51,19 @@ class User extends Authenticatable
         ];
     }
 
-    // public function projects(): HasMany
-    // {
-    //     return $this->hasMany(Project::class);
-    // }
-
-    // public function projects(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(Project::class, 'project_user', 'user_id', 'project_id');
-    // }
-
+    /**
+     * Summary of projects
+     * @return BelongsToMany<Project, User, \Illuminate\Database\Eloquent\Relations\Pivot>
+     */
     public function projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class);
     }
 
+    /**
+     * Summary of activities
+     * @return HasMany<UserActivity, User>
+     */
     public function activities(): HasMany
     {
         return $this->hasMany(UserActivity::class)->with('user');

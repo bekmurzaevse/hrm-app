@@ -23,7 +23,6 @@ readonly class UpdateDto
         public string $position,
         public string $city,
         public string $address,
-        // public string $salary,
         public string $desiredSalary,
         public ?string $source,
         public ?float $experience,
@@ -32,9 +31,6 @@ readonly class UpdateDto
         public ?string $comment,
         public ?string $description,
         public int $userId,
-        // public ?array $files,
-        // public ?array $skills,
-        // public ?array $languages,
         public ?UploadedFile $photo,
     ) {}
 
@@ -61,7 +57,6 @@ readonly class UpdateDto
             position: $request->position,
             city: $request->city,
             address: $request->address,
-            // salary: $request->salary,
             desiredSalary: $request->desired_salary,
             source: $request->source,
             experience: $request->experience,
@@ -70,9 +65,6 @@ readonly class UpdateDto
             comment: $request->comment,
             description: $request->description,
             userId: $request->user_id,
-            // skills: $request->skills,
-            // languages: $request->langs,
-            // files: $request->file('files'),
             photo: $request->file('photo'),
         );
     }

@@ -17,6 +17,11 @@ readonly class AddEducationDto
     ) {
     }
 
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Candidate\AddEducationRequest $request
+     * @return AddEducationDto
+     */
     public static function from(AddEducationRequest $request): self
     {
         return new self(

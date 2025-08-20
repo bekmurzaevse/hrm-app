@@ -34,7 +34,7 @@ class AddSkillAction
 
         logActivity(
             "Навыки добавлены!",
-            "Кандидату с ID {$candidate->id} добавлены навыки: {$skillsString}."
+            "Кандидату с $candidate->first_name $candidate->last_name добавлены навыки: {$skillsString}."
         );
 
         return static::toResponse(

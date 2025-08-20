@@ -12,6 +12,13 @@ class DeleteContactAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param int $contactId
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(int $id, int $contactId): JsonResponse
     {
         try {

@@ -11,15 +11,24 @@ class AddContactAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param \App\Dto\Candidate\AddContactDto $dto
+     * @return JsonResponse
+     */
     public function __invoke(int $id, AddContactDto $dto): JsonResponse
     {
         $candidate = Candidate::findOrFail($id);
-        $candidate->contacts()->create([
+        $contact = $candidate->contacts()->create([
             'title' => $dto->title,
             'value' => $dto->value,
         ]);
 
-        logActivity("Added contact to candidate!", "к $candidate->first_name $candidate->last_name $candidate->patronymic $dto->title=$dto->value  добавлен контакт!");
+        logActivity(
+            "Добавлен новый контакт кандидату",
+            "Кандидату {$candidate->first_name} {$candidate->last_name} (ID: {$candidate->id}) добавлен контакт: {$contact->title} - {$contact->value}. Файл: " . __FILE__
+        );
 
         return static::toResponse(
             message: 'Contact added!'

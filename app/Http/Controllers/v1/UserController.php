@@ -75,9 +75,15 @@ class UserController extends Controller
         return $action($id);
     }
 
+    /**
+     * Summary of updateStatus
+     * @param int $id
+     * @param \App\Http\Requests\v1\User\UpdateStatusRequest $request
+     * @param \App\Actions\v1\User\UpdateStatusAction $action
+     * @return JsonResponse
+     */
     public function updateStatus(int $id, UpdateStatusRequest $request, UpdateStatusAction $action): JsonResponse
     {
         return $action($id, UpdateStatusDto::from($request));
     }
-
 }

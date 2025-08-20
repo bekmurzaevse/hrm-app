@@ -32,25 +32,17 @@ class UpdateRequest extends FormRequest
             'region' => 'required|string',
             'family_status' => 'required|in:married,unmarried,divorced',
             'family_info' => 'nullable|string',
-
             'status' => 'required|in:active,in_search,employed',
             'workplace' => 'nullable|string',
             'position' => 'required|string',
             'city' => 'required|string',
             'address' => 'required|string',
-            // 'salary' => 'required|numeric',
             'desired_salary' => 'required|numeric',
             'source' => 'nullable|string',
             'user_id' => 'required|integer|exists:users,id',
             'experience' => 'nullable|numeric',
             'description' => 'nullable|string',
             'photo' => 'nullable|image|mimes:png,jpg,png,jpeg',
-            // 'files' => 'nullable|array|max:5',
-            // 'files.*' => 'required|file|mimes:pdf|max:4096',
-            // 'skills' => 'nullable|array',
-            // 'skills.*' => 'required|string',
-            // 'langs' => 'nullable|array',
-            // 'langs.*' => 'required|string',
         ];
     }
 }

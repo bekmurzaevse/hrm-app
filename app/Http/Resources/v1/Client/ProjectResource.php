@@ -16,14 +16,11 @@ class ProjectResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-// dd('sssss2222');
-
         return [
             'title' => $this->title,
             'status' => $this->status,
             'contract' => $this->contract_number,
             'deadline' => $this->deadline->format('Y-m-d'),
-            // 'performers' => PerformerResource::collection($this->performers),
             'performers' => $this->performers->map(fn($performer) => [
                 'first_name' => $performer->first_name,
                 'last_name'  => $performer->last_name,

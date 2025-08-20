@@ -46,15 +46,6 @@ class Client extends Model
     }
 
     /**
-     * Summary of contactPersons
-     * @return HasMany<ContactPerson, Client>
-     */
-    public function contactPersons(): HasMany
-    {
-        return $this->hasMany(ContactPerson::class);
-    }
-
-    /**
      * Summary of vacancies
      * @return HasMany<Vacancy, Client>
      */
@@ -72,6 +63,10 @@ class Client extends Model
         return $this->hasMany(Candidate::class);
     }
 
+    /**
+     * Summary of files
+     * @return MorphMany<File, Client>
+     */
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'fileable');
@@ -86,14 +81,21 @@ class Client extends Model
         return $this->morphMany(Contact::class, 'contactable');
     }
 
+    /**
+     * Summary of user
+     * @return BelongsTo<User, Client>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Summary of projects
+     * @return HasMany<Project, Client>
+     */
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
     }
-
 }

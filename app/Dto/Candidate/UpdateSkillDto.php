@@ -11,6 +11,11 @@ readonly class UpdateSkillDto
     ) {
     }
 
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Candidate\UpdateSkillRequest $request
+     * @return UpdateSkillDto
+     */
     public static function from(UpdateSkillRequest $request): self
     {
         return new self(

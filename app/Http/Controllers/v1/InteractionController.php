@@ -17,17 +17,33 @@ use Illuminate\Http\JsonResponse;
 class InteractionController extends Controller
 {
 
-
+    /**
+     * Summary of index
+     * @param \App\Actions\v1\Interaction\IndexAction $action
+     * @return JsonResponse
+     */
     public function index(IndexAction $action): JsonResponse
     {
         return $action();
     }
 
+    /**
+     * Summary of show
+     * @param int $id
+     * @param \App\Actions\v1\Interaction\ShowAction $action
+     * @return JsonResponse
+     */
     public function show(int $id, ShowAction $action): JsonResponse
     {
         return $action($id);
     }
 
+    /**
+     * Summary of create
+     * @param \App\Http\Requests\v1\Interaction\CreateRequest $request
+     * @param \App\Actions\v1\Interaction\CreateAction $action
+     * @return JsonResponse
+     */
     public function create(CreateRequest $request, CreateAction $action): JsonResponse
     {
         return $action(CreateDto::from($request));
@@ -38,11 +54,11 @@ class InteractionController extends Controller
         return $action($id, UpdateDto::from($request));
     }
 
-    public function delete(int $id, DeleteAction $action)
+    public function delete(int $id, DeleteAction $action): JsonResponse
     {
         return $action($id);
     }
-    
+
 
 
 }

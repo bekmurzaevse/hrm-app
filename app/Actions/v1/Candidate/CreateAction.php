@@ -26,18 +26,15 @@ class CreateAction
             'birth_date' => $dto->birthDate,
             'gender' => $dto->gender,
             'citizenship' => $dto->citizenship,
-
             'country_residence' => $dto->countryResidence,
             'region' => $dto->region,
             'family_status' => $dto->familyStatus,
             'family_info' => $dto->familyInfo,
-
             'status' => $dto->status,
             'workplace' => $dto->workplace,
             'position' => $dto->position,
             'city' => $dto->city,
             'address' => $dto->address,
-            // 'salary' => $dto->salary,
             'desired_salary' => $dto->desiredSalary,
             'source' => $dto->source,
             'experience' => $dto->experience,

@@ -16,10 +16,6 @@ class ClientResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // $sum = 0;
-        // foreach ($this->projects as $project) {
-        //     $sum += $project->first()->contract_budget;
-        // }
         return [
             'main_info' => [
                 'name' => $this->name,
@@ -30,13 +26,9 @@ class ClientResource extends JsonResource
                 // 'KPP' => $this->KPP,
                 'description' => $this->description,
             ],
-            // 'contacts' => ContactResource::collection($this->contacts),
-            // 'contact_persons' => $this->contactPersons,
-
             'phone' => $this->phone,
             'email' => $this->email,
             'address' => $this->address,
-
             'contact_person' => [
                 'full_name' => $this->contact_person,
                 'position' => $this->person_position,
@@ -53,8 +45,6 @@ class ClientResource extends JsonResource
                 'all_vacancies' => $this->vacancies()->count(),
                 'open_vacancies' => $this->vacancies()->where('status', 'open')->count(),
                 'close_vacancies' => $this->vacancies()->where('status', 'closed')->count(),
-                // 'all_sum' => $this->projects()->all()->sum('contract_budget'),
-                // 'all_sum' => $sum,
             ],
             'vacancies' => ClientVacancyResource::collection($this->vacancies),
             'projects' => ProjectResource::collection($this->projects),

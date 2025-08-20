@@ -3,7 +3,6 @@
 namespace App\Dto\Candidate;
 
 use App\Http\Requests\v1\Candidate\UpdateEducationRequest;
-use App\Http\Requests\v1\Candidate\UpdateWorkExperienceRequest;
 
  class UpdateEducationDto
 {

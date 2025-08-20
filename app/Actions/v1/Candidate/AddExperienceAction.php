@@ -4,7 +4,6 @@ namespace App\Actions\v1\Candidate;
 
 use App\Dto\Candidate\AddExperienceDto;
 use App\Exceptions\ApiResponseException;
-use App\Http\Requests\v1\Candidate\AddWorkExperienceRequest;
 use App\Models\Candidate;
 use App\Models\WorkExperience;
 use App\Traits\ResponseTrait;
