@@ -32,6 +32,11 @@ class CreateAction
 
         $project = Project::create($data);
 
+        // Log user activity
+        $title = 'Создал проект';
+        $text = "Проект «{$project->title}» был создан.";
+        logActivity($title, $text);
+
         $project->performers()->attach($dto->performers);
 
         return static::toResponse(

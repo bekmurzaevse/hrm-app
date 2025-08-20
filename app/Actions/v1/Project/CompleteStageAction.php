@@ -37,7 +37,6 @@ class CompleteStageAction
 
                 $projectId = $stage->project_id;
 
-
                 // Mark next stage as in_progress
                 $afterStage = Stage::where('project_id', $projectId)
                     ->where('order', '>', $stage->order)
@@ -45,6 +44,11 @@ class CompleteStageAction
                     ->first();
                 $afterStage->status = 'in_progress';
                 $afterStage->save();
+
+                // Log user activity
+                $title = 'Завершение этапа';
+                $text = "Этап «{$stage->title}» проекта «{$stage->project->title}» был завершён";
+                logActivity($title, $text);
             } else {
                 return static::toResponse(
                     message: "Stage status need in_progress, now it is {$stage->status}"

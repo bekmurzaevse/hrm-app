@@ -30,6 +30,12 @@ class DeleteAction
                 Storage::disk('public')->deleteDirectory("vacancies/" . $vacancy->id);
             }
             $vacancy->files()->delete();
+
+            // Log user activity
+            $title = 'Удаление вакансии';
+            $text = "Вакансия «{$vacancy->title}» была удалена";
+            logActivity($title, $text);
+
             $vacancy->delete();
 
             return static::toResponse(

@@ -23,6 +23,11 @@ class CreateSkillAction
         try {
             $vacancy = Vacancy::findOrFail($id);
 
+            // Log user activity
+            $title = 'Создание навыка';
+            $text = "Навык был добавлен к вакансии «{$vacancy->title}».";
+            logActivity($title, $text);
+
             $vacancy->skills()->createMany(
                 array_map(fn($title) => ['title' => $title], $dto->titles)
             );

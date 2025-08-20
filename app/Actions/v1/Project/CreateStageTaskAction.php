@@ -28,6 +28,11 @@ class CreateStageTaskAction
             ];
             $stage->stageTasks()->create($data);
 
+            // Log user activity
+            $title = 'Создание задачи';
+            $text = "Задача «{$dto->title}» была создана в этапе «{$stage->title}» проекта «{$stage->project->title}»";
+            logActivity($title, $text);
+
             return static::toResponse(
                 message: "Stage's task created"
             );

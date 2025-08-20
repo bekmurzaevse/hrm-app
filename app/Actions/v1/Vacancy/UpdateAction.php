@@ -50,6 +50,11 @@ class UpdateAction
                 // TODO: Add skills if exists in request
             ]);
 
+            // Log user activity
+            $title = 'Обновление вакансии';
+            $text = "Вакансия «{$vacancy->title}» была обновлена";
+            logActivity($title, $text);
+
             return static::toResponse(
                 message: "id-{$id} Vacancy updated",
                 // data: new VacancyResource($vacancy)

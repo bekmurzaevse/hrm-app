@@ -30,6 +30,11 @@ class CreateContractAction
             ];
 
             $project->update($data);
+            
+            // Log user activity
+            $title = 'Создал контракт';
+            $text = "Контракт для проекта «{$project->title}» был создан.";
+            logActivity($title, $text);
 
             return static::toResponse(
                 message: 'Contract created successfully for project-' . $id

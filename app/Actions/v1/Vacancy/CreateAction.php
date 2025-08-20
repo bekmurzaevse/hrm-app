@@ -43,6 +43,11 @@ class CreateAction
             // TODO: Add skills if exists in request
         ];
 
+        // Log user activity
+        $title = 'Создание вакансии';
+        $text = "Вакансия «{$dto->title}» была создана.";
+        logActivity($title, $text);
+
         Vacancy::create($data);
 
         return static::toResponse(

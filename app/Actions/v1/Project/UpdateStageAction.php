@@ -31,6 +31,11 @@ class UpdateStageAction
             ];
             // TODO: add StageDetail, stageOrder
 
+            // Log user activity
+            $title = 'Обновление этапа';
+            $text = "Этап «{$stage->title}» проекта «{$stage->project->title}» был обновлен.";
+            logActivity($title, $text);
+
             $stage->update($data);
 
             return static::toResponse(

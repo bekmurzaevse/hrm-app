@@ -22,7 +22,13 @@ class DeleteSkillAction
     public function __invoke(int $id, int $skillId): JsonResponse
     {
         try {
-            Vacancy::findOrFail($id)->skills()->findOrFail($skillId)->delete();
+            $vacancy = Vacancy::findOrFail($id);
+            $vacancy->skills()->findOrFail($skillId)->delete();
+
+            // Log user activity
+            $title = 'Удаление навыка';
+            $text = "Навык был удален из вакансии «{$vacancy->title}».";
+            logActivity($title, $text);
 
             return static::toResponse(
                 message: "Id-{$skillId} skill deleted",

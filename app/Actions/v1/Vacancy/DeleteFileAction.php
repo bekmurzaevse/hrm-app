@@ -23,14 +23,21 @@ class DeleteFileAction
     public function __invoke(int $id, int $fileId): JsonResponse
     {
         try {
-            $file = Vacancy::findOrFail($id)
-                ->files()
+            $vacancy = Vacancy::findOrFail($id);
+            $file = $vacancy->files()
                 ->findOrFail($fileId);
 
             if (!Storage::disk('public')->exists($file->path)) {
                 throw new ApiResponseException('File Not Found', 404);
             }
             Storage::disk('public')->delete($file->path);
+
+            // Log user activity
+            logActivity(
+                "Файл удалён",
+                "Из вакансии «{$vacancy->title}» был удалён файл «{$file->name}»."
+            );
+
             $file->delete();
 
             return static::toResponse(

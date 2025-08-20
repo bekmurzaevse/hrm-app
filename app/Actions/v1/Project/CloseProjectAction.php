@@ -35,6 +35,11 @@ class CloseProjectAction
                 $project->status = 'cancelled';
                 $project->save();
 
+                // Log user activity
+                $title = 'Закрытие проекта';
+                $text = "Проект «{$project->title}» был закрыт";
+                logActivity($title, $text);
+
                 return static::toResponse(
                     message: "{$id}-Project closed"
                 );
