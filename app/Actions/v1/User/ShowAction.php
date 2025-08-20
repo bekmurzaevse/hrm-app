@@ -14,12 +14,25 @@ class ShowAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(int $id): JsonResponse
     {
         try {
             $key = 'users:show:' . app()->getLocale() . ':' . md5(request()->fullUrl());
             $user = Cache::remember($key, now()->addDay(), function () use ($id) {
-                return User::findOrFail($id);
+                return User::with([
+                    'activities',
+                    'projects.stages',
+                    'projects.performers',
+                    'projects.stages.executor',
+                    'projects.client',
+                    'projects.vacancy',
+                    ])->findOrFail($id);
             });
 
             return static::toResponse(

@@ -17,7 +17,7 @@ class InteractionResource extends JsonResource
         return [
             'id' => $this->id,
             'type' => $this->type->title,
-            'created_at' => $this->created_at->format('Y-m-d'),
+            'created_at' => $this->created_at->format('Y-m-d H:i'),
             'value' => $this->value,
             'description' => $this->description,
             'user' => $this->user->first_name . ' ' . $this->user->last_name,

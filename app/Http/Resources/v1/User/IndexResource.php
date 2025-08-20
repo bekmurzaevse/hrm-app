@@ -25,6 +25,10 @@ class IndexResource extends JsonResource
 
             // 'projects' => ProjectResource::collection($this->projects),
 
+            'projects' => [
+                'in_progress' => $this->projects()->where('status', 'in_progress')->count(),
+                'cancelled' => $this->projects()->where('status', 'cancelled')->count(),
+            ],
             'created_at' => $this->created_at->format('Y-m-d'),
             'updated_at' => $this->updated_at->format('Y-m-d'),
         ];

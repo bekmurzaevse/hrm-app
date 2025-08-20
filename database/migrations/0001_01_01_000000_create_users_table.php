@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('patronymic');
+            $table->text('address');
+            $table->date('birth_date');
             $table->string('position');
             $table->enum('status', ['working', 'not_working', 'dismissed']);
             $table->string('phone')->unique();

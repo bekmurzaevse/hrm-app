@@ -18,6 +18,8 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'patronymic',
+        'birth_date',
+        'address',
         'position',
         'status',
         'phone',
@@ -53,9 +55,19 @@ class User extends Authenticatable
     //     return $this->hasMany(Project::class);
     // }
 
+    // public function projects(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Project::class, 'project_user', 'user_id', 'project_id');
+    // }
+
     public function projects(): BelongsToMany
     {
-        return $this->belongsToMany(Project::class, 'project_user', 'user_id', 'project_id');
+        return $this->belongsToMany(Project::class);
+    }
+
+    public function activities(): HasMany
+    {
+        return $this->hasMany(UserActivity::class)->with('user');
     }
 
 }

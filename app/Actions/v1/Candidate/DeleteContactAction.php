@@ -15,7 +15,16 @@ class DeleteContactAction
     public function __invoke(int $id, int $contactId): JsonResponse
     {
         try {
-            Candidate::findOrFail($id)->contacts()->findOrFail($contactId)->delete();
+            $candidate = Candidate::findOrFail($id);
+            $contact   = $candidate->contacts()->findOrFail($contactId);
+
+            $contactName = $contact->name ?? "Контакт #{$contactId}";
+            $contact->delete();
+
+            logActivity(
+                "Контакт удалён!",
+                "У кандидата {$candidate->first_name} {$candidate->last_name} (ID {$candidate->id}) был удалён контакт: {$contactName} (ID {$contactId})."
+            );
 
             return static::toResponse(
                 message: "$id - id li Contact o'shirildi!",

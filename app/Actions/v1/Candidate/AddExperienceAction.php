@@ -25,8 +25,8 @@ class AddExperienceAction
     public function __invoke(int $id, AddExperienceDto $dto): JsonResponse
     {
         try {
-            // $candidate = Candidate::findOrFail($id);
-            WorkExperience::create([
+            $candidate = Candidate::findOrFail($id);
+            $experience = WorkExperience::create([
                 'company' => $dto->company,
                 'position' => $dto->position,
                 'candidate_id' => $id,
@@ -35,12 +35,17 @@ class AddExperienceAction
                 'description' => $dto->description,
             ]);
 
+            logActivity(
+                "Опыт работы добавлен!",
+                "Кандидату с $candidate->first_name $candidate->last_name добавлен новый опыт работы в компании {$experience->company} на должности {$experience->position}."
+            );
+
             return static::toResponse(
                 message: "$id - id li candidate qa work experience qosildi!",
                 // data: new CandidateResource($candidate)
             );
         } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('Error', 404);
+            throw new ApiResponseException('Candidate Not Found!', 404);
         }
     }
 }

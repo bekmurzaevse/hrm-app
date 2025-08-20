@@ -25,6 +25,8 @@ class UpdateAction
                 'description' => $dto->description,
             ]);
 
+            logActivity("Interaction Created!", "$interaction->name обновлено!");
+
             return static::toResponse(
                 message: "$id - id li Interaction jan'alandi",
                 // data: new CandidateResource($candidate)

@@ -7,11 +7,14 @@ use App\Actions\v1\User\DeleteAction;
 use App\Actions\v1\User\IndexAction;
 use App\Actions\v1\User\ShowAction;
 use App\Actions\v1\User\UpdateAction;
+use App\Actions\v1\User\UpdateStatusAction;
 use App\Dto\User\CreateDto;
 use App\Dto\User\UpdateDto;
+use App\Dto\User\UpdateStatusDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\User\CreateRequest;
 use App\Http\Requests\v1\User\UpdateRequest;
+use App\Http\Requests\v1\User\UpdateStatusRequest;
 use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
@@ -71,4 +74,10 @@ class UserController extends Controller
     {
         return $action($id);
     }
+
+    public function updateStatus(int $id, UpdateStatusRequest $request, UpdateStatusAction $action): JsonResponse
+    {
+        return $action($id, UpdateStatusDto::from($request));
+    }
+
 }

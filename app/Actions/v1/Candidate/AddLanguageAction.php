@@ -26,7 +26,12 @@ class AddLanguageAction
             'description' => $dto->description,
         ];
 
-        Language::create($data);
+        $language = Language::create($data);
+
+        logActivity(
+            "Язык добавлен!",
+            "Кандидату с ID {$id} добавлен язык {$language->title} с уровнем {$language->degree}."
+        );
 
         return static::toResponse(
             message: 'Language added!'

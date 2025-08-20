@@ -27,7 +27,14 @@ class DeleteAction
 
             Storage::disk('public')->deleteDirectory("candidates/$candidate->id");
 
+            $candidateName = "{$candidate->first_name} {$candidate->last_name} {$candidate->patronymic}";
+
             $candidate->delete();
+
+            logActivity(
+                "Кандидат удалён!",
+                "Кандидат {$candidateName} (ID {$id}) был удалён из системы."
+            );
 
             return static::toResponse(
                 message: "$id - id li candidate o'shirildi",

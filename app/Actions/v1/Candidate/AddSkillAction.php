@@ -21,11 +21,21 @@ class AddSkillAction
     {
         $candidate = Candidate::findOrFail($id);
 
+        $addedSkills = [];
+
         array_map(function ($title) use ($candidate) {
             $candidate->skills()->create([
                 'title' => $title,
             ]);
+            $addedSkills[] = $title;
         }, $dto->titles);
+
+        $skillsString = implode(', ', $addedSkills);
+
+        logActivity(
+            "Навыки добавлены!",
+            "Кандидату с ID {$candidate->id} добавлены навыки: {$skillsString}."
+        );
 
         return static::toResponse(
             message: 'Skills added!'

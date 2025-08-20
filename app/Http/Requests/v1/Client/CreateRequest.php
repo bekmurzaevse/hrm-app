@@ -35,7 +35,6 @@ class CreateRequest extends FormRequest
             'email' => 'nullable|string',
             'address' => 'required|string',
 
-
             'user_id' => 'required|exists:users,id',
             'INN' => 'required|string',
             'employee_count' => 'nullable|string|in:-50,50-250,250+',
