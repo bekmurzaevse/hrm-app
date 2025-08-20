@@ -2,46 +2,41 @@
 
 namespace App\Actions\v1\Project;
 
-use App\Dto\Project\CreateStageDto;
+use App\Dto\Project\UpdateStageTaskDto;
 use App\Exceptions\ApiResponseException;
-use App\Models\Project;
 use App\Models\Stage;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class CreateStageAction
+class UpdateStageTaskAction
 {
     use ResponseTrait;
 
     /**
      * Summary of __invoke
-     * @param \App\Dto\Project\CreateStageDto $dto
+     * @param int $taskId
+     * @param \App\Dto\Project\UpdateStageTaskDto $dto
+     * @throws \App\Exceptions\ApiResponseException
      * @return JsonResponse
      */
-    public function __invoke(int $id, CreateStageDto $dto): JsonResponse
+    public function __invoke(int $taskId, UpdateStageTaskDto $dto): JsonResponse
     {
         try {
-            $project = Project::findOrFail($id);
-            $afterStage = Stage::findOrFail($dto->stageId);
-
-            Stage::where('order', '>', $afterStage->order)
-                ->where('project_id', $project->id)
-                ->increment('order');
+            $stage = Stage::findOrFail($dto->stageId);
 
             $data = [
                 'title' => $dto->title,
                 'description' => $dto->description,
+                'executor_id' => $dto->executorId,
+                'priority' => $dto->priority,
                 'deadline' => $dto->deadline,
                 'created_by' => 1, // TODO: Replace with authenticated user ID
-                'order' => $afterStage->order + 1,
-                'executor_id' => $dto->executorId,
             ];
-            // TODO: status stage need to remake logic
-            $project->stages()->create($data);
+            $stage->stageTasks()->findOrFail($taskId)->update($data);
 
             return static::toResponse(
-                message: 'Stage created'
+                message: "Stage's task updated"
             );
         } catch (ModelNotFoundException $e) {
             $model = class_basename($e->getModel());

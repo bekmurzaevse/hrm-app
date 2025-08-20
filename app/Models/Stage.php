@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -65,6 +67,17 @@ class Stage extends Model
         ][$value];
     }
 
+    /**
+     * Summary of deadline
+     * @return Attribute
+     */
+    protected function deadline(): Attribute
+    {
+        return Attribute::make(
+            set: fn($value) => Carbon::createFromFormat('m-d-Y', $value),
+        );
+    }
+    
     /**
      * Summary of project
      * @return BelongsTo<Project, Stage>

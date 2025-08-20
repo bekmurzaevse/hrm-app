@@ -7,7 +7,9 @@ use App\Actions\v1\Project\CompleteStageAction;
 use App\Actions\v1\Project\CreateAction;
 use App\Actions\v1\Project\CreateContractAction;
 use App\Actions\v1\Project\CreateStageAction;
+use App\Actions\v1\Project\CreateStageTaskAction;
 use App\Actions\v1\Project\DeleteStageAction;
+use App\Actions\v1\Project\DeleteStageTaskAction;
 use App\Actions\v1\Project\DownloadFileAction;
 use App\Actions\v1\Project\IndexAction;
 use App\Actions\v1\Project\SetRequireStageAction;
@@ -16,6 +18,7 @@ use App\Actions\v1\Project\ShowFileAction;
 use App\Actions\v1\Project\UpdateAction;
 use App\Actions\v1\Project\UpdatePerformerAction;
 use App\Actions\v1\Project\UpdateStageAction;
+use App\Actions\v1\Project\UpdateStageTaskAction;
 use App\Actions\v1\Project\UploadFileAction;
 use App\Actions\v1\Project\DeleteFileAction;
 use App\Dto\Project\CloseProjectDto;
@@ -23,9 +26,11 @@ use App\Dto\Project\CompleteStageDto;
 use App\Dto\Project\CreateContractDto;
 use App\Dto\Project\CreateDto;
 use App\Dto\Project\CreateStageDto;
+use App\Dto\Project\CreateStageTaskDto;
 use App\Dto\Project\UpdateDto;
 use App\Dto\Project\UpdatePerformerDto;
 use App\Dto\Project\UpdateStageDto;
+use App\Dto\Project\UpdateStageTaskDto;
 use App\Dto\Project\UploadFileDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Project\CloseProjectRequest;
@@ -33,9 +38,11 @@ use App\Http\Requests\v1\Project\CompleteStageRequest;
 use App\Http\Requests\v1\Project\CreateContractRequest;
 use App\Http\Requests\v1\Project\CreateRequest;
 use App\Http\Requests\v1\Project\CreateStageRequest;
+use App\Http\Requests\v1\Project\CreateStageTaskRequest;
 use App\Http\Requests\v1\Project\UpdatePerformerRequest;
 use App\Http\Requests\v1\Project\UpdateRequest;
 use App\Http\Requests\v1\Project\UpdateStageRequest;
+use App\Http\Requests\v1\Project\UpdateStageTaskRequest;
 use App\Http\Requests\v1\Project\UploadFileRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -222,5 +229,40 @@ class ProjectController extends Controller
     public function deleteStage(int $stageId, DeleteStageAction $action): JsonResponse
     {
         return $action($stageId);
+    }
+
+    /**
+     * Summary of createStageTask
+     * @param int $stageId
+     * @param \App\Http\Requests\v1\Project\CreateStageTaskRequest $request
+     * @param \App\Actions\v1\Project\CreateStageTaskAction $action
+     * @return JsonResponse
+     */
+    public function createStageTask(CreateStageTaskRequest $request, CreateStageTaskAction $action): JsonResponse
+    {
+        return $action(CreateStageTaskDto::from($request));
+    }
+
+    /**
+     * Summary of updateStageTask
+     * @param int $taskId
+     * @param \App\Http\Requests\v1\Project\UpdateStageTaskRequest $request
+     * @param \App\Actions\v1\Project\UpdateStageTaskAction $action
+     * @return JsonResponse
+     */
+    public function updateStageTask(int $taskId, UpdateStageTaskRequest $request, UpdateStageTaskAction $action): JsonResponse
+    {
+        return $action($taskId, UpdateStageTaskDto::from($request));
+    }
+
+    /**
+     * Summary of deleteStageTask
+     * @param int $taskId
+     * @param \App\Actions\v1\Project\DeleteStageTaskAction $action
+     * @return JsonResponse
+     */
+    public function deleteStageTask(int $taskId, DeleteStageTaskAction $action): JsonResponse
+    {
+        return $action($taskId);
     }
 }
