@@ -4,7 +4,6 @@ namespace App\Actions\v1\Client;
 
 use App\Dto\Client\UploadDto;
 use App\Helpers\FileUploadHelper;
-use App\Models\Candidate;
 use App\Models\Client;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -28,7 +27,14 @@ class UploadAction
         array_map(function ($file) use ($client) {
             $client->files()->create($file);
         }, $uploadedFiles);
-        
+
+        $fileNames = array_map(fn($f) => $f['original_name'] ?? $f['name'] ?? 'unknown', $uploadedFiles);
+
+        logActivity(
+            "Загрузка файлов",
+            "Клиент '{$client->name}' (ID: {$client->id}) загрузил(а) следующие файлы: " . implode(', ', $fileNames)
+        );
+
         return static::toResponse(
             message: 'Uploaded files to client ' . $client->id
         );

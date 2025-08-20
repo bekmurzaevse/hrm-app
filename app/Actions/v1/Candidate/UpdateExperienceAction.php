@@ -13,17 +13,45 @@ class UpdateExperienceAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param int $workId
+     * @param \App\Dto\Candidate\UpdateExperienceDto $dto
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(int $id, int $workId, UpdateExperienceDto $dto): JsonResponse
     {
         try {
-            WorkExperience::findOrFail($workId)->update([
-                'company' => $dto->company,
-                'position' => $dto->position,
-                'candidate_id' => $id,
-                'start_work' => $dto->startWork,
-                'end_work' => $dto->endWork,
-                'description' => $dto->description,
+            $experience = WorkExperience::findOrFail($workId);
+
+            $oldData = $experience->only([
+                'company', 'position', 'candidate_id', 'start_work', 'end_work', 'description'
             ]);
+
+            $experience->update([
+                'company'      => $dto->company,
+                'position'     => $dto->position,
+                'candidate_id' => $id,
+                'start_work'   => $dto->startWork,
+                'end_work'     => $dto->endWork,
+                'description'  => $dto->description,
+            ]);
+
+            logActivity(
+                "Опыт работы обновлён!",
+                "У кандидата {$experience->candidate->first_name} {$experience->candidate->lst_nme} был обновлён опыт работы {$experience->compny} $experience->position).
+                 Старые данные: " . json_encode($oldData, JSON_UNESCAPED_UNICODE) .
+                 " | Новые данные: " . json_encode([
+                    'company'      => $dto->company,
+                    'position'     => $dto->position,
+                    'candidate_id' => $id,
+                    'start_work'   => $dto->startWork,
+                    'end_work'     => $dto->endWork,
+                    'description'  => $dto->description,
+                 ], JSON_UNESCAPED_UNICODE)
+            );
 
             return static::toResponse(
                 message: "$id - id li candidate tin' work experience jan'alandi!",

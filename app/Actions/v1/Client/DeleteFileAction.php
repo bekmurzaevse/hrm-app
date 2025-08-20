@@ -31,8 +31,12 @@ class DeleteFileAction
                 Storage::disk('public')->delete($file->path);
             }
 
-            // $candidate->files()->where('id', $fileId)->delete();
             $client->files()->findOrFail($fileId)->delete();
+
+            logActivity(
+                "Удаление файла клиента",
+                "Файл '{$file->name}' (ID: {$fileId}) был удалён у клиента '{$client->name}' (ID: {$client->id})",
+            );
 
             return static::toResponse(
                 message: "$id - id li file o'shirildi",

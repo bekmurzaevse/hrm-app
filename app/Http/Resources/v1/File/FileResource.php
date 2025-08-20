@@ -16,7 +16,7 @@ class FileResource extends JsonResource
     public function toArray(Request $request): array
     {
         $fileExists = Storage::disk('public')->exists($this->path);
-// 'post_title' => $this->additional['post_title'] ?? null,
+
         return [
             'id' => $this->id,
             'name' => $this->name,

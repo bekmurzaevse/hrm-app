@@ -3,6 +3,7 @@
 namespace App\Actions\v1\Candidate;
 
 use App\Dto\Candidate\AddLanguageDto;
+use App\Models\Candidate;
 use App\Models\Language;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -26,11 +27,13 @@ class AddLanguageAction
             'description' => $dto->description,
         ];
 
+        $candidate = Candidate::findOrFail($id);
+
         $language = Language::create($data);
 
         logActivity(
             "Язык добавлен!",
-            "Кандидату с ID {$id} добавлен язык {$language->title} с уровнем {$language->degree}."
+            "Кандидату с $candidate->first_name $candidate->last_name добавлен язык {$language->title} с уровнем {$language->degree}."
         );
 
         return static::toResponse(

@@ -21,7 +21,14 @@ class DeleteAction
     public function __invoke(int $id): JsonResponse
     {
         try {
-            Type::findOrFail($id)->delete();
+            $type = Type::findOrFail($id);
+            $title = $type->title;
+            $type->delete();
+
+            logActivity(
+                "Тип удалён!",
+                "Тип '{$title}' (ID: {$id}) был успешно удалён в файле " . __FILE__
+            );
 
             return static::toResponse(
                 message: "$id - id li type o'shirildi",

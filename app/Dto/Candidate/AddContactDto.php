@@ -12,6 +12,11 @@ use App\Http\Requests\v1\Candidate\AddContactRequest;
     ) {
     }
 
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Candidate\AddContactRequest $request
+     * @return AddContactDto
+     */
     public static function from(AddContactRequest $request): self
     {
         return new self(

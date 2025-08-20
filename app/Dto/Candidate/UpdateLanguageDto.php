@@ -13,7 +13,11 @@ readonly class UpdateLanguageDto
     ) {
     }
 
-
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Candidate\UpdateLanguageRequest $request
+     * @return UpdateLanguageDto
+     */
     public static function from(UpdateLanguageRequest $request): self
     {
         return new self(

@@ -23,7 +23,7 @@ class AddEducationAction
     public function __invoke(int $id, AddEducationDto $dto): JsonResponse
     {
         try {
-            $candidate = Canpdidate::findOrFail($id);
+            $candidate = Candidate::findOrFail($id);
             $data = [
                 'title' => $dto->title,
                 'degree' => $dto->degree,
@@ -34,9 +34,12 @@ class AddEducationAction
                 'description' => $dto->description,
             ];
 
-            Education::create($data);
+            $education = Education::create($data);
 
-            logActivity("Added education to candidate!", "к $candidate->first_name $candidate->last_name $candidate->patronymic присоединилось обучение в $dto->title $dto->degree $dto->specialty!");
+            logActivity(
+                "Добавлено образование кандидату",
+                "Кандидату {$candidate->first_name} {$candidate->last_name} $candidate->first_name $candidate->first_name добавлено образование: {$education->title}, степень: {$education->degree}, специальность: {$education->specialty}, годы: {$education->start_year}-{$education->end_year}. Файл: " . __FILE__
+            );
 
             return static::toResponse(
                 message: 'Education added!'

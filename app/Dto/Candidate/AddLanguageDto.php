@@ -13,7 +13,11 @@ readonly class AddLanguageDto
     ) {
     }
 
-
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Candidate\AddLanguageRequest $request
+     * @return AddLanguageDto
+     */
     public static function from(AddLanguageRequest $request): self
     {
         return new self(

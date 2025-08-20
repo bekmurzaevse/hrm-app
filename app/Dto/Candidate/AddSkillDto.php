@@ -11,7 +11,11 @@ readonly class AddSkillDto
     ) {
     }
 
-
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Candidate\AddSkillRequest $request
+     * @return AddSkillDto
+     */
     public static function from(AddSkillRequest $request): self
     {
         return new self(

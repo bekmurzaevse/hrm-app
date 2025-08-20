@@ -28,6 +28,10 @@ class UserActivity extends Model
         ];
     }
 
+    /**
+     * Summary of user
+     * @return BelongsTo<User, UserActivity>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

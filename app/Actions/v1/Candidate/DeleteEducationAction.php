@@ -28,7 +28,7 @@ class DeleteEducationAction
 
             logActivity(
                 "Образование удалено!",
-                "У кандидата (ID {$education->candidate_id}) было удалено образование: {$eduInfo} (ID {$id})."
+                "У кандидата {$education->candidate->first_name} было удалено образование: {$eduInfo} (ID {$id})."
             );
 
             return static::toResponse(

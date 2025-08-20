@@ -101,19 +101,30 @@ class Candidate extends Model
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'fileable');
-        // ->where('type', null);
     }
 
+    /**
+     * Summary of skills
+     * @return MorphMany<Skill, Candidate>
+     */
     public function skills(): MorphMany
     {
         return $this->morphMany(Skill::class, 'skillable');
     }
 
+    /**
+     * Summary of photo
+     * @return MorphOne<File, Candidate>
+     */
     public function photo(): MorphOne
     {
         return $this->morphOne(File::class, 'fileable')->where('type', 'photo');
     }
 
+    /**
+     * Summary of languages
+     * @return HasMany<Language, Candidate>
+     */
     public function languages(): HasMany
     {
         return $this->hasMany(Language::class);

@@ -27,8 +27,6 @@ class CandidateResource extends JsonResource
             'main_info' => [
                 'full_name' => $this->first_name . ' ' . $this->last_name . ' ' . $this->patronymic,
                 'birth_date' => $this->birth_date->format('Y-m-d'),
-                // 'age' => now()->year - $this->birth_date->year,
-                // Carbon::now()->subYears($request->from)
                 'age' => Carbon::parse($this->birth_date)->age,
                 'citizen' => $this->citizen,
                 'gender' => $this->gender,
@@ -50,7 +48,6 @@ class CandidateResource extends JsonResource
             ],
             'history' => InteractionResource::collection($this->interactions),
             'work_experience' => WorkExperienceResource::collection($this->workExperience),
-            // 'salary' => $this->salary,
             'desired_salary' => $this->desired_salary,
             'esucations' => EducationResource::collection($this->educations),
             'files' => FileResource::collection($this->files()->where('type', null)->get()),

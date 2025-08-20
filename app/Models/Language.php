@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Language extends Model
@@ -26,5 +27,13 @@ class Language extends Model
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
+    }
+    /**
+     * Summary of candidate
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Candidate, Language>
+     */
+    public function candidate(): BelongsTo
+    {
+        return $this->belongsTo(Candidate::class);
     }
 }

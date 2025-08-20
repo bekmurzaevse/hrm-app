@@ -13,17 +13,34 @@ class UpdateStatusAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param \App\Dto\User\UpdateStatusDto $dto
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(int $id, UpdateStatusDto $dto): JsonResponse
     {
         try {
             $user = User::findOrFail($id);
             if ($user->status === $dto->status) {
+                logActivity(
+                    "Статус без изменений",
+                    "Пользователь {$user->first_name} {$user->last_name} (ID: {$user->id}) уже имеет статус {$dto->status}. Файл: " . __FILE__
+                );
+
                 return static::toResponse(
                     message: "$id - id li userdin' statusi ALDINNAN $dto->status qa ten'!",
-                    // data: new CandidateResource($candidate)
                 );
             }
+            $oldStatus = $user->status;
             $user->update(['status' => $dto->status]);
+
+            logActivity(
+                "Статус пользователя обновлен",
+                "У пользователя {$user->first_name} {$user->last_name} (ID: {$user->id}) статус изменен: с {$oldStatus} на {$dto->status}. Файл: " . __FILE__
+            );
 
             return static::toResponse(
                 message: "$id - id li userdin' statusi $dto->status qa jan'alandi",

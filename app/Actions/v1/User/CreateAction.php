@@ -31,7 +31,12 @@ class CreateAction
             'password' => $dto->password,
         ];
 
-        User::create($data);
+        $user = User::create($data);
+
+        logActivity(
+            "Пользователь создан!",
+            "Создан новый пользователь: {$user->first_name} {$user->last_name} (ID: {$user->id}) в файле " . __FILE__
+        );
 
         return static::toResponse(
             message: 'User created'

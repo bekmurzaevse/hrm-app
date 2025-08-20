@@ -48,6 +48,10 @@ class Interaction extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Summary of type
+     * @return BelongsTo<Type, Interaction>
+     */
     public function type(): BelongsTo
     {
         return $this->belongsTo(Type::class);

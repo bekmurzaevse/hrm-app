@@ -32,7 +32,6 @@ class DatabaseSeeder extends Seeder
             InteractionSeeder::class,
             EducationSeeder::class,
             WorkExperienceSeeder::class,
-            ContactPersonSeeder::class,
             TagSeeder::class,
             ProjectSeeder::class,
             StageSeeder::class,
