@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('stage_id')->constrained('stages')->cascadeOnUpdate()->restrictOnDelete();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->foreignId('excutor_id')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId('executor_id')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
             $table->enum('priority', ['low', 'medium', 'high']);
             $table->date('deadline');
             $table->foreignId('created_by')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();

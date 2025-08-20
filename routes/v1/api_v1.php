@@ -107,6 +107,10 @@ Route::prefix('projects')->group(function () {
     Route::patch('/stage/{stageId}/require', [ProjectController::class, 'setRequireStage']);
     Route::patch('/stage/{stageId}/complete', [ProjectController::class, 'completeStage']);
     Route::delete('/stage/delete/{stageId}', [ProjectController::class, 'deleteStage']);
+    // Stage Task
+    Route::post('/stage/task/create', [ProjectController::class, 'createStageTask']);
+    Route::put('/stage/task/{taskId}/update', [ProjectController::class, 'updateStageTask']);
+    Route::delete('/stage/task/{taskId}/delete', [ProjectController::class, 'deleteStageTask']);
 });
 
 Route::prefix('users')->group(function () {

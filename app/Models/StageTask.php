@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,7 +16,7 @@ class StageTask extends Model
         'stage_id',
         'title',
         'description',
-        'excutor_id',
+        'executor_id',
         'priority',
         'deadline',
         'created_by',
@@ -32,11 +34,6 @@ class StageTask extends Model
             'updated_at' => 'datetime',
         ];
     }
-    /**
-     * Summary of appends
-     * @var array
-     */
-    protected $appends = ['executor_fio'];
 
     /**
      * Summary of getExecutorFioAttribute
@@ -49,6 +46,17 @@ class StageTask extends Model
             $this->executor->last_name,
             mb_substr($this->executor->first_name, 0, 1, 'UTF-8'),
             mb_substr($this->executor->patronymic, 0, 1, 'UTF-8')
+        );
+    }
+
+    /**
+     * Summary of deadline
+     * @return Attribute
+     */
+    protected function deadline(): Attribute
+    {
+        return Attribute::make(
+            set: fn($value) => Carbon::createFromFormat('m-d-Y', $value),
         );
     }
 
