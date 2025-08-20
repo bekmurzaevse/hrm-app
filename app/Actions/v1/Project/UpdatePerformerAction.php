@@ -23,6 +23,11 @@ class UpdatePerformerAction
         try {
             $project = Project::findOrFail($id);
 
+            // Log user activity
+            $title = 'Обновил исполнителей';
+            $text = "Исполнители проекта «{$project->title}» были обновлены.";
+            logActivity($title, $text);
+
             $project->performers()->sync($dto->performers);
 
             return static::toResponse(

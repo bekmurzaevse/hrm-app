@@ -37,6 +37,11 @@ class UpdateAction
 
             $project->update($data);
 
+            // Log user activity
+            $title = 'Обновил проект';
+            $text = "Проект «{$project->title}» был обновлен.";
+            logActivity($title, $text);
+
             if ($dto->performers) {
                 $project->performers()->sync($dto->performers);
             }

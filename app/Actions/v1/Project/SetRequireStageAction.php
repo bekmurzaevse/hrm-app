@@ -25,6 +25,10 @@ class SetRequireStageAction
             if ($stage->is_required === false) {
                 $stage->is_required = true;
                 $stage->save();
+
+                // Log user activity
+                $title = 'Установка этапа как обязательного';
+                $description = 'Админ установил этап "' . $stage->title . '" как обязательный';
             } else {
                 return static::toResponse(
                     message: 'Stage already marked as required'

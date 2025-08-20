@@ -33,6 +33,12 @@ class UpdateStageTaskAction
                 'deadline' => $dto->deadline,
                 'created_by' => 1, // TODO: Replace with authenticated user ID
             ];
+
+            // Log user activity
+            $title = 'Обновление задачи';
+            $text = "Задача «{$dto->title}» была обновлена в этапе «{$stage->title}» проекта «{$stage->project->title}»";
+            logActivity($title, $text);
+
             $stage->stageTasks()->findOrFail($taskId)->update($data);
 
             return static::toResponse(

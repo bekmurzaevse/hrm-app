@@ -40,6 +40,11 @@ class CreateStageAction
             // TODO: status stage need to remake logic
             $project->stages()->create($data);
 
+            // Log user activity
+            $title = 'Создание этапа';
+            $text = "Этап «{$dto->title}» был создан в проекте «{$project->title}».";
+            logActivity($title, $text);
+
             return static::toResponse(
                 message: 'Stage created'
             );

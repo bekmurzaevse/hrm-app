@@ -35,6 +35,12 @@ class UploadFileAction
                 'type' => $dto->type,
             ]);
 
+            // Log user activity
+            logActivity(
+                "Файл загружен",
+                "В проект «{$project->title}» был загружен файл «{$uploadedFile['name']}»."
+            );
+
             return static::toResponse(
                 message: "Uploaded file to Project-{$id}",
             );

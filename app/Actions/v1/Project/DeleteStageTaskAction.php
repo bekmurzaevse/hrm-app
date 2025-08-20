@@ -22,6 +22,12 @@ class DeleteStageTaskAction
     {
         try {
             $stageTasks = StageTask::findOrFail($taskId);
+
+            // Log user activity
+            $title = 'Удаление задачи';
+            $text = "Задача «{$stageTasks->title}» была удалена в этапе «{$stageTasks->stage->title}» проекта «{$stageTasks->stage->project->title}»";
+            logActivity($title, $text);
+
             $stageTasks->delete();
 
             return static::toResponse(

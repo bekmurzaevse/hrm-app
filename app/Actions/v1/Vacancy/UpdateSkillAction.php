@@ -29,6 +29,11 @@ class UpdateSkillAction
             $vacancy->skills()->findOrFail($skillId)
                 ->update(['title' => $dto->title]);
 
+            // Log user activity
+            $title = 'Обновление навыка';
+            $text = "Навык был обновлен в вакансии «{$vacancy->title}».";
+            logActivity($title, $text);
+
             return static::toResponse(
                 message: "Vacancy's Skill Updated"
             );

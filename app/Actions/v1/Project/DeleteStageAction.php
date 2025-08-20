@@ -25,6 +25,12 @@ class DeleteStageAction
             // TODO: add stageCompetion
             $stage->stageTasks()->delete();
             // TODO: add StageDetail
+
+            // Log user activity
+            $title = 'Удаление этапа';
+            $text = "Этап «{$stage->title}» проекта «{$stage->project->title}» был удалён.";
+            logActivity($title, $text);
+
             $stage->delete();
 
             return static::toResponse(
