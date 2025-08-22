@@ -51,7 +51,6 @@ class VacancyResource extends JsonResource
                 'created_by' => $this->creator,
             ],
             'files' => $this->files->map(function ($file) {
-                $fileExists = Storage::disk('public')->exists($file->path);
                 return [
                     'id' => $file->id,
                     'name' => $file->name,
