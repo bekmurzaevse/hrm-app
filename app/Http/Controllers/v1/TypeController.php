@@ -49,11 +49,24 @@ class TypeController extends Controller
         return $action(CreateDto::from($request));
     }
 
+    /**
+     * Summary of update
+     * @param int $id
+     * @param \App\Http\Requests\v1\Type\UpdateRequest $request
+     * @param \App\Actions\v1\Type\UpdateAction $action
+     * @return JsonResponse
+     */
     public function update(int $id, UpdateRequest $request, UpdateAction $action): JsonResponse
     {
         return $action($id, UpdateDto::from($request));
     }
 
+    /**
+     * Summary of delete
+     * @param int $id
+     * @param \App\Actions\v1\Type\DeleteAction $action
+     * @return JsonResponse
+     */
     public function delete(int $id, DeleteAction $action): JsonResponse
     {
         return $action($id);

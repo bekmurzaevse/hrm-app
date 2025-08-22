@@ -34,7 +34,8 @@ class DownloadAction
 
             return Storage::disk('public')->download($filePath, $file->name);
         } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('File Not Found', 404);
+            $model = class_basename($ex->getModel());
+            throw new ApiResponseException("{$model} Not Found", 404);
         }
     }
 }

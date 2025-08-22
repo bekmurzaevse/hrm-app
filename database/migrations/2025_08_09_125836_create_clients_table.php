@@ -17,15 +17,12 @@ return new class extends Migration
             $table->enum('status', ['Active', 'Potential', 'Inactive'])->default('Active')->nullable();
             $table->string('leader');
             $table->string('contact_person');
-
             $table->string('person_position');
             $table->string('person_phone');
             $table->string('person_email')->nullable();
-
             $table->string('phone');
             $table->string('email')->nullable();
             $table->text('address');
-
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->string('INN')->unique();
             $table->enum('employee_count', ['-50', '50-250', '250+']);
