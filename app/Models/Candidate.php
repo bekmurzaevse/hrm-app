@@ -34,6 +34,7 @@ class Candidate extends Model
         'desired_salary',
         'source',
         'user_id',
+        'experience',
         'short_summary',
         'achievments',
         'comment',
@@ -49,7 +50,7 @@ class Candidate extends Model
         return [
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
-            'birth_date' => 'datetime',
+            'birth_date' => 'date',
         ];
     }
 

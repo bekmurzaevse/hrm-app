@@ -69,7 +69,7 @@ class UpdateAction
 
             logActivity(
                 "Кандидат обновлён!",
-                "Кандидат $candidate->first_name $candidate->last_name был успешно обновлён пользователем " . auth()->user->first_name auth()->user->last_name
+                "Кандидат $candidate->first_name $candidate->last_name был успешно обновлён пользователем " . ((auth()->user()->first_name ?? '') . ' ' . (auth()->user()->last_name ?? ''))
             );
 
             return static::toResponse(

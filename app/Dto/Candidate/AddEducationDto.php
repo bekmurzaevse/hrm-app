@@ -3,7 +3,6 @@
 namespace App\Dto\Candidate;
 
 use App\Http\Requests\v1\Candidate\AddEducationRequest;
-use App\Http\Requests\v1\Candidate\AddLanguageRequest;
 
 readonly class AddEducationDto
 {
