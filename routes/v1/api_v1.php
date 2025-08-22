@@ -47,6 +47,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
      * Routs for Auth logout
      */
     Route::prefix('auth')->group(function () {
+        Route::get('get-me', [AuthController::class, 'getMe']);
         Route::post('logout', [AuthController::class, 'logout']);
     });
 

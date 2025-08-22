@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Actions\v1\Auth\GetMeAction;
 use App\Actions\v1\Auth\LoginAction;
 use App\Actions\v1\Auth\LogoutAction;
 use App\Actions\v1\Auth\RefreshTokenAction;
@@ -39,6 +40,16 @@ class AuthController extends Controller
      * @return JsonResponse
      */
     public function logout(LogoutAction $action): JsonResponse
+    {
+        return $action();
+    }
+
+    /**
+     * Summary of getMe
+     * @param \App\Actions\v1\Auth\GetMeAction $action
+     * @return JsonResponse
+     */
+    public function getMe(GetMeAction $action): JsonResponse
     {
         return $action();
     }
