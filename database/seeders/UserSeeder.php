@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'status' => 'working',
             'phone' => '1234321',
             'email' => 'pavel@gmail.com',
-            'password' => '123',
+            'password' => '12345678',
         ]);
         $admin1->assignRole('admin');
 
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             'status' => 'not_working',
             'phone' => '9878656',
             'email' => 'murk@gmail.com',
-            'password' => '123',
+            'password' => '12345678',
         ]);
         $admin2->assignRole('admin');
 
@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
             'status' => 'working',
             'phone' => '998901234567',
             'email' => 'elon.musk@example.com',
-            'password' => '123',
+            'password' => '12345678',
         ]);
         $manager1->assignRole('manager');
 
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
             'status' => 'not_working',
             'phone' => '998935551212',
             'email' => 'bill.gates@example.com',
-            'password' => '123',
+            'password' => '12345678',
         ]);
         $manager2->assignRole('manager');
 
@@ -79,7 +79,7 @@ class UserSeeder extends Seeder
             'status' => 'working',
             'phone' => '998909991010',
             'email' => 'jack.ma@example.com',
-            'password' => '123',
+            'password' => '12345678',
         ]);
         $recruiter1->assignRole('recruiter');
 
@@ -93,7 +93,7 @@ class UserSeeder extends Seeder
             'status' => 'not_working',
             'phone' => '998935552233',
             'email' => 'satya.nadella@example.com',
-            'password' => '123',
+            'password' => '12345678',
         ]);
         $recruiter2->assignRole('recruiter');
 
@@ -107,7 +107,7 @@ class UserSeeder extends Seeder
             'status' => 'dismissed',
             'phone' => '9876543210',
             'email' => 'jeff.bezos@example.com',
-            'password' => '123',
+            'password' => '12345678',
         ]);
         $recruiter3->assignRole('recruiter');
 
@@ -121,7 +121,7 @@ class UserSeeder extends Seeder
             'status' => 'working',
             'phone' => '1112223333',
             'email' => 'steve.jobs@example.com',
-            'password' => '123',
+            'password' => '12345678',
         ]);
         $recruiter4->assignRole('recruiter');
     }
