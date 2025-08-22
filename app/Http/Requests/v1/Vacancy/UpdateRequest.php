@@ -33,6 +33,7 @@ class UpdateRequest extends FormRequest
             'status' => 'required|in:Не активна,Открыта,Закрыта,Не закрыта',
             'position_count' => 'required|integer|min:1',
             'salary' => 'required|regex:/^\d+(-\d+)?$/',
+            'currency' => 'required|in:RUB,USD,EUR',
             'period' => 'required|in:В час,В день,В неделю,В месяц',
             'bonus' => 'nullable|string|max:1000',
             'probation' => 'nullable|string|max:255',
