@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1;
+namespace App\Http\Controllers\v1;
 
 use App\Actions\v1\Candidate\AddContactAction;
 use App\Actions\v1\Candidate\AddEducationAction;
@@ -126,56 +126,133 @@ class CandidateController extends Controller
         return $action($id, UploadDto::from($request));
     }
 
+    /**
+     * Summary of download
+     * @param int $id
+     * @param int $fileId
+     * @param \App\Actions\v1\Candidate\DownloadAction $action
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
     public function download(int $id, int $fileId, DownloadAction $action): StreamedResponse
     {
         return $action($id, $fileId);
     }
 
+    /**
+     * Summary of deleteFile
+     * @param int $id
+     * @param int $fileId
+     * @param \App\Actions\v1\Candidate\DeleteFileAction $action
+     * @return JsonResponse
+     */
     public function deleteFile(int $id, int $fileId, DeleteFileAction $action): JsonResponse
     {
         return $action($id, $fileId);
     }
 
+    /**
+     * Summary of experienceCreate
+     * @param int $id
+     * @param \App\Http\Requests\v1\Candidate\AddWorkExperienceRequest $request
+     * @param \App\Actions\v1\Candidate\AddExperienceAction $action
+     * @return JsonResponse
+     */
     public function experienceCreate(int $id, AddWorkExperienceRequest $request, AddExperienceAction $action): JsonResponse
     {
         return $action($id, AddExperienceDto::from($request));
     }
 
+    /**
+     * Summary of experienceUpdate
+     * @param int $id
+     * @param int $workId
+     * @param \App\Http\Requests\v1\Candidate\UpdateWorkExperienceRequest $request
+     * @param \App\Actions\v1\Candidate\UpdateExperienceAction $action
+     * @return JsonResponse
+     */
     public function experienceUpdate(int $id, int $workId, UpdateWorkExperienceRequest $request, UpdateExperienceAction $action): JsonResponse
     {
         return $action($id, $workId, UpdateExperienceDto::from($request));
     }
 
+    /**
+     * Summary of experienceDelete
+     * @param int $id
+     * @param \App\Actions\v1\Candidate\DeleteExperienceAction $action
+     * @return JsonResponse
+     */
     public function experienceDelete(int $id, DeleteExperienceAction $action): JsonResponse
     {
         return $action($id);
     }
 
+    /**
+     * Summary of languageCreate
+     * @param int $id
+     * @param \App\Http\Requests\v1\Candidate\AddLanguageRequest $request
+     * @param \App\Actions\v1\Candidate\AddLanguageAction $action
+     * @return JsonResponse
+     */
     public function languageCreate(int $id, AddLanguageRequest $request, AddLanguageAction $action): JsonResponse
     {
         return $action($id, AddLanguageDto::from($request));
     }
 
+    /**
+     * Summary of skillCreate
+     * @param int $id
+     * @param \App\Http\Requests\v1\Candidate\AddSkillRequest $request
+     * @param \App\Actions\v1\Candidate\AddSkillAction $action
+     * @return JsonResponse
+     */
     public function skillCreate(int $id, AddSkillRequest $request, AddSkillAction $action): JsonResponse
     {
         return $action($id, AddSkillDto::from($request));
     }
 
+    /**
+     * Summary of educationCreate
+     * @param int $id
+     * @param \App\Http\Requests\v1\Candidate\AddEducationRequest $request
+     * @param \App\Actions\v1\Candidate\AddEducationAction $action
+     * @return JsonResponse
+     */
     public function educationCreate(int $id, AddEducationRequest $request, AddEducationAction $action): JsonResponse
     {
         return $action($id, AddEducationDto::from($request));
     }
 
+    /**
+     * Summary of educationUpdate
+     * @param int $id
+     * @param int $educationId
+     * @param \App\Http\Requests\v1\Candidate\UpdateEducationRequest $request
+     * @param \App\Actions\v1\Candidate\UpdateEducationAction $action
+     * @return JsonResponse
+     */
     public function educationUpdate(int $id, int $educationId, UpdateEducationRequest $request, UpdateEducationAction $action): JsonResponse
     {
         return $action($id, $educationId, UpdateEducationDto::from($request));
     }
 
+    /**
+     * Summary of educationDelete
+     * @param int $id
+     * @param \App\Actions\v1\Candidate\DeleteEducationAction $action
+     * @return JsonResponse
+     */
     public function educationDelete(int $id, DeleteEducationAction $action): JsonResponse
     {
         return $action($id);
     }
 
+    /**
+     * Summary of contactCreate
+     * @param int $id
+     * @param \App\Http\Requests\v1\Candidate\AddContactRequest $request
+     * @param \App\Actions\v1\Candidate\AddContactAction $action
+     * @return JsonResponse
+     */
     public function contactCreate(int $id, AddContactRequest $request, AddContactAction $action): JsonResponse
     {
         return $action($id, AddContactDto::from($request));
@@ -205,27 +282,53 @@ class CandidateController extends Controller
         return $action($id);
     }
 
-    public function skillUpdate(int $id, int $skillId, UpdateSkillRequest $request, UpdateSkillAction $action)
+    /**
+     * Summary of skillUpdate
+     * @param int $id
+     * @param int $skillId
+     * @param \App\Http\Requests\v1\Candidate\UpdateSkillRequest $request
+     * @param \App\Actions\v1\Candidate\UpdateSkillAction $action
+     * @return JsonResponse
+     */
+    public function skillUpdate(int $id, int $skillId, UpdateSkillRequest $request, UpdateSkillAction $action): JsonResponse
     {
         return $action($id, $skillId, UpdateSkillDto::from($request));
     }
 
-    public function skillDelete(int $id, int $skillId, DeleteSkillAction $action)
+    /**
+     * Summary of skillDelete
+     * @param int $id
+     * @param int $skillId
+     * @param \App\Actions\v1\Candidate\DeleteSkillAction $action
+     * @return JsonResponse
+     */
+    public function skillDelete(int $id, int $skillId, DeleteSkillAction $action): JsonResponse
     {
         return $action($id, $skillId);
     }
 
-    public function contactUpdate(int $id, int $contactId, UpdateContactRequest $request, UpdateContactAction $action)
+    /**
+     * Summary of contactUpdate
+     * @param int $id
+     * @param int $contactId
+     * @param \App\Http\Requests\v1\Candidate\UpdateContactRequest $request
+     * @param \App\Actions\v1\Candidate\UpdateContactAction $action
+     * @return JsonResponse
+     */
+    public function contactUpdate(int $id, int $contactId, UpdateContactRequest $request, UpdateContactAction $action): JsonResponse
     {
         return $action($id, $contactId, UpdateContactDto::from($request));
     }
 
-    public function contactUDelete(int $id, int $contactId, DeleteContactAction $action)
+    /**
+     * Summary of contactUDelete
+     * @param int $id
+     * @param int $contactId
+     * @param \App\Actions\v1\Candidate\DeleteContactAction $action
+     * @return JsonResponse
+     */
+    public function contactUDelete(int $id, int $contactId, DeleteContactAction $action): JsonResponse
     {
         return $action($id, $contactId);
     }
-
-
-
-
 }

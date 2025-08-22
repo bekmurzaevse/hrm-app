@@ -13,6 +13,13 @@ class UpdateAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param \App\Dto\User\UpdateDto $dto
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(int $id, UpdateDto $dto): JsonResponse
     {
         try {
@@ -29,6 +36,11 @@ class UpdateAction
                 'email' => $dto->email,
                 'password' => $dto->password,
             ]);
+
+            logActivity(
+                "Пользователь обновлен!",
+                "Обновлены данные пользователя: {$user->first_name} {$user->last_name} (ID: {$user->id}) в файле " . __FILE__
+            );
 
             return static::toResponse(
                 message: "$id - id li user jan'alandi",

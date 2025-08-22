@@ -28,7 +28,6 @@ class IndexResource extends JsonResource
             ],
             'contacts' => ContactResource::collection($this->contacts),
             'user_id' => $this->user_id,
-            // 'vacancies' => $this->vacancies,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];

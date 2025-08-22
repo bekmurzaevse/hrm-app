@@ -12,6 +12,11 @@ readonly class UpdateContactDto
     ) {
     }
 
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Candidate\UpdateContactRequest $request
+     * @return UpdateContactDto
+     */
     public static function from(UpdateContactRequest $request): self
     {
         return new self(

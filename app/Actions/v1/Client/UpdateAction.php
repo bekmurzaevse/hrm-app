@@ -9,7 +9,6 @@ use App\Models\Client;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Storage;
 
 class UpdateAction
 {
@@ -31,15 +30,12 @@ class UpdateAction
                 'status' => $dto->status,
                 'leader' => $dto->leader,
                 'contact_person' => $dto->contactPerson,
-
                 'person_position' => $dto->personPosition,
                 'person_phone' => $dto->personPhone,
                 'person_email' => $dto->personEmail,
-
                 'phone' => $dto->phone,
                 'email' => $dto->email,
                 'address' => $dto->address,
-
                 'user_id' => $dto->userId,
                 'INN' => $dto->INN,
                 'employee_count' => $dto->employeeCount,
@@ -49,18 +45,10 @@ class UpdateAction
                 'notes' => $dto->notes,
             ]);
 
-            // if ($dto->files) {
-            //     Storage::disk('public')->deleteDirectory("clients/$client->id");
-            //     $client->files()->delete();
-
-            //     $uploadedFiles = FileUploadHelper::files($dto->files, "clients/$client->id");
-
-            //     array_map(function ($file) use ($client) {
-            //         $client->files()->create($file);
-            //     }, $uploadedFiles);
-            // }
-
-            logActivity("Client Updated!", "$client->name обновлено!");
+            logActivity(
+                "Обновление клиента",
+                "Клиент '{$client->name}' (ID: {$client->id}) был успешно обновлён."
+            );
 
             return static::toResponse(
                 message: "$id - id li client jan'alandi",

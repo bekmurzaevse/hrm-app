@@ -12,6 +12,12 @@ class DeleteExperienceAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(int $id): JsonResponse
     {
         try {
@@ -19,13 +25,13 @@ class DeleteExperienceAction
             $experience = WorkExperience::findOrFail($id);
 
             $expInfo = $experience->company ?? "Опыт работы #{$id}";
-            $candidateId = $experience->candidate_id;
+            $candidate = $experience->candidate;
 
             $experience->delete();
 
             logActivity(
                 "Опыт работы удалён!",
-                "У кандидата (ID {$candidateId}) был удалён опыт работы: {$expInfo} (ID {$id})."
+                "У кандидата $candidate->first_name $candidate->last_name был удалён опыт работы: {$expInfo} (ID {$id})."
             );
 
             return static::toResponse(

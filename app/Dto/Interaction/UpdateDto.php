@@ -15,6 +15,11 @@ readonly class UpdateDto
     ) {
     }
 
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Interaction\UpdateRequest $request
+     * @return UpdateDto
+     */
     public static function from(UpdateRequest $request): self
     {
         return new self(

@@ -40,6 +40,10 @@ class File extends Model
         return $this->morphTo();
     }
 
+    /**
+     * Summary of client
+     * @return MorphTo<Model, File>
+     */
     public function client()
     {
         return $this->morphTo()->where('fileable_type', Client::class);

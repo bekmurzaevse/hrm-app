@@ -33,7 +33,13 @@ class ClientController extends Controller
         return $action();
     }
 
-    // TODO
+
+    /**
+     * Summary of show
+     * @param int $id
+     * @param \App\Actions\v1\Client\ShowAction $action
+     * @return JsonResponse
+     */
     public function show(int $id, ShowAction $action): JsonResponse
     {
         return $action($id);
@@ -97,9 +103,15 @@ class ClientController extends Controller
         return $action($id, $fileId);
     }
 
+    /**
+     * Summary of deleteFile
+     * @param int $id
+     * @param int $fileId
+     * @param \App\Actions\v1\Client\DeleteFileAction $action
+     * @return JsonResponse
+     */
     public function deleteFile(int $id, int $fileId, DeleteFileAction $action): JsonResponse
     {
         return $action($id, $fileId);
     }
-
 }

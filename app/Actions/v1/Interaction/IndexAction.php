@@ -12,6 +12,10 @@ class IndexAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @return JsonResponse
+     */
     public function __invoke(): JsonResponse
     {
         $key = 'interactions:' . app()->getLocale() . ':' . md5(request()->fullUrl());

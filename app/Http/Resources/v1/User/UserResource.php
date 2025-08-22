@@ -14,7 +14,6 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // dd('okoko', $this->projects);
         return [
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,

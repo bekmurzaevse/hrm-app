@@ -11,6 +11,11 @@ class CreateAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param \App\Dto\Interaction\CreateDto $dto
+     * @return JsonResponse
+     */
     public function __invoke(CreateDto $dto): JsonResponse
     {
         $data = [
@@ -23,7 +28,10 @@ class CreateAction
 
         $interaction = Interaction::create($data);
 
-        logActivity("Interaction Created!", "$interaction->value добавлен!");
+        logActivity(
+            "Создано взаимодействие",
+            "Взаимодействие '{$interaction->value}' создано для кандидата {$interaction->candidate->first_name} {$interaction->candidate->last_name} пользователем {$interaction->user->first_name} {$interaction->user->last_name}"
+        );
 
         return static::toResponse(
             message: "Interaction created"

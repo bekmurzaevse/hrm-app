@@ -31,16 +31,19 @@ class DeleteFileAction
                 Storage::disk('public')->delete($file->path);
             }
 
-            // $candidate->files()->where('id', $fileId)->delete();
             $client->files()->findOrFail($fileId)->delete();
+
+            logActivity(
+                "Удаление файла клиента",
+                "Файл '{$file->name}' (ID: {$fileId}) был удалён у клиента '{$client->name}' (ID: {$client->id})",
+            );
 
             return static::toResponse(
                 message: "$id - id li file o'shirildi",
             );
         } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('Not Found', 404);
-        } catch (\Error $e) {
-            throw new ApiResponseException('file Not Found', 404);
+            $model = class_basename($ex->getModel());
+            throw new ApiResponseException("{$model} Not Found", 404);
         }
     }
 }

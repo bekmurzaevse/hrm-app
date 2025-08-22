@@ -17,27 +17,57 @@ use Illuminate\Http\JsonResponse;
 class TypeController extends Controller
 {
 
+    /**
+     * Summary of index
+     * @param \App\Actions\v1\Type\IndexAction $action
+     * @return JsonResponse
+     */
     public function index(IndexAction $action): JsonResponse
     {
         return $action();
     }
 
+    /**
+     * Summary of show
+     * @param int $id
+     * @param \App\Actions\v1\Type\ShowAction $action
+     * @return JsonResponse
+     */
     public function show(int $id, ShowAction $action): JsonResponse
     {
         return $action($id);
     }
 
-    public function create(CreateRequest $request, CreateAction $action)
+    /**
+     * Summary of create
+     * @param \App\Http\Requests\v1\Type\CreateRequest $request
+     * @param \App\Actions\v1\Type\CreateAction $action
+     * @return JsonResponse
+     */
+    public function create(CreateRequest $request, CreateAction $action): JsonResponse
     {
         return $action(CreateDto::from($request));
     }
 
+    /**
+     * Summary of update
+     * @param int $id
+     * @param \App\Http\Requests\v1\Type\UpdateRequest $request
+     * @param \App\Actions\v1\Type\UpdateAction $action
+     * @return JsonResponse
+     */
     public function update(int $id, UpdateRequest $request, UpdateAction $action): JsonResponse
     {
         return $action($id, UpdateDto::from($request));
     }
 
-    public function delete(int $id, DeleteAction $action)
+    /**
+     * Summary of delete
+     * @param int $id
+     * @param \App\Actions\v1\Type\DeleteAction $action
+     * @return JsonResponse
+     */
+    public function delete(int $id, DeleteAction $action): JsonResponse
     {
         return $action($id);
     }

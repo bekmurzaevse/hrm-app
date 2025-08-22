@@ -33,18 +33,15 @@ class UpdateAction
                 'birth_date' => $dto->birthDate,
                 'gender' => $dto->gender,
                 'citizenship' => $dto->citizenship,
-
                 'country_residence' => $dto->countryResidence,
                 'region' => $dto->region,
                 'family_status' => $dto->familyStatus,
                 'family_info' => $dto->familyInfo,
-
                 'status' => $dto->status,
                 'workplace' => $dto->workplace,
                 'position' => $dto->position,
                 'city' => $dto->city,
                 'address' => $dto->address,
-                // 'salary' => $dto->salary,
                 'desired_salary' => $dto->desiredSalary,
                 'source' => $dto->source,
                 'experience' => $dto->experience,
@@ -54,8 +51,6 @@ class UpdateAction
                 'description' => $dto->description,
                 'user_id' => $dto->userId,
             ]);
-
-            logActivity("Candidate Updated!", "$dto->firstName $dto->lastName $dto->patronymic обновлено!");
 
             if ($dto->photo) {
                 if (Storage::disk('public')->exists($candidate->photo->path)) {
@@ -72,23 +67,18 @@ class UpdateAction
                 ]);
             }
 
-            // if ($dto->files) {
-            //     Storage::disk('public')->deleteDirectory("candidates/$candidate->id");
-            //     $candidate->files()->delete();
-
-            //     $uploadedFiles = FileUploadHelper::files($dto->files, "candidates/$candidate->id");
-
-            //     array_map(function ($file) use ($candidate) {
-            //         $candidate->files()->create($file);
-            //     }, $uploadedFiles);
-            // }
+            logActivity(
+                "Кандидат обновлён!",
+                "Кандидат $candidate->first_name $candidate->last_name был успешно обновлён пользователем " . auth()->user->first_name auth()->user->last_name
+            );
 
             return static::toResponse(
                 message: "$id - id li candidate jan'alandi",
                 // data: new CandidateResource($candidate)
             );
         } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('Candidate Not Found', 404);
+            $model = class_basename($ex->getModel());
+            throw new ApiResponseException("{$model} Not Found", 404);
         }
     }
 }

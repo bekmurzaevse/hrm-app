@@ -25,6 +25,11 @@ class DeleteAction
 
             $user->delete();
 
+            logActivity(
+                "Пользователь удален!",
+                "Удален пользователь: {$user->first_name} {$user->last_name} (ID: {$user->id}) в файле " . __FILE__
+            );
+
             return static::toResponse(
                 message: "$id - id li user o'shirildi",
             );

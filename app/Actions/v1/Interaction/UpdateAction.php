@@ -13,6 +13,13 @@ class UpdateAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param \App\Dto\Interaction\UpdateDto $dto
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(int $id, UpdateDto $dto): JsonResponse
     {
         try {
@@ -25,7 +32,10 @@ class UpdateAction
                 'description' => $dto->description,
             ]);
 
-            logActivity("Interaction Created!", "$interaction->name обновлено!");
+            logActivity(
+            "Взаимодействие обновлено!",
+            "Взаимодействие '{$interaction->value}' (ID: {$interaction->id}) было обновлено!"
+            );
 
             return static::toResponse(
                 message: "$id - id li Interaction jan'alandi",

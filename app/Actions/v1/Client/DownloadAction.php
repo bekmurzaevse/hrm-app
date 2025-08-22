@@ -12,6 +12,12 @@ class DownloadAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param int $fileId
+     * @throws \App\Exceptions\ApiResponseException
+     */
     public function __invoke(int $id, int $fileId)
     {
         try {
@@ -28,7 +34,8 @@ class DownloadAction
 
             return Storage::disk('public')->download($filePath, $file->name);
         } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('File Not Found', 404);
+            $model = class_basename($ex->getModel());
+            throw new ApiResponseException("{$model} Not Found", 404);
         }
     }
 }

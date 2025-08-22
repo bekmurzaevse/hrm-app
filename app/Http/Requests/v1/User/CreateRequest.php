@@ -25,10 +25,8 @@ class CreateRequest extends FormRequest
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
             'patronymic' => 'required|string|max:50',
-
             'birth_date' => 'required|string',
             'address' => 'required|string',
-
             'position' => 'required|string',
             'status' => 'required|in:workin,not_workin,dismissed',
             'phone' => 'required|string',

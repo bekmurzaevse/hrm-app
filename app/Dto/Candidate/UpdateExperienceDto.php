@@ -15,6 +15,11 @@ readonly class UpdateExperienceDto
     ) {
     }
 
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Candidate\UpdateWorkExperienceRequest $request
+     * @return UpdateExperienceDto
+     */
     public static function from(UpdateWorkExperienceRequest $request): self
     {
         return new self(

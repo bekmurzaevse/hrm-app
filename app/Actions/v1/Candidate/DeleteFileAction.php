@@ -13,6 +13,13 @@ class DeleteFileAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param int $fileId
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(int $id, int $fileId): JsonResponse
     {
 
@@ -30,16 +37,15 @@ class DeleteFileAction
 
             logActivity(
                 "Файл удалён!",
-                "У кандидата (ID {$candidate->id}) был удалён файл: {$fileName} (ID {$fileId})."
+                "У кандидата ($candidate->first_name $candidate->last_name) был удалён файл: {$fileName} (ID {$fileId})."
             );
 
             return static::toResponse(
                 message: "$id - id li file o'shirildi",
             );
         } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('Not Found', 404);
-        } catch (\Error $e) {
-            throw new ApiResponseException('file Not Found', 404);
+            $model = class_basename($ex->getModel());
+            throw new ApiResponseException("{$model} Not Found", 404);
         }
     }
 }

@@ -26,13 +26,11 @@ class CandidateSeeder extends Seeder
             'region' => 'Tashkent',
             'family_status' => 'married',
             'family_info' => 'test test',
-
             'status' => 'active',
             'workplace' => 'Microsoft',
             'position' => 'General Director & Founder',
             'city' => 'California',
             'address' => 'USA California street № 4',
-            // 'salary' => 250000,
             'desired_salary' => 300000,
             'source' => 'Linkedin',
             'experience' => 1,
@@ -47,8 +45,6 @@ class CandidateSeeder extends Seeder
 
         $photo = UploadedFile::fake()->create('test.jpg', 1024, 'image/jpeg');
         $data = FileUploadHelper::file($photo, "test");
-
-        // dd($data);
 
         $candidate1->photo()->create([
                 'name' => $photo->getClientOriginalName(),
@@ -70,18 +66,15 @@ class CandidateSeeder extends Seeder
             'birth_date' => '1960-10-14',
             'gender' => 'male',
             'citizenship' => 'USA',
-
             'country_residence' => 'Russia',
             'region' => 'Moscow',
             'family_status' => 'unmarried',
             'family_info' => 'test test',
-
             'status' => 'active',
             'workplace' => 'META',
             'position' => 'General Director & Founder',
             'city' => 'California',
             'address' => 'USA California street № 15',
-            // 'salary' => 360000,
             'desired_salary' => 450000,
             'source' => 'Linkedin',
             'experience' => 5,

@@ -26,15 +26,12 @@ class CreateRequest extends FormRequest
             'status' => 'nullable|string|in:Vip,Regular,Problematic',
             'leader' => 'required|string|max:50',
             'contact_person' => 'required|string|max:50',
-
             'person_position' => 'required|string|max:50',
             'person_phone' => 'required|string',
             'person_email' => 'nullable|string|email',
-
             'phone' => 'required|string',
             'email' => 'nullable|string',
             'address' => 'required|string',
-
             'user_id' => 'required|exists:users,id',
             'INN' => 'required|string',
             'employee_count' => 'nullable|string|in:-50,50-250,250+',

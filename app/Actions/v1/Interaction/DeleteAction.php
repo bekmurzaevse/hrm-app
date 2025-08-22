@@ -21,7 +21,18 @@ class DeleteAction
     public function __invoke(int $id): JsonResponse
     {
         try {
-            Interaction::findOrFail($id)->delete();
+            $interaction = Interaction::findOrFail($id);
+
+            $value = $interaction->value;
+            $candidate = $interaction->candidate;
+            $user = $interaction->user;
+
+            $interaction->delete();
+
+            logActivity(
+                "Удалено взаимодействие",
+                "Взаимодействие '{$value}' {$interaction->type->title} для кандидата {$candidate->first_name} {$candidate->last_name} удалено пользователем $user->first_name $user->last_name"
+            );
 
             return static::toResponse(
                 message: "$id - id li Interaction o'shirildi",

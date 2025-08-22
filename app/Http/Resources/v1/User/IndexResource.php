@@ -22,9 +22,6 @@ class IndexResource extends JsonResource
             'status' => $this->status,
             'email' => $this->email,
             'phone' => $this->phone,
-
-            // 'projects' => ProjectResource::collection($this->projects),
-
             'projects' => [
                 'in_progress' => $this->projects()->where('status', 'in_progress')->count(),
                 'cancelled' => $this->projects()->where('status', 'cancelled')->count(),

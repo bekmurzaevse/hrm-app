@@ -24,10 +24,17 @@ class UpdateAction
     {
         try {
             $type = Type::findOrFail($id);
+            $oldTitle = $type->title;
+
             $type->update([
                 'title' => $dto->title,
                 'description' => $dto->description,
             ]);
+
+            logActivity(
+                "Тип обновлён!",
+                "Тип '{$oldTitle}' был изменён на '{$dto->title}' (ID: {$id}) в файле " . __FILE__
+            );
 
             return static::toResponse(
                 message: "$id - id li Type jan'alandi",
