@@ -31,6 +31,7 @@ class CreateAction
             'position_count' => $dto->positionCount,
             'created_by' => 1, // TODO: Replace with authenticated user ID
             'salary' => $dto->salary,
+            'currency' => $dto->currency,
             'period' => $dto->period,
             'bonus' => $dto->bonus,
             'probation' => $dto->probation,
