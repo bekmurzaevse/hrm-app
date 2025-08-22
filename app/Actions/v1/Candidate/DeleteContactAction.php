@@ -37,7 +37,8 @@ class DeleteContactAction
                 message: "$id - id li Contact o'shirildi!",
             );
         } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('Candidate or Contact Not Found', 404);
+            $model = class_basename($ex->getModel());
+            throw new ApiResponseException("{$model} Not Found", 404);
         }
     }
 }

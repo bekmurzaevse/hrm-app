@@ -31,11 +31,9 @@ return new class extends Migration {
             $table->string('source')->nullable();
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->double('experience')->nullable();
-
             $table->text('short_summary')->nullable();
             $table->text('achievments')->nullable();
             $table->text('comment')->nullable();
-
             $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();

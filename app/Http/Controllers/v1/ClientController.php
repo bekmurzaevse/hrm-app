@@ -114,5 +114,4 @@ class ClientController extends Controller
     {
         return $action($id, $fileId);
     }
-
 }

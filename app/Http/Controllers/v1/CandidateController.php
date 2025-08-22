@@ -282,27 +282,53 @@ class CandidateController extends Controller
         return $action($id);
     }
 
+    /**
+     * Summary of skillUpdate
+     * @param int $id
+     * @param int $skillId
+     * @param \App\Http\Requests\v1\Candidate\UpdateSkillRequest $request
+     * @param \App\Actions\v1\Candidate\UpdateSkillAction $action
+     * @return JsonResponse
+     */
     public function skillUpdate(int $id, int $skillId, UpdateSkillRequest $request, UpdateSkillAction $action): JsonResponse
     {
         return $action($id, $skillId, UpdateSkillDto::from($request));
     }
 
+    /**
+     * Summary of skillDelete
+     * @param int $id
+     * @param int $skillId
+     * @param \App\Actions\v1\Candidate\DeleteSkillAction $action
+     * @return JsonResponse
+     */
     public function skillDelete(int $id, int $skillId, DeleteSkillAction $action): JsonResponse
     {
         return $action($id, $skillId);
     }
 
+    /**
+     * Summary of contactUpdate
+     * @param int $id
+     * @param int $contactId
+     * @param \App\Http\Requests\v1\Candidate\UpdateContactRequest $request
+     * @param \App\Actions\v1\Candidate\UpdateContactAction $action
+     * @return JsonResponse
+     */
     public function contactUpdate(int $id, int $contactId, UpdateContactRequest $request, UpdateContactAction $action): JsonResponse
     {
         return $action($id, $contactId, UpdateContactDto::from($request));
     }
 
+    /**
+     * Summary of contactUDelete
+     * @param int $id
+     * @param int $contactId
+     * @param \App\Actions\v1\Candidate\DeleteContactAction $action
+     * @return JsonResponse
+     */
     public function contactUDelete(int $id, int $contactId, DeleteContactAction $action): JsonResponse
     {
         return $action($id, $contactId);
     }
-
-
-
-
 }

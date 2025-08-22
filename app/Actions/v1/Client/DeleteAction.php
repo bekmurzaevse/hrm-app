@@ -47,7 +47,8 @@ class DeleteAction
                 message: "$id - id li client o'shirildi",
             );
         } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('Client Not Found', 404);
+            $model = class_basename($ex->getModel());
+            throw new ApiResponseException("{$model} Not Found", 404);
         }
     }
 

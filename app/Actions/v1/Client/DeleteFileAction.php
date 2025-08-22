@@ -42,9 +42,8 @@ class DeleteFileAction
                 message: "$id - id li file o'shirildi",
             );
         } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('Not Found', 404);
-        } catch (\Error $e) {
-            throw new ApiResponseException('file Not Found', 404);
+            $model = class_basename($ex->getModel());
+            throw new ApiResponseException("{$model} Not Found", 404);
         }
     }
 }
