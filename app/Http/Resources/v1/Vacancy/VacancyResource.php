@@ -25,32 +25,30 @@ class VacancyResource extends JsonResource
                 'type_employment' => $this->type_employment,
                 'work_experience' => $this->work_experience,
                 'position_count' => $this->position_count,
-                'bonus' => $this?->bonus,
-                'probation' => $this?->probation,
-                'probation_salary' => $this?->probation_salary,
+                'bonus' => $this->bonus,
+                'probation' => $this->probation,
+                'probation_salary' => $this->probation_salary,
             ],
             'detail' => [
                 'desription' => $this->description,
                 'requirements' => $this->requirements,
                 'responsibilities' => $this->responsibilities,
                 'work_conditions' => $this->work_conditions,
-                'benefits' => $this?->benefits,
+                'benefits' => $this->benefits,
             ],
             'skills' => $this->skills->map->only(['id', 'title']),
             // TODO: Add main contact person details after creating maincontact for clients
-            'contact_info' => $this->client->contactPersons->first()->only([
-                'id',
-                'full_name',
-                'position',
-                'phone',
-                'email',
+            'contact_info' => $this->client->contacts->map(fn($contact) => [
+                'id' => $contact->id,
+                'title' => $contact->title,
+                'value' => $contact->value,
             ]),
             'status' => $this->status,
             'position_count' => $this->position_count,
-            'city' => $this?->city,
+            'city' => $this->city,
             'key_data' => [
                 'created_at' => $this->created_at->format('Y-m-d'),
-                'craeted_by' => $this->creator,
+                'created_by' => $this->creator,
             ],
             'files' => $this->files->map(function ($file) {
                 $fileExists = Storage::disk('public')->exists($file->path);
@@ -61,8 +59,12 @@ class VacancyResource extends JsonResource
                     'size' => round($file->size / 1024, 2) . ' KB',
                     // TODO: add creator of File
                     'created_at' => $file->created_at->format('Y-m-d'),
-                    'download_url' => $fileExists ? url('/api/v1/vacancies/' . $this->id . '/download/' . $file->id) : null,
-                    'show_url' => $fileExists ? url('/api/v1/vacancies/' . $this->id . '/file/' . $file->id) : null,
+                    'download_url' => $file->path && Storage::disk('public')->exists($file->path)
+                        ? url("/api/v1/vacancies/{$this->id}/download/{$file->id}")
+                        : null,
+                    'show_url' => $file->path && Storage::disk('public')->exists($file->path)
+                        ? url('/api/v1/vacancies/' . $this->id . '/file/' . $file->id)
+                        : null,
                 ];
             }),
         ];
