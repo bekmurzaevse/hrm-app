@@ -28,7 +28,7 @@ class UpdateRequest extends FormRequest
             'birth_date' => 'required|string',
             'address' => 'required|string',
             'position' => 'required|string',
-            'status' => 'required|in:workin,not_workin,dismissed',
+            'status' => 'required|in:working,not_working,dismissed',
             'phone' => 'required|string',
             'email' => 'required|string|email',
             'password' => 'required|string|min:6',
