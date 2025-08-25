@@ -20,7 +20,7 @@ class IndexAction
     {
         $key = 'interactions:' . app()->getLocale() . ':' . md5(request()->fullUrl());
         $interactions = Cache::remember($key, now()->addDay(), function () {
-            return Interaction::paginate(10);
+            return Interaction::with(['type', 'user'])->paginate(10);
         });
 
         return static::toResponse(

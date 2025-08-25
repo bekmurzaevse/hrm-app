@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -26,6 +25,10 @@ class CandidateTest extends TestCase
         // $this->actingAs($user);
     }
 
+    /**
+     * Summary of test_candidate_can_get_all
+     * @return void
+     */
     public function test_candidate_can_get_all(): void
     {
         $response = $this->getJson("api/v1/candidates/");
@@ -60,6 +63,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_candidate_can_show
+     * @return void
+     */
     public function test_candidate_can_show(): void
     {
         // $user = User::find(1)->first();
@@ -293,6 +300,10 @@ class CandidateTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /**
+     * Summary of test_add_contact_to_candidate
+     * @return void
+     */
     public function test_add_contact_to_candidate()
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -312,6 +323,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_update_contact_to_candidate
+     * @return void
+     */
     public function test_update_contact_to_candidate()
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -338,6 +353,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_delete_contact_in_candidate
+     * @return void
+     */
     public function test_delete_contact_in_candidate(): void
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -358,6 +377,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_add_education_to_candidate
+     * @return void
+     */
     public function test_add_education_to_candidate()
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -382,6 +405,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_update_education_to_candidate
+     * @return void
+     */
     public function test_update_education_to_candidate()
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -418,6 +445,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_delete_education_in_candidate
+     * @return void
+     */
     public function test_delete_education_in_candidate(): void
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -443,6 +474,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_add_experience_to_candidate
+     * @return void
+     */
     public function test_add_experience_to_candidate()
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -466,6 +501,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_update_experience_to_candidate
+     * @return void
+     */
     public function test_update_experience_to_candidate()
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -500,6 +539,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_delete_experience_in_candidate
+     * @return void
+     */
     public function test_delete_experience_in_candidate(): void
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -524,6 +567,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_add_language_to_candidate
+     * @return void
+     */
     public function test_add_language_to_candidate()
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -545,6 +592,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_update_language_to_candidate
+     * @return void
+     */
     public function test_update_language_to_candidate()
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -575,6 +626,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_delete_language_in_candidate
+     * @return void
+     */
     public function test_delete_language_in_candidate(): void
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -597,9 +652,11 @@ class CandidateTest extends TestCase
             ]);
     }
 
-    ///////////////////////////////////////////////////
-
-    public function test_add_skill_to_candidate()
+    /**
+     * Summary of test_add_skill_to_candidate
+     * @return void
+     */
+    public function test_add_skill_to_candidate(): void
     {
         $candidate = Candidate::inRandomOrder()->first();
 
@@ -617,7 +674,11 @@ class CandidateTest extends TestCase
             ]);
     }
 
-    public function test_update_skill_to_candidate()
+    /**
+     * Summary of test_update_skill_to_candidate
+     * @return void
+     */
+    public function test_update_skill_to_candidate(): void
     {
         $candidate = Candidate::inRandomOrder()->first();
 
@@ -641,6 +702,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_delete_skill_in_candidate
+     * @return void
+     */
     public function test_delete_skill_in_candidate(): void
     {
 
@@ -661,6 +726,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_upload_file_to_candidate
+     * @return void
+     */
     public function test_upload_file_to_candidate(): void
     {
         $candidate = Candidate::inRandomOrder()->first();
@@ -684,6 +753,10 @@ class CandidateTest extends TestCase
             ]);
     }
 
+    /**
+     * Summary of test_delete_file_in_candidate
+     * @return void
+     */
     public function test_delete_file_in_candidate(): void
     {
         $candidate = Candidate::inRandomOrder()->first();
