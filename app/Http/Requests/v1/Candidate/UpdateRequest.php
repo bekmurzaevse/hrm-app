@@ -45,4 +45,61 @@ class UpdateRequest extends FormRequest
             'photo' => 'nullable|image|mimes:png,jpg,png,jpeg',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'first_name.required' => "First name ma'jbu'riy.",
+            'first_name.string' => "First name string boliw kerek.",
+            'first_name.max' => "First name 50 belgiden ko'p bolmawi kerek.",
+
+            'last_name.required' => "Last name ma'jbu'riy.",
+            'last_name.string' => "Last name string boliw kerek.",
+            'last_name.max' => "Last name 50 belgiden ko'p bolmawi kerek.",
+
+            'patronymic.required' => "Patronymic ma'jbu'riy.",
+            'patronymic.string' => "Patronymic string boliw kerek.",
+            'patronymic.max' => "Patronymic 50 belgiden ko'p bolmawi kerek.",
+
+            'gender.required' => "Gender ma'jbu'riy.",
+            'gender.in' => "Gender ma'nisleri (male yoki female) boliwi kerek.",
+
+            'family_status.required' => "family_status ma'jbu'riy.",
+            'family_status.in' => "family_status ma'nisleri (married, unmarried, divorced) boliwi kerek.",
+
+            'family_info.required' => "family_info ma'jbu'riy.",
+            'family_info.string' => "family_info string boliw kerek.",
+
+            'citizenship.required' => "citizenship ma'jbu'riy.",
+            'citizenship.string' => "citizenship string boliw kerek.",
+
+            'country_residence.required' => "country_residence ma'jbu'riy.",
+            'country_residence.string' => "country_residence string boliw kerek.",
+
+            'region.required' => "region ma'jbu'riy.",
+            'region.string' => "region string boliw kerek.",
+
+            'status.required' => "status ma'jbu'riy.",
+            'status.in' => "status ma'nisleri (active, in_search, employed) boliwi kerek.",
+
+            'position.required' => "position ma'jbu'riy.",
+            'position.string' => "position string boliw kerek.",
+
+            'city.required' => "city ma'jbu'riy.",
+            'city.string' => "city string boliw kerek.",
+
+            'address.required' => "address ma'jbu'riy.",
+            'address.string' => "address string boliw kerek.",
+
+            'desired_salary.required' => "desired_salary ma'jbu'riy.",
+            'desired_salary.numeric' => "desired_salary san boliw kerek.",
+
+            'user_id.required' => "user_id ma'jbu'riy.",
+            'user_id.integer' => "user_id pu'tin san boliw kerek.",
+            'user_id.exist' => "user_id bazada tabilmadi.",
+
+            'photo.image' => "photo image tipinde boliwiw kerek.",
+            'photo.mimes' => "photo (png,jpg,png,jpeg) tiplerinin' biri boliwi kerek.",
+        ];
+    }
 }

@@ -27,4 +27,16 @@ class UpdateLanguageRequest extends FormRequest
             'description' => 'nullable|string',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'title.required' => "title ma'jbu'riy.",
+            'title.string' => "title string boliw kerek.",
+            'title.max' => "title 50 belgiden ko'p bolmawi kerek.",
+            'degree.required' => "degree ma'jbu'riy.",
+            'degree.string' => "degree string boliw kerek.",
+            'degree.max' => "degree 50 belgiden ko'p bolmawi kerek.",
+        ];
+    }
 }
