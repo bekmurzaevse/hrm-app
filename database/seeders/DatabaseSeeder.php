@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CandidateSeeder::class,
             LanguageSeeder::class,
+            TypeSeeder::class,
             ClientSeeder::class,
             VacancySeeder::class,
             SkillSeeder::class,

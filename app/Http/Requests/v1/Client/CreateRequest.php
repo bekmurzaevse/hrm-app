@@ -23,7 +23,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
-            'status' => 'nullable|string|in:Vip,Regular,Problematic',
+            'status' => 'nullable|string|in:Active,Potential,Inactive',
             'leader' => 'required|string|max:50',
             'contact_person' => 'required|string|max:50',
             'person_position' => 'required|string|max:50',
