@@ -3,6 +3,7 @@
 namespace App\Actions\v1\Project;
 
 use App\Dto\v1\Project\CloseProjectDto;
+use App\Enums\ProjectStatusEnum;
 use App\Exceptions\ApiResponseException;
 use App\Models\Project;
 use App\Traits\ResponseTrait;
@@ -23,7 +24,7 @@ class CloseProjectAction
         try {
             $project = Project::findOrFail($id);
 
-            if ($project->status == 'В работе') {
+            if ($project->status == ProjectStatusEnum::IN_PROGRESS->value) {
                 $data = [
                     'comment' => $dto->comment,
                     'closed_by' => 1, // TODO: Replace with authenticated user ID
@@ -32,7 +33,7 @@ class CloseProjectAction
 
                 $project->closeProject()->create($data);
 
-                $project->status = 'cancelled';
+                $project->status = ProjectStatusEnum::CANCELLED->value;
                 $project->save();
 
                 // Log user activity

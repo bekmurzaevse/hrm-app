@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\VacancyStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,17 +17,17 @@ return new class extends Migration {
             $table->foreignId('client_id')->constrained('clients')->restrictOnDelete()->cascadeOnUpdate();
             $table->text('department')->nullable();
             $table->string('city')->nullable();
-            $table->enum('type_employment', ['office', 'remote', 'temporary', 'internship', 'hybrid']);
-            $table->enum('work_schedule', ['full_time', 'flexible', 'remote', 'shift']);
-            $table->enum('work_experience', ['no_experience', 'one_to_three', 'three_to_six', 'over_six']);
-            $table->enum('education', ['secondary', 'secondary_vocational', 'incomplete_higher', 'higher']);
-            $table->enum('status', ['not_active', 'open', 'closed', 'not_closed'])->default('not_active');
+            $table->string('type_employment');
+            $table->string('work_schedule');
+            $table->string('work_experience');
+            $table->string('education');
+            $table->string('status')->default(VacancyStatusEnum::NOT_ACTIVE);
             $table->unsignedTinyInteger('position_count')->default(1);
             $table->foreignId('created_by')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->unsignedInteger('salary_from');
             $table->unsignedInteger('salary_to');
-            $table->enum('currency', ['RUB', 'USD', 'EUR']);
-            $table->enum('period', ['hour', 'day', 'week', 'month']);
+            $table->string('currency');
+            $table->string('period');
             $table->text('bonus')->nullable();
             $table->string('probation')->nullable();
             $table->unsignedInteger('probation_salary')->nullable();

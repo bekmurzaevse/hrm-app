@@ -3,6 +3,7 @@
 namespace App\Actions\v1\Project\Stage;
 
 use App\Dto\v1\Project\Stage\CompleteStageDto;
+use App\Enums\StageStatusEnum;
 use App\Exceptions\ApiResponseException;
 use App\Models\Stage;
 use App\Traits\ResponseTrait;
@@ -25,14 +26,14 @@ class CompleteStageAction
         try {
             $stage = Stage::findOrFail($stageId);
 
-            if ($stage->status === 'В работе') {
+            if ($stage->status === StageStatusEnum::IN_PROGRESS->value) {
                 $stage->stageCompletion()->create([
                     'completed_by' => 1, // TODO: add auth user
                     'candidate_count' => $dto->candidateCount,
                     'comment' => $dto->comment
                 ]);
 
-                $stage->status = 'completed';
+                $stage->status = StageStatusEnum::COMPLETED->value;
                 $stage->save();
 
                 $projectId = $stage->project_id;
@@ -42,7 +43,7 @@ class CompleteStageAction
                     ->where('order', '>', $stage->order)
                     ->orderBy('order', 'asc')
                     ->first();
-                $afterStage->status = 'in_progress';
+                $afterStage->status = StageStatusEnum::IN_PROGRESS->value;
                 $afterStage->save();
 
                 // Log user activity

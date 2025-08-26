@@ -71,18 +71,6 @@ class Project extends Model
     }
 
     /**
-     * Summary of getStatusAttribute
-     * @return string
-     */
-    public function getStatusAttribute(): string
-    {
-        return [
-            'in_progress' => 'В работе',
-            'cancelled' => 'Отменен',
-        ][$this->attributes['status']];
-    }
-
-    /**
      * Summary of deadline
      * @return Attribute
      */

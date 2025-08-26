@@ -54,20 +54,6 @@ class Stage extends Model
     }
 
     /**
-     * Summary of getStatusAttribute
-     * @param mixed $value
-     * @return string
-     */
-    public function getStatusAttribute($value)
-    {
-        return [
-            'completed' => 'Завершен',
-            'in_progress' => 'В работе',
-            'waiting' => 'Ожидает',
-        ][$value];
-    }
-
-    /**
      * Summary of deadline
      * @return Attribute
      */

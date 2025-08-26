@@ -2,7 +2,15 @@
 
 namespace App\Http\Requests\v1\Vacancy;
 
+use App\Enums\CurrencyEnum;
+use App\Enums\EducationEnum;
+use App\Enums\EmploymentTypeEnum;
+use App\Enums\PeriodEnum;
+use App\Enums\VacancyStatusEnum;
+use App\Enums\WorkExperienceEnum;
+use App\Enums\WorkScheduleEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -26,15 +34,15 @@ class UpdateRequest extends FormRequest
             'client_id' => 'required|exists:clients,id',
             'department' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
-            'type_employment' => 'required|in:В офисе,Удаленно,Временная занятость,Стажировка,Гибридная работа',
-            'work_schedule' => 'required|in:Полный день,Гибкий график,Удаленная работа,Сменный график',
-            'work_experience' => 'required|in:Без опыта,1-3 года,1-3 года,Более 6 лет',
-            'education' => 'required|in:Среднее,Среднее специальное,Неоконченное высшее,Высшее',
-            'status' => 'required|in:Не активна,Открыта,Закрыта,Не закрыта',
+            'type_employment' => ['required', Rule::enum(EmploymentTypeEnum::class)],
+            'work_schedule' => ['required', Rule::enum(WorkScheduleEnum::class)],
+            'work_experience' => ['required', Rule::enum(WorkExperienceEnum::class)],
+            'education' => ['required', Rule::enum(EducationEnum::class)],
+            'status' => ['required', Rule::enum(VacancyStatusEnum::class)],
             'position_count' => 'required|integer|min:1',
             'salary' => 'required|regex:/^\d+(-\d+)?$/',
-            'currency' => 'required|in:RUB,USD,EUR',
-            'period' => 'required|in:В час,В день,В неделю,В месяц',
+            'currency' => ['required', Rule::enum(CurrencyEnum::class)],
+            'period' => ['required', Rule::enum(PeriodEnum::class)],
             'bonus' => 'nullable|string|max:1000',
             'probation' => 'nullable|string|max:255',
             'probation_salary' => 'nullable|regex:/^[0-9]+$/',
