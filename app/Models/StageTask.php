@@ -75,7 +75,7 @@ class StageTask extends Model
      */
     public function executor(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'excutor_id', 'id');
+        return $this->belongsTo(User::class);
     }
 
     /**
