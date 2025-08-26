@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Type;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class TypeTest extends TestCase
@@ -14,7 +14,7 @@ class TypeTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        // Storage::fake('public');
+        Storage::fake('public');
         $this->seed();
 
         // $user - User::find(1);

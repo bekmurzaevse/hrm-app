@@ -7,7 +7,7 @@ use App\Models\Interaction;
 use App\Models\Type;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class InteractionTest extends TestCase
@@ -17,6 +17,7 @@ class InteractionTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        Storage::fake('public');
         $this->seed();
 
         // $user - User::find(1);

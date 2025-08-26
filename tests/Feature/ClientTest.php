@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
@@ -77,10 +76,10 @@ class ClientTest extends TestCase
 
         $response
             ->assertStatus(200);
-            // ->assertJsonStructure([
-            //     'status',
-            //     'message',
-            // ]);
+        // ->assertJsonStructure([
+        //     'status',
+        //     'message',
+        // ]);
     }
 
     /**
@@ -263,10 +262,10 @@ class ClientTest extends TestCase
         $client = Client::inRandomOrder()->first();
 
         $file = UploadedFile::fake()->create(
-                'INN.pdf',
-                200, // 200 KB
-                'application/pdf'
-            );
+            'INN.pdf',
+            200, // 200 KB
+            'application/pdf'
+        );
 
         $payload = [
             'files' => [$file],
@@ -275,10 +274,10 @@ class ClientTest extends TestCase
         $response = $this->postJson("api/v1/clients/$client->id/files/upload", $payload);
 
         $response->assertStatus(200);
-            // ->assertJsonStructure([
-            //     'status',
-            //     'message',
-            // ]);
+        // ->assertJsonStructure([
+        //     'status',
+        //     'message',
+        // ]);
     }
 
     /**
@@ -290,10 +289,10 @@ class ClientTest extends TestCase
         $client = Client::inRandomOrder()->first();
 
         $file = UploadedFile::fake()->create(
-                'document.pdf',
-                200, // 200 KB
-                'application/pdf'
-            );
+            'document.pdf',
+            200, // 200 KB
+            'application/pdf'
+        );
         $payload = [
             'files' => [$file],
         ];
