@@ -8,9 +8,9 @@ use App\Actions\v1\User\IndexAction;
 use App\Actions\v1\User\ShowAction;
 use App\Actions\v1\User\UpdateAction;
 use App\Actions\v1\User\UpdateStatusAction;
-use App\Dto\User\CreateDto;
-use App\Dto\User\UpdateDto;
-use App\Dto\User\UpdateStatusDto;
+use App\Dto\v1\User\CreateDto;
+use App\Dto\v1\User\UpdateDto;
+use App\Dto\v1\User\UpdateStatusDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\User\CreateRequest;
 use App\Http\Requests\v1\User\UpdateRequest;
@@ -19,7 +19,6 @@ use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
-
     /**
      * Summary of index
      * @param \App\Actions\v1\User\IndexAction $action

@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Candidate;
 
-use App\Dto\Candidate\UpdateDto;
+use App\Dto\v1\Candidate\UpdateDto;
 use App\Exceptions\ApiResponseException;
 use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
@@ -18,9 +18,9 @@ class UpdateAction
     /**
      * Summary of __invoke
      * @param int $id
-     * @param \App\Dto\Candidate\UpdateDto $dto
-     * @throws \App\Exceptions\ApiResponseException
+     * @param \App\Dto\v1\Candidate\UpdateDto $dto
      * @return JsonResponse
+     *@throws \App\Exceptions\ApiResponseException
      */
     public function __invoke(int $id, UpdateDto $dto): JsonResponse
     {

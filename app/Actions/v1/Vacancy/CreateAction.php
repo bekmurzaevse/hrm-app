@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Vacancy;
 
-use App\Dto\Vacancy\CreateDto;
+use App\Dto\v1\Vacancy\CreateDto;
 use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -13,7 +13,7 @@ class CreateAction
 
     /**
      * Summary of __invoke
-     * @param \App\Dto\Vacancy\CreateDto $dto
+     * @param \App\Dto\v1\Vacancy\CreateDto $dto
      * @return JsonResponse
      */
     public function __invoke(CreateDto $dto): JsonResponse

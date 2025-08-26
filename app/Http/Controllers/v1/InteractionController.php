@@ -7,8 +7,8 @@ use App\Actions\v1\Interaction\DeleteAction;
 use App\Actions\v1\Interaction\IndexAction;
 use App\Actions\v1\Interaction\ShowAction;
 use App\Actions\v1\Interaction\UpdateAction;
-use App\Dto\Interaction\CreateDto;
-use App\Dto\Interaction\UpdateDto;
+use App\Dto\v1\Interaction\CreateDto;
+use App\Dto\v1\Interaction\UpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Interaction\CreateRequest;
 use App\Http\Requests\v1\Interaction\UpdateRequest;
@@ -16,7 +16,6 @@ use Illuminate\Http\JsonResponse;
 
 class InteractionController extends Controller
 {
-
     /**
      * Summary of index
      * @param \App\Actions\v1\Interaction\IndexAction $action

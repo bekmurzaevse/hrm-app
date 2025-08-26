@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Interaction;
 
-use App\Dto\Interaction\UpdateDto;
+use App\Dto\v1\Interaction\UpdateDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Interaction;
 use App\Traits\ResponseTrait;
@@ -16,9 +16,9 @@ class UpdateAction
     /**
      * Summary of __invoke
      * @param int $id
-     * @param \App\Dto\Interaction\UpdateDto $dto
-     * @throws \App\Exceptions\ApiResponseException
+     * @param \App\Dto\v1\Interaction\UpdateDto $dto
      * @return JsonResponse
+     *@throws \App\Exceptions\ApiResponseException
      */
     public function __invoke(int $id, UpdateDto $dto): JsonResponse
     {

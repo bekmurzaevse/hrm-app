@@ -2,9 +2,8 @@
 
 namespace App\Actions\v1\Client;
 
-use App\Dto\Client\UpdateDto;
+use App\Dto\v1\Client\UpdateDto;
 use App\Exceptions\ApiResponseException;
-use App\Helpers\FileUploadHelper;
 use App\Models\Client;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -17,9 +16,9 @@ class UpdateAction
     /**
      * Summary of __invoke
      * @param int $id
-     * @param \App\Dto\Client\UpdateDto $dto
-     * @throws \App\Exceptions\ApiResponseException
+     * @param \App\Dto\v1\Client\UpdateDto $dto
      * @return JsonResponse
+     *@throws \App\Exceptions\ApiResponseException
      */
     public function __invoke(int $id, UpdateDto $dto): JsonResponse
     {

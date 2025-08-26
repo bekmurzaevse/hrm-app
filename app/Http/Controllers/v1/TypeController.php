@@ -7,8 +7,8 @@ use App\Actions\v1\Type\DeleteAction;
 use App\Actions\v1\Type\IndexAction;
 use App\Actions\v1\Type\ShowAction;
 use App\Actions\v1\Type\UpdateAction;
-use App\Dto\Type\CreateDto;
-use App\Dto\Type\UpdateDto;
+use App\Dto\v1\Type\CreateDto;
+use App\Dto\v1\Type\UpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Type\CreateRequest;
 use App\Http\Requests\v1\Type\UpdateRequest;
@@ -16,7 +16,6 @@ use Illuminate\Http\JsonResponse;
 
 class TypeController extends Controller
 {
-
     /**
      * Summary of index
      * @param \App\Actions\v1\Type\IndexAction $action

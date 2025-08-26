@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Project;
 
-use App\Dto\Project\CloseProjectDto;
+use App\Dto\v1\Project\CloseProjectDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Project;
 use App\Traits\ResponseTrait;
@@ -15,7 +15,7 @@ class CloseProjectAction
 
     /**
      * Summary of __invoke
-     * @param \App\Dto\Project\UpdateDto $dto
+     * @param \App\Dto\v1\Project\UpdateDto $dto
      * @return JsonResponse
      */
     public function __invoke(int $id, CloseProjectDto $dto): JsonResponse

@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Type;
 
-use App\Dto\Type\UpdateDto;
+use App\Dto\v1\Type\UpdateDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Type;
 use App\Traits\ResponseTrait;
@@ -16,9 +16,9 @@ class UpdateAction
     /**
      * Summary of __invoke
      * @param int $id
-     * @param \App\Dto\Type\UpdateDto $dto
-     * @throws \App\Exceptions\ApiResponseException
+     * @param \App\Dto\v1\Type\UpdateDto $dto
      * @return JsonResponse
+     *@throws \App\Exceptions\ApiResponseException
      */
     public function __invoke(int $id, UpdateDto $dto): JsonResponse
     {

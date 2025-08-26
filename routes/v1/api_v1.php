@@ -2,13 +2,25 @@
 
 use App\Enums\TokenAbilityEnum;
 use App\Http\Controllers\v1\AuthController;
-use App\Http\Controllers\v1\CandidateController;
-use App\Http\Controllers\v1\ClientController;
-use App\Http\Controllers\v1\ProjectController;
+use App\Http\Controllers\v1\Candidate\CandidateController;
+use App\Http\Controllers\v1\Candidate\CandidateExperienceController;
+use App\Http\Controllers\v1\Candidate\CandidateLanguageController;
+use App\Http\Controllers\v1\Candidate\CandidateEducationController;
+use App\Http\Controllers\v1\Candidate\CandidateContactController;
+use App\Http\Controllers\v1\Candidate\CandidateSkillController;
+use App\Http\Controllers\v1\Candidate\CandidateFileController;
+use App\Http\Controllers\v1\Clinet\ClientController;
+use App\Http\Controllers\v1\Clinet\ClientFileController;
 use App\Http\Controllers\v1\InteractionController;
+use App\Http\Controllers\v1\Project\ProjectController;
+use App\Http\Controllers\v1\Project\ProjectFileController;
+use App\Http\Controllers\v1\Project\ProjectStageController;
+use App\Http\Controllers\v1\Project\StageTaskController;
 use App\Http\Controllers\v1\TypeController;
 use App\Http\Controllers\v1\UserController;
-use App\Http\Controllers\v1\VacancyController;
+use App\Http\Controllers\v1\Vacancy\VacancyController;
+use App\Http\Controllers\v1\Vacancy\VacancyFileController;
+use App\Http\Controllers\v1\Vacancy\VacancySkillController;
 use Illuminate\Support\Facades\Route;
 
 Route::pattern('id', '\d+');
@@ -66,48 +78,45 @@ Route::prefix('auth')->middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum
     Route::prefix('candidates')->group(function () {
         Route::get('/', [CandidateController::class, 'index']);
         Route::get('/{id}', [CandidateController::class, 'show']);
-
-        Route::post('/{id}/upload', [CandidateController::class, 'upload']);
-        Route::get('/{id}/download/{fileId}', [CandidateController::class, 'download']);
-        Route::post('/{id}/deleteFile/{fileId}', [CandidateController::class, 'deleteFile']);
-
-        Route::post('/{id}/experience/create', [CandidateController::class, 'experienceCreate']);
-        Route::put('/{id}/experience/update/{workId}', [CandidateController::class, 'experienceUpdate']);
-        Route::delete('/experience/delete/{id}', [CandidateController::class, 'experienceDelete']);
-
-        Route::post('/{id}/languages/create', [CandidateController::class, 'languageCreate']);
-        Route::put('/{id}/languages/update/{langId}', [CandidateController::class, 'languageUpdate']);
-        Route::delete('/languages/delete/{id}', [CandidateController::class, 'languageDelete']);
-
-        Route::post('/{id}/skills/create', [CandidateController::class, 'skillCreate']);
-        Route::put('/{id}/skills/update/{skillId}', [CandidateController::class, 'skillUpdate']);
-        Route::delete('{id}/skills/delete/{skillId}', [CandidateController::class, 'skillDelete']);
-
-        Route::post('/{id}/educations/create', [CandidateController::class, 'educationCreate']);
-        Route::put('/{id}/educations/update/{educationId}', [CandidateController::class, 'educationUpdate']);
-        Route::delete('/educations/delete/{id}', [CandidateController::class, 'educationDelete']);
-
-        Route::post('/{id}/contacts/create', [CandidateController::class, 'contactCreate']);
-        Route::put('/{id}/contacts/update/{contactId}', [CandidateController::class, 'contactUpdate']);
-        Route::delete('/{id}/contacts/delete/{contactId}', [CandidateController::class, 'contactUDelete']);
-
         Route::post('/create', [CandidateController::class, 'create']);
         Route::put('/update/{id}', [CandidateController::class, 'update']);
         Route::delete('/delete/{id}', [CandidateController::class, 'delete']);
+        // File
+        Route::post('/{id}/upload', [CandidateFileController::class, 'upload']);
+        Route::get('/{id}/download/{fileId}', [CandidateFileController::class, 'download']);
+        Route::post('/{id}/deleteFile/{fileId}', [CandidateFileController::class, 'deleteFile']);
+        //Experience
+        Route::post('/{id}/experience/create', [CandidateExperienceController::class, 'experienceCreate']);
+        Route::put('/{id}/experience/update/{workId}', [CandidateExperienceController::class, 'experienceUpdate']);
+        Route::delete('/experience/delete/{id}', [CandidateExperienceController::class, 'experienceDelete']);
+        // Language
+        Route::post('/{id}/languages/create', [CandidateLanguageController::class, 'languageCreate']);
+        Route::put('/{id}/languages/update/{langId}', [CandidateLanguageController::class, 'languageUpdate']);
+        Route::delete('/languages/delete/{id}', [CandidateLanguageController::class, 'languageDelete']);
+        // Skill
+        Route::post('/{id}/skills/create', [CandidateSkillController::class, 'skillCreate']);
+        Route::put('/{id}/skills/update/{skillId}', [CandidateSkillController::class, 'skillUpdate']);
+        Route::delete('{id}/skills/delete/{skillId}', [CandidateSkillController::class, 'skillDelete']);
+        //Education
+        Route::post('/{id}/educations/create', [CandidateEducationController::class, 'educationCreate']);
+        Route::put('/{id}/educations/update/{educationId}', [CandidateEducationController::class, 'educationUpdate']);
+        Route::delete('/educations/delete/{id}', [CandidateEducationController::class, 'educationDelete']);
+        //Contact
+        Route::post('/{id}/contacts/create', [CandidateContactController::class, 'contactCreate']);
+        Route::put('/{id}/contacts/update/{contactId}', [CandidateContactController::class, 'contactUpdate']);
+        Route::delete('/{id}/contacts/delete/{contactId}', [CandidateContactController::class, 'contactUDelete']);
     });
 
     Route::prefix('clients')->group(function () {
         Route::get('/', [ClientController::class, 'index']);
         Route::get('/{id}', [ClientController::class, 'show']);
-
-        Route::get('/{id}/files/download/{fileId}', [ClientController::class, 'download']);
-        Route::post('/{id}/files/upload', [ClientController::class, 'upload']);
-        Route::delete('/{id}/files/deleteFile/{fileId}', [ClientController::class, 'deleteFile']);
-
-
         Route::post('/create', [ClientController::class, 'create']);
         Route::put('/update/{id}', [ClientController::class, 'update']);
         Route::delete('/delete/{id}', [ClientController::class, 'delete']);
+        // File
+        Route::get('/{id}/files/download/{fileId}', [ClientFileController::class, 'download']);
+        Route::post('/{id}/files/upload', [ClientFileController::class, 'upload']);
+        Route::delete('/{id}/files/deleteFile/{fileId}', [ClientFileController::class, 'deleteFile']);
     });
 
     // Vacancies
@@ -118,14 +127,14 @@ Route::prefix('auth')->middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum
         Route::put('/update/{id}', [VacancyController::class, 'update']);
         Route::delete('/delete/{id}', [VacancyController::class, 'delete']);
         //File
-        Route::get('/{id}/download/{fileId}', [VacancyController::class, 'downloadFile']);
-        Route::get('/{id}/file/{fileId}', [VacancyController::class, 'showFile']);
-        Route::post('/{id}/upload', [VacancyController::class, 'uploadFile']);
-        Route::delete('/{id}/delete/{fileId}', [VacancyController::class, 'deleteFile']);
+        Route::get('/{id}/download/{fileId}', [VacancyFileController::class, 'downloadFile']);
+        Route::get('/{id}/file/{fileId}', [VacancyFileController::class, 'showFile']);
+        Route::post('/{id}/upload', [VacancyFileController::class, 'uploadFile']);
+        Route::delete('/{id}/delete/{fileId}', [VacancyFileController::class, 'deleteFile']);
         // Skills
-        Route::post('/{id}/skills/create', [VacancyController::class, 'createSkills']);
-        Route::put('/{id}/skills/update/{skillId}', [VacancyController::class, 'updateSkill']);
-        Route::delete('/{id}/skills/delete/{skillId}', [VacancyController::class, 'deleteSkill']);
+        Route::post('/{id}/skills/create', [VacancySkillController::class, 'createSkills']);
+        Route::put('/{id}/skills/update/{skillId}', [VacancySkillController::class, 'updateSkill']);
+        Route::delete('/{id}/skills/delete/{skillId}', [VacancySkillController::class, 'deleteSkill']);
     });
 
     // Projects
@@ -138,20 +147,20 @@ Route::prefix('auth')->middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum
         Route::put('/update/{id}', [ProjectController::class, 'update']);
         Route::patch('/{id}/close', [ProjectController::class, 'closeProject']);
         // File
-        Route::get('/{id}/download/{fileId}', [ProjectController::class, 'downloadFile']);
-        Route::get('/{id}/file/{fileId}', [ProjectController::class, 'showFile']);
-        Route::post('/{id}/upload', [ProjectController::class, 'uploadFile']);
-        Route::delete('/{id}/delete/{fileId}', [ProjectController::class, 'deleteFile']);
+        Route::get('/{id}/download/{fileId}', [ProjectFileController::class, 'downloadFile']);
+        Route::get('/{id}/file/{fileId}', [ProjectFileController::class, 'showFile']);
+        Route::post('/{id}/upload', [ProjectFileController::class, 'uploadFile']);
+        Route::delete('/{id}/delete/{fileId}', [ProjectFileController::class, 'deleteFile']);
         // Stage
-        Route::post('/{id}/stage/create', [ProjectController::class, 'createStage']);
-        Route::patch('/stage/{stageId}/update', [ProjectController::class, 'updateStage']);
-        Route::patch('/stage/{stageId}/require', [ProjectController::class, 'setRequireStage']);
-        Route::patch('/stage/{stageId}/complete', [ProjectController::class, 'completeStage']);
-        Route::delete('/stage/delete/{stageId}', [ProjectController::class, 'deleteStage']);
+        Route::post('/{id}/stage/create', [ProjectStageController::class, 'createStage']);
+        Route::patch('/stage/{stageId}/update', [ProjectStageController::class, 'updateStage']);
+        Route::patch('/stage/{stageId}/require', [ProjectStageController::class, 'setRequireStage']);
+        Route::patch('/stage/{stageId}/complete', [ProjectStageController::class, 'completeStage']);
+        Route::delete('/stage/delete/{stageId}', [ProjectStageController::class, 'deleteStage']);
         // Stage Task
-        Route::post('/stage/task/create', [ProjectController::class, 'createStageTask']);
-        Route::put('/stage/task/{taskId}/update', [ProjectController::class, 'updateStageTask']);
-        Route::delete('/stage/task/{taskId}/delete', [ProjectController::class, 'deleteStageTask']);
+        Route::post('/stage/task/create', [StageTaskController::class, 'createStageTask']);
+        Route::put('/stage/task/{taskId}/update', [StageTaskController::class, 'updateStageTask']);
+        Route::delete('/stage/task/{taskId}/delete', [StageTaskController::class, 'deleteStageTask']);
     });
 
     Route::prefix('users')->group(function () {
