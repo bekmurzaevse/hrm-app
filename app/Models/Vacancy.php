@@ -2,6 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\CurrencyEnum;
+use App\Enums\EducationEnum;
+use App\Enums\EmploymentTypeEnum;
+use App\Enums\PeriodEnum;
+use App\Enums\VacancyStatusEnum;
+use App\Enums\WorkExperienceEnum;
+use App\Enums\WorkScheduleEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,11 +51,18 @@ class Vacancy extends Model
 
     /**
      * Summary of casts
-     * @return array{created_at: string, deadline: string, updated_at: string}
+     * @return array{created_at: string, currency: string, education: string, period: string, status: string, type_employment: string, updated_at: string, work_experience: string, work_schedule: string}
      */
     protected function casts(): array
     {
         return [
+            'type_employment' => EmploymentTypeEnum::class,
+            'work_schedule' => WorkScheduleEnum::class,
+            'work_experience' => WorkExperienceEnum::class,
+            'education' => EducationEnum::class,
+            'status' => VacancyStatusEnum::class,
+            'currency' => CurrencyEnum::class,
+            'period' => PeriodEnum::class,
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
