@@ -206,7 +206,6 @@ class VacancyTest extends TestCase
      */
     public function test_admin_and_manager_can_update_vacancy(): void
     {
-        $this->withoutExceptionHandling();
         $vacancy = Vacancy::find(1);
 
         $data = [

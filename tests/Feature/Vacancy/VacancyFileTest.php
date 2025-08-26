@@ -57,8 +57,6 @@ class VacancyFileTest extends TestCase
      */
     public function test_vacancy_file_download()
     {
-        $this->withoutExceptionHandling();
-
         $vacancy = Vacancy::find(1);
 
         $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');
@@ -83,8 +81,6 @@ class VacancyFileTest extends TestCase
      */
     public function test_vacancy_file_show()
     {
-        $this->withoutExceptionHandling();
-
         $vacancy = Vacancy::find(1);
 
         $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');
@@ -109,8 +105,6 @@ class VacancyFileTest extends TestCase
      */
     public function test_vacancy_file_delete()
     {
-        $this->withoutExceptionHandling();
-
         $vacancy = Vacancy::find(1);
 
         $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');
