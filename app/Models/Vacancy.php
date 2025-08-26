@@ -23,7 +23,7 @@ class Vacancy extends Model
         'work_schedule',
         'work_experience',
         'education',
-        'satus',
+        'status',
         'position_count',
         'created_by',
         'salary',
