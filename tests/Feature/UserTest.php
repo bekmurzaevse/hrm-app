@@ -146,8 +146,6 @@ class UserTest extends TestCase
      */
     public function test_user_can_update(): void
     {
-        $this->withoutExceptionHandling();
-
         // $user = User::find(1)->first();
         // $this->actingAs($user);
 

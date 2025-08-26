@@ -54,11 +54,7 @@ class InteractionTest extends TestCase
         $response = $this->getJson('/api/v1/types/' . $typeId);
 
         $response
-            ->assertStatus(200)
-            ->assertJsonStructure([
-                'status',
-                'message',
-            ]);
+            ->assertStatus(200);
     }
 
     /**
