@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\v1\Clinet;
+namespace App\Http\Controllers\v1\Client;
 
 use App\Actions\v1\Client\CreateAction;
 use App\Actions\v1\Client\DeleteAction;

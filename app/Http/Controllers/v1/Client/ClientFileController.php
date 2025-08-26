@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\v1\Clinet;
+namespace App\Http\Controllers\v1\Client;
 
 use App\Actions\v1\Client\File\DeleteFileAction;
 use App\Actions\v1\Client\File\DownloadAction;
