@@ -29,4 +29,24 @@ class UpdateWorkExperienceRequest extends FormRequest
             'description' => 'nullable|string',
         ];
     }
+
+    /**
+     * Summary of messages
+     * @return array{company.max: string, company.required: string, company.string: string, position.max: string, position.required: string, position.string: string, start_year.max: string, start_year.required: string, start_year.string: string, start_year.string: string}
+     */
+    public function messages(): array
+    {
+        return [
+            'company.required' => "company ma'jbu'riy.",
+            'company.string' => "company string boliw kerek.",
+            'company.max' => "company 50 belgiden ko'p bolmawi kerek.",
+            'position.required' => "position ma'jbu'riy.",
+            'position.string' => "position string boliw kerek.",
+            'position.max' => "position 50 belgiden ko'p bolmawi kerek.",
+            'start_year.required' => "start_year ma'jbu'riy.",
+            'start_year.string' => "start_year string boliw kerek.",
+            'start_year.max' => "start_year 50 belgiden ko'p bolmawi kerek.",
+            'start_year.string' => "start_year string boliw kerek.",
+        ];
+    }
 }

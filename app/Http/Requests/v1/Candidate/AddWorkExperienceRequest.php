@@ -30,4 +30,20 @@ class AddWorkExperienceRequest extends FormRequest
             'description' => 'nullable|string',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'company.required' => "company ma'jbu'riy.",
+            'company.string' => "company string boliw kerek.",
+            'company.max' => "company 50 belgiden ko'p bolmawi kerek.",
+            'position.required' => "position ma'jbu'riy.",
+            'position.string' => "position string boliw kerek.",
+            'position.max' => "position 50 belgiden ko'p bolmawi kerek.",
+            'start_year.required' => "start_year ma'jbu'riy.",
+            'start_year.string' => "start_year string boliw kerek.",
+            'start_year.max' => "start_year 50 belgiden ko'p bolmawi kerek.",
+            'start_year.string' => "start_year string boliw kerek.",
+        ];
+    }
 }

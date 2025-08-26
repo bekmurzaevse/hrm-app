@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -11,7 +12,6 @@ use Tests\TestCase;
 
 class CandidateTest extends TestCase
 {
-
     use RefreshDatabase;
 
     public function setUp(): void
@@ -284,6 +284,31 @@ class CandidateTest extends TestCase
                 'message',
             ]);
 
+        $this->assertDatabaseHas('candidates', [
+            'first_name' => "Joe new",
+            'last_name' => "Biden new",
+            'patronymic' => "Putin new",
+            'birth_date' => "1950-11-24 00:00:00",
+            'gender' => "male",
+            'citizenship' => "USA",
+            'country_residence' => "Uzbekistan",
+            'region' => "Tashkent",
+            'family_status' => "married",
+            'family_info' => "Short text of family new",
+            'status' => "employed",
+            'workplace' => "ASUS",
+            'position' => "CEO",
+            'city' => "Samarkand",
+            'address' => "Beruniy street",
+            'desired_salary' => 8000,
+            'source' => "hh.ru",
+            'experience' => 3,
+            'short_summary' => "short summary",
+            'achievments' => "diplom, Sertificate ...",
+            'comment' => "some text",
+            'description' => "description",
+            'user_id' => 1,
+        ]);
     }
 
     /**
@@ -389,7 +414,7 @@ class CandidateTest extends TestCase
             'degree' => "test degree",
             'specialty' => 'test specialty',
             'start_year' => '2019',
-            'end_year' => '2023',
+            'end_year' => '2024',
             'candidate_id' => $candidate->id,
             'description' => 'test description',
         ];
@@ -427,7 +452,7 @@ class CandidateTest extends TestCase
             'degree' => "test degree",
             'specialty' => 'test specialty',
             'start_year' => '2019',
-            'end_year' => '2023',
+            'end_year' => '2024',
             'candidate_id' => $candidate->id,
             'description' => 'test description',
         ];
@@ -471,6 +496,16 @@ class CandidateTest extends TestCase
                 'status',
                 'message',
             ]);
+
+        $this->assertDatabaseHas('education',[
+            'title' => "test title",
+            'degree' => "test degree",
+            'specialty' => 'test specialty',
+            'start_year' => '2019',
+            'end_year' => '2023',
+            'candidate_id' => $candidate->id,
+            'description' => 'test description',
+        ]);
     }
 
     /**
@@ -498,6 +533,15 @@ class CandidateTest extends TestCase
                 'status',
                 'message',
             ]);
+
+        $this->assertDatabaseHas('work_experiences',[
+            'company' => "Goole",
+            'position' => "Senior Software Ingeneer",
+            'candidate_id' => $candidate->id,
+            'start_work' => "2013",
+            'end_work' => "2018",
+            'description' => "test description",
+        ]);
     }
 
     /**
@@ -536,6 +580,15 @@ class CandidateTest extends TestCase
                 'status',
                 'message',
             ]);
+
+        $this->assertDatabaseHas('work_experiences', [
+            'company' => "Yandex new",
+            'position' => "Intern new",
+            'candidate_id' => $candidate->id,
+            'start_work' => "2018",
+            'end_work' => "2018",
+            'description' => "test description",
+        ]);
     }
 
     /**
@@ -564,6 +617,10 @@ class CandidateTest extends TestCase
                 'status',
                 'message',
             ]);
+
+        $this->assertSoftDeleted('work_experiences', [
+            'id' => $experienceId,
+        ]);
     }
 
     /**
@@ -589,6 +646,13 @@ class CandidateTest extends TestCase
                 'status',
                 'message',
             ]);
+
+        $this->assertDatabaseHas('languages', [
+            'title' => "France",
+            'degree' => "Elemantary",
+            'candidate_id' => $candidate->id,
+            'description' => "test desc",
+        ]);
     }
 
     /**
@@ -623,6 +687,13 @@ class CandidateTest extends TestCase
                 'status',
                 'message',
             ]);
+
+        $this->assertDatabaseHas('languages', [
+            'title' => "German",
+            'degree' => "B1",
+            'candidate_id' => $candidate->id,
+            'description' => "test desc",
+        ]);
     }
 
     /**
@@ -649,6 +720,10 @@ class CandidateTest extends TestCase
                 'status',
                 'message',
             ]);
+
+        $this->assertSoftDeleted('languages', [
+            'id' => $langId,
+        ]);
     }
 
     /**
@@ -671,6 +746,10 @@ class CandidateTest extends TestCase
                 'status',
                 'message',
             ]);
+
+        $this->assertDatabaseHas('skills', [
+            'title' => 'PHP',
+        ]);
     }
 
     /**
@@ -699,6 +778,11 @@ class CandidateTest extends TestCase
                 'status',
                 'message',
             ]);
+
+        $this->assertDatabaseHas('skills', [
+            'id' => $skillId,
+            'title' => 'telegram',
+        ]);
     }
 
     /**
@@ -723,6 +807,10 @@ class CandidateTest extends TestCase
                 'status',
                 'message',
             ]);
+
+        $this->assertSoftDeleted('skills', [
+            'id' => $skillId,
+        ]);
     }
 
     /**
@@ -778,5 +866,9 @@ class CandidateTest extends TestCase
                 'status',
                 'message',
             ]);
+
+        $this->assertSoftDeleted('files', [
+            'id' => $fileId,
+        ]);
     }
 }

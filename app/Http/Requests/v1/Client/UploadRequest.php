@@ -37,4 +37,19 @@ class UploadRequest extends FormRequest
 
         ];
     }
+
+    /**
+     * Summary of messages
+     * @return array{files.array: string, files.file: string, files.max: string, files.mimetypes: string, files.required: string}
+     */
+    public function messages(): array
+    {
+        return [
+            'files.required' => "files ma'jbu'riy.",
+            'files.array' => "files array boliw kerek.",
+            'files.file' => "Tip file boliw kerek.",
+            'files.max' => "file din' razmeri 4 Mb boliw kerek.",
+            'files.mimetypes' => "file din' tipleri (" . implode(',', $this->allowedMimes) . ") boliw kerek.",
+        ];
+    }
 }

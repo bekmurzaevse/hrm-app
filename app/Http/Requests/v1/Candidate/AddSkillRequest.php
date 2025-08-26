@@ -22,8 +22,16 @@ class AddSkillRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titles' => 'required|array|max:50',
+            'titles' => 'required|array',
             'titles.*' => 'required|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'titles.required' => "titles ma'jbu'riy.",
+            'titles.array' => "titles array boliw kerek.",
         ];
     }
 }

@@ -29,4 +29,24 @@ class UpdateRequest extends FormRequest
             'description' => 'nullable|string',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'value.required' => "value ma'jbu'riy.",
+            'value.string' => "value string boliw kerek.",
+
+            'user_id.required' => "user id kiritiliwi kerek.",
+            'user_id.integer' => "user id pu'tin san kiritiliwi kerek.",
+            'user_id.exists' => "user id bazada tabilmadi.",
+
+            'type_id.required' => "type id kiritiliwi kerek.",
+            'type_id.integer' => "type id pu'tin san kiritiliwi kerek.",
+            'type_id.exists' => "type id bazada tabilmadi.",
+
+            'candidate_id.required' => "candidate id kiritiliwi kerek.",
+            'candidate_id.integer' => "candidate id pu'tin san kiritiliwi kerek.",
+            'candidate_id.exists' => "candidate id bazada tabilmadi.",
+        ];
+    }
 }
