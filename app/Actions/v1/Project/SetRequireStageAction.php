@@ -22,7 +22,7 @@ class SetRequireStageAction
         try {
             $stage = Stage::findOrFail($stageId);
 
-            if ($stage->is_required === false) {
+            if (!$stage->is_required) {
                 $stage->is_required = true;
                 $stage->save();
 

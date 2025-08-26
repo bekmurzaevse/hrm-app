@@ -6,7 +6,6 @@ use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
@@ -139,9 +138,9 @@ class CandidateTest extends TestCase
                     ],
                     "photo",
                     //  => [
-                        // "name",
-                        // "path",
-                        // "size",
+                    // "name",
+                    // "path",
+                    // "size",
                     // ],
                     "description",
                 ]
@@ -338,7 +337,7 @@ class CandidateTest extends TestCase
             'value' => '878347563',
         ];
 
-        $response = $this->postJson("/api/v1/candidates/$candidate->id/contacts/create" , $data);
+        $response = $this->postJson("/api/v1/candidates/$candidate->id/contacts/create", $data);
 
         $response
             ->assertStatus(200)
@@ -368,7 +367,7 @@ class CandidateTest extends TestCase
 
         $contactId = $candidate->contacts()->inRandomOrder()->first()->id;
 
-        $response = $this->putJson("/api/v1/candidates/$candidate->id/contacts/update/$contactId" , $data);
+        $response = $this->putJson("/api/v1/candidates/$candidate->id/contacts/update/$contactId", $data);
 
         $response
             ->assertStatus(200)
@@ -396,7 +395,7 @@ class CandidateTest extends TestCase
         $response = $this->deleteJson("/api/v1/candidates/$candidate->id/contacts/delete/$contactId");
 
         $response->assertStatus(200)
-        ->assertJsonStructure([
+            ->assertJsonStructure([
                 'status',
                 'message',
             ]);
@@ -420,7 +419,7 @@ class CandidateTest extends TestCase
             'description' => 'test description',
         ];
 
-        $response = $this->postJson("/api/v1/candidates/$candidate->id/educations/create" , $data);
+        $response = $this->postJson("/api/v1/candidates/$candidate->id/educations/create", $data);
 
         $response
             ->assertStatus(200)
@@ -460,7 +459,7 @@ class CandidateTest extends TestCase
 
         $educationId = $candidate->educations()->inRandomOrder()->first()->id;
 
-        $response = $this->putJson("/api/v1/candidates/$candidate->id/educations/update/$educationId" , $data);
+        $response = $this->putJson("/api/v1/candidates/$candidate->id/educations/update/$educationId", $data);
 
         $response
             ->assertStatus(200)
@@ -493,7 +492,7 @@ class CandidateTest extends TestCase
         $response = $this->deleteJson("/api/v1/candidates/educations/delete/$educationId");
 
         $response->assertStatus(200)
-        ->assertJsonStructure([
+            ->assertJsonStructure([
                 'status',
                 'message',
             ]);
@@ -526,7 +525,7 @@ class CandidateTest extends TestCase
             'description' => "test description",
         ];
 
-        $response = $this->postJson("/api/v1/candidates/$candidate->id/experience/create" , $data);
+        $response = $this->postJson("/api/v1/candidates/$candidate->id/experience/create", $data);
 
         $response
             ->assertStatus(200)
@@ -573,7 +572,7 @@ class CandidateTest extends TestCase
 
         $workId = $candidate->workExperience()->inRandomOrder()->first()->id;
 
-        $response = $this->putJson("/api/v1/candidates/$candidate->id/experience/update/$workId" , $data);
+        $response = $this->putJson("/api/v1/candidates/$candidate->id/experience/update/$workId", $data);
 
         $response
             ->assertStatus(200)
@@ -614,7 +613,7 @@ class CandidateTest extends TestCase
         $response = $this->deleteJson("/api/v1/candidates/experience/delete/$experienceId");
 
         $response->assertStatus(200)
-        ->assertJsonStructure([
+            ->assertJsonStructure([
                 'status',
                 'message',
             ]);
@@ -639,7 +638,7 @@ class CandidateTest extends TestCase
             'description' => "test desc",
         ];
 
-        $response = $this->postJson("/api/v1/candidates/$candidate->id/languages/create" , $data);
+        $response = $this->postJson("/api/v1/candidates/$candidate->id/languages/create", $data);
 
         $response
             ->assertStatus(200)
@@ -680,7 +679,7 @@ class CandidateTest extends TestCase
 
         $langId = $candidate->languages()->inRandomOrder()->first()->id;
 
-        $response = $this->putJson("/api/v1/candidates/$candidate->id/languages/update/$langId" , $data);
+        $response = $this->putJson("/api/v1/candidates/$candidate->id/languages/update/$langId", $data);
 
         $response
             ->assertStatus(200)
@@ -717,7 +716,7 @@ class CandidateTest extends TestCase
         $response = $this->deleteJson("/api/v1/candidates/languages/delete/$langId");
 
         $response->assertStatus(200)
-        ->assertJsonStructure([
+            ->assertJsonStructure([
                 'status',
                 'message',
             ]);
@@ -739,7 +738,7 @@ class CandidateTest extends TestCase
             'titles' => ['PHP', 'Laravel'],
         ];
 
-        $response = $this->postJson("/api/v1/candidates/$candidate->id/skills/create" , $data);
+        $response = $this->postJson("/api/v1/candidates/$candidate->id/skills/create", $data);
 
         $response
             ->assertStatus(200)
@@ -771,7 +770,7 @@ class CandidateTest extends TestCase
 
         $skillId = $candidate->skills()->inRandomOrder()->first()->id;
 
-        $response = $this->putJson("/api/v1/candidates/$candidate->id/skills/update/$skillId" , $data);
+        $response = $this->putJson("/api/v1/candidates/$candidate->id/skills/update/$skillId", $data);
 
         $response
             ->assertStatus(200)
@@ -804,7 +803,7 @@ class CandidateTest extends TestCase
         $response = $this->deleteJson("/api/v1/candidates/$candidate->id/skills/delete/$skillId");
 
         $response->assertStatus(200)
-        ->assertJsonStructure([
+            ->assertJsonStructure([
                 'status',
                 'message',
             ]);
@@ -823,10 +822,10 @@ class CandidateTest extends TestCase
         $candidate = Candidate::inRandomOrder()->first();
 
         $file = UploadedFile::fake()->create(
-                'document.pdf',
-                200, // 200 KB
-                'application/pdf'
-            );
+            'document.pdf',
+            200, // 200 KB
+            'application/pdf'
+        );
 
         $payload = [
             'files' => [$file],
@@ -850,10 +849,10 @@ class CandidateTest extends TestCase
         $candidate = Candidate::inRandomOrder()->first();
 
         $file = UploadedFile::fake()->create(
-                'document.pdf',
-                200, // 200 KB
-                'application/pdf'
-            );
+            'document.pdf',
+            200, // 200 KB
+            'application/pdf'
+        );
         $payload = [
             'files' => [$file],
         ];
@@ -863,7 +862,7 @@ class CandidateTest extends TestCase
         $response = $this->postJson("/api/v1/candidates/$candidate->id/deleteFile/$fileId");
 
         $response->assertStatus(200)
-        ->assertJsonStructure([
+            ->assertJsonStructure([
                 'status',
                 'message',
             ]);

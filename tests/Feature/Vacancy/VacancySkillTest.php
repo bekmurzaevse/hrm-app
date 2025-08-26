@@ -29,7 +29,6 @@ class VacancySkillTest extends TestCase
      */
     public function test_vacancy_skills_can_create(): void
     {
-        $this->withoutExceptionHandling();
         $vacancy = Vacancy::find(1);
 
         $response = $this->postJson('/api/v1/vacancies/1/skills/create', [
