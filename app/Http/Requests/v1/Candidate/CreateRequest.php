@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests\v1\Candidate;
 
+use App\Enums\Candidate\CandidateStatusEnum;
+use App\Enums\Candidate\FamilyStatusEnum;
+use App\Enums\GenderEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateRequest extends FormRequest
 {
@@ -26,13 +30,13 @@ class CreateRequest extends FormRequest
             'last_name' => 'required|string|max:50',
             'patronymic' => 'required|string|max:50',
             'birth_date' => 'required|string',
-            'gender' => 'required|in:male,female',
+            'gender' => ['required', Rule::enum(GenderEnum::class)],
             'citizenship' => 'required|string',
             'country_residence' => 'required|string',
             'region' => 'required|string',
-            'family_status' => 'required|in:married,unmarried,divorced',
+            'family_status' => ['required', Rule::enum(FamilyStatusEnum::class)],
             'family_info' => 'nullable|string',
-            'status' => 'required|in:active,in_search,employed',
+            'status' => ['required', Rule::enum(CandidateStatusEnum::class)],
             'workplace' => 'nullable|string',
             'position' => 'required|string',
             'city' => 'required|string',

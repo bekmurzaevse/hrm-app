@@ -1,5 +1,8 @@
 <?php
 
+use App\Enums\Candidate\CandidateStatusEnum;
+use App\Enums\Candidate\FamilyStatusEnum;
+use App\Enums\GenderEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,15 +19,15 @@ return new class extends Migration {
             $table->string('last_name');
             $table->string('patronymic');
             $table->date('birth_date');
-            $table->enum('gender', ['male', 'female']);
+            $table->string('gender')->default(GenderEnum::MALE->value);
             $table->string('citizenship');
             $table->string('country_residence');
             $table->string('region');
             $table->string('city');
             $table->string('address');
             $table->text('family_info')->nullable();
-            $table->enum('family_status', ['married', 'unmarried', 'divorced']);
-            $table->enum('status', ['active', 'in_search', 'employed']);
+            $table->string('family_status')->default(FamilyStatusEnum::UNMARRIED->value);
+            $table->string('status')->default(CandidateStatusEnum::ACTIVE->value);
             $table->string('workplace')->nullable();
             $table->string('position');
             $table->double('desired_salary')->default(0);

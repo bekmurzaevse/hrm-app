@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\v1\User;
 
+use App\Enums\User\UserStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateRequest extends FormRequest
 {
@@ -28,7 +30,7 @@ class CreateRequest extends FormRequest
             'birth_date' => 'required|string',
             'address' => 'required|string',
             'position' => 'required|string',
-            'status' => 'required|in:working,not_working,dismissed',
+            'status' => ['required', Rule::enum(UserStatusEnum::class)],
             'phone' => 'required|string',
             'email' => 'required|string|email',
             'password' => 'required|string|min:6',
