@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Project;
 
-use App\Dto\Project\UpdatePerformerDto;
+use App\Dto\v1\Project\UpdatePerformerDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Project;
 use App\Traits\ResponseTrait;
@@ -15,7 +15,7 @@ class UpdatePerformerAction
 
     /**
      * Summary of __invoke
-     * @param \App\Dto\Project\UpdatePerformerDto $dto
+     * @param \App\Dto\v1\Project\UpdatePerformerDto $dto
      * @return JsonResponse
      */
     public function __invoke(int $id, UpdatePerformerDto $dto): JsonResponse

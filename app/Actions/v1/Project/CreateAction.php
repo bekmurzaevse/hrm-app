@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Project;
 
-use App\Dto\Project\CreateDto;
+use App\Dto\v1\Project\CreateDto;
 use App\Models\Project;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -13,7 +13,7 @@ class CreateAction
 
     /**
      * Summary of __invoke
-     * @param \App\Dto\Project\CreateDto $dto
+     * @param \App\Dto\v1\Project\CreateDto $dto
      * @return JsonResponse
      */
     public function __invoke(CreateDto $dto): JsonResponse

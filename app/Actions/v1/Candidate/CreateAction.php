@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Candidate;
 
-use App\Dto\Candidate\CreateDto;
+use App\Dto\v1\Candidate\CreateDto;
 use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
 use App\Traits\ResponseTrait;
@@ -14,7 +14,7 @@ class CreateAction
 
     /**
      * Summary of __invoke
-     * @param \App\Dto\Candidate\CreateDto $dto
+     * @param \App\Dto\v1\Candidate\CreateDto $dto
      * @return JsonResponse
      */
     public function __invoke(CreateDto $dto): JsonResponse

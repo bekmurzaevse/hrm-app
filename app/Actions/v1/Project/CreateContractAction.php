@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Project;
 
-use App\Dto\Project\CreateContractDto;
+use App\Dto\v1\Project\CreateContractDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Project;
 use App\Traits\ResponseTrait;
@@ -15,7 +15,7 @@ class CreateContractAction
 
     /**
      * Summary of __invoke
-     * @param \App\Dto\Project\CreateContractDto $dto
+     * @param \App\Dto\v1\Project\CreateContractDto $dto
      * @return JsonResponse
      */
     public function __invoke(int $id, CreateContractDto $dto): JsonResponse
@@ -30,7 +30,7 @@ class CreateContractAction
             ];
 
             $project->update($data);
-            
+
             // Log user activity
             $title = 'Создал контракт';
             $text = "Контракт для проекта «{$project->title}» был создан.";
