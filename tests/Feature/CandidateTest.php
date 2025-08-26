@@ -791,7 +791,6 @@ class CandidateTest extends TestCase
      */
     public function test_delete_skill_in_candidate(): void
     {
-
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->skills()->create([

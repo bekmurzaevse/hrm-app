@@ -66,7 +66,6 @@ class ClientTest extends TestCase
      */
     public function test_client_can_show(): void
     {
-        $this->withoutExceptionHandling();
         // $user = User::find(1)->first();
         // $this->actingAs($user);
 
@@ -76,10 +75,6 @@ class ClientTest extends TestCase
 
         $response
             ->assertStatus(200);
-        // ->assertJsonStructure([
-        //     'status',
-        //     'message',
-        // ]);
     }
 
     /**
@@ -88,7 +83,6 @@ class ClientTest extends TestCase
      */
     public function test_client_can_create(): void
     {
-        $this->withoutExceptionHandling();
         // $user = User::find(1)->first();
         // $this->actingAs($user);
 
@@ -123,7 +117,6 @@ class ClientTest extends TestCase
             'address' => $address,
             'user_id' => $userId,
             'INN' => $INN,
-            // 'KPP' => $KPP,
             'employee_count' => $employeeCount,
             'source' => $source,
             'activity' => $activity,
@@ -162,7 +155,6 @@ class ClientTest extends TestCase
      */
     public function test_client_can_update(): void
     {
-        $this->withoutExceptionHandling();
         // $user = User::find(1)->first();
         // $this->actingAs($user);
 
@@ -274,10 +266,6 @@ class ClientTest extends TestCase
         $response = $this->postJson("api/v1/clients/$client->id/files/upload", $payload);
 
         $response->assertStatus(200);
-        // ->assertJsonStructure([
-        //     'status',
-        //     'message',
-        // ]);
     }
 
     /**
