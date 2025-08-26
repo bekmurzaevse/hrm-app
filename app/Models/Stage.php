@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StageStatusEnum;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -28,11 +29,12 @@ class Stage extends Model
 
     /**
      * Summary of casts
-     * @return array{created_at: string, deadline: string, updated_at: string}
+     * @return array{created_at: string, deadline: string, status: string, updated_at: string}
      */
     protected function casts(): array
     {
         return [
+            'status' => StageStatusEnum::class,
             'deadline' => 'date',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
@@ -54,20 +56,6 @@ class Stage extends Model
     }
 
     /**
-     * Summary of getStatusAttribute
-     * @param mixed $value
-     * @return string
-     */
-    public function getStatusAttribute($value)
-    {
-        return [
-            'completed' => 'Завершен',
-            'in_progress' => 'В работе',
-            'waiting' => 'Ожидает',
-        ][$value];
-    }
-
-    /**
      * Summary of deadline
      * @return Attribute
      */
@@ -77,7 +65,7 @@ class Stage extends Model
             set: fn($value) => Carbon::createFromFormat('m-d-Y', $value),
         );
     }
-    
+
     /**
      * Summary of project
      * @return BelongsTo<Project, Stage>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\StageTaskPriorityEnum;
 use App\Models\StageTask;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,7 +19,7 @@ class StageTaskSeeder extends Seeder
             'title' => 'Sample Task',
             'description' => 'This is a sample task description.',
             'executor_id' => 1,
-            'priority' => 'medium',
+            'priority' => StageTaskPriorityEnum::MEDIUM->value,
             'deadline' => now()->addDays(7)->format('m-d-Y'),
             'created_by' => 1,
         ]);
@@ -28,7 +29,7 @@ class StageTaskSeeder extends Seeder
             'title' => 'Another Task',
             'description' => 'This is another task description.',
             'executor_id' => 2,
-            'priority' => 'high',
+            'priority' => StageTaskPriorityEnum::HIGH->value,
             'deadline' => now()->addDays(5)->format('m-d-Y'),
             'created_by' => 1,
         ]);
@@ -38,7 +39,7 @@ class StageTaskSeeder extends Seeder
             'title' => 'Third Task',
             'description' => 'This is the third task description.',
             'executor_id' => 1,
-            'priority' => 'low',
+            'priority' => StageTaskPriorityEnum::LOW->value,
             'deadline' => now()->addDays(10)->format('m-d-Y'),
             'created_by' => 1,
         ]);
@@ -48,7 +49,7 @@ class StageTaskSeeder extends Seeder
             'title' => 'Fourth Task',
             'description' => 'This is the fourth task description.',
             'executor_id' => 2,
-            'priority' => 'medium',
+            'priority' => StageTaskPriorityEnum::MEDIUM->value,
             'deadline' => now()->addDays(3)->format('m-d-Y'),
             'created_by' => 1,
         ]);
@@ -58,7 +59,7 @@ class StageTaskSeeder extends Seeder
             'title' => 'Sample Task',
             'description' => 'This is a sample task description.',
             'executor_id' => 1,
-            'priority' => 'medium',
+            'priority' => StageTaskPriorityEnum::MEDIUM->value,
             'deadline' => now()->addDays(7)->format('m-d-Y'),
             'created_by' => 1,
         ]);
@@ -68,7 +69,7 @@ class StageTaskSeeder extends Seeder
             'title' => 'Another Task',
             'description' => 'This is another task description.',
             'executor_id' => 2,
-            'priority' => 'high',
+            'priority' => StageTaskPriorityEnum::HIGH->value,
             'deadline' => now()->addDays(5)->format('m-d-Y'),
             'created_by' => 1,
         ]);
@@ -78,7 +79,7 @@ class StageTaskSeeder extends Seeder
             'title' => 'Third Task',
             'description' => 'This is the third task description.',
             'executor_id' => 1,
-            'priority' => 'low',
+            'priority' => StageTaskPriorityEnum::LOW->value,
             'deadline' => now()->addDays(10)->format('m-d-Y'),
             'created_by' => 1,
         ]);
@@ -88,7 +89,7 @@ class StageTaskSeeder extends Seeder
             'title' => 'Fourth Task',
             'description' => 'This is the fourth task description.',
             'executor_id' => 2,
-            'priority' => 'medium',
+            'priority' => StageTaskPriorityEnum::MEDIUM->value,
             'deadline' => now()->addDays(3)->format('m-d-Y'),
             'created_by' => 1,
         ]);
@@ -98,7 +99,7 @@ class StageTaskSeeder extends Seeder
             'title' => 'Sample Task',
             'description' => 'This is a sample task description.',
             'executor_id' => 1,
-            'priority' => 'medium',
+            'priority' => StageTaskPriorityEnum::MEDIUM->value,
             'deadline' => now()->addDays(7)->format('m-d-Y'),
             'created_by' => 1,
         ]);
@@ -108,7 +109,7 @@ class StageTaskSeeder extends Seeder
             'title' => 'Another Task',
             'description' => 'This is another task description.',
             'executor_id' => 2,
-            'priority' => 'high',
+            'priority' => StageTaskPriorityEnum::HIGH->value,
             'deadline' => now()->addDays(5)->format('m-d-Y'),
             'created_by' => 1,
         ]);
@@ -118,7 +119,7 @@ class StageTaskSeeder extends Seeder
             'title' => 'Third Task',
             'description' => 'This is the third task description.',
             'executor_id' => 1,
-            'priority' => 'low',
+            'priority' => StageTaskPriorityEnum::HIGH->value,
             'deadline' => now()->addDays(10)->format('m-d-Y'),
             'created_by' => 1,
         ]);
@@ -128,7 +129,7 @@ class StageTaskSeeder extends Seeder
             'title' => 'Fourth Task',
             'description' => 'This is the fourth task description.',
             'executor_id' => 2,
-            'priority' => 'medium',
+            'priority' => StageTaskPriorityEnum::MEDIUM->value,
             'deadline' => now()->addDays(3)->format('m-d-Y'),
             'created_by' => 1,
         ]);

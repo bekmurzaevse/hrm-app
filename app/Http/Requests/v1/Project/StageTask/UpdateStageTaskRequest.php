@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\v1\Project\StageTask;
 
+use App\Enums\StageTaskPriorityEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateStageTaskRequest extends FormRequest
 {
@@ -26,7 +28,7 @@ class UpdateStageTaskRequest extends FormRequest
             'title' => 'required|string|min:2|max:255',
             'description' => 'nullable|string',
             'executor_id' => 'required|integer|exists:users,id',
-            'priority' => 'required|string|in:low,medium,high',
+            'priority' => ['required', 'string', Rule::enum(StageTaskPriorityEnum::class)],
             'deadline' => 'required|date_format:m-d-Y',
         ];
     }

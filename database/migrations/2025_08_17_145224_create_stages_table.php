@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StageStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ return new class extends Migration {
             $table->boolean('is_required')->default(false);
             $table->foreignId('created_by')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->unsignedTinyInteger('order');
-            $table->enum('status', ['completed', 'in_progress', 'waiting'])->default('waiting');
+            $table->string('status')->default(StageStatusEnum::WAITING->value);
             $table->foreignId('project_id')->constrained('projects')->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('executor_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->softDeletes();

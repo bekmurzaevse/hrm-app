@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProjectStatusEnum;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -32,11 +33,12 @@ class Project extends Model
 
     /**
      * Summary of casts
-     * @return array{created_at: string, deadline: string, updated_at: string}
+     * @return array{created_at: string, deadline: string, status: string, updated_at: string}
      */
     protected function casts(): array
     {
         return [
+            'status' => ProjectStatusEnum::class,
             'deadline' => 'date',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
@@ -68,18 +70,6 @@ class Project extends Model
                 mb_substr($user->patronymic, 0, 1, 'UTF-8')
             );
         });
-    }
-
-    /**
-     * Summary of getStatusAttribute
-     * @return string
-     */
-    public function getStatusAttribute(): string
-    {
-        return [
-            'in_progress' => 'В работе',
-            'cancelled' => 'Отменен',
-        ][$this->attributes['status']];
     }
 
     /**

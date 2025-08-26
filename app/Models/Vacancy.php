@@ -2,6 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\CurrencyEnum;
+use App\Enums\EducationEnum;
+use App\Enums\EmploymentTypeEnum;
+use App\Enums\PeriodEnum;
+use App\Enums\VacancyStatusEnum;
+use App\Enums\WorkExperienceEnum;
+use App\Enums\WorkScheduleEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,11 +51,18 @@ class Vacancy extends Model
 
     /**
      * Summary of casts
-     * @return array{created_at: string, deadline: string, updated_at: string}
+     * @return array{created_at: string, currency: string, education: string, period: string, status: string, type_employment: string, updated_at: string, work_experience: string, work_schedule: string}
      */
     protected function casts(): array
     {
         return [
+            'type_employment' => EmploymentTypeEnum::class,
+            'work_schedule' => WorkScheduleEnum::class,
+            'work_experience' => WorkExperienceEnum::class,
+            'education' => EducationEnum::class,
+            'status' => VacancyStatusEnum::class,
+            'currency' => CurrencyEnum::class,
+            'period' => PeriodEnum::class,
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
@@ -63,150 +77,6 @@ class Vacancy extends Model
         return Attribute::make(
             get: fn($value) => ucfirst($value),
             set: fn($value) => trim($value)
-        );
-    }
-
-    /**
-     * Summary of typeEmployment
-     * @return Attribute
-     */
-    protected function typeEmployment(): Attribute
-    {
-        return Attribute::make(
-            get: function ($value) {
-                $map = [
-                    'office' => 'В офисе',
-                    'remote' => 'Удаленно',
-                    'tempororary' => 'Временная занятость',
-                    'internship' => 'Стажировка',
-                    'hybrid' => 'Гибридная работа',
-                ];
-
-                return $map[$value];
-            },
-            set: function ($value) {
-                $map = [
-                    'В офисе' => 'office',
-                    'Удаленно' => 'remote',
-                    'Временная занятость' => 'tempororary',
-                    'Стажировка' => 'internship',
-                    'Гибридная работа' => 'hybrid',
-                ];
-
-                return $map[$value];
-            }
-        );
-    }
-
-    /**
-     * Summary of workSchedule
-     * @return Attribute
-     */
-    protected function workSchedule(): Attribute
-    {
-        return Attribute::make(
-            get: function ($value) {
-                $map = [
-                    'full_time' => 'Полный день',
-                    'flexible' => 'Гибкий график',
-                    'remote' => 'Удаленная работа',
-                    'shift' => 'Сменный график',
-                ];
-
-                return $map[$value];
-            },
-            set: function ($value) {
-                $map = [
-                    'Полный день' => 'full_time',
-                    'Гибкий график' => 'flexible',
-                    'Удаленная работа' => 'remote',
-                    'Сменный график' => 'shift',
-                ];
-
-                return $map[$value];
-            }
-        );
-    }
-
-    /**
-     * Summary of workExperience
-     * @return Attribute
-     */
-    protected function workExperience(): Attribute
-    {
-        return Attribute::make(
-            get: function ($value) {
-                $map = [
-                    'no_experience' => 'Без опыта',
-                    'one_to_three' => '1-3 года',
-                    'three_to_six' => '3-6 лет',
-                    'over_six' => 'Более 6 лет',
-                ];
-
-                return $map[$value];
-            },
-            set: function ($value) {
-                $map = [
-                    'Без опыта' => 'no_experience',
-                    '1-3 года' => 'one_to_three',
-                    '3-6 лет' => 'three_to_six',
-                    'Более 6 лет' => 'over_six',
-                ];
-
-                return $map[$value];
-            }
-        );
-    }
-
-    /**
-     * Summary of education
-     * @return Attribute
-     */
-    protected function education(): Attribute
-    {
-        return Attribute::make(
-            get: function ($value) {
-                $map = [
-                    'secondary' => 'Среднее',
-                    'secondary_vocational' => 'Среднее специальное',
-                    'incomplete_higher' => 'Неоконченное высшее',
-                    'higher' => 'Высшее',
-                ];
-
-                return $map[$value];
-            },
-            set: function ($value) {
-                $map = [
-                    'Среднее' => 'secondary',
-                    'Среднее специальное' => 'secondary_vocational',
-                    'Неоконченное высшее' => 'incomplete_higher',
-                    'Высшее' => 'higher',
-                ];
-
-                return $map[$value];
-            }
-        );
-    }
-
-    /**
-     * Summary of status
-     * @return Attribute
-     */
-    protected function status(): Attribute
-    {
-        return Attribute::make(
-            get: fn($value) => [
-                'not_active' => 'Не активна',
-                'open' => 'Открыта',
-                'closed' => 'Закрыта',
-                'not_closed' => 'Не закрыта',
-            ][$value],
-            set: fn($value) => [
-                'Не активна' => 'not_active',
-                'Открыта' => 'open',
-                'Закрыта' => 'closed',
-                'Не закрыта' => 'not_closed',
-            ][$value]
         );
     }
 
@@ -278,36 +148,6 @@ class Vacancy extends Model
             }
         );
 
-    }
-
-    /**
-     * Summary of period
-     * @return Attribute
-     */
-    protected function period(): Attribute
-    {
-        return Attribute::make(
-            get: function ($value) {
-                $map = [
-                    'hour' => 'В час',
-                    'day' => 'В день',
-                    'week' => 'В неделю',
-                    'month' => 'В месяц',
-                ];
-
-                return $map[$value];
-            },
-            set: function ($value) {
-                $map = [
-                    'В час' => 'hour',
-                    'В день' => 'day',
-                    'В неделю' => 'week',
-                    'В месяц' => 'month',
-                ];
-
-                return $map[$value];
-            }
-        );
     }
 
     /**

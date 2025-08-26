@@ -2,6 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Enums\CurrencyEnum;
+use App\Enums\EducationEnum;
+use App\Enums\EmploymentTypeEnum;
+use App\Enums\PeriodEnum;
+use App\Enums\VacancyStatusEnum;
+use App\Enums\WorkExperienceEnum;
+use App\Enums\WorkScheduleEnum;
 use App\Helpers\FileUploadHelper;
 use App\Models\Vacancy;
 use Illuminate\Database\Seeder;
@@ -19,16 +26,16 @@ class VacancySeeder extends Seeder
             'client_id' => 1,
             'department' => 'Отдел Продаж',
             'city' => 'Москва',
-            'type_employment' => 'В офисе',
-            'work_schedule' => 'Полный день',
-            'work_experience' => '3-6 лет',
-            'education' => 'Высшее',
-            'status' => 'Открыта',
+            'type_employment' => EmploymentTypeEnum::OFFICE->value,
+            'work_schedule' => WorkScheduleEnum::FULL_TIME->value,
+            'work_experience' => WorkExperienceEnum::THREE_TO_SIX->value,
+            'education' => EducationEnum::HIGHER->value,
+            'status' => VacancyStatusEnum::OPEN->value,
             'position_count' => 2,
             'created_by' => 1,
             'salary' => "60000-80000",
-            'currency' => 'USD',
-            'period' => 'В месяц',
+            'currency' => CurrencyEnum::RUB->value,
+            'period' => PeriodEnum::MONTH->value,
             'bonus' => 'Performance-based bonuses available.',
             'probation' => '6 months',
             'probation_salary' => 55000,
@@ -73,16 +80,16 @@ class VacancySeeder extends Seeder
             'client_id' => 2,
             'department' => 'IT Отдел',
             'city' => 'Санкт-Петербург',
-            'type_employment' => 'Удаленно',
-            'work_schedule' => 'Удаленная работа',
-            'work_experience' => '1-3 года',
-            'education' => 'Неоконченное высшее',
-            'status' => 'Не активна',
+            'type_employment' => EmploymentTypeEnum::REMOTE->value,
+            'work_schedule' => WorkScheduleEnum::REMOTE->value,
+            'work_experience' => WorkExperienceEnum::ONE_TO_THREE->value,
+            'education' => EducationEnum::INCOMPLETE_HIGHER->value,
+            'status' => VacancyStatusEnum::NOT_ACTIVE->value,
             'position_count' => 1,
             'created_by' => 1,
             'salary' => "70000-80000",
-            'currency' => 'RUB',
-            'period' => 'В неделю',
+            'currency' => CurrencyEnum::RUB->value,
+            'period' => PeriodEnum::WEEK->value,
             'bonus' => 'Annual performance bonus based on company profits.',
             'probation' => '3 months',
             'probation_salary' => 65000,
@@ -126,16 +133,16 @@ class VacancySeeder extends Seeder
             'client_id' => 2,
             'department' => 'Маркетинг',
             'city' => 'Казань',
-            'type_employment' => 'Стажировка',
-            'work_schedule' => 'Гибкий график',
-            'work_experience' => 'Без опыта',
-            'education' => 'Среднее специальное',
-            'status' => 'Закрыта',
+            'type_employment' => EmploymentTypeEnum::INTERNSHIP->value,
+            'work_schedule' => WorkScheduleEnum::FLEXIBLE->value,
+            'work_experience' => WorkExperienceEnum::NO_EXPERIENCE->value,
+            'education' => EducationEnum::SECONDARY_VOCATIONAL->value,
+            'status' => VacancyStatusEnum::CLOSED->value,
             'position_count' => 5,
             'created_by' => 1,
             'salary' => "50000",
-            'currency' => 'EUR',
-            'period' => 'В месяц',
+            'currency' => CurrencyEnum::EUR->value,
+            'period' => PeriodEnum::MONTH->value,
             'bonus' => 'Quarterly bonuses based on team performance.',
             'probation' => '3 months',
             'probation_salary' => 45000,

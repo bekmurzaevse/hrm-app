@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ProjectStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +23,7 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->text('comment')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
-            $table->enum('status', ['in_progress', 'cancelled'])->default('in_progress');
+            $table->string('status')->default(ProjectStatusEnum::IN_PROGRESS->value);
             $table->softDeletes();
             $table->timestamps();
         });

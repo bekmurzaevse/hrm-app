@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StageTaskPriorityEnum;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -24,11 +25,12 @@ class StageTask extends Model
 
     /**
      * Summary of casts
-     * @return array{created_at: string, deadline: string, updated_at: string}
+     * @return array{created_at: string, deadline: string, priority: string, updated_at: string}
      */
     protected function casts(): array
     {
         return [
+            'priority' => StageTaskPriorityEnum::class,
             'deadline' => 'date',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',

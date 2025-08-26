@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('title');
             $table->text('description')->nullable();
             $table->foreignId('executor_id')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
-            $table->enum('priority', ['low', 'medium', 'high']);
+            $table->string('priority');
             $table->date('deadline');
             $table->foreignId('created_by')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
             $table->softDeletes();
