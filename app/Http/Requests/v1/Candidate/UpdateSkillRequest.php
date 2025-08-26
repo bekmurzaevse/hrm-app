@@ -25,4 +25,12 @@ class UpdateSkillRequest extends FormRequest
             'title' => 'required|string',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'titles.required' => "titles ma'jbu'riy.",
+            'titles.array' => "titles array boliw kerek.",
+        ];
+    }
 }

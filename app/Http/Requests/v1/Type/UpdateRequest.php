@@ -26,4 +26,17 @@ class UpdateRequest extends FormRequest
             'description' => 'nullable|string',
         ];
     }
+
+    /**
+     * Summary of messages
+     * @return array{title.max: string, title.required: string, title.string: string}
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => "title ma'jbu'riy.",
+            'title.string' => "title string boliw kerek.",
+            'title.max' => "title 50 belgiden ko'p bolmawi kerek.",
+        ];
+    }
 }

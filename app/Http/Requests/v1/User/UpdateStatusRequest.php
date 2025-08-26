@@ -25,4 +25,16 @@ class UpdateStatusRequest extends FormRequest
             'status' => 'required|in:working,not_working,dismissed',
         ];
     }
+
+    /**
+     * Summary of messages
+     * @return array{status.in: string, status.required: string}
+     */
+    public function messages(): array
+    {
+        return [
+            'status.required' => "status ma'jbu'riy.",
+            'status.in' => "status ma'nisleri (working, not_working, dismissed) boliwi kerek.",
+        ];
+    }
 }

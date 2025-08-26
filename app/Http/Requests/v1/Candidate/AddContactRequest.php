@@ -26,4 +26,16 @@ class AddContactRequest extends FormRequest
             'value' => 'required|string|max:50',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'title.required' => "title ma'jbu'riy.",
+            'title.string' => "title string boliw kerek.",
+            'title.max' => "title 50 belgiden ko'p bolmawi kerek.",
+            'value.required' => "value ma'jbu'riy.",
+            'value.string' => "value string boliw kerek.",
+            'value.max' => "value 50 belgiden ko'p bolmawi kerek.",
+        ];
+    }
 }
