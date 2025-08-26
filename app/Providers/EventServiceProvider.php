@@ -24,5 +24,7 @@ class EventServiceProvider extends ServiceProvider
         \App\Models\Interaction::observe(\App\Observers\InteractionObserver::class);
         \App\Models\Type::observe(\App\Observers\TypeObserver::class);
         \App\Models\User::observe(\App\Observers\UserObserver::class);
+        \App\Models\Project::observe(\App\Observers\ProjectObserver::class);
+        \App\Models\Vacancy::observe(\App\Observers\VacancyObserver::class);
     }
 }
