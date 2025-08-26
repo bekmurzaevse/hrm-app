@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\Candidate\CandidateStatusEnum;
+use App\Enums\Candidate\FamilyStatusEnum;
+use App\Enums\GenderEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -48,6 +51,9 @@ class Candidate extends Model
     protected function casts(): array
     {
         return [
+            'gender' => GenderEnum::class,
+            'family_status' => FamilyStatusEnum::class,
+            'status' => CandidateStatusEnum::class,
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
             'birth_date' => 'date',

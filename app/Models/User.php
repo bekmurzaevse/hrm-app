@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\User\UserStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -47,6 +49,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'status' => UserStatusEnum::class,
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];

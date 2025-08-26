@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Candidate\CandidateStatusEnum;
+use App\Enums\Candidate\FamilyStatusEnum;
+use App\Enums\GenderEnum;
 use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
 use App\Models\User;
@@ -20,13 +23,13 @@ class CandidateSeeder extends Seeder
             'last_name' => 'Gates',
             'patronymic' => 'bill@example.com',
             'birth_date' => '1994-12-25',
-            'gender' => 'male',
+            'gender' => GenderEnum::MALE->value,
             'citizenship' => 'USA',
             'country_residence' => 'Uzbekistan',
             'region' => 'Tashkent',
-            'family_status' => 'married',
+            'family_status' => FamilyStatusEnum::MARRIED->value,
             'family_info' => 'test test',
-            'status' => 'active',
+            'status' => CandidateStatusEnum::ACTIVE->value,
             'workplace' => 'Microsoft',
             'position' => 'General Director & Founder',
             'city' => 'California',
@@ -64,13 +67,13 @@ class CandidateSeeder extends Seeder
             'last_name' => 'Zuckerberg',
             'patronymic' => 'murk@example.com',
             'birth_date' => '1960-10-14',
-            'gender' => 'male',
+            'gender' => GenderEnum::MALE->value,
             'citizenship' => 'USA',
             'country_residence' => 'Russia',
             'region' => 'Moscow',
-            'family_status' => 'unmarried',
+            'family_status' => FamilyStatusEnum::UNMARRIED->value,
             'family_info' => 'test test',
-            'status' => 'active',
+            'status' => CandidateStatusEnum::ACTIVE->value,
             'workplace' => 'META',
             'position' => 'General Director & Founder',
             'city' => 'California',

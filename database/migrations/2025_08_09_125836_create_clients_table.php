@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\Client\ClientStatusEnum;
+use App\Enums\Client\EmlpoyeeCountEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +16,7 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->enum('status', ['Active', 'Potential', 'Inactive'])->default('Active')->nullable();
+            $table->string('status')->default(ClientStatusEnum::ACTIVE->value);
             $table->string('leader');
             $table->string('contact_person');
             $table->string('person_position');
@@ -25,7 +27,7 @@ return new class extends Migration
             $table->text('address');
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->string('INN')->unique();
-            $table->enum('employee_count', ['-50', '50-250', '250+']);
+            $table->string('employee_count')->default(EmlpoyeeCountEnum::SMALL->value);
             $table->string('source');
             $table->string('activity')->nullable();
             $table->text('description')->nullable();

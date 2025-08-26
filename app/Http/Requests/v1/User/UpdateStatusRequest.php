@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\v1\User;
 
+use App\Enums\User\UserStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateStatusRequest extends FormRequest
 {
@@ -22,7 +24,7 @@ class UpdateStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required|in:working,not_working,dismissed',
+            'status' => ['required', Rule::enum(UserStatusEnum::class)],
         ];
     }
 

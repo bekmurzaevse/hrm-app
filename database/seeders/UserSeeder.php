@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\User\UserStatusEnum;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,7 +21,7 @@ class UserSeeder extends Seeder
             'birth_date' => '1996-11-23',
             'address' => 'Astana',
             'position' => 'CEO',
-            'status' => 'working',
+            'status' => UserStatusEnum::WORKING->value,
             'phone' => '1234321',
             'email' => 'pavel@gmail.com',
             'password' => '12345678',
@@ -34,7 +35,7 @@ class UserSeeder extends Seeder
             'birth_date' => '1993-04-17',
             'address' => 'Bishkek',
             'position' => 'Leader',
-            'status' => 'not_working',
+            'status' => UserStatusEnum::NOT_WORKING->value,
             'phone' => '9878656',
             'email' => 'murk@gmail.com',
             'password' => '12345678',
@@ -48,7 +49,7 @@ class UserSeeder extends Seeder
             'birth_date' => '1971-06-28',
             'address' => 'Texas, USA',
             'position' => 'Team Leader',
-            'status' => 'working',
+            'status' => UserStatusEnum::DISMISSED->value,
             'phone' => '998901234567',
             'email' => 'elon.musk@example.com',
             'password' => '12345678',
@@ -62,7 +63,7 @@ class UserSeeder extends Seeder
             'birth_date' => '1955-10-28',
             'address' => 'Seattle, USA',
             'position' => 'Talent Acquisition',
-            'status' => 'not_working',
+            'status' => UserStatusEnum::WORKING->value,
             'phone' => '998935551212',
             'email' => 'bill.gates@example.com',
             'password' => '12345678',
@@ -76,7 +77,7 @@ class UserSeeder extends Seeder
             'birth_date' => '1964-09-10',
             'address' => 'Hangzhou, China',
             'position' => 'HR Specialist',
-            'status' => 'working',
+            'status' => UserStatusEnum::WORKING->value,
             'phone' => '998909991010',
             'email' => 'jack.ma@example.com',
             'password' => '12345678',
@@ -90,7 +91,7 @@ class UserSeeder extends Seeder
             'birth_date' => '1967-08-19',
             'address' => 'Hyderabad, India',
             'position' => 'Staffing Manager',
-            'status' => 'not_working',
+            'status' => UserStatusEnum::NOT_WORKING->value,
             'phone' => '998935552233',
             'email' => 'satya.nadella@example.com',
             'password' => '12345678',
@@ -104,7 +105,7 @@ class UserSeeder extends Seeder
             'birth_date' => '1964-01-12',
             'address' => 'New York, USA',
             'position' => 'Staffing Manager',
-            'status' => 'dismissed',
+            'status' => UserStatusEnum::DISMISSED->value,
             'phone' => '9876543210',
             'email' => 'jeff.bezos@example.com',
             'password' => '12345678',
@@ -118,7 +119,7 @@ class UserSeeder extends Seeder
             'birth_date' => '1955-02-24',
             'address' => 'Cupertino, USA',
             'position' => 'Staffing Manager',
-            'status' => 'working',
+            'status' => UserStatusEnum::WORKING->value,
             'phone' => '1112223333',
             'email' => 'steve.jobs@example.com',
             'password' => '12345678',

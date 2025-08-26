@@ -27,7 +27,7 @@ class UpdateStatusAction
             if ($user->status === $dto->status) {
                 logActivity(
                     "Статус без изменений",
-                    "Пользователь {$user->first_name} {$user->last_name} (ID: {$user->id}) уже имеет статус {$dto->status}. Файл: " . __FILE__
+                    "Пользователь {$user->first_name} {$user->last_name} (ID: {$user->id}) уже имеет статус {$dto->status->value}. Файл: " . __FILE__
                 );
 
                 return static::toResponse(
@@ -37,9 +37,17 @@ class UpdateStatusAction
             $oldStatus = $user->status;
             $user->update(['status' => $dto->status]);
 
+            $oldStatusValue = $oldStatus instanceof \App\Enums\User\UserStatusEnum
+                ? $oldStatus->value
+                : $oldStatus;
+
+            $newStatusValue = $dto->status instanceof \App\Enums\User\UserStatusEnum
+                ? $dto->status->value
+                : $dto->status;
+
             logActivity(
                 "Статус пользователя обновлен",
-                "У пользователя {$user->first_name} {$user->last_name} (ID: {$user->id}) статус изменен: с {$oldStatus} на {$dto->status}. Файл: " . __FILE__
+                "У пользователя {$user->first_name} {$user->last_name} (ID: {$user->id}) статус изменен: с {$oldStatusValue} на {$newStatusValue}. Файл: " . __FILE__
             );
 
             return static::toResponse(

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\v1\Client;
 
+use App\Enums\Client\EmlpoyeeCountEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateRequest extends FormRequest
 {
@@ -34,7 +36,7 @@ class CreateRequest extends FormRequest
             'address' => 'required|string',
             'user_id' => 'required|exists:users,id',
             'INN' => 'required|string',
-            'employee_count' => 'nullable|string|in:-50,50-250,250+',
+            'employee_count' => ['nullable', Rule::enum(EmlpoyeeCountEnum::class)],
             'source' => 'required|string',
             'activity' => 'required|string',
             'description' => 'nullable|string',

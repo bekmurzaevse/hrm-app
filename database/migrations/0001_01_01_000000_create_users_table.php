@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\User\UserStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->text('address');
             $table->date('birth_date');
             $table->string('position');
-            $table->enum('status', ['working', 'not_working', 'dismissed']);
+            $table->string('status')->default(UserStatusEnum::WORKING->value);
             $table->string('phone')->unique();
             $table->string('email')->unique();
             $table->string('password');
