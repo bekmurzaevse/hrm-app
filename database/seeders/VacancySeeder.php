@@ -10,6 +10,7 @@ use App\Enums\VacancyStatusEnum;
 use App\Enums\WorkExperienceEnum;
 use App\Enums\WorkScheduleEnum;
 use App\Helpers\FileUploadHelper;
+use App\Models\District;
 use App\Models\Vacancy;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\UploadedFile;
@@ -25,7 +26,7 @@ class VacancySeeder extends Seeder
             'title' => 'Менеджер по продажам',
             'client_id' => 1,
             'department' => 'Отдел Продаж',
-            'city' => 'Москва',
+            'district_id' => District::inRandomOrder()->first()->id,
             'type_employment' => EmploymentTypeEnum::OFFICE->value,
             'work_schedule' => WorkScheduleEnum::FULL_TIME->value,
             'work_experience' => WorkExperienceEnum::THREE_TO_SIX->value,
@@ -79,7 +80,7 @@ class VacancySeeder extends Seeder
             'title' => 'Разработчик PHP',
             'client_id' => 2,
             'department' => 'IT Отдел',
-            'city' => 'Санкт-Петербург',
+            'district_id' => District::inRandomOrder()->first()->id,
             'type_employment' => EmploymentTypeEnum::REMOTE->value,
             'work_schedule' => WorkScheduleEnum::REMOTE->value,
             'work_experience' => WorkExperienceEnum::ONE_TO_THREE->value,
@@ -132,7 +133,7 @@ class VacancySeeder extends Seeder
             'title' => 'Стажер по маркетингу',
             'client_id' => 2,
             'department' => 'Маркетинг',
-            'city' => 'Казань',
+            'district_id' => District::inRandomOrder()->first()->id,
             'type_employment' => EmploymentTypeEnum::INTERNSHIP->value,
             'work_schedule' => WorkScheduleEnum::FLEXIBLE->value,
             'work_experience' => WorkExperienceEnum::NO_EXPERIENCE->value,

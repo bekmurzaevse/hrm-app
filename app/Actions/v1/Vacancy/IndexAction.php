@@ -26,6 +26,8 @@ class IndexAction
             return Vacancy::with([
                 'client:id,name',
                 'createdBy:id,first_name,last_name,patronymic',
+                'district:id,title,region_id',
+                'district.region:id,title',
             ])->paginate(10);
         });
 

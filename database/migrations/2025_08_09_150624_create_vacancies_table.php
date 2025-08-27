@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('title');
             $table->foreignId('client_id')->constrained('clients')->restrictOnDelete()->cascadeOnUpdate();
             $table->text('department')->nullable();
-            $table->string('city')->nullable();
+            $table->foreignId('district_id')->constrained('districts')->restrictOnDelete()->cascadeOnUpdate();
             $table->string('type_employment');
             $table->string('work_schedule');
             $table->string('work_experience');

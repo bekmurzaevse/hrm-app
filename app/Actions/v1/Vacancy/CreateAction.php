@@ -22,7 +22,7 @@ class CreateAction
             'title' => $dto->title,
             'client_id' => $dto->clientId,
             'department' => $dto->department,
-            'city' => $dto->city,
+            'district_id' => $dto->districtId,
             'type_employment' => $dto->typeEmployment,
             'work_schedule' => $dto->workSchedule,
             'work_experience' => $dto->workExperience,

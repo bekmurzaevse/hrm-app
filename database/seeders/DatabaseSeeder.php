@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             LanguageSeeder::class,
             TypeSeeder::class,
             ClientSeeder::class,
+            DistrictSeeder::class,
             VacancySeeder::class,
             SkillSeeder::class,
             ContactSeeder::class,
@@ -40,7 +41,7 @@ class DatabaseSeeder extends Seeder
             StageSeeder::class,
             StageCompletionSeeder::class,
             StageTaskSeeder::class,
-            ProjectUserSeeder::class
+            ProjectUserSeeder::class,
         ]);
     }
 }

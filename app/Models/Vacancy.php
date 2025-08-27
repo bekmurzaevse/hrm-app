@@ -25,7 +25,7 @@ class Vacancy extends Model
         'title',
         'client_id',
         'department',
-        'city',
+        'district_id',
         'type_employment',
         'work_schedule',
         'work_experience',
@@ -193,5 +193,14 @@ class Vacancy extends Model
     public function project(): HasOne
     {
         return $this->hasOne(related: Project::class, foreignKey: 'vacancy_id');
+    }
+
+    /**
+     * Summary of district
+     * @return BelongsTo<District, Vacancy>
+     */
+    public function district(): BelongsTo
+    {
+        return $this->belongsTo(related: District::class, foreignKey: 'district_id');
     }
 }
