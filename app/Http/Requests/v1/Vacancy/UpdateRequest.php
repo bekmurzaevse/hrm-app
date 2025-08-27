@@ -33,7 +33,7 @@ class UpdateRequest extends FormRequest
             'title' => 'required|string|min:2|max:255',
             'client_id' => 'required|exists:clients,id',
             'department' => 'nullable|string|max:255',
-            'city' => 'nullable|string|max:255',
+            'district_id' => 'required|integer|exists:districts,id',
             'type_employment' => ['required', Rule::enum(EmploymentTypeEnum::class)],
             'work_schedule' => ['required', Rule::enum(WorkScheduleEnum::class)],
             'work_experience' => ['required', Rule::enum(WorkExperienceEnum::class)],
