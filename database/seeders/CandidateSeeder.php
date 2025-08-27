@@ -7,7 +7,7 @@ use App\Enums\Candidate\FamilyStatusEnum;
 use App\Enums\GenderEnum;
 use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
-use App\Models\Region;
+use App\Models\District;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\UploadedFile;
@@ -33,7 +33,7 @@ class CandidateSeeder extends Seeder
             'status' => CandidateStatusEnum::ACTIVE->value,
             'workplace' => 'Microsoft',
             'position' => 'General Director & Founder',
-            'district_id' => 1,
+            'district_id' => District::inRandomOrder()->first()->id,
             'address' => 'USA California street № 4',
             'desired_salary' => 300000,
             'source' => 'Linkedin',
@@ -77,7 +77,7 @@ class CandidateSeeder extends Seeder
             'status' => CandidateStatusEnum::ACTIVE->value,
             'workplace' => 'META',
             'position' => 'General Director & Founder',
-            'district_id' => 1,
+            'district_id' => District::inRandomOrder()->first()->id,
             'address' => 'USA California street № 15',
             'desired_salary' => 450000,
             'source' => 'Linkedin',

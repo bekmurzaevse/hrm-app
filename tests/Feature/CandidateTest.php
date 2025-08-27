@@ -51,7 +51,7 @@ class CandidateTest extends TestCase
                             "workplace",
                             "position",
                             "last_contact",
-                            "district_id",
+                            "district",
                             "experience",
                             "source",
                             "desired_salary",
@@ -158,6 +158,8 @@ class CandidateTest extends TestCase
      */
     public function test_candidate_can_be_created(): void
     {
+        $this->withoutExceptionHandling();
+
         $photo = UploadedFile::fake()->image('photo.jpg');
 
         $payload = [
@@ -210,7 +212,7 @@ class CandidateTest extends TestCase
             'status' => CandidateStatusEnum::EMPLOYED,
             'workplace' => "Microsoft",
             'position' => "Tecnical Director",
-            'ditrict_id' => 1,
+            'district_id' => 1,
             'address' => "1 Mikro rayon",
             'desired_salary' => 12000,
             'source' => "hh.uz",
