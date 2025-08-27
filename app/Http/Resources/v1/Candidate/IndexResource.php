@@ -16,6 +16,7 @@ class IndexResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        // dd($this->pluck('position')->unique());
         return [
             'full_name' => $this->first_name . ' ' . $this->last_name . ' ' . $this->patronymic,
             'age' => Carbon::parse($this->birth_date)->age,
@@ -23,7 +24,7 @@ class IndexResource extends JsonResource
             'workplace' => $this->workplace,
             'position' => $this->position,
             'last_contact' => new LastContactResource($this->interactions()->orderBy('created_at', 'desc')->first()),
-            'city' => $this->city,
+            'city' => $this->region->title,
             'experience' => $this->experience,
             'source' => $this->source,
             'desired_salary' => $this->desired_salary,
