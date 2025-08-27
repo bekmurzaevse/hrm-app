@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\User\UserStatusEnum;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -108,7 +109,7 @@ class UserTest extends TestCase
         $position = "CEO";
         $phone = "998997654382";
         $email = "murk@yandex.ru";
-        $status = "working";
+        $status = UserStatusEnum::WORKING;
         $password = "123456";
 
         $data = [
@@ -221,12 +222,14 @@ class UserTest extends TestCase
      */
     public function test_update_status_in_user(): void
     {
+        $this->withoutExceptionHandling();
+
         // $user = User::find(1)->first();
         // $this->actingAs($user);
 
         $user = User::inRandomOrder()->first();
 
-        $status = "working";
+        $status = UserStatusEnum::WORKING->value;
 
         $data = [
             'status' => $status,

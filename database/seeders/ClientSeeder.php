@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Client\ClientStatusEnum;
+use App\Enums\Client\EmlpoyeeCountEnum;
 use App\Helpers\FileUploadHelper;
 use App\Models\Client;
 use App\Models\User;
@@ -17,7 +19,7 @@ class ClientSeeder extends Seeder
     {
         $client1 = Client::create([
             'name' => 'Google',
-            'status' => 'Active',
+            'status' => ClientStatusEnum::ACTIVE,
             'leader' => 'Bill Gates',
             'contact_person' => 'Bazarbay',
             'person_position' => 'Pavel Durov',
@@ -29,7 +31,7 @@ class ClientSeeder extends Seeder
             'user_id' => User::inRandomOrder()->first()->id,
             'INN' => '111222333',
             // 'KPP' => '333222',
-            'employee_count' => '-50',
+            'employee_count' => EmlpoyeeCountEnum::SMALL->value,
             'source' => 'Facebook',
             'activity' => 'Programming',
             'description' => 'test',
@@ -56,7 +58,7 @@ class ClientSeeder extends Seeder
 
         $client2 = Client::create([
             'name' => 'Tesla',
-            'status' => 'Potential',
+            'status' => ClientStatusEnum::ACTIVE,
             'leader' => 'Ilon Musk',
             'contact_person' => 'Piyshenbay',
             'person_position' => 'Pavel Durov',
@@ -68,7 +70,7 @@ class ClientSeeder extends Seeder
             'user_id' => User::inRandomOrder()->first()->id,
             'INN' => '222333444',
             // 'KPP' => '666777',
-            'employee_count' => '50-250',
+            'employee_count' => EmlpoyeeCountEnum::NORMAL->value,
             'source' => 'X',
             'activity' => 'Design',
             'description' => 'test',

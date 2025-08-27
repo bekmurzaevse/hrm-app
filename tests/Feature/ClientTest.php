@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Enums\Client\ClientStatusEnum;
+use App\Enums\Client\EmlpoyeeCountEnum;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -162,7 +164,7 @@ class ClientTest extends TestCase
         $client = Client::inRandomOrder()->first();
 
         $name = "Asus";
-        $status = "Active";
+        $status = ClientStatusEnum::ACTIVE;
         $leader = "Vladimir Putin";
         $contactPerson = "Vladimir Zelenskiy";
         $personPosition = "President";
@@ -172,7 +174,7 @@ class ClientTest extends TestCase
         $email = "vladimir@mail.ru";
         $address = "Russia Moscow";
         $INN = "456323344";
-        $employeeCount = "50-250";
+        $employeeCount = EmlpoyeeCountEnum::SMALL->value;
         $source = "ish.uz";
         $activity = "Politics";
         $description = "new description";

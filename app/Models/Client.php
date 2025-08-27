@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Client\ClientStatusEnum;
+use App\Enums\Client\EmlpoyeeCountEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -40,6 +42,8 @@ class Client extends Model
     protected function casts(): array
     {
         return [
+            'status' => ClientStatusEnum::class,
+            'employee_count' => EmlpoyeeCountEnum::class,
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
