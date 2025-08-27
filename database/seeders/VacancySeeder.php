@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Enums\CurrencyEnum;
-use App\Enums\EducationEnum;
-use App\Enums\EmploymentTypeEnum;
-use App\Enums\PeriodEnum;
-use App\Enums\VacancyStatusEnum;
-use App\Enums\WorkExperienceEnum;
-use App\Enums\WorkScheduleEnum;
+use App\Enums\Vacancy\CurrencyEnum;
+use App\Enums\Vacancy\EducationEnum;
+use App\Enums\Vacancy\EmploymentTypeEnum;
+use App\Enums\Vacancy\PeriodEnum;
+use App\Enums\Vacancy\VacancyStatusEnum;
+use App\Enums\Vacancy\WorkExperienceEnum;
+use App\Enums\Vacancy\WorkScheduleEnum;
 use App\Helpers\FileUploadHelper;
 use App\Models\District;
 use App\Models\Vacancy;

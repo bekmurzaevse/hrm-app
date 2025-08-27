@@ -38,12 +38,12 @@ class VacancyResource extends JsonResource
                 'benefits' => $this->benefits,
             ],
             'skills' => $this->skills->map->only(['id', 'title']),
-            // TODO: Add main contact person details after creating maincontact for clients
-            'contact_info' => $this->client->contacts->map(fn($contact) => [
-                'id' => $contact->id,
-                'title' => $contact->title,
-                'value' => $contact->value,
-            ]),
+            'contact_info' => [
+                'contact_person' => $this->client->contact_person,
+                'person_position' => $this->client->person_position,
+                'person_phone' => $this->client->person_phone,
+                'person_email' => $this->client?->person_email,
+            ],
             'status' => $this->status,
             'position_count' => $this->position_count,
             'city' => $this->city,

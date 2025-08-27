@@ -27,7 +27,7 @@ class CloseProjectAction
             if ($project->status == ProjectStatusEnum::IN_PROGRESS) {
                 $data = [
                     'comment' => $dto->comment,
-                    'closed_by' => 1, // TODO: Replace with authenticated user ID
+                    'closed_by' => auth()->user()->id,
                     'closed_at' => now(),
                 ];
 
