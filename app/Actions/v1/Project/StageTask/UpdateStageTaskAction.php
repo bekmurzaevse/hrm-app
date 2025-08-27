@@ -31,7 +31,7 @@ class UpdateStageTaskAction
                 'executor_id' => $dto->executorId,
                 'priority' => $dto->priority,
                 'deadline' => $dto->deadline,
-                'created_by' => 1, // TODO: Replace with authenticated user ID
+                'created_by' => auth()->user()->id,
             ];
 
             // Log user activity

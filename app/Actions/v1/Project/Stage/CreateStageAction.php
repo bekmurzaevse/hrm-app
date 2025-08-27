@@ -33,7 +33,7 @@ class CreateStageAction
                 'title' => $dto->title,
                 'description' => $dto->description,
                 'deadline' => $dto->deadline,
-                'created_by' => 1, // TODO: Replace with authenticated user ID
+                'created_by' => auth()->user()->id,
                 'order' => $afterStage->order + 1,
                 'executor_id' => $dto->executorId,
             ];

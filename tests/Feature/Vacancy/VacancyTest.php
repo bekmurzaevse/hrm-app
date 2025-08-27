@@ -105,11 +105,10 @@ class VacancyTest extends TestCase
                         ]
                     ],
                     'contact_info' => [
-                        '*' => [
-                            'id',
-                            'title',
-                            'value',
-                        ]
+                        'contact_person',
+                        'person_position',
+                        'person_phone',
+                        'person_email',
                     ],
                     'status',
                     'position_count',

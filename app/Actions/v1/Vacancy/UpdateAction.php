@@ -36,7 +36,7 @@ class UpdateAction
                 'education' => $dto->education,
                 'status' => $dto->status,
                 'position_count' => $dto->positionCount,
-                'created_by' => 1, // TODO: Replace with authenticated user ID
+                'created_by' => auth()->user()->id,
                 'salary' => $dto->salary,
                 'currency' => $dto->currency,
                 'period' => $dto->period,
