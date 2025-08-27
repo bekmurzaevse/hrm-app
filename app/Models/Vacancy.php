@@ -126,7 +126,7 @@ class Vacancy extends Model
                 $salary = $this->salary;
                 $period = $this->period;
 
-                return $salary . ' ' . $period; // 1000 RUB В месяц, 1000-2000 RUB В месяц
+                return $salary . ' ' . $period->value; // 1000 RUB В месяц, 1000-2000 RUB В месяц
             }
         );
     }

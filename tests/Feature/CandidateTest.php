@@ -7,10 +7,11 @@ use App\Enums\Candidate\FamilyStatusEnum;
 use App\Enums\GenderEnum;
 use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class CandidateTest extends TestCase
@@ -23,8 +24,9 @@ class CandidateTest extends TestCase
         Storage::fake('public');
         $this->seed();
 
-        // $user - User::find(1);
-        // $this->actingAs($user);
+        $user = User::find(1);
+        Sanctum::actingAs($user, ['access-token']);
+        // TODO: Need test with unauthorized user by role, actingAs * 
     }
 
     /**
@@ -500,7 +502,7 @@ class CandidateTest extends TestCase
                 'message',
             ]);
 
-        $this->assertDatabaseHas('education',[
+        $this->assertDatabaseHas('education', [
             'title' => "test title",
             'degree' => "test degree",
             'specialty' => 'test specialty',
@@ -537,7 +539,7 @@ class CandidateTest extends TestCase
                 'message',
             ]);
 
-        $this->assertDatabaseHas('work_experiences',[
+        $this->assertDatabaseHas('work_experiences', [
             'company' => "Goole",
             'position' => "Senior Software Ingeneer",
             'candidate_id' => $candidate->id,

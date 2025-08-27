@@ -24,7 +24,7 @@ class CloseProjectAction
         try {
             $project = Project::findOrFail($id);
 
-            if ($project->status == ProjectStatusEnum::IN_PROGRESS->value) {
+            if ($project->status == ProjectStatusEnum::IN_PROGRESS) {
                 $data = [
                     'comment' => $dto->comment,
                     'closed_by' => 1, // TODO: Replace with authenticated user ID
@@ -33,7 +33,7 @@ class CloseProjectAction
 
                 $project->closeProject()->create($data);
 
-                $project->status = ProjectStatusEnum::CANCELLED->value;
+                $project->status = ProjectStatusEnum::CANCELLED;
                 $project->save();
 
                 // Log user activity

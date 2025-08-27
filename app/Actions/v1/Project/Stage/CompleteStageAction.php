@@ -26,14 +26,14 @@ class CompleteStageAction
         try {
             $stage = Stage::findOrFail($stageId);
 
-            if ($stage->status === StageStatusEnum::IN_PROGRESS->value) {
+            if ($stage->status === StageStatusEnum::IN_PROGRESS) {
                 $stage->stageCompletion()->create([
-                    'completed_by' => 1, // TODO: add auth user
+                    'completed_by' => auth()->user()->id,
                     'candidate_count' => $dto->candidateCount,
                     'comment' => $dto->comment
                 ]);
 
-                $stage->status = StageStatusEnum::COMPLETED->value;
+                $stage->status = StageStatusEnum::COMPLETED;
                 $stage->save();
 
                 $projectId = $stage->project_id;
@@ -43,7 +43,7 @@ class CompleteStageAction
                     ->where('order', '>', $stage->order)
                     ->orderBy('order', 'asc')
                     ->first();
-                $afterStage->status = StageStatusEnum::IN_PROGRESS->value;
+                $afterStage->status = StageStatusEnum::IN_PROGRESS;
                 $afterStage->save();
 
                 // Log user activity

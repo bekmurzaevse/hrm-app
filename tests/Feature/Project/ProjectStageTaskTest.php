@@ -6,6 +6,7 @@ use App\Models\StageTask;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ProjectStageTaskTest extends TestCase
@@ -19,7 +20,7 @@ class ProjectStageTaskTest extends TestCase
         $this->seed();
 
         $user = User::find(1);
-        $this->actingAs($user);
+        Sanctum::actingAs($user, ['access-token']);
         // TODO: Need test with unauthorized user by role, actingAs * 
     }
 
