@@ -136,4 +136,13 @@ class Candidate extends Model
     {
         return $this->hasMany(Language::class);
     }
+
+    /**
+     * Summary of region
+     * @return BelongsTo<Region, Candidate>
+     */
+    public function region(): BelongsTo
+    {
+        return $this->belongsTo(Region::class);
+    }
 }

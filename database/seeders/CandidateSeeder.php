@@ -7,6 +7,7 @@ use App\Enums\Candidate\FamilyStatusEnum;
 use App\Enums\GenderEnum;
 use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
+use App\Models\Region;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\UploadedFile;
@@ -26,13 +27,13 @@ class CandidateSeeder extends Seeder
             'gender' => GenderEnum::MALE->value,
             'citizenship' => 'USA',
             'country_residence' => 'Uzbekistan',
-            'region' => 'Tashkent',
+            'region_id' => Region::inRandomOrder()->first()->id,
             'family_status' => FamilyStatusEnum::MARRIED->value,
             'family_info' => 'test test',
             'status' => CandidateStatusEnum::ACTIVE->value,
             'workplace' => 'Microsoft',
             'position' => 'General Director & Founder',
-            'city' => 'California',
+            // 'city' => 'California',
             'address' => 'USA California street № 4',
             'desired_salary' => 300000,
             'source' => 'Linkedin',
@@ -70,13 +71,13 @@ class CandidateSeeder extends Seeder
             'gender' => GenderEnum::MALE->value,
             'citizenship' => 'USA',
             'country_residence' => 'Russia',
-            'region' => 'Moscow',
+            'region_id' => Region::inRandomOrder()->first()->id,
             'family_status' => FamilyStatusEnum::UNMARRIED->value,
             'family_info' => 'test test',
             'status' => CandidateStatusEnum::ACTIVE->value,
             'workplace' => 'META',
             'position' => 'General Director & Founder',
-            'city' => 'California',
+            // 'city' => 'California',
             'address' => 'USA California street № 15',
             'desired_salary' => 450000,
             'source' => 'Linkedin',
