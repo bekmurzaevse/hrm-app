@@ -25,13 +25,13 @@ class Candidate extends Model
         'gender',
         'citizenship',
         'country_residence',
-        'region',
+        // 'region_id',
         'family_status',
         'family_info',
         'status',
         'workplace',
         'position',
-        'city',
+        'district_id',
         'address',
         'salary',
         'desired_salary',
@@ -141,8 +141,13 @@ class Candidate extends Model
      * Summary of region
      * @return BelongsTo<Region, Candidate>
      */
-    public function region(): BelongsTo
-    {
-        return $this->belongsTo(Region::class);
-    }
+    // public function region(): BelongsTo
+    // {
+    //     return $this->belongsTo(Region::class);
+    // }
+
+    // public function district(): BelongsTo
+    // {
+    //     return $this->belongsTo(District::class);
+    // }
 }
