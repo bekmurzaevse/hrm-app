@@ -40,7 +40,8 @@ class DatabaseSeeder extends Seeder
             StageSeeder::class,
             StageCompletionSeeder::class,
             StageTaskSeeder::class,
-            ProjectUserSeeder::class
+            ProjectUserSeeder::class,
+            DistrictSeeder::class
         ]);
     }
 }
