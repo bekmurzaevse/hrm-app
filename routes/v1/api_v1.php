@@ -53,7 +53,7 @@ Route::prefix('auth')->middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum
 /**
  * Routs for Auth
  */
-// Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->value])->group(function () {
+Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->value])->group(function () {
 
     /**
      * Routs for Auth logout
@@ -189,4 +189,4 @@ Route::prefix('auth')->middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum
         Route::put('/update/{id}', [InteractionController::class, 'update']);
         Route::delete('/delete/{id}', [InteractionController::class, 'delete']);
     });
-// });
+});

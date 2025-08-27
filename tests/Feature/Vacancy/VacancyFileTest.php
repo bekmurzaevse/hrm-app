@@ -8,6 +8,7 @@ use App\Models\Vacancy;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class VacancyFileTest extends TestCase
@@ -21,7 +22,7 @@ class VacancyFileTest extends TestCase
         $this->seed();
 
         $user = User::find(1);
-        $this->actingAs($user);
+        Sanctum::actingAs($user, ['access-token']);
         // TODO: Need test with unauthorized user by role, actingAs * 
     }
 

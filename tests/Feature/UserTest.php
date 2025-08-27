@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -17,8 +18,8 @@ class UserTest extends TestCase
         Storage::fake('public');
         $this->seed();
 
-        // $user - User::find(1);
-        // $this->actingAs($user);
+        $user = User::find(1);
+        Sanctum::actingAs($user, ['access-token']);
     }
 
     /**
