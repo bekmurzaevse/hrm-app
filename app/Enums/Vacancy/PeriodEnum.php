@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums;
+namespace App\Enums\Vacancy;
 
 enum PeriodEnum: string
 {
