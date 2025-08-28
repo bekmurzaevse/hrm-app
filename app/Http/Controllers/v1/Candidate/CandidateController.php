@@ -11,6 +11,7 @@ use App\Dto\v1\Candidate\CreateDto;
 use App\Dto\v1\Candidate\UpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Candidate\CreateRequest;
+use App\Http\Requests\v1\Candidate\IndexRequest;
 use App\Http\Requests\v1\Candidate\UpdateRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class CandidateController extends Controller
      * @param \App\Actions\v1\Candidate\IndexAction $action
      * @return JsonResponse
      */
-    public function index(IndexAction $action, Request $request): JsonResponse
+    public function index(IndexAction $action, IndexRequest $request): JsonResponse
     {
         return $action($request);
     }

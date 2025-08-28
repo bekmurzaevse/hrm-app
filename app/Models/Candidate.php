@@ -146,8 +146,8 @@ class Candidate extends Model
     //     return $this->belongsTo(Region::class);
     // }
 
-    // public function district(): BelongsTo
-    // {
-    //     return $this->belongsTo(District::class);
-    // }
+    public function district(): BelongsTo
+    {
+        return $this->belongsTo(District::class);
+    }
 }

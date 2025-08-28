@@ -3,6 +3,8 @@
 namespace App\Http\Resources\v1\Candidate;
 
 use App\Models\Candidate;
+use App\Models\District;
+use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 class CandidateCollection extends ResourceCollection
@@ -14,7 +16,28 @@ class CandidateCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
+        $regions = Region::all();
+        $districts = District::all();
+
         return [
+            'filters' => [
+                // 'gender' => [
+                //     'title'
+                // ],
+                'regions' => $regions->map(function ($region) {
+                    return [
+                        'id' => $region->id,
+                        'title' => $region->title,
+                    ];
+                }),
+                'districts' => $districts->map(function ($district) {
+                    return [
+                        'id' => $district->id,
+                        'region_id' => $district->region_id,
+                        'title' => $district->title,
+                    ];
+                }),
+            ],
             'items' => IndexResource::collection($this->collection),
             'pagination' => [
                 'current_page' => $this->currentPage(),

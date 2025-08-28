@@ -11,6 +11,7 @@ use App\Dto\v1\Client\CreateDto;
 use App\Dto\v1\Client\UpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Client\CreateRequest;
+use App\Http\Requests\v1\Client\IndexRequest;
 use App\Http\Requests\v1\Client\UpdateRequest;
 use Illuminate\Http\JsonResponse;
 
@@ -19,11 +20,12 @@ class ClientController extends Controller
     /**
      * Summary of index
      * @param \App\Actions\v1\Client\IndexAction $action
+     * @param \App\Http\Requests\v1\Client\IndexRequest $request
      * @return JsonResponse
      */
-    public function index(IndexAction $action): JsonResponse
+    public function index(IndexAction $action, IndexRequest $request): JsonResponse
     {
-        return $action();
+        return $action($request);
     }
     /**
      * Summary of show

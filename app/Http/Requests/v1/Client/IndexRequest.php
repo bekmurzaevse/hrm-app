@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\v1\Candidate;
+namespace App\Http\Requests\v1\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,18 +22,14 @@ class IndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'gender' => 'nullable|string|in:male,female',
+            'employee_count' => 'nullable|string',
             'status' => 'nullable|string',
-            'family_status' => 'nullable|string',
-            'from_age' => 'nullable|integer',
-            'region_id' => 'nullable|integer',
-            'district_id' => 'nullable|integer',
-            'to_age' => 'nullable|integer',
+            'user_id' => 'nullable|integer',
+            'project_from_sum' => 'nullable|integer',
+            'project_to_sum' => 'nullable|integer',
+            'from_project' => 'nullable|integer',
+            'to_project' => 'nullable|integer',
             'search' => 'nullable|string',
-            'salary_from' => 'nullable|integer',
-            'salary_to' => 'nullable|integer',
-            'experience_from' => 'nullable|integer',
-            'experience_to' => 'nullable|integer',
         ];
     }
 }
