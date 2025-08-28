@@ -3,7 +3,7 @@
 namespace App\Http\Resources\v1\Client;
 
 use App\Enums\Client\ClientStatusEnum;
-use App\Enums\EmploymentTypeEnum;
+use App\Enums\Vacancy\EmploymentTypeEnum;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
