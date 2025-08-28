@@ -43,6 +43,21 @@ class CandidateTest extends TestCase
                 "status",
                 "message",
                 "data" => [
+                    "filters" => [
+                        "regions" => [
+                            '*' => [
+                                "id",
+                                "title",
+                            ],
+                        ],
+                        "districts" => [
+                            '*' => [
+                                "id",
+                                "region_id",
+                                "title",
+                            ],
+                        ],
+                    ],
                     "items" => [
                         "*" => [
                             "full_name",
@@ -51,7 +66,6 @@ class CandidateTest extends TestCase
                             "workplace",
                             "position",
                             "last_contact",
-                            "district",
                             "experience",
                             "source",
                             "desired_salary",

@@ -40,6 +40,18 @@ class ClientTest extends TestCase
                 'status',
                 'message',
                 'data' => [
+                    "filters" => [
+                        "status",
+                        "employee_count",
+                        "users" => [
+                            '*' => [
+                                "id",
+                                "first_name",
+                                "last_name",
+                                "patronymic",
+                            ],
+                        ],
+                    ],
                     'items' => [
                         [
                             "name",
