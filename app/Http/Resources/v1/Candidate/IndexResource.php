@@ -3,6 +3,8 @@
 namespace App\Http\Resources\v1\Candidate;
 
 use App\Http\Resources\v1\Interaction\LastContactResource;
+use App\Models\District;
+use App\Models\Region;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,7 +18,6 @@ class IndexResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // dd($this->pluck('position')->unique());
         return [
             'full_name' => $this->first_name . ' ' . $this->last_name . ' ' . $this->patronymic,
             'age' => Carbon::parse($this->birth_date)->age,
@@ -24,7 +25,7 @@ class IndexResource extends JsonResource
             'workplace' => $this->workplace,
             'position' => $this->position,
             'last_contact' => new LastContactResource($this->interactions()->orderBy('created_at', 'desc')->first()),
-            'district' => $this->district,
+            // 'district' => $this->district,
             'experience' => $this->experience,
             'source' => $this->source,
             'desired_salary' => $this->desired_salary,
