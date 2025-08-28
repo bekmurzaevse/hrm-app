@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ProjectStatusEnum;
+use App\Enums\StageStatusEnum;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -52,7 +53,7 @@ class Project extends Model
     public function getProgressAttribute(): string
     {
         $total = $this->stages->count();
-        $completed = $this->stages->where('status', 'Завершен')->count();
+        $completed = $this->stages->where('status', StageStatusEnum::COMPLETED)->count();
         $response = $total !== 0 ? round(($completed / $total) * 100) . "%" : "0%";
         return $response;
     }

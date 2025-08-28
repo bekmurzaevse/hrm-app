@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1\Project;
 
+use App\Enums\ProjectStatusEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
@@ -15,8 +16,8 @@ class ProjectCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         $totalProjects = $this->count();
-        $inProgressProjects = $this->where('status', 'В работе')->count();
-        $completedProjects = $this->where('status', 'Отменен')->count();
+        $inProgressProjects = $this->where('status', ProjectStatusEnum::IN_PROGRESS)->count();
+        $completedProjects = $this->where('status', ProjectStatusEnum::CANCELLED)->count();
         $totalPrice = $this->sum('contract_budget');
 
         return [
