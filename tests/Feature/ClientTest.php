@@ -81,9 +81,6 @@ class ClientTest extends TestCase
      */
     public function test_client_can_show(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $clientId = Client::inRandomOrder()->first()->id;
 
         $response = $this->getJson('/api/v1/clients/' . $clientId);
@@ -98,9 +95,6 @@ class ClientTest extends TestCase
      */
     public function test_client_can_create(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $name = "Artel";
         $status = "Potential";
         $leader = "Donald Trump";
@@ -117,7 +111,7 @@ class ClientTest extends TestCase
         $activity = "Programming";
         $description = "description";
         $notes = "notes";
-        $userId = User::inRandomOrder()->first()->id;
+        $userId = auth()->user()->id;
 
         $data = [
             'name' => $name,
@@ -170,9 +164,6 @@ class ClientTest extends TestCase
      */
     public function test_client_can_update(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $client = Client::inRandomOrder()->first();
 
         $name = "Asus";
@@ -191,7 +182,7 @@ class ClientTest extends TestCase
         $activity = "Politics";
         $description = "new description";
         $notes = "new notes";
-        $userId = User::inRandomOrder()->first()->id;
+        $userId = auth()->user()->id;
 
         $data = [
             'name' => $name,
@@ -245,9 +236,6 @@ class ClientTest extends TestCase
      */
     public function test_client_can_delete(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $clientId = Client::inRandomOrder()->first()->id;
 
         $response = $this->deleteJson('/api/v1/clients/delete/' . $clientId);

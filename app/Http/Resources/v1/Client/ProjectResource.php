@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\v1\Client;
 
-use App\Http\Resources\v1\File\FileResource;
-use App\Http\Resources\v1\Vacancy\ClientVacancyResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

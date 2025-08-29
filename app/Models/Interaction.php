@@ -56,5 +56,4 @@ class Interaction extends Model
     {
         return $this->belongsTo(Type::class);
     }
-
 }

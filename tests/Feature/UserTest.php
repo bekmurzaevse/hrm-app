@@ -66,9 +66,6 @@ class UserTest extends TestCase
      */
     public function test_user_can_show(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $userId = User::inRandomOrder()->first()->id;
 
         $response = $this->getJson('/api/v1/users/' . $userId);
@@ -98,9 +95,6 @@ class UserTest extends TestCase
      */
     public function test_user_can_create(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $firstName = "Murk";
         $lastName = "Zuckerberg";
         $patronymic = "Zuckerberg";
@@ -148,9 +142,6 @@ class UserTest extends TestCase
      */
     public function test_user_can_update(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $user = User::inRandomOrder()->first();
 
         $firstName = "new Murk";
@@ -201,9 +192,6 @@ class UserTest extends TestCase
      */
     public function test_user_can_delete(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $userId = User::inRandomOrder()->first()->id;
 
         $response = $this->deleteJson('/api/v1/users/delete/' . $userId);
@@ -222,11 +210,6 @@ class UserTest extends TestCase
      */
     public function test_update_status_in_user(): void
     {
-        $this->withoutExceptionHandling();
-
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $user = User::inRandomOrder()->first();
 
         $status = UserStatusEnum::WORKING->value;

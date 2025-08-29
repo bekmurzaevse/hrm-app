@@ -19,6 +19,7 @@ class ProjectResource extends JsonResource
             'status' => $this->status,
             'deadline' => $this->deadline->format('Y-m-d'),
             'client_name' => $this->client->name,
+            'progress' => $this->progress,
         ];
     }
 }

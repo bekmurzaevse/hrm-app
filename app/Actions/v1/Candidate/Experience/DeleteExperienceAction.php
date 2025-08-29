@@ -21,7 +21,6 @@ class DeleteExperienceAction
     public function __invoke(int $id): JsonResponse
     {
         try {
-            // WorkExperience::findOrFail($id)->delete();
             $experience = WorkExperience::findOrFail($id);
 
             $expInfo = $experience->company ?? "Опыт работы #{$id}";

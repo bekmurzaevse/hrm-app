@@ -28,6 +28,7 @@ class Language extends Model
             'updated_at' => 'datetime',
         ];
     }
+    
     /**
      * Summary of candidate
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Candidate, Language>

@@ -24,21 +24,20 @@ class UpdateRequest extends FormRequest
         return [
             'value' => 'required|string',
             'type_id' => 'required|integer|exists:types,id',
-            'user_id' => 'required|integer|exists:users,id',
             'candidate_id' => 'required|integer|exists:candidates,id',
             'description' => 'nullable|string',
         ];
     }
 
+    /**
+     * Summary of messages
+     * @return array{candidate_id.exists: string, candidate_id.integer: string, candidate_id.required: string, type_id.exists: string, type_id.integer: string, type_id.required: string, user_id.exists: string, user_id.integer: string, user_id.required: string, value.required: string, value.string: string}
+     */
     public function messages(): array
     {
         return [
             'value.required' => "value ma'jbu'riy.",
             'value.string' => "value string boliw kerek.",
-
-            'user_id.required' => "user id kiritiliwi kerek.",
-            'user_id.integer' => "user id pu'tin san kiritiliwi kerek.",
-            'user_id.exists' => "user id bazada tabilmadi.",
 
             'type_id.required' => "type id kiritiliwi kerek.",
             'type_id.integer' => "type id pu'tin san kiritiliwi kerek.",

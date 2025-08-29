@@ -22,7 +22,6 @@ class DeleteFileAction
      */
     public function __invoke(int $id, int $fileId): JsonResponse
     {
-
         try {
             $candidate = Candidate::findOrFail($id);
 

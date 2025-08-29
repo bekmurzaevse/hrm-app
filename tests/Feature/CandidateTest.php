@@ -87,9 +87,6 @@ class CandidateTest extends TestCase
      */
     public function test_candidate_can_show(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $candidateId = Candidate::inRandomOrder()->first()->id;
 
         $response = $this->getJson('/api/v1/candidates/' . $candidateId);
@@ -156,11 +153,6 @@ class CandidateTest extends TestCase
                         ],
                     ],
                     "photo",
-                    //  => [
-                    // "name",
-                    // "path",
-                    // "size",
-                    // ],
                     "description",
                 ]
             ]);
@@ -172,8 +164,6 @@ class CandidateTest extends TestCase
      */
     public function test_candidate_can_be_created(): void
     {
-        $this->withoutExceptionHandling();
-
         $photo = UploadedFile::fake()->image('photo.jpg');
 
         $payload = [
@@ -184,13 +174,11 @@ class CandidateTest extends TestCase
             'gender' => GenderEnum::MALE,
             'citizenship' => "USA",
             'country_residence' => "Uzbekistan",
-            // 'region' => "Tashkent",
             'family_status' => FamilyStatusEnum::MARRIED,
             'family_info' => "Short text of family",
             'status' => CandidateStatusEnum::EMPLOYED,
             'workplace' => "Microsoft",
             'position' => "Tecnical Director",
-            // 'city' => "Tashkent",
             'district_id' => 1,
             'address' => "1 Mikro rayon",
             'desired_salary' => 12000,
@@ -220,7 +208,6 @@ class CandidateTest extends TestCase
             'gender' => GenderEnum::MALE,
             'citizenship' => "USA",
             'country_residence' => "Uzbekistan",
-            // 'region' => "Tashkent",
             'family_status' => FamilyStatusEnum::MARRIED,
             'family_info' => "Short text of family",
             'status' => CandidateStatusEnum::EMPLOYED,
@@ -245,9 +232,6 @@ class CandidateTest extends TestCase
      */
     public function test_candidate_can_updated_with_new_photo(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->photo()->create([
@@ -268,7 +252,6 @@ class CandidateTest extends TestCase
             'gender' => GenderEnum::FEMALE,
             'citizenship' => "USA",
             'country_residence' => "Uzbekistan",
-            // 'region' => "Tashkent",
             'family_status' => FamilyStatusEnum::UNMARRIED,
             'family_info' => "Short text of family new",
             'status' => CandidateStatusEnum::EMPLOYED,
@@ -314,7 +297,6 @@ class CandidateTest extends TestCase
             'gender' => GenderEnum::FEMALE,
             'citizenship' => "USA",
             'country_residence' => "Uzbekistan",
-            // 'region' => "Tashkent",
             'family_status' => FamilyStatusEnum::UNMARRIED,
             'family_info' => "Short text of family new",
             'status' => CandidateStatusEnum::EMPLOYED,

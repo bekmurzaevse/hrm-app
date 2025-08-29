@@ -3,8 +3,6 @@
 namespace App\Http\Resources\v1\Candidate;
 
 use App\Http\Resources\v1\Interaction\LastContactResource;
-use App\Models\District;
-use App\Models\Region;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

@@ -47,9 +47,6 @@ class InteractionTest extends TestCase
      */
     public function test_type_can_show(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $typeId = Type::inRandomOrder()->first()->id;
 
         $response = $this->getJson('/api/v1/types/' . $typeId);
@@ -64,13 +61,10 @@ class InteractionTest extends TestCase
      */
     public function test_interaction_can_create(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $value = "test";
         $description = "description";
         $candidateId = Candidate::inRandomOrder()->first()->id;
-        $userId = User::inRandomOrder()->first()->id;
+        $userId = auth()->user()->id;
         $typeId = Type::inRandomOrder()->first()->id;
 
         $data = [
@@ -100,15 +94,12 @@ class InteractionTest extends TestCase
      */
     public function test_interaction_can_update(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $interaction = Interaction::inRandomOrder()->first();
 
         $value = "new test";
         $description = "new description";
         $candidateId = Candidate::inRandomOrder()->first()->id;
-        $userId = User::inRandomOrder()->first()->id;
+        $userId = auth()->user()->id;
         $typeId = Type::inRandomOrder()->first()->id;
 
         $data = [
@@ -143,9 +134,6 @@ class InteractionTest extends TestCase
      */
     public function test_interaction_can_delete(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $interactionId = Interaction::inRandomOrder()->first()->id;
 
         $response = $this->deleteJson('/api/v1/interactions/delete/' . $interactionId);

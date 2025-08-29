@@ -43,12 +43,12 @@ class Region extends Model
     public function candidates(): HasManyThrough
     {
         return $this->hasManyThrough(
-            Candidate::class, // oxirgi model
-            District::class,  // oraliq model
-            'region_id',      // District jadvalidagi foreign key (region_id)
-            'district_id',    // Candidate jadvalidagi foreign key (district_id)
-            'id',             // Region jadvalidagi local key
-            'id'              // District jadvalidagi local key
+            Candidate::class,
+            District::class,
+            'region_id',
+            'district_id',
+            'id',
+            'id'
         );
     }
 }

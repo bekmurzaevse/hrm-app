@@ -22,7 +22,6 @@ return new class extends Migration {
             $table->string('gender')->default(GenderEnum::MALE->value);
             $table->string('citizenship');
             $table->string('country_residence');
-            // $table->foreignId('region_id')->constrained('regions')->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('district_id')->constrained('districts')->restrictOnDelete()->cascadeOnUpdate();
             $table->string('address');
             $table->text('family_info')->nullable();

@@ -21,7 +21,7 @@ class WorkExperienceSeeder extends Seeder
             'candidate_id' => Candidate::inRandomOrder()->first()->id,
             'description' => 'Work experience description',
         ]);
-        
+
         WorkExperience::create([
             'company' => 'Microsoft',
             'position' => 'CTO',

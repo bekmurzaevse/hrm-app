@@ -8,7 +8,6 @@ use App\Models\Candidate;
 use App\Traits\ResponseTrait;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class IndexAction
@@ -62,13 +61,11 @@ class IndexAction
                 $toDate   = Carbon::now()->subYears($to + 1)->addDay()->startOfDay();
 
                 $query->whereBetween('birth_date', [$toDate, $fromDate]);
-
             } elseif ($request->from_age) {
                 $from = (int) $request->from_age;
                 $fromDate = Carbon::now()->subYears($from)->endOfDay();
 
                 $query->where('birth_date', '<=', $fromDate);
-
             } elseif ($request->to_age) {
                 $to   = (int) $request->to_age;
 

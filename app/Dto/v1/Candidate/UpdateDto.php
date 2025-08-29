@@ -15,7 +15,6 @@ readonly class UpdateDto
         public string $gender,
         public string $citizenship,
         public ?string $countryResidence,
-        // public int $regionId,
         public string $familyStatus,
         public ?string $familyInfo,
         public ?string $status,
@@ -30,7 +29,6 @@ readonly class UpdateDto
         public ?string $achievments,
         public ?string $comment,
         public ?string $description,
-        public int $userId,
         public ?UploadedFile $photo,
     ) {}
 
@@ -49,7 +47,6 @@ readonly class UpdateDto
             gender: $request->gender,
             citizenship: $request->citizenship,
             countryResidence: $request->country_residence,
-            // regionId: $request->region_id,
             familyStatus: $request->family_status,
             familyInfo: $request->family_info,
             status: $request->status,
@@ -64,7 +61,6 @@ readonly class UpdateDto
             achievments: $request->achievments,
             comment: $request->comment,
             description: $request->description,
-            userId: $request->user_id,
             photo: $request->file('photo'),
         );
     }

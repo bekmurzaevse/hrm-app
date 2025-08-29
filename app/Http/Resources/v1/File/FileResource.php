@@ -21,7 +21,6 @@ class FileResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'path' => $this->path,
-            // 'size' => $this->size,
             'size' => $fileExists ? round(Storage::disk('public')->size($this->path) / 1024, 2) . " KB" : null,
             // 'download_url' => $fileExists ? url('/api/v1/clients/' . $this->additional['client_id'] . '/download/' . $this->id) : null,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),

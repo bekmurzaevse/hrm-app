@@ -10,7 +10,6 @@ readonly class CreateDto
         public string $value,
         public int $typeId,
         public int $candidateId,
-        public int $userId,
         public ?string $description,
     ) {
     }
@@ -26,7 +25,6 @@ readonly class CreateDto
             value: $request->value,
             typeId: $request->type_id,
             candidateId: $request->candidate_id,
-            userId: $request->user_id,
             description: $request->description,
         );
     }

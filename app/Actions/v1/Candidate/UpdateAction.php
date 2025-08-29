@@ -34,7 +34,6 @@ class UpdateAction
                 'gender' => $dto->gender,
                 'citizenship' => $dto->citizenship,
                 'country_residence' => $dto->countryResidence,
-                // 'region_id' => $dto->regionId,
                 'family_status' => $dto->familyStatus,
                 'family_info' => $dto->familyInfo,
                 'status' => $dto->status,
@@ -49,7 +48,7 @@ class UpdateAction
                 'achievments' => $dto->achievments,
                 'comment' => $dto->comment,
                 'description' => $dto->description,
-                'user_id' => $dto->userId,
+                'user_id' => auth()->user()->id,
             ]);
 
             if ($dto->photo) {
