@@ -35,7 +35,7 @@ class UpdateAction
                 'phone' => $dto->phone,
                 'email' => $dto->email,
                 'address' => $dto->address,
-                'user_id' => $dto->userId,
+                'user_id' => auth()->user()->id,
                 'INN' => $dto->INN,
                 'employee_count' => $dto->employeeCount,
                 'source' => $dto->source,

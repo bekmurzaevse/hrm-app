@@ -27,6 +27,10 @@ class UpdateContactRequest extends FormRequest
         ];
     }
 
+    /**
+     * Summary of messages
+     * @return array{title.max: string, title.required: string, title.string: string, value.max: string, value.required: string, value.string: string}
+     */
     public function messages(): array
     {
         return [

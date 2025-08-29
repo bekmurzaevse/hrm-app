@@ -14,7 +14,6 @@ use App\Http\Requests\v1\Candidate\CreateRequest;
 use App\Http\Requests\v1\Candidate\IndexRequest;
 use App\Http\Requests\v1\Candidate\UpdateRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class CandidateController extends Controller
 {

@@ -8,7 +8,7 @@ if (! function_exists('logActivity')) {
     function logActivity($title, $text) {
         UserActivity::create([
             'title' => $title,
-            'user_id' => 1,
+            'user_id' => auth()->user()->id,
             'text' => $text,
         ]);
     }

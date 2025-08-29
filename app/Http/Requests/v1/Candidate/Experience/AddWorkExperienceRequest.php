@@ -31,6 +31,7 @@ class AddWorkExperienceRequest extends FormRequest
         ];
     }
 
+    /** */
     public function messages(): array
     {
         return [
@@ -43,7 +44,6 @@ class AddWorkExperienceRequest extends FormRequest
             'start_year.required' => "start_year ma'jbu'riy.",
             'start_year.string' => "start_year string boliw kerek.",
             'start_year.max' => "start_year 50 belgiden ko'p bolmawi kerek.",
-            'start_year.string' => "start_year string boliw kerek.",
         ];
     }
 }

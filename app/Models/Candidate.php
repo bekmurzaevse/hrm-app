@@ -25,7 +25,6 @@ class Candidate extends Model
         'gender',
         'citizenship',
         'country_residence',
-        // 'region_id',
         'family_status',
         'family_info',
         'status',
@@ -138,14 +137,9 @@ class Candidate extends Model
     }
 
     /**
-     * Summary of region
-     * @return BelongsTo<Region, Candidate>
+     * Summary of district
+     * @return BelongsTo<District, Candidate>
      */
-    // public function region(): BelongsTo
-    // {
-    //     return $this->belongsTo(Region::class);
-    // }
-
     public function district(): BelongsTo
     {
         return $this->belongsTo(District::class);

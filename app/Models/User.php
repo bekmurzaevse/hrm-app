@@ -72,5 +72,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserActivity::class)->with('user');
     }
-
 }

@@ -61,9 +61,6 @@ class TypeTest extends TestCase
      */
     public function test_type_can_show(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $typeId = Type::inRandomOrder()->first()->id;
 
         $response = $this->getJson('/api/v1/types/' . $typeId);
@@ -87,9 +84,6 @@ class TypeTest extends TestCase
      */
     public function test_type_can_create(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $title = "test title";
 
         $data = [
@@ -111,9 +105,6 @@ class TypeTest extends TestCase
      */
     public function test_type_can_update(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $type = Type::inRandomOrder()->first();
 
         $title = "update test title";
@@ -142,9 +133,6 @@ class TypeTest extends TestCase
      */
     public function test_type_can_delete(): void
     {
-        // $user = User::find(1)->first();
-        // $this->actingAs($user);
-
         $typeId = Type::inRandomOrder()->first()->id;
 
         $response = $this->deleteJson('/api/v1/types/delete/' . $typeId);

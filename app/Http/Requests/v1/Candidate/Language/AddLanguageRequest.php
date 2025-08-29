@@ -28,6 +28,10 @@ class AddLanguageRequest extends FormRequest
         ];
     }
 
+    /**
+     * Summary of messages
+     * @return array{degree.max: string, degree.required: string, degree.string: string, title.max: string, title.required: string, title.string: string}
+     */
     public function messages()
     {
         return [

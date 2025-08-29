@@ -33,7 +33,6 @@ class CreateRequest extends FormRequest
             'gender' => ['required', Rule::enum(GenderEnum::class)],
             'citizenship' => 'required|string',
             'country_residence' => 'required|string',
-            // 'region_id' => 'required|integer|exists:regions,id',
             'family_status' => ['required', Rule::enum(FamilyStatusEnum::class)],
             'family_info' => 'nullable|string',
             'status' => ['required', Rule::enum(CandidateStatusEnum::class)],
@@ -43,7 +42,6 @@ class CreateRequest extends FormRequest
             'address' => 'required|string',
             'desired_salary' => 'required|numeric',
             'source' => 'nullable|string',
-            'user_id' => 'required|integer|exists:users,id',
             'experience' => 'nullable|numeric',
             'description' => 'nullable|string',
             'short_summary' => 'nullable|string',
@@ -53,6 +51,10 @@ class CreateRequest extends FormRequest
         ];
     }
 
+    /**
+     * Summary of messages
+     * @return array{address.required: string, address.string: string, citizenship.required: string, citizenship.string: string, country_residence.required: string, country_residence.string: string, desired_salary.numeric: string, desired_salary.required: string, distrcit_id.exist: string, distrcit_id.integer: string, distrcit_id.required: string, family_info.required: string, family_info.string: string, family_status.in: string, family_status.required: string, first_name.max: string, first_name.required: string, first_name.string: string, gender.in: string, gender.required: string, last_name.max: string, last_name.required: string, last_name.string: string, patronymic.max: string, patronymic.required: string, patronymic.string: string, photo.image: string, photo.mimes: string, position.required: string, position.string: string, status.in: string, status.required: string, user_id.exist: string, user_id.integer: string, user_id.required: string}
+     */
     public function messages(): array
     {
         return [
@@ -83,10 +85,6 @@ class CreateRequest extends FormRequest
             'country_residence.required' => "country_residence ma'jbu'riy.",
             'country_residence.string' => "country_residence string boliw kerek.",
 
-            // 'region_id.required' => "region_id ma'jbu'riy.",
-            // 'region_id.integer' => "region_id pu'tin san boliw kerek.",
-            // 'region_id.exist' => "region_id bazada tabilmadi.",
-
             'distrcit_id.required' => "distrcit_id ma'jbu'riy.",
             'distrcit_id.integer' => "distrcit_id pu'tin san boliw kerek.",
             'distrcit_id.exist' => "distrcit_id bazada tabilmadi.",
@@ -97,18 +95,11 @@ class CreateRequest extends FormRequest
             'position.required' => "position ma'jbu'riy.",
             'position.string' => "position string boliw kerek.",
 
-            // 'city.required' => "city ma'jbu'riy.",
-            // 'city.string' => "city string boliw kerek.",
-
             'address.required' => "address ma'jbu'riy.",
             'address.string' => "address string boliw kerek.",
 
             'desired_salary.required' => "desired_salary ma'jbu'riy.",
             'desired_salary.numeric' => "desired_salary san boliw kerek.",
-
-            'user_id.required' => "user_id ma'jbu'riy.",
-            'user_id.integer' => "user_id pu'tin san boliw kerek.",
-            'user_id.exist' => "user_id bazada tabilmadi.",
 
             'photo.image' => "photo image tipinde boliwiw kerek.",
             'photo.mimes' => "photo (png,jpg,png,jpeg) tiplerinin' biri boliwi kerek.",

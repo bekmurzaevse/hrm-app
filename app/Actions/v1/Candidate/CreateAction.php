@@ -27,7 +27,6 @@ class CreateAction
             'gender' => $dto->gender,
             'citizenship' => $dto->citizenship,
             'country_residence' => $dto->countryResidence,
-            // 'region_id' => $dto->regionId,
             'family_status' => $dto->familyStatus,
             'family_info' => $dto->familyInfo,
             'status' => $dto->status,
@@ -42,7 +41,7 @@ class CreateAction
             'achievments' => $dto->achievments,
             'comment' => $dto->comment,
             'description' => $dto->description,
-            'user_id' => $dto->userId,
+            'user_id' => auth()->user()->id,
         ];
 
         $candidate = Candidate::create($data);

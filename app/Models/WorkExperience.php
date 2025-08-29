@@ -38,6 +38,4 @@ class WorkExperience extends Model
     {
         return $this->belongsTo(Candidate::class);
     }
-
-
 }

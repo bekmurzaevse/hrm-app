@@ -27,6 +27,10 @@ class AddSkillRequest extends FormRequest
         ];
     }
 
+    /**
+     * Summary of messages
+     * @return array{titles.array: string, titles.required: string}
+     */
     public function messages(): array
     {
         return [

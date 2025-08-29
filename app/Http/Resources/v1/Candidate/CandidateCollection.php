@@ -2,11 +2,12 @@
 
 namespace App\Http\Resources\v1\Candidate;
 
-use App\Models\Candidate;
+use App\Enums\GenderEnum;
 use App\Models\District;
 use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+
 class CandidateCollection extends ResourceCollection
 {
     /**
@@ -21,9 +22,7 @@ class CandidateCollection extends ResourceCollection
 
         return [
             'filters' => [
-                // 'gender' => [
-                //     'title'
-                // ],
+                'gender' => array_column(GenderEnum::cases(), 'value'),
                 'regions' => $regions->map(function ($region) {
                     return [
                         'id' => $region->id,

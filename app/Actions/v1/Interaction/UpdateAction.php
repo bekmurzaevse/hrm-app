@@ -28,7 +28,7 @@ class UpdateAction
                 'value' => $dto->value,
                 'type_id' => $dto->typeId,
                 'candidate_id' => $dto->candidateId,
-                'user_id' => $dto->userId,
+                'user_id' => auth()->user()->id,
                 'description' => $dto->description,
             ]);
 

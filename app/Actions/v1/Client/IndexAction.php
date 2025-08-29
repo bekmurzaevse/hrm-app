@@ -68,7 +68,6 @@ class IndexAction
             } elseif ($request->to_project) {
                 $query->having('projects_count', '<=', $request->to_project);
             }
-
             return $query->paginate(10);
         });
 

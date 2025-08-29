@@ -37,6 +37,10 @@ class CreateRequest extends FormRequest
         ];
     }
 
+    /**
+     * Summary of messages
+     * @return array{address.required: string, address.string: string, email.email: string, email.required: string, email.string: string, first_name.max: string, first_name.required: string, first_name.string: string, last_name.max: string, last_name.required: string, last_name.string: string, password.min: string, password.password: string, password.required: string, patronymic.max: string, patronymic.required: string, patronymic.string: string, phone.required: string, phone.string: string, position.required: string, position.string: string, status.in: string, status.required: string}
+     */
     public function messages(): array
     {
         return [

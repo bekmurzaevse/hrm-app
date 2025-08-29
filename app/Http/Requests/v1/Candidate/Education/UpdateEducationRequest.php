@@ -31,6 +31,10 @@ class UpdateEducationRequest extends FormRequest
         ];
     }
 
+    /**
+     * Summary of messages
+     * @return array{degree.max: string, degree.required: string, degree.string: string, end_year.max: string, end_year.required: string, end_year.string: string, specialty.max: string, specialty.required: string, specialty.string: string, start_year.max: string, start_year.required: string, start_year.string: string, title.max: string, title.required: string, title.string: string}
+     */
     public function messages(): array
     {
         return [

@@ -34,7 +34,6 @@ class CreateRequest extends FormRequest
             'phone' => 'required|string',
             'email' => 'nullable|string|email',
             'address' => 'required|string',
-            'user_id' => 'required|exists:users,id',
             'INN' => 'required|string',
             'employee_count' => ['nullable', Rule::enum(EmlpoyeeCountEnum::class)],
             'source' => 'required|string',
@@ -84,9 +83,6 @@ class CreateRequest extends FormRequest
 
             'address.required' => "address ma'jbu'riy.",
             'address.string' => "address string boliw kerek.",
-
-            'user_id.required' => "user id kiritiliwi kerek.",
-            'user_id.exists' => "user id bazada tabilmadi.",
 
             'INN.required' => "INN ma'jbu'riy.",
             'INN.string' => "INN string boliw kerek.",
