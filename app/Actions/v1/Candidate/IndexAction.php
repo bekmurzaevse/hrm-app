@@ -44,15 +44,11 @@ class IndexAction
                     ->orWhere('position', 'LIKE', "%{$request->search}%")
                     ->orWhere('citizenship', 'LIKE', "%{$request->search}%")
                     ->orWhere('country_residence', 'LIKE', "%{$request->search}%")
-                    ->orWhere('source', 'LIKE', "%{$request->search}%");
-
+                    ->orWhere('source', 'LIKE', "%{$request->search}%")
+                    ->orWhereHas('contacts', function ($q) use ($request) {
+                        $q->where('value', 'LIKE', "%{$request->search}%");
+                    });
             }
-
-            // if ($request->search) {
-            //     $query->whereHas('contacts', function ($q) use ($request) {
-            //         $q->where('contacts.value', 'LIKE', "%{$request->search}%");
-            //     });
-            // }
 
             if ($request->gender) {
                 $query->where('gender', $request->gender);
