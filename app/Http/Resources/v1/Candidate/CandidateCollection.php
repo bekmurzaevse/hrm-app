@@ -7,6 +7,7 @@ use App\Models\District;
 use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Cache;
 
 class CandidateCollection extends ResourceCollection
 {
@@ -17,8 +18,8 @@ class CandidateCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        $regions = Region::all();
-        $districts = District::all();
+        $regions = Cache::get('regions');
+        $districts = Cache::get('districts');
 
         return [
             'filters' => [

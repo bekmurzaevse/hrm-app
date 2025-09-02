@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\User;
 
-use App\Http\Requests\v1\User\IndexRequest;
+use App\Dto\v1\User\IndexDto;
 use App\Http\Resources\v1\User\UserCollection;
 use App\Models\User;
 use App\Traits\ResponseTrait;
@@ -15,26 +15,27 @@ class IndexAction
 
     /**
      * Summary of __invoke
+     * @param \App\Dto\v1\User\IndexDto $dto
      * @return JsonResponse
      */
-    public function __invoke(IndexRequest $request): JsonResponse
+    public function __invoke(IndexDto $dto): JsonResponse
     {
         $key = 'users:' . app()->getLocale() . ':' . md5(request()->fullUrl());
-        $users = Cache::remember($key, now()->addDay(), function () use ($request) {
+        $users = Cache::remember($key, now()->addDay(), function () use ($dto) {
             $query = User::with(['projects']);
 
-            if ($request->status) {
-                $query->where('status', $request->status);
+            if ($dto->status) {
+                $query->where('status', $dto->status);
             }
 
-            if ($request->search) {
-                $query->where('first_name', 'LIKE', "%{$request->search}%")
-                    ->orWhere('last_name', 'LIKE', "%{$request->search}%")
-                    ->orWhere('patronymic', 'LIKE', "%{$request->search}%")
-                    ->orWhere('address', 'LIKE', "%{$request->search}%")
-                    ->orWhere('position', 'LIKE', "%{$request->search}%")
-                    ->orWhere('phone', 'LIKE', "%{$request->search}%")
-                    ->orWhere('email', 'LIKE', "%{$request->search}%");
+            if ($dto->search) {
+                $query->where('first_name', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('last_name', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('patronymic', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('address', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('position', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('phone', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('email', 'LIKE', "%{$dto->search}%");
             }
 
             return $query->paginate(10);

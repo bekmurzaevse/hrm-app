@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Client;
 
-use App\Http\Requests\v1\Client\IndexRequest;
+use App\Dto\v1\Client\IndexDto;
 use App\Http\Resources\v1\Client\ClientCollection;
 use App\Models\Client;
 use App\Traits\ResponseTrait;
@@ -15,39 +15,40 @@ class IndexAction
 
     /**
      * Summary of __invoke
+     * @param \App\Dto\v1\Client\IndexDto $dto
      * @return JsonResponse
      */
-    public function __invoke(IndexRequest $request): JsonResponse
+    public function __invoke(IndexDto $dto): JsonResponse
     {
         $key = 'clients:' . app()->getLocale() . ':' . md5(request()->fullUrl());
-        $clients = Cache::remember($key, now()->addDay(), function () use ($request) {
+        $clients = Cache::remember($key, now()->addDay(), function () use ($dto) {
             $query = Client::with(['contacts', 'user']);
 
-            if ($request->status) {
-                $query->where('status', $request->status);
+            if ($dto->status) {
+                $query->where('status', $dto->status);
             }
 
-            if ($request->employee_count) {
-                $query->where('employee_count', $request->employee_count);
+            if ($dto->employeeCount) {
+                $query->where('employee_count', $dto->employeeCount);
             }
 
-            if ($request->user_id) {
-                $query->where('user_id', $request->user_id);
+            if ($dto->userId) {
+                $query->where('user_id', $dto->userId);
             }
 
-            if ($request->search) {
-                $query->where('name', 'LIKE', "%{$request->search}%")
-                    ->orWhere('leader', 'LIKE', "%{$request->search}%")
-                    ->orWhere('phone', 'LIKE', "%{$request->search}%")
-                    ->orWhere('email', 'LIKE', "%{$request->search}%")
-                    ->orWhere('address', 'LIKE', "%{$request->search}%")
-                    ->orWhere('INN', 'LIKE', "%{$request->search}%")
-                    ->orWhere('activity', 'LIKE', "%{$request->search}%")
-                    ->orWhere('source', 'LIKE', "%{$request->search}%");
+            if ($dto->search) {
+                $query->where('name', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('leader', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('phone', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('email', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('address', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('INN', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('activity', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('source', 'LIKE', "%{$dto->search}%");
             }
 
-            $from = $request->project_from_sum ? (int) $request->project_from_sum : null;
-            $to   = $request->project_to_sum   ? (int) $request->project_to_sum   : null;
+            $from = $dto->projectFromSum ? (int) $dto->projectFromSum : null;
+            $to   = $dto->projectToSum   ? (int) $dto->projectToSum   : null;
 
             $query->whereHas('projects', function ($q) use ($from, $to) {
                 if ($from && $to) {
@@ -61,12 +62,12 @@ class IndexAction
             });
 
             $query->withCount('projects');
-            if ($request->from_project && $request->to_project) {
-                $query->havingBetween('projects_count', [$request->from_project, $request->to_project]);
-            } elseif ($request->from_project) {
-                $query->having('projects_count', '>=', $request->from_project);
-            } elseif ($request->to_project) {
-                $query->having('projects_count', '<=', $request->to_project);
+            if ($dto->fromProject && $dto->toProject) {
+                $query->havingBetween('projects_count', [$dto->fromProject, $dto->toProject]);
+            } elseif ($dto->fromProject) {
+                $query->having('projects_count', '>=', $dto->fromProject);
+            } elseif ($dto->toProject) {
+                $query->having('projects_count', '<=', $dto->toProject);
             }
             return $query->paginate(10);
         });
