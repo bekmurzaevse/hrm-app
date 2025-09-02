@@ -22,12 +22,27 @@ class FilterServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Regions - forever cache
+        if (app()->environment('testing')) {
+            $regions = collect([
+                (object) ['id' => 1, 'title' => 'Toshkent'],
+                (object) ['id' => 2, 'title' => 'Samarqand'],
+            ]);
+
+            $districts = collect([
+                (object) ['id' => 1, 'region_id' => 1, 'title' => 'Yunusobod'],
+                (object) ['id' => 2, 'region_id' => 2, 'title' => 'Oqdarvo'],
+            ]);
+
+            Cache::forever('regions', $regions);
+            Cache::forever('districts', $districts);
+
+            return;
+        }
+
         if (!Cache::has('regions')) {
             Cache::forever('regions', Region::select('id', 'title')->get());
         }
 
-        // Districts - forever cache
         if (!Cache::has('districts')) {
             Cache::forever('districts', District::select('id', 'region_id', 'title')->get());
         }
