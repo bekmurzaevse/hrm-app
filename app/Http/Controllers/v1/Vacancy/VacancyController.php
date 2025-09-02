@@ -8,9 +8,11 @@ use App\Actions\v1\Vacancy\IndexAction;
 use App\Actions\v1\Vacancy\ShowAction;
 use App\Actions\v1\Vacancy\UpdateAction;
 use App\Dto\v1\Vacancy\CreateDto;
+use App\Dto\v1\Vacancy\IndexDto;
 use App\Dto\v1\Vacancy\UpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Vacancy\CreateRequest;
+use App\Http\Requests\v1\Vacancy\IndexRequest;
 use App\Http\Requests\v1\Vacancy\UpdateRequest;
 use Illuminate\Http\JsonResponse;
 
@@ -19,11 +21,12 @@ class VacancyController extends Controller
     /**
      * Summary of index
      * @param \App\Actions\v1\Vacancy\IndexAction $action
+     * @param \App\Http\Requests\v1\Vacancy\IndexRequest $request
      * @return JsonResponse
      */
-    public function index(IndexAction $action): JsonResponse
+    public function index(IndexAction $action, IndexRequest $request): JsonResponse
     {
-        return $action();
+        return $action(IndexDto::from($request));
     }
 
     /**
