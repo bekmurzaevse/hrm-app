@@ -3,8 +3,10 @@
 namespace App\Http\Resources\v1\Project;
 
 use App\Enums\ProjectStatusEnum;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Cache;
 
 class ProjectCollection extends ResourceCollection
 {
@@ -20,7 +22,17 @@ class ProjectCollection extends ResourceCollection
         $completedProjects = $this->where('status', ProjectStatusEnum::CANCELLED)->count();
         $totalPrice = $this->sum('contract_budget');
 
+        $users = Cache::remember(
+            'users:filter',
+            60 * 60 * 24 * 30,
+            fn() =>
+            User::role(['admin', 'manager'])->select('id', 'first_name', 'last_name', 'patronymic')->get()
+        );
+
         return [
+            'filter' => [
+                'user' => $users
+            ],
             'cards' => [
                 'total' => $totalProjects,
                 'in_progress' => $inProgressProjects,

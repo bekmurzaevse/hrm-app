@@ -21,7 +21,7 @@ class VacancyCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         $users = Cache::remember(
-            'users:vacancy',
+            'users:filter',
             60 * 60 * 24 * 30,
             fn() =>
             User::role(['admin', 'manager'])->select('id', 'first_name', 'last_name', 'patronymic')->get()

@@ -12,12 +12,14 @@ use App\Actions\v1\Project\UpdatePerformerAction;
 use App\Dto\v1\Project\CloseProjectDto;
 use App\Dto\v1\Project\CreateContractDto;
 use App\Dto\v1\Project\CreateDto;
+use App\Dto\v1\Project\IndexDto;
 use App\Dto\v1\Project\UpdateDto;
 use App\Dto\v1\Project\UpdatePerformerDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Project\CloseProjectRequest;
 use App\Http\Requests\v1\Project\CreateContractRequest;
 use App\Http\Requests\v1\Project\CreateRequest;
+use App\Http\Requests\v1\Project\IndexRequest;
 use App\Http\Requests\v1\Project\UpdatePerformerRequest;
 use App\Http\Requests\v1\Project\UpdateRequest;
 use Illuminate\Http\JsonResponse;
@@ -27,11 +29,12 @@ class ProjectController extends Controller
     /**
      * Summary of index
      * @param \App\Actions\v1\Project\IndexAction $action
+     * @param \App\Http\Requests\v1\Project\IndexRequest $request
      * @return JsonResponse
      */
-    public function index(IndexAction $action): JsonResponse
+    public function index(IndexAction $action, IndexRequest $request): JsonResponse
     {
-        return $action();
+        return $action(IndexDto::from($request));
     }
 
     /**
