@@ -31,13 +31,36 @@ class VacancyTest extends TestCase
     public function test_authorized_user_can_view_list_of_vacancies(): void
     {
         $response = $this->getJson("/api/v1/vacancies");
-
         $response
             ->assertStatus(200)
             ->assertJsonStructure([
                 'status',
                 'message',
                 'data' => [
+                    'filter' => [
+                        'regions' => [
+                            '*' => [
+                                'id',
+                                'title',
+                            ]
+                        ],
+                        'districts' => [
+                            '*' => [
+                                'id',
+                                'region_id',
+                                'title',
+                            ]
+                        ],
+                        'created_by' => [
+                            '*' => [
+                                'id',
+                                'first_name',
+                                'last_name',
+                                'patronymic'
+                            ]
+                        ],
+                        'statuses'
+                    ],
                     'items' => [
                         [
                             'id',
