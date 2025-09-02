@@ -13,6 +13,7 @@ use App\Dto\v1\User\UpdateDto;
 use App\Dto\v1\User\UpdateStatusDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\User\CreateRequest;
+use App\Http\Requests\v1\User\IndexRequest;
 use App\Http\Requests\v1\User\UpdateRequest;
 use App\Http\Requests\v1\User\UpdateStatusRequest;
 use Illuminate\Http\JsonResponse;
@@ -24,9 +25,9 @@ class UserController extends Controller
      * @param \App\Actions\v1\User\IndexAction $action
      * @return JsonResponse
      */
-    public function index(IndexAction $action): JsonResponse
+    public function index(IndexAction $action, IndexRequest $request): JsonResponse
     {
-        return $action();
+        return $action($request);
     }
 
     /**
