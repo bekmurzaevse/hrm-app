@@ -8,6 +8,7 @@ use App\Actions\v1\Client\IndexAction;
 use App\Actions\v1\Client\ShowAction;
 use App\Actions\v1\Client\UpdateAction;
 use App\Dto\v1\Client\CreateDto;
+use App\Dto\v1\Client\IndexDto;
 use App\Dto\v1\Client\UpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Client\CreateRequest;
@@ -25,8 +26,9 @@ class ClientController extends Controller
      */
     public function index(IndexAction $action, IndexRequest $request): JsonResponse
     {
-        return $action($request);
+        return $action(IndexDto::from($request));
     }
+
     /**
      * Summary of show
      * @param int $id

@@ -9,6 +9,7 @@ use App\Actions\v1\User\ShowAction;
 use App\Actions\v1\User\UpdateAction;
 use App\Actions\v1\User\UpdateStatusAction;
 use App\Dto\v1\User\CreateDto;
+use App\Dto\v1\User\IndexDto;
 use App\Dto\v1\User\UpdateDto;
 use App\Dto\v1\User\UpdateStatusDto;
 use App\Http\Controllers\Controller;
@@ -23,11 +24,12 @@ class UserController extends Controller
     /**
      * Summary of index
      * @param \App\Actions\v1\User\IndexAction $action
+     * @param \App\Http\Requests\v1\User\IndexRequest $request
      * @return JsonResponse
      */
     public function index(IndexAction $action, IndexRequest $request): JsonResponse
     {
-        return $action($request);
+        return $action(IndexDto::from($request));
     }
 
     /**

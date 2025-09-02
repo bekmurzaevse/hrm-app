@@ -2,6 +2,7 @@
 
 namespace App\Actions\v1\Candidate;
 
+use App\Dto\v1\Candidate\IndexDto;
 use App\Http\Requests\v1\Candidate\IndexRequest;
 use App\Http\Resources\v1\Candidate\CandidateCollection;
 use App\Models\Candidate;
@@ -16,91 +17,92 @@ class IndexAction
 
     /**
      * Summary of __invoke
+     * @param \App\Dto\v1\Candidate\IndexDto $dto
      * @return JsonResponse
      */
-    public function __invoke(IndexRequest $request): JsonResponse
+    public function __invoke(IndexDto $dto): JsonResponse
     {
         $key = 'candidates:' . app()->getLocale() . ':' . md5(request()->fullUrl());
-        $candidates = Cache::remember($key, now()->addDay(), function () use ($request) {
+        $candidates = Cache::remember($key, now()->addDay(), function () use ($dto) {
             $query = Candidate::with(['district']);
 
-            if ($request->region_id) {
-                $query->whereHas('district', function ($q) use ($request) {
-                    $q->where('region_id', $request->region_id);
+            if ($dto->regionId) {
+                $query->whereHas('district', function ($q) use ($dto) {
+                    $q->where('region_id', $dto->regionId);
                 });
             }
 
-            if ($request->district_id) {
-                $query->where('district_id', $request->district_id);
+            if ($dto->districtId) {
+                $query->where('district_id', $dto->districtId);
             }
 
-            if ($request->search) {
-                $query->where('first_name', 'LIKE', "%{$request->search}%")
-                    ->orWhere('last_name', 'LIKE', "%{$request->search}%")
-                    ->orWhere('patronymic', 'LIKE', "%{$request->search}%")
-                    ->orWhere('address', 'LIKE', "%{$request->search}%")
-                    ->orWhere('workplace', 'LIKE', "%{$request->search}%")
-                    ->orWhere('position', 'LIKE', "%{$request->search}%")
-                    ->orWhere('citizenship', 'LIKE', "%{$request->search}%")
-                    ->orWhere('country_residence', 'LIKE', "%{$request->search}%")
-                    ->orWhere('source', 'LIKE', "%{$request->search}%")
-                    ->orWhereHas('contacts', function ($q) use ($request) {
-                        $q->where('value', 'LIKE', "%{$request->search}%");
+            if ($dto->search) {
+                $query->where('first_name', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('last_name', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('patronymic', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('address', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('workplace', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('position', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('citizenship', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('country_residence', 'LIKE', "%{$dto->search}%")
+                    ->orWhere('source', 'LIKE', "%{$dto->search}%")
+                    ->orWhereHas('contacts', function ($q) use ($dto) {
+                        $q->where('value', 'LIKE', "%{$dto->search}%");
                     });
             }
 
-            if ($request->gender) {
-                $query->where('gender', $request->gender);
+            if ($dto->gender) {
+                $query->where('gender', $dto->gender);
             }
 
-            if ($request->from_age && $request->to_age) {
-                $from = (int) $request->from_age;
-                $to   = (int) $request->to_age;
+            if ($dto->fromAge && $dto->toAge) {
+                $from = (int) $dto->fromAge;
+                $to   = (int) $dto->toAge;
 
                 $fromDate = Carbon::now()->subYears($from)->endOfDay();
                 $toDate   = Carbon::now()->subYears($to + 1)->addDay()->startOfDay();
 
                 $query->whereBetween('birth_date', [$toDate, $fromDate]);
-            } elseif ($request->from_age) {
-                $from = (int) $request->from_age;
+            } elseif ($dto->fromAge) {
+                $from = (int) $dto->fromAge;
                 $fromDate = Carbon::now()->subYears($from)->endOfDay();
 
                 $query->where('birth_date', '<=', $fromDate);
-            } elseif ($request->to_age) {
-                $to   = (int) $request->to_age;
+            } elseif ($dto->toAge) {
+                $to   = (int) $dto->toAge;
 
                 $toDate   = Carbon::now()->subYears($to + 1)->addDay()->startOfDay();
                 $query->where('birth_date', '>=', $toDate);
             }
 
-            if ($request->salary_from && $request->salary_to) {
+            if ($dto->salaryFrom && $dto->salaryTo) {
                 $query->whereBetween('desired_salary', [
-                    $request->salary_from,
-                    $request->salary_to
+                    $dto->salaryFrom,
+                    $dto->salaryTo
                 ]);
-            } elseif ($request->salary_from) {
-                $query->where('desired_salary', '>=', $request->salary_from);
-            } elseif ($request->salary_to) {
-                $query->where('desired_salary', '<=', $request->salary_to);
+            } elseif ($dto->salaryFrom) {
+                $query->where('desired_salary', '>=', $dto->salaryFrom);
+            } elseif ($dto->salaryTo) {
+                $query->where('desired_salary', '<=', $dto->salaryTo);
             }
 
-            if ($request->experience_from && $request->experience_to) {
+            if ($dto->experienceFrom && $dto->experienceTo) {
                 $query->whereBetween('experience', [
-                    $request->experience_from,
-                    $request->experience_to
+                    $dto->experienceFrom,
+                    $dto->experienceTo
                 ]);
-            } elseif ($request->experience_from) {
-                $query->where('experience', '>=', $request->experience_from);
-            } elseif ($request->experience_to) {
-                $query->where('experience', '<=', $request->experience_to);
+            } elseif ($dto->experienceFrom) {
+                $query->where('experience', '>=', $dto->experienceFrom);
+            } elseif ($dto->experienceTo) {
+                $query->where('experience', '<=', $dto->experienceTo);
             }
 
-            if ($request->status) {
-                $query->where('status', $request->status);
+            if ($dto->status) {
+                $query->where('status', $dto->status);
             }
 
-            if ($request->family_status) {
-                $query->where('family_status', $request->family_status);
+            if ($dto->familyStatus) {
+                $query->where('family_status', $dto->familyStatus);
             }
 
             return $query->paginate(10);

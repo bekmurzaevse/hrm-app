@@ -8,6 +8,7 @@ use App\Actions\v1\Candidate\IndexAction;
 use App\Actions\v1\Candidate\ShowAction;
 use App\Actions\v1\Candidate\UpdateAction;
 use App\Dto\v1\Candidate\CreateDto;
+use App\Dto\v1\Candidate\IndexDto;
 use App\Dto\v1\Candidate\UpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Candidate\CreateRequest;
@@ -20,11 +21,12 @@ class CandidateController extends Controller
     /**
      * Summary of index
      * @param \App\Actions\v1\Candidate\IndexAction $action
+     * @param \App\Http\Requests\v1\Candidate\IndexRequest $request
      * @return JsonResponse
      */
     public function index(IndexAction $action, IndexRequest $request): JsonResponse
     {
-        return $action($request);
+        return $action(IndexDto::from($request));
     }
 
     /**
