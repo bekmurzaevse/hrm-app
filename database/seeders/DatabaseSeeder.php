@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\SelectionItems;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -35,6 +36,8 @@ class DatabaseSeeder extends Seeder
             StageCompletionSeeder::class,
             StageTaskSeeder::class,
             ProjectUserSeeder::class,
+            SelectionSeeder::class,
+            SelectionItemSeeder::class
         ]);
     }
 }
