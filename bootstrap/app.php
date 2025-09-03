@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -26,8 +28,25 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
         ]);
+        $middleware->group('api', [
+            \App\Http\Middleware\ApiJson::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->render(function (AuthenticationException $ex) {
+            return response()->json([
+                'status' => Response::HTTP_UNAUTHORIZED,
+                'message' => $ex->getMessage(),
+            ], Response::HTTP_UNAUTHORIZED);
+        });
+
+        $exceptions->render(function (AuthorizationException $ex) {
+            return response()->json([
+                'status' => Response::HTTP_FORBIDDEN,
+                'message' => $ex->getMessage(),
+            ], Response::HTTP_FORBIDDEN);
+        });
+
         $exceptions->render(function (HttpException $ex) {
             return response()->json([
                 'status' => $ex->getStatusCode(),
