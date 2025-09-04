@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Actions\v1\User\CreateAction;
 use App\Actions\v1\User\DeleteAction;
 use App\Actions\v1\User\IndexAction;
+use App\Actions\v1\User\ListAction;
 use App\Actions\v1\User\ShowAction;
 use App\Actions\v1\User\UpdateAction;
 use App\Actions\v1\User\UpdateStatusAction;
@@ -87,5 +88,10 @@ class UserController extends Controller
     public function updateStatus(int $id, UpdateStatusRequest $request, UpdateStatusAction $action): JsonResponse
     {
         return $action($id, UpdateStatusDto::from($request));
+    }
+
+    public function list(ListAction $action): JsonResponse
+    {
+        return $action();
     }
 }

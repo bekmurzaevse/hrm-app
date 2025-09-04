@@ -17,6 +17,7 @@ use App\Http\Controllers\v1\Project\ProjectController;
 use App\Http\Controllers\v1\Project\ProjectFileController;
 use App\Http\Controllers\v1\Project\ProjectStageController;
 use App\Http\Controllers\v1\Project\StageTaskController;
+use App\Http\Controllers\v1\RegionController;
 use App\Http\Controllers\v1\TypeController;
 use App\Http\Controllers\v1\UserController;
 use App\Http\Controllers\v1\Vacancy\VacancyController;
@@ -166,6 +167,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
 
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index']);
+        Route::get('/list', [UserController::class, 'list']);
         Route::get('/{id}', [UserController::class, 'show']);
 
         Route::put('/{id}/updateStatus', [UserController::class, 'updateStatus']);
@@ -198,5 +200,9 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::post('/create-expense', [FinanceController::class, 'createExpense']);
         // Route::put('/update/{id}', [InteractionController::class, 'update']);
         // Route::delete('/delete/{id}', [InteractionController::class, 'delete']);
+    });
+
+    Route::prefix('regions')->group(function () {
+        Route::get('/', [RegionController::class, 'index']);
     });
 });

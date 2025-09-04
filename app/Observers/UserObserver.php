@@ -17,6 +17,7 @@ class UserObserver
         $this->clear([
             'users',
             'users:show',
+            'users:list',
         ]);
     }
 
@@ -29,6 +30,7 @@ class UserObserver
         $this->clear([
             'users',
             'users:show',
+            'users:list',
         ]);
     }
 
@@ -41,6 +43,7 @@ class UserObserver
         $this->clear([
             'users',
             'users:show',
+            'users:list',
         ]);
     }
 
@@ -53,6 +56,7 @@ class UserObserver
         $this->clear([
             'users',
             'users:show',
+            'users:list',
         ]);
     }
 
@@ -65,6 +69,7 @@ class UserObserver
         $this->clear([
             'users',
             'users:show',
+            'users:list',
         ]);
     }
 }

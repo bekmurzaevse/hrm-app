@@ -22,17 +22,17 @@ class ProjectCollection extends ResourceCollection
         $completedProjects = $this->where('status', ProjectStatusEnum::CANCELLED)->count();
         $totalPrice = $this->sum('contract_budget');
 
-        $users = Cache::remember(
-            'users:filter',
-            60 * 60 * 24 * 30,
-            fn() =>
-            User::role(['admin', 'manager'])->select('id', 'first_name', 'last_name', 'patronymic')->get()
-        );
+        // $users = Cache::remember(
+        //     'users:filter',
+        //     60 * 60 * 24 * 30,
+        //     fn() =>
+        //     User::role(['admin', 'manager'])->select('id', 'first_name', 'last_name', 'patronymic')->get()
+        // );
 
         return [
-            'filter' => [
-                'user' => $users
-            ],
+            // 'filter' => [
+            //     'user' => $users
+            // ],
             'cards' => [
                 'total' => $totalProjects,
                 'in_progress' => $inProgressProjects,

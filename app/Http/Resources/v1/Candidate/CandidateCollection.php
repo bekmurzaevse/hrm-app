@@ -18,26 +18,26 @@ class CandidateCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        $regions = Cache::get('regions');
-        $districts = Cache::get('districts');
+        // $regions = Cache::get('regions');
+        // $districts = Cache::get('districts');
 
         return [
-            'filters' => [
-                'gender' => array_column(GenderEnum::cases(), 'value'),
-                'regions' => $regions->map(function ($region) {
-                    return [
-                        'id' => $region->id,
-                        'title' => $region->title,
-                    ];
-                }),
-                'districts' => $districts->map(function ($district) {
-                    return [
-                        'id' => $district->id,
-                        'region_id' => $district->region_id,
-                        'title' => $district->title,
-                    ];
-                }),
-            ],
+            // 'filters' => [
+            //     'gender' => array_column(GenderEnum::cases(), 'value'),
+            //     'regions' => $regions->map(function ($region) {
+            //         return [
+            //             'id' => $region->id,
+            //             'title' => $region->title,
+            //         ];
+            //     }),
+            //     'districts' => $districts->map(function ($district) {
+            //         return [
+            //             'id' => $district->id,
+            //             'region_id' => $district->region_id,
+            //             'title' => $district->title,
+            //         ];
+            //     }),
+            // ],
             'items' => IndexResource::collection($this->collection),
             'pagination' => [
                 'current_page' => $this->currentPage(),
