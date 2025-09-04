@@ -155,4 +155,9 @@ class Project extends Model
     {
         return $this->hasOne(ProjectClosure::class);
     }
+
+    public function finances(): HasMany
+    {
+        return $this->hasMany(Finance::class);
+    }
 }
