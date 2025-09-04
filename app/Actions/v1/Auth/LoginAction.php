@@ -5,6 +5,7 @@ namespace App\Actions\v1\Auth;
 use App\Dto\v1\Auth\LoginDto;
 use App\Enums\TokenAbilityEnum;
 use App\Exceptions\ApiResponseException;
+use App\Http\Resources\v1\Auth\GetMeResource;
 use App\Models\User;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -48,6 +49,7 @@ class LoginAction
                     'refresh_token' => $refreshToken->plainTextToken,
                     'at_expired_at' => $accessTokenExpiration->format('Y-m-d H:i:s'),
                     'rf_expired_at' => $refreshTokenExpiration->format('Y-m-d H:i:s'),
+                    'user' =>  new GetMeResource(auth()->user())
                 ]
             );
         } catch (ModelNotFoundException $ex) {

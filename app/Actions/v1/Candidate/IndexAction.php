@@ -3,7 +3,6 @@
 namespace App\Actions\v1\Candidate;
 
 use App\Dto\v1\Candidate\IndexDto;
-use App\Http\Requests\v1\Candidate\IndexRequest;
 use App\Http\Resources\v1\Candidate\CandidateCollection;
 use App\Models\Candidate;
 use App\Traits\ResponseTrait;
