@@ -10,13 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('selection_items', function (Blueprint $table) {
+        Schema::create('selection_statuses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('selection_id')->constrained('selections')->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('candidate_id')->nullable()->constrained('candidates')->restrictOnDelete()->cascadeOnUpdate();
-            $table->string('external_name')->nullable();
+            $table->string('title');
+            $table->unsignedTinyInteger('order')->default(0);
             $table->softDeletes();
-            $table->timestamps();
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('selection_items');
+        Schema::dropIfExists('selection_statuses');
     }
 };
