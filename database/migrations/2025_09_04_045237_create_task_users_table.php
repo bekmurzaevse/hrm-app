@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Candidate\Task\TaskStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +16,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('task_id')->constrained('tasks')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->timestamp('assigned_at')->nullable();
+            $table->string('status')->default(TaskStatusEnum::OPEN->value);
             $table->softDeletes();
             $table->timestamps();
         });
