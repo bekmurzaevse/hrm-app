@@ -38,7 +38,7 @@ class IndexAction
                     ->orWhere('email', 'LIKE', "%{$dto->search}%");
             }
 
-            return $query->paginate(10);
+            return $query->paginate($dto->perPage ?? 10);
         });
 
         return static::toResponse(

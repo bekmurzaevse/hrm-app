@@ -28,6 +28,7 @@ class IndexRequest extends FormRequest
             'user_id' => 'nullable|integer',
             'contract_budget_from' => 'nullable|integer|required_with:contract_budget_to',
             'contract_budget_to' => 'nullable|integer|required_with:contract_budget_from',
+            'per_page' => 'nullable|integer',
         ];
     }
 }

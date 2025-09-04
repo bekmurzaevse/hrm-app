@@ -21,7 +21,6 @@ class IndexAction
      */
     public function __invoke(IndexDto $dto): JsonResponse
     {
-
         $key = 'candidates:' . app()->getLocale() . ':' . md5(request()->fullUrl());
         $candidates = Cache::remember($key, now()->addDay(), function () use ($dto) {
             $query = Candidate::with(['district']);
@@ -105,7 +104,7 @@ class IndexAction
                 $query->where('family_status', $dto->familyStatus);
             }
 
-            return $query->paginate(10);
+            return $query->paginate($dto->perPage ?? 10);
         });
 
         return static::toResponse(

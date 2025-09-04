@@ -25,9 +25,10 @@ class CreateIncomeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['required', Rule::enum(FinanceTypeEnum::class)],
+            // 'type' => ['required', Rule::enum(FinanceTypeEnum::class)],
             'category_income' => ['required', Rule::enum(CategoryIncomeEnum::class)],
             'project_id' => 'nullable|integer|exists:projects,id',
+            // 'user_id' => 'nullable|integer|exists:users,id',
             'date' => 'required|date_format:Y-m-d',
             'amount' => 'required|numeric',
             'comment' => 'nullable|string',

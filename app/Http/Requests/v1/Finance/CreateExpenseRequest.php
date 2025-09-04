@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests\v1\Finance;
 
-use App\Enums\Finance\CategoryIncomeEnum;
-use App\Enums\Finance\FinanceTypeEnum;
+use App\Enums\Finance\CategoryExpenseEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,9 +24,9 @@ class CreateExpenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['required', Rule::enum(FinanceTypeEnum::class)],
-            'category_expense' => ['required', Rule::enum(CategoryIncomeEnum::class)],
+            'category_expense' => ['required', Rule::enum(CategoryExpenseEnum::class)],
             'project_id' => 'nullable|integer|exists:projects,id',
+            'user_id' => 'nullable|integer|exists:users,id',
             'date' => 'required|date_format:Y-m-d',
             'amount' => 'required|numeric',
             'comment' => 'nullable|string',

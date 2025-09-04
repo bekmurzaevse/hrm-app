@@ -2,14 +2,14 @@
 
 namespace App\Dto\v1\Finance;
 
-use App\Http\Requests\v1\Finance\CreateIncomeRequest;
+use App\Http\Requests\v1\Finance\CreateExpenseRequest;
 
 readonly class CreateExpenseDto
 {
     public function __construct(
-        public string $type,
-        public string $categoryIncome,
+        public string $categoryExpense,
         public ?int $projectId,
+        public ?int $userId,
         public string $date,
         public float $amount,
         public ?string $comment,
@@ -17,13 +17,17 @@ readonly class CreateExpenseDto
     ) {
     }
 
-    
-    public static function from(CreateIncomeRequest $request): self
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Finance\CreateExpenseRequest $request
+     * @return CreateExpenseDto
+     */
+    public static function from(CreateExpenseRequest $request): self
     {
         return new self(
-            type: $request->type,
-            categoryIncome: $request->category_income,
+            categoryExpense: $request->category_expense,
             projectId: $request->project_id,
+            userId: $request->user_id,
             date: $request->date,
             amount: $request->amount,
             comment: $request->comment,

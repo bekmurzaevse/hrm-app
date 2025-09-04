@@ -32,6 +32,7 @@ class IndexRequest extends FormRequest
             'from' => 'nullable|date_format:Y-m-d|required_with:to',
             'to' => 'nullable|date_format:Y-m-d|required_with:from',
             'status' => 'nullable|string',
+            'per_page' => 'nullable|integer',
         ];
     }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Actions\v1\Finance;
 
-use App\Dto\v1\Finance\CreateIncomeDto;
+use App\Dto\v1\Finance\CreateExpenseDto;
+use App\Enums\Finance\FinanceTypeEnum;
 use App\Models\Finance;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -11,13 +12,18 @@ class CreateExpenseAction
 {
     use ResponseTrait;
 
-    
-    public function __invoke(CreateIncomeDto $dto): JsonResponse
+    /**
+     * Summary of __invoke
+     * @param \App\Dto\v1\Finance\CreateExpenseDto $dto
+     * @return JsonResponse
+     */
+    public function __invoke(CreateExpenseDto $dto): JsonResponse
     {
         $data = [
-            'type' => $dto->type,
-            'category_income' => $dto->categoryIncome,
+            'type' => FinanceTypeEnum::EXPENSE,
+            'category_expense' => $dto->categoryExpense,
             'project_id' => $dto->projectId,
+            'user_id' => $dto->userId,
             'date' => $dto->date,
             'amount' => $dto->amount,
             'comment' => $dto->comment,
@@ -27,12 +33,12 @@ class CreateExpenseAction
         $finance = Finance::create($data);
 
         logActivity(
-            title: 'Finance Income Created',
+            title: 'Finance Expense Created',
             text: "Доход #{$finance->id} на сумму {$finance->amount} был создан."
         );
 
         return static::toResponse(
-            message: 'Finance Income created'
+            message: 'Finance Expense created'
         );
     }
 }

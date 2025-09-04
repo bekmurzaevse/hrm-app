@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\v1\Finance;
 
+use App\Actions\v1\Finance\CreateExpenseAction;
 use App\Actions\v1\Finance\CreateIncomeAction;
+use App\Dto\v1\Finance\CreateExpenseDto;
 use App\Dto\v1\Finance\CreateIncomeDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\Finance\CreateExpenseRequest;
 use App\Http\Requests\v1\Finance\CreateIncomeRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class FinanceController extends Controller
 {
@@ -23,10 +25,15 @@ class FinanceController extends Controller
         return $action(CreateIncomeDto::from($request));
     }
 
-    public function createExpense(CreateIncomeAction $action, CreateIncomeRequest $request): JsonResponse
+    /**
+     * Summary of createExpense
+     * @param \App\Actions\v1\Finance\CreateExpenseAction $action
+     * @param \App\Http\Requests\v1\Finance\CreateExpenseRequest $request
+     * @return JsonResponse
+     */
+    public function createExpense(CreateExpenseAction $action, CreateExpenseRequest $request): JsonResponse
     {
-        return $action(CreateIncomeDto::from($request));
+        return $action(CreateExpenseDto::from($request));
     }
-
 
 }

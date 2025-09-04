@@ -56,7 +56,7 @@ class IndexAction
                 $query->whereBetween('contract_budget', [$dto->contractBudgetFrom, $dto->contractBudgetTo]);
             }
 
-            return $query->paginate(10);
+            return $query->paginate($dto->perPage ?? 10);
         });
 
         return static::toResponse(
