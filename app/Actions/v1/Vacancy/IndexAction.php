@@ -73,7 +73,7 @@ class IndexAction
                 $query->where('status', $dto->status);
             }
 
-            return $query->paginate(10);
+            return $query->paginate($dto->perPage ?? 10);
         });
 
         return static::toResponse(

@@ -16,7 +16,8 @@ readonly class IndexDto
         public ?int $userId,
         public ?string $from,
         public ?string $to,
-        public ?string $status
+        public ?string $status,
+        public ?int $perPage,
     ) {
     }
 
@@ -37,7 +38,8 @@ readonly class IndexDto
             userId: $request->user_id,
             from: $request->from,
             to: $request->to,
-            status: $request->status
+            status: $request->status,
+            perPage: $request->per_page,
         );
     }
 }

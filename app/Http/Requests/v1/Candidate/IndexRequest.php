@@ -34,6 +34,7 @@ class IndexRequest extends FormRequest
             'salary_to' => 'nullable|integer',
             'experience_from' => 'nullable|integer',
             'experience_to' => 'nullable|integer',
+            'per_page' => 'nullable|integer',
         ];
     }
 }

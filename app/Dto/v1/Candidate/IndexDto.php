@@ -19,6 +19,7 @@ readonly class IndexDto
         public ?float $salaryTo,
         public ?float $experienceFrom,
         public ?float $experienceTo,
+        public ?int $perPage,
     ) {
     }
 
@@ -42,6 +43,7 @@ readonly class IndexDto
             salaryTo: $request->salary_to,
             experienceFrom: $request->experience_from,
             experienceTo: $request->experience_to,
+            perPage: $request->per_page,
         );
     }
 }

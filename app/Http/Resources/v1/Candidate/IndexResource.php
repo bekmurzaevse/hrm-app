@@ -17,6 +17,7 @@ class IndexResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'full_name' => $this->first_name . ' ' . $this->last_name . ' ' . $this->patronymic,
             'age' => Carbon::parse($this->birth_date)->age,
             'status' => $this->status,

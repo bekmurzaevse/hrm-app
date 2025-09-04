@@ -24,6 +24,7 @@ class IndexRequest extends FormRequest
         return [
             'status' => 'nullable|string',
             'search' => 'nullable|string',
+            'per_page' => 'nullable|integer',
         ];
     }
 }

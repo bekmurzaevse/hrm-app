@@ -9,6 +9,7 @@ readonly class IndexDto
     public function __construct(
         public ?string $status,
         public ?string $search,
+        public ?int $perPage,
     ) {
     }
 
@@ -22,6 +23,7 @@ readonly class IndexDto
         return new self(
             status: $request->status,
             search: $request->search,
+            perPage: $request->per_page,
         );
     }
 }

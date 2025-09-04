@@ -3,6 +3,7 @@
 namespace App\Actions\v1\Finance;
 
 use App\Dto\v1\Finance\CreateIncomeDto;
+use App\Enums\Finance\FinanceTypeEnum;
 use App\Models\Finance;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -19,7 +20,7 @@ class CreateIncomeAction
     public function __invoke(CreateIncomeDto $dto): JsonResponse
     {
         $data = [
-            'type' => $dto->type,
+            'type' => FinanceTypeEnum::INCOME,
             'category_income' => $dto->categoryIncome,
             'project_id' => $dto->projectId,
             'date' => $dto->date,

@@ -30,6 +30,7 @@ class IndexRequest extends FormRequest
             'from_project' => 'nullable|integer',
             'to_project' => 'nullable|integer',
             'search' => 'nullable|string',
+            'per_page' => 'nullable|integer',
         ];
     }
 }

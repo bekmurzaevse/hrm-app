@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->string('address');
             $table->text('family_info')->nullable();
             $table->string('family_status')->default(FamilyStatusEnum::UNMARRIED->value);
-            $table->string('status')->default(CandidateStatusEnum::ACTIVE->value);
+            $table->string('status')->default(CandidateStatusEnum::IN_SEARCH->value);
             $table->string('workplace')->nullable();
             $table->string('position');
             $table->double('desired_salary')->default(0);

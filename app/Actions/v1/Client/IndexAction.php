@@ -69,7 +69,7 @@ class IndexAction
             } elseif ($dto->toProject) {
                 $query->having('projects_count', '<=', $dto->toProject);
             }
-            return $query->paginate(10);
+            return $query->paginate($dto->perPage ?? 10);
         });
 
         return static::toResponse(

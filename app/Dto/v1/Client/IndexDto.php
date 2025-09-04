@@ -15,6 +15,7 @@ readonly class IndexDto
         public ?int $fromProject,
         public ?int $toProject,
         public ?string $search,
+        public ?int $perPage,
     ) {
     }
 
@@ -34,6 +35,7 @@ readonly class IndexDto
             fromProject: $request->from_project,
             toProject: $request->to_project,
             search: $request->search,
+            perPage: $request->per_page,
         );
     }
 }

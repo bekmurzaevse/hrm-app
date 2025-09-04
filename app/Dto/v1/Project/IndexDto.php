@@ -12,7 +12,8 @@ readonly class IndexDto
         public ?string $deadlineTo,
         public ?int $userId,
         public ?int $contractBudgetFrom,
-        public ?int $contractBudgetTo
+        public ?int $contractBudgetTo,
+        public ?int $perPage,
     ) {
     }
 
@@ -29,7 +30,8 @@ readonly class IndexDto
             deadlineTo: $request->deadline_to,
             userId: $request->user_id,
             contractBudgetFrom: $request->contract_budget_from,
-            contractBudgetTo: $request->contract_budget_to
+            contractBudgetTo: $request->contract_budget_to,
+            perPage: $request->per_page,
         );
     }
 }
