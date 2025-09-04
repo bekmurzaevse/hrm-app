@@ -28,7 +28,7 @@ class Task extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function users()
+    public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
