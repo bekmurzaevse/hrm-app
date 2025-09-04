@@ -41,6 +41,10 @@ class DatabaseSeeder extends Seeder
             SelectionItemSeeder::class,
             TaskSeeder::class,
             TaskUserSeeder::class,
+            TaskSeeder::class,
+            FinanceSeeder::class,
+            SelectionSeeder::class,
+            SelectionItemSeeder::class
         ]);
     }
 }

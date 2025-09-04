@@ -18,7 +18,7 @@ class TaskUserSeeder extends Seeder
             'task_id' => 1,
             'user_id' => 2,
             'assigned_at' => now(),
-            'status' => TaskStatusEnum::OPEN->value,
+            'status' => TaskStatusEnum::IN_PROGRESS->value,
         ]);
 
         TaskUser::create([
