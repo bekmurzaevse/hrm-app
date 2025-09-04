@@ -2,9 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\SelectionItems;
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -41,10 +38,9 @@ class DatabaseSeeder extends Seeder
             SelectionItemSeeder::class,
             TaskSeeder::class,
             TaskUserSeeder::class,
-            TaskSeeder::class,
             FinanceSeeder::class,
-            SelectionSeeder::class,
-            SelectionItemSeeder::class
+            SelectionStatusSeeder::class,
+            StatusValueSeeder::class
         ]);
     }
 }

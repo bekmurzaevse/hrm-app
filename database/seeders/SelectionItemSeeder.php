@@ -13,81 +13,18 @@ class SelectionItemSeeder extends Seeder
     public function run(): void
     {
         $items = [
-            [
-                'selection_id' => 1,
-                'candidate_id' => 1,
-                'statuses' => [
-                    'Созвон' => '25.07.2025',
-                    'Созвон 2' => 'Согласна на работу, приглашена на интервью 30.07',
-                    'Эл.письмо' => '',
-                    'Интервью' => 'Приняла условия',
-                    'Коммент' => 'Адекватная, ищет работу ближе к дому',
-                ]
-            ],
-            [
-                'selection_id' => 1,
-                'candidate_id' => 2,
-                'statuses' => [
-                    'Созвон' => '25.07.2025',
-                    'Созвон 2' => 'не поднимает трубку',
-                    'Эл.письмо' => '26.07.',
-                    'Интервью' => 'Занята, освободится в сентябре',
-                    'Коммент' => '',
-                ]
-            ],
-            [
-                'selection_id' => 2,
-                'candidate_id' => 2,
-                'statuses' => [
-                    'Созвон' => '26.07.2025',
-                    'Созвон 2' => 'Занята, попросила перезвонить',
-                    'Эл.письмо' => '27.07.',
-                    'Интервью' => 'Работает, но Заинтесована в новой работе, приглашена на интервью 30.07',
-                    'Коммент' => 'Не устраивает зп. Просит рассмотреть другие варианты работы',
-                ]
-            ],
-            [
-                'selection_id' => 2,
-                'candidate_id' => 1,
-                'statuses' => [
-                    'Созвон' => '01.08.2025',
-                    'Созвон 2' => 'Договорились на встречу 03.08',
-                    'Эл.письмо' => '',
-                    'Интервью' => 'Интервью назначено на 05.08',
-                    'Коммент' => 'Опыт 5 лет, заинтересован',
-                ],
-            ],
-            [
-                'selection_id' => 3,
-                'candidate_id' => 1,
-                'statuses' => [
-                    'Созвон' => '02.08.2025',
-                    'Созвон 2' => 'Не берет трубку',
-                    'Эл.письмо' => 'Отправлено резюме на почту',
-                    'Интервью' => '',
-                    'Коммент' => 'Нужно перезвонить через неделю',
-                ],
-            ],
-            [
-                'selection_id' => 3,
-                'candidate_id' => 2,
-                'statuses' => [
-                    'Созвон' => '03.08.2025',
-                    'Созвон 2' => 'Готов к собеседованию',
-                    'Эл.письмо' => 'Подтверждение отправлено',
-                    'Интервью' => 'Назначено на 04.08',
-                    'Коммент' => 'Молодой специалист, амбициозный',
-                ],
-            ],
+            ['selection_id' => 1, 'candidate_id' => 1, 'external_name' => null, 'created_at' => now(), 'updated_at' => now()],
+            ['selection_id' => 1, 'candidate_id' => 2, 'external_name' => null, 'created_at' => now(), 'updated_at' => now()],
+            ['selection_id' => 2, 'candidate_id' => 2, 'external_name' => null, 'created_at' => now(), 'updated_at' => now()],
+            ['selection_id' => 2, 'candidate_id' => 1, 'external_name' => null, 'created_at' => now(), 'updated_at' => now()],
+            ['selection_id' => 3, 'candidate_id' => 1, 'external_name' => null, 'created_at' => now(), 'updated_at' => now()],
+            ['selection_id' => 3, 'candidate_id' => 2, 'external_name' => null, 'created_at' => now(), 'updated_at' => now()],
+            ['selection_id' => 3, 'candidate_id' => null, 'external_name' => 'James Harden', 'created_at' => now(), 'updated_at' => now()],
+            ['selection_id' => 4, 'candidate_id' => 1, 'external_name' => null, 'created_at' => now(), 'updated_at' => now()],
+            ['selection_id' => 4, 'candidate_id' => null, 'external_name' => 'Loris Paul', 'created_at' => now(), 'updated_at' => now()],
+            ['selection_id' => 4, 'candidate_id' => null, 'external_name' => 'Kevin Durant', 'created_at' => now(), 'updated_at' => now()],
         ];
 
-        foreach ($items as $item) {
-            DB::table('selection_items')->insert([
-                'selection_id' => $item['selection_id'],
-                'candidate_id' => $item['candidate_id'],
-                'statuses' => json_encode($item['statuses'], JSON_UNESCAPED_UNICODE),
-            ]);
-        }
+        DB::table('selection_items')->insert($items);
     }
 }
-    

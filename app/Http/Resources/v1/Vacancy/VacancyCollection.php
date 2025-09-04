@@ -20,20 +20,20 @@ class VacancyCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        $users = Cache::remember(
-            'users:filter',
-            60 * 60 * 24 * 30,
-            fn() =>
-            User::role(['admin', 'manager'])->select('id', 'first_name', 'last_name', 'patronymic')->get()
-        );
+        // $users = Cache::remember(
+        //     'users:filter',
+        //     60 * 60 * 24 * 30,
+        //     fn() =>
+        //     User::role(['admin', 'manager'])->select('id', 'first_name', 'last_name', 'patronymic')->get()
+        // );
 
         return [
-            'filter' => [
-                'regions' => Cache::get('regions'),
-                'districts' => Cache::get('districts'),
-                'created_by' => $users,
-                'statuses' => array_column(VacancyStatusEnum::cases(), 'value'),
-            ],
+            // 'filter' => [
+            //     'regions' => Cache::get('regions'),
+            //     'districts' => Cache::get('districts'),
+            //     'created_by' => $users,
+            //     'statuses' => array_column(VacancyStatusEnum::cases(), 'value'),
+            // ],
             'items' => IndexResource::collection($this->collection),
             'pagination' => [
                 'current_page' => $this->currentPage(),
