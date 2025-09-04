@@ -11,6 +11,7 @@ use App\Http\Controllers\v1\Candidate\CandidateSkillController;
 use App\Http\Controllers\v1\Candidate\CandidateFileController;
 use App\Http\Controllers\v1\Client\ClientController;
 use App\Http\Controllers\v1\Client\ClientFileController;
+use App\Http\Controllers\v1\Finance\FinanceController;
 use App\Http\Controllers\v1\InteractionController;
 use App\Http\Controllers\v1\Project\ProjectController;
 use App\Http\Controllers\v1\Project\ProjectFileController;
@@ -188,5 +189,14 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::post('/create', [InteractionController::class, 'create']);
         Route::put('/update/{id}', [InteractionController::class, 'update']);
         Route::delete('/delete/{id}', [InteractionController::class, 'delete']);
+    });
+
+    Route::prefix('finances')->group(function () {
+        // Route::get('/', [InteractionController::class, 'index']);
+        // Route::get('/{id}', [InteractionController::class, 'show']);
+        Route::post('/create-income', [FinanceController::class, 'createIncome']);
+        Route::post('/create-expense', [FinanceController::class, 'createExpense']);
+        // Route::put('/update/{id}', [InteractionController::class, 'update']);
+        // Route::delete('/delete/{id}', [InteractionController::class, 'delete']);
     });
 });

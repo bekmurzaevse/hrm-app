@@ -21,6 +21,7 @@ class IndexAction
      */
     public function __invoke(IndexDto $dto): JsonResponse
     {
+
         $key = 'candidates:' . app()->getLocale() . ':' . md5(request()->fullUrl());
         $candidates = Cache::remember($key, now()->addDay(), function () use ($dto) {
             $query = Candidate::with(['district']);
