@@ -38,6 +38,12 @@ class DatabaseSeeder extends Seeder
             ProjectUserSeeder::class,
             FinanceSeeder::class,
             SelectionSeeder::class,
+            SelectionItemSeeder::class,
+            TaskSeeder::class,
+            TaskUserSeeder::class,
+            TaskSeeder::class,
+            FinanceSeeder::class,
+            SelectionSeeder::class,
             SelectionItemSeeder::class
         ]);
     }

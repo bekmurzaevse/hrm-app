@@ -76,5 +76,9 @@ class User extends Authenticatable
     public function finances(): HasMany
     {
         return $this->hasMany(Finance::class);
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'created_by');
     }
 }
