@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Candidate\Task\TaskStatusEnum;
+use App\Enums\Task\TaskStatusEnum;
 use App\Models\TaskUser;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;

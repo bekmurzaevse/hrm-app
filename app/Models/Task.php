@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Candidate\Task\TaskPriorityEnum;
-use App\Models\Candidate\Task\TaskStatusEnum;
+use App\Enums\Task\TaskPriorityEnum;
+use App\Enums\Task\TaskStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -33,7 +33,7 @@ class Task extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function taskUsers() 
+    public function taskUsers()
     {
         return $this->hasMany(TaskUser::class);
     }

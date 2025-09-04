@@ -39,10 +39,19 @@ class Selection extends Model
 
     /**
      * Summary of items
-     * @return HasMany<SelectionItems, Selection>
+     * @return HasMany<SelectionItem, Selection>
      */
     public function items(): HasMany
     {
-        return $this->hasMany(SelectionItems::class);
+        return $this->hasMany(SelectionItem::class);
+    }
+
+    /**
+     * Summary of status
+     * @return HasMany<SelectionStatus, Selection>
+     */
+    public function status(): HasMany
+    {
+        return $this->hasMany(SelectionStatus::class);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Candidate\Task;
+namespace App\Enums\Task;
 
 enum TaskStatusEnum: string
 {

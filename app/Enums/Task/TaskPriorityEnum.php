@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace App\Models\Candidate\Task;
+namespace App\Enums\Task;
 
 enum TaskPriorityEnum: string
 {

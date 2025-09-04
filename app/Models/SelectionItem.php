@@ -4,16 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SelectionItems extends Model
+class SelectionItem extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
         'selection_id',
         'candidate_id',
-        'statuses',
+        'external_name'
     ];
 
     /**
@@ -23,7 +24,6 @@ class SelectionItems extends Model
     protected function casts(): array
     {
         return [
-            'statuses' => 'array',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
@@ -40,10 +40,19 @@ class SelectionItems extends Model
 
     /**
      * Summary of candidate
-     * @return BelongsTo<Candidate, SelectionItems>
+     * @return BelongsTo<Candidate, SelectionItem>
      */
     public function candidate(): BelongsTo
     {
         return $this->belongsTo(Candidate::class);
+    }
+
+    /**
+     * Summary of statusValues
+     * @return HasMany<StatusValue, SelectionItem>
+     */
+    public function statusValues(): HasMany
+    {
+        return $this->hasMany(StatusValue::class);
     }
 }

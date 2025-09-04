@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\Candidate\Task\TaskPriorityEnum;
-use App\Models\Candidate\Task\TaskStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\Task\TaskStatusEnum;
+use App\Enums\Task\TaskPriorityEnum;
 
 return new class extends Migration {
     /**
@@ -17,8 +17,8 @@ return new class extends Migration {
             $table->string('title');
             $table->text('description')->nullable();
             $table->date('deadline');
-            $table->string('status')->default(TaskStatusEnum::IN_PROGRESS->value);
-            $table->string('priority')->default(TaskPriorityEnum::MEDIUM->value);
+            $table->string('status')->default(TaskStatusEnum::IN_PROGRESS);
+            $table->string('priority')->default(TaskPriorityEnum::MEDIUM);
             $table->foreignId('created_by')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
             $table->softDeletes();
             $table->timestamps();
