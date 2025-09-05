@@ -31,6 +31,6 @@ class SelectionStatus extends Model
      */
     public function values(): HasMany
     {
-        return $this->hasMany(StatusValue::class);
+        return $this->hasMany(StatusValue::class, 'status_id');
     }
 }

@@ -6,6 +6,7 @@ use App\Actions\v1\Selection\CreateAction;
 use App\Actions\v1\Selection\DeleteAction;
 use App\Actions\v1\Selection\DeleteManyAction;
 use App\Actions\v1\Selection\IndexAction;
+use App\Actions\v1\Selection\ShowAction;
 use App\Dto\v1\Selection\CreateDto;
 use App\Dto\v1\Selection\DeleteManyDto;
 use App\Dto\v1\Selection\IndexDto;
@@ -26,6 +27,17 @@ class SelectionController extends Controller
     public function index(IndexRequest $request, IndexAction $action): JsonResponse
     {
         return $action(IndexDto::from($request));
+    }
+
+    /**
+     * Summary of show
+     * @param int $id
+     * @param \App\Actions\v1\Selection\ShowAction $action
+     * @return JsonResponse
+     */
+    public function show(int $id, ShowAction $action): JsonResponse
+    {
+        return $action($id);
     }
 
     /**
