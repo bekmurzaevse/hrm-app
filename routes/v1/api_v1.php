@@ -18,6 +18,7 @@ use App\Http\Controllers\v1\Project\ProjectFileController;
 use App\Http\Controllers\v1\Project\ProjectStageController;
 use App\Http\Controllers\v1\Project\StageTaskController;
 use App\Http\Controllers\v1\RegionController;
+use App\Http\Controllers\v1\Task\TaskController;
 use App\Http\Controllers\v1\TypeController;
 use App\Http\Controllers\v1\UserController;
 use App\Http\Controllers\v1\Vacancy\VacancyController;
@@ -204,5 +205,13 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
 
     Route::prefix('regions')->group(function () {
         Route::get('/', [RegionController::class, 'index']);
+    });
+
+    Route::prefix('tasks')->group(function () {
+        Route::get('/', [TaskController::class, 'index']);
+        Route::get('/{id}', [TaskController::class, 'show']);
+        Route::post('/create', [TaskController::class, 'create']);
+        Route::put('/update/{id}', [TaskController::class, 'update']);
+        Route::delete('/delete/{id}', [TaskController::class, 'destroy']);
     });
 });
