@@ -25,7 +25,7 @@ class ShowAction
         try {
             $key = 'tasks:show:' . app()->getLocale() . ':' . md5(request()->fullUrl());
             $task = Cache::remember($key, now()->addDay(), function () use ($id) {
-                return Task::with(['creator'])->findOrFail($id);
+                return Task::with(['createdBy'])->findOrFail($id);
             });
 
             return static::toResponse(

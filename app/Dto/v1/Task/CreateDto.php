@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Requests\v1\Task;
+namespace App\Dto\V1\Task;
+
+use App\Http\Requests\v1\Task\CreateRequest;
 
 readonly class CreateDto
 {
@@ -8,7 +10,6 @@ readonly class CreateDto
         public string $title,
         public ?string $description,
         public string $deadline,
-        public int $createdBy,
         public string $status,
         public string $priority,
     ) {
@@ -20,7 +21,6 @@ readonly class CreateDto
             title: $request->title,
             description: $request->description,
             deadline: $request->deadline,
-            createdBy: $request->created_by,
             status: $request->status,
             priority: $request->priority,
         );

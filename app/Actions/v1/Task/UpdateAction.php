@@ -10,10 +10,17 @@ use App\Dto\v1\Task\UpdateDto;
 use App\Models\Task;
 use App\Traits\ResponseTrait;
 
-class UpdateAction 
+class UpdateAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param \App\Dto\v1\Task\UpdateDto $dto
+     * @return JsonResponse
+     * @throws \App\Exceptions\ApiResponseException
+     */
     public function __invoke(int $id, UpdateDto $dto): JsonResponse
     {
         try {
@@ -22,13 +29,19 @@ class UpdateAction
                 'title' => $dto->title,
                 'description' => $dto->description ?? $task->description,
                 'deadline' => $dto->deadline ?? $task->deadline,
-                'created_by' => $dto->createdBy ?? $task->created_by,
+                'created_by' => auth()->user()->id,
                 'status' => $dto->status,
                 'priority' => $dto->priority ?? $task->priority,
             ]);
 
+            logActivity(
+                "Задача обновлена!",
+                "Задача '{$task->title}' (ID: {$task->id}) была обновлена пользователем"
+                //auth()->user()->first_name . " " . auth()->user()->last_name
+            );
+
             return static::toResponse(
-                message: "$id - id li task janalandi",
+                message: "$id - id li task jan'alandı",
                 data: new TaskResource($task)
             );
         } catch (ModelNotFoundException $ex) {

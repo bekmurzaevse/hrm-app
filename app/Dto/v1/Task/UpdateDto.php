@@ -10,7 +10,6 @@ readonly class UpdateDto
         public string $title,
         public ?string $description,
         public ?string $deadline,
-        public ?int $createdBy,
         public string $status,
         public ?string $priority,
     ) {
@@ -22,7 +21,6 @@ readonly class UpdateDto
             title: $request->title,
             description: $request->description,
             deadline: $request->deadline,
-            createdBy: $request->created_by,
             status: $request->status,
             priority: $request->priority,
         );
