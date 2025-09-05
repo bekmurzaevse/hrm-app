@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Actions\v1\Task;
+namespace App\Actions\v1\TaskUser;
 
 use App\Exceptions\ApiResponseException;
-use App\Models\Task;
+use App\Models\TaskUser;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -21,19 +21,19 @@ class DeleteAction
     public function __invoke(int $id): JsonResponse
     {
         try {
-            $task = Task::findOrFail($id);
-            $task->delete();
+            $taskUser = TaskUser::findOrFail($id);
+            $taskUser->delete();
 
             logActivity(
-                "Задача удалена",
-                "Задача '{$task->title}' удалена пользователем " . auth()->user()->first_name . " " . auth()->user()->last_name
+                "Пользователь удален из задачи",
+                "Пользователь " . auth()->user()->first_name . ' ' . auth()->user()->last_name . " удален из задачи ID: {$taskUser->task_id}"
             );
 
             return static::toResponse(
-                message: "$id - id li Task O'shirildi",
+                message: 'Task User deleted successfully',
             );
         } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('Task Not Found', 404);
+            throw new ApiResponseException('Task User Not Found', 404);
         }
     }
 }
