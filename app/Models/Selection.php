@@ -5,12 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Selection extends Model
 {
-    use SoftDeletes;
-
     protected $fillable = [
         'title',
         'created_by',
@@ -34,7 +31,7 @@ class Selection extends Model
      */
     public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     /**
@@ -50,7 +47,7 @@ class Selection extends Model
      * Summary of status
      * @return HasMany<SelectionStatus, Selection>
      */
-    public function status(): HasMany
+    public function statuses(): HasMany
     {
         return $this->hasMany(SelectionStatus::class);
     }
