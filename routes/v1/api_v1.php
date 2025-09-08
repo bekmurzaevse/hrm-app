@@ -212,6 +212,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::get('/', [SelectionController::class, 'index']);
         Route::get('/{id}', [SelectionController::class, 'show']);
         Route::post('/create', [SelectionController::class, 'create']);
+        Route::post('/{id}/copy', [SelectionController::class, 'copy']);
         Route::delete('/delete/{id}', [SelectionController::class, 'delete']);
         Route::delete('/delete', [SelectionController::class, 'deleteMany']);
     });

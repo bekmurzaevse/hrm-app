@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\v1\Selection;
 
+use App\Actions\v1\Selection\CopyAction;
 use App\Actions\v1\Selection\CreateAction;
 use App\Actions\v1\Selection\DeleteAction;
 use App\Actions\v1\Selection\DeleteManyAction;
 use App\Actions\v1\Selection\IndexAction;
 use App\Actions\v1\Selection\ShowAction;
+use App\Dto\v1\Selection\CopyDto;
 use App\Dto\v1\Selection\CreateDto;
 use App\Dto\v1\Selection\DeleteManyDto;
 use App\Dto\v1\Selection\IndexDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\Selection\CopyRequest;
 use App\Http\Requests\v1\Selection\CreateRequest;
 use App\Http\Requests\v1\Selection\DeleteManyRequest;
 use App\Http\Requests\v1\Selection\IndexRequest;
+use App\Models\Selection;
 use Illuminate\Http\JsonResponse;
 
 class SelectionController extends Controller
@@ -49,6 +53,18 @@ class SelectionController extends Controller
     public function create(CreateRequest $request, CreateAction $action): JsonResponse
     {
         return $action(CreateDto::from($request));
+    }
+
+    /**
+     * Summary of copy
+     * @param int $id
+     * @param \App\Actions\v1\Selection\CopyAction $action
+     * @param \App\Http\Requests\v1\Selection\CopyRequest $request
+     * @return JsonResponse
+     */
+    public function copy(int $id, CopyAction $action, CopyRequest $request): JsonResponse
+    {
+        return $action($id, CopyDto::from($request));
     }
 
     /**
