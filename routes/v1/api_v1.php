@@ -218,7 +218,8 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::post('/create', [TaskController::class, 'create']);
         Route::put('/update/{id}', [TaskController::class, 'update']);
         Route::delete('/delete/{id}', [TaskController::class, 'destroy']);
-    
+    });
+
     // Selection
     Route::prefix('selections')->group(function () {
         Route::get('/', [SelectionController::class, 'index']);
@@ -228,5 +229,4 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::delete('/delete/{id}', [SelectionController::class, 'delete']);
         Route::delete('/delete', [SelectionController::class, 'deleteMany']);
     });
-});
 });

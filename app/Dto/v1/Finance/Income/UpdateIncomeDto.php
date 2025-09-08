@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Dto\v1\Finance;
+namespace App\Dto\v1\Finance\Income;
 
-use App\Http\Requests\v1\Finance\UpdateExpenseRequest;
+use App\Http\Requests\v1\Finance\Income\UpdateIncomeRequest;
 
-readonly class UpdateExpenseDto
+readonly class UpdateIncomeDto
 {
     public function __construct(
-        public string $categoryExpense,
+        public string $categoryIncome,
         public ?int $projectId,
-        public ?int $userId,
         public string $date,
         public float $amount,
         public ?string $comment,
@@ -19,15 +18,14 @@ readonly class UpdateExpenseDto
 
     /**
      * Summary of from
-     * @param \App\Http\Requests\v1\Finance\UpdateExpenseRequest $request
-     * @return UpdateExpenseDto
+     * @param \App\Http\Requests\v1\Finance\Income\UpdateIncomeRequest $request
+     * @return UpdateIncomeDto
      */
-    public static function from(UpdateExpenseRequest $request): self
+    public static function from(UpdateIncomeRequest $request): self
     {
         return new self(
-            categoryExpense: $request->category_expense,
+            categoryIncome: $request->category_income,
             projectId: $request->project_id,
-            userId: $request->user_id,
             date: $request->date,
             amount: $request->amount,
             comment: $request->comment,
@@ -35,4 +33,3 @@ readonly class UpdateExpenseDto
         );
     }
 }
-

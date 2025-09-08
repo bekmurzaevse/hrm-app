@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\v1\Finance;
+namespace App\Http\Requests\v1\Finance\Expense;
 
-use App\Enums\Finance\CategoryIncomeEnum;
+use App\Enums\Finance\CategoryExpenseEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateIncomeRequest extends FormRequest
+class CreateExpenseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class CreateIncomeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_income' => ['required', Rule::enum(CategoryIncomeEnum::class)],
+            'category_expense' => ['required', Rule::enum(CategoryExpenseEnum::class)],
             'project_id' => 'nullable|integer|exists:projects,id',
+            'user_id' => 'nullable|integer|exists:users,id',
             'date' => 'required|date_format:Y-m-d',
             'amount' => 'required|numeric',
             'comment' => 'nullable|string',

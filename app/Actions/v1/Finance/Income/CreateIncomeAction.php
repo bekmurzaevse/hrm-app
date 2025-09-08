@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Actions\v1\Finance;
+namespace App\Actions\v1\Finance\Income;
 
-use App\Dto\v1\Finance\CreateIncomeDto;
+use App\Dto\v1\Finance\Income\CreateIncomeDto;
 use App\Enums\Finance\FinanceTypeEnum;
 use App\Models\Finance;
 use App\Traits\ResponseTrait;
@@ -14,7 +14,7 @@ class CreateIncomeAction
 
     /**
      * Summary of __invoke
-     * @param \App\Dto\v1\Finance\CreateIncomeDto $dto
+     * @param \App\Dto\v1\Finance\Income\CreateIncomeDto $dto
      * @return JsonResponse
      */
     public function __invoke(CreateIncomeDto $dto): JsonResponse
