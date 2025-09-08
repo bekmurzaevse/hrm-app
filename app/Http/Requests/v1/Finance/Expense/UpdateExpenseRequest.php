@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\v1\Finance;
+namespace App\Http\Requests\v1\Finance\Expense;
 
 use App\Enums\Finance\CategoryExpenseEnum;
 use Illuminate\Foundation\Http\FormRequest;

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests\v1\Finance;
+namespace App\Http\Requests\v1\Finance\Income;
 
 use App\Enums\Finance\CategoryIncomeEnum;
-use App\Enums\Finance\FinanceTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

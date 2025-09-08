@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Actions\v1\Finance;
+namespace App\Actions\v1\Finance\Expense;
 
-use App\Dto\v1\Finance\CreateExpenseDto;
+use App\Dto\v1\Finance\Expense\CreateExpenseDto;
 use App\Enums\Finance\FinanceTypeEnum;
 use App\Models\Finance;
 use App\Traits\ResponseTrait;
@@ -14,7 +14,7 @@ class CreateExpenseAction
 
     /**
      * Summary of __invoke
-     * @param \App\Dto\v1\Finance\CreateExpenseDto $dto
+     * @param \App\Dto\v1\Finance\Expense\CreateExpenseDto $dto
      * @return JsonResponse
      */
     public function __invoke(CreateExpenseDto $dto): JsonResponse
@@ -34,7 +34,7 @@ class CreateExpenseAction
 
         logActivity(
             title: 'Финансовые расходы созданы',
-            text: "Доход {$finance->category_expense} на сумму {$finance->amount} был создан."
+            text: "Доход {$finance->category_expense->value} на сумму {$finance->amount} был создан."
         );
 
         return static::toResponse(

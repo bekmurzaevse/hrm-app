@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Dto\v1\Finance;
+namespace App\Dto\v1\Finance\Income;
 
-use App\Http\Requests\v1\Finance\CreateIncomeRequest;
+use App\Http\Requests\v1\Finance\Income\CreateIncomeRequest;
 
 readonly class CreateIncomeDto
 {
@@ -18,7 +18,7 @@ readonly class CreateIncomeDto
 
     /**
      * Summary of from
-     * @param \App\Http\Requests\v1\Finance\CreateIncomeRequest $request
+     * @param \App\Http\Requests\v1\Finance\Income\CreateIncomeRequest $request
      * @return CreateIncomeDto
      */
     public static function from(CreateIncomeRequest $request): self
