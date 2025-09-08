@@ -32,8 +32,8 @@ class CreateIncomeAction
         $finance = Finance::create($data);
 
         logActivity(
-            title: 'Finance Income Created',
-            text: "Доход #{$finance->id} на сумму {$finance->amount} был создан."
+            title: 'Создан финансовый доход',
+            text: "Доход {$finance->category_income->value} на сумму {$finance->amount} был создан."
         );
 
         return static::toResponse(

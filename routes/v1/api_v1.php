@@ -194,12 +194,16 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
     });
 
     Route::prefix('finances')->group(function () {
-        // Route::get('/', [InteractionController::class, 'index']);
+        Route::get('/', [FinanceController::class, 'index']);
         // Route::get('/{id}', [InteractionController::class, 'show']);
         Route::post('/create-income', [FinanceController::class, 'createIncome']);
         Route::post('/create-expense', [FinanceController::class, 'createExpense']);
+
+        Route::put('/update-income/{id}', [FinanceController::class, 'updateIncome']);
+        Route::put('/update-expense/{id}', [FinanceController::class, 'updateExpense']);
+
         // Route::put('/update/{id}', [InteractionController::class, 'update']);
-        // Route::delete('/delete/{id}', [InteractionController::class, 'delete']);
+        Route::delete('/delete/{id}', [FinanceController::class, 'delete']);
     });
 
     Route::prefix('regions')->group(function () {
