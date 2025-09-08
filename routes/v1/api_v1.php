@@ -19,6 +19,7 @@ use App\Http\Controllers\v1\Project\ProjectStageController;
 use App\Http\Controllers\v1\Project\StageTaskController;
 use App\Http\Controllers\v1\RegionController;
 use App\Http\Controllers\v1\Task\TaskController;
+use App\Http\Controllers\v1\Selection\SelectionController;
 use App\Http\Controllers\v1\TypeController;
 use App\Http\Controllers\v1\UserController;
 use App\Http\Controllers\v1\Vacancy\VacancyController;
@@ -217,5 +218,15 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::post('/create', [TaskController::class, 'create']);
         Route::put('/update/{id}', [TaskController::class, 'update']);
         Route::delete('/delete/{id}', [TaskController::class, 'destroy']);
+    
+    // Selection
+    Route::prefix('selections')->group(function () {
+        Route::get('/', [SelectionController::class, 'index']);
+        Route::get('/{id}', [SelectionController::class, 'show']);
+        Route::post('/create', [SelectionController::class, 'create']);
+        Route::post('/{id}/copy', [SelectionController::class, 'copy']);
+        Route::delete('/delete/{id}', [SelectionController::class, 'delete']);
+        Route::delete('/delete', [SelectionController::class, 'deleteMany']);
     });
+});
 });
