@@ -3,10 +3,11 @@
 namespace App\Http\Requests\v1\Finance;
 
 use App\Enums\Finance\CategoryIncomeEnum;
+use App\Enums\Finance\FinanceTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateIncomeRequest extends FormRequest
+class UpdateIncomeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
