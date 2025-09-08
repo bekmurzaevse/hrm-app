@@ -52,13 +52,15 @@ class CopyAction
             foreach ($itemKeys as $item) {
                 $oldItem = $item['old'];
                 $newItem = $item['new'];
-                $oldStatusValues = $oldItem->statusValues->keyBy('status_id'); // Collection, N+1 kamayadi
+                $oldStatusValues = $oldItem->statusValues->keyBy('status_id');
 
                 foreach ($statusKeys as $oldStatusId => $newStatusId) {
-                    $newItem->statusValues()->create([
-                        'status_id' => $newStatusId,
-                        'value' => $oldStatusValues[$oldStatusId]->value,
-                    ]);
+                    if ($oldStatusValues->has($oldStatusId)) {
+                        $newItem->statusValues()->create([
+                            'status_id' => $newStatusId,
+                            'value' => $oldStatusValues[$oldStatusId]->value,
+                        ]);
+                    }
                 }
             }
 
