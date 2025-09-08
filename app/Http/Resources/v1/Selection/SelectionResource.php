@@ -18,7 +18,11 @@ class SelectionResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'created_at' => $this->created_at?->format('Y-m-d'),
-            'created_by' => $this->createdBy?->last_name . ' ' . mb_substr($this->createdBy?->first_name, 0, 1, 'UTF-8') . '.' . mb_substr($this->createdBy?->patronymic, 0, 1, 'UTF-8'),
+            'created_by' => $this->createdBy
+                ? $this->createdBy->last_name . ' ' .
+                mb_substr($this->createdBy->first_name, 0, 1, 'UTF-8') . '.' .
+                mb_substr($this->createdBy->patronymic, 0, 1, 'UTF-8') . '.'
+                : null,
             'candidates' => $this->items->count(),
             'candidates_count' => $this->items->whereNotNull('candidate_id')->count(),
             'external_count' => $this->items->whereNotNull('external_name')->count(),
@@ -41,11 +45,24 @@ class SelectionResource extends JsonResource
             )->sortBy('order')->values();
 
         $items = $this->items->map(function ($item) use ($statuses) {
-            $candidateName = $item->candidate?->last_name . ' ' .
-                mb_substr($item->candidate?->first_name, 0, 1, 'UTF-8') . '.' .
-                mb_substr($item->candidate?->patronymic, 0, 1, 'UTF-8') . '.';
 
             $statusValues = $statuses->map(function ($status) use ($item) {
+
+                // For first status
+                if ($status['id'] === null) {
+                    $candidateName = $item->candidate?->last_name . ' ' .
+                        mb_substr($item->candidate?->first_name, 0, 1, 'UTF-8') . '.' .
+                        mb_substr($item->candidate?->patronymic, 0, 1, 'UTF-8') . '.';
+
+                    return [
+                        'status_id' => null,
+                        'value_id' => $item->id,
+                        'value' => $item->candidate_id ? $candidateName : $item->external_name,
+                        'source' => $item->candidate_id ? 'database' : 'external',
+                    ];
+                }
+
+                // Other statuses
                 $statusValue = $item->statusValues->where('status_id', $status['id'])->first();
 
                 return [
@@ -55,17 +72,12 @@ class SelectionResource extends JsonResource
                 ];
             });
 
-            return [
-                'id' => $item->id,
-                'candidate' => $item->candidate_id ? $candidateName : $item->external_name,
-                'source' => $item->candidate_id ? 'database' : 'external',
-                'status_values' => $statusValues,
-            ];
+            return $statusValues;
         });
 
         return array_merge($baseData, [
-            'statuses' => $statuses,
-            'items' => $items,
+            'statuses' => $statuses->toArray(),
+            'items' => $items->toArray(),
         ]);
     }
 }
