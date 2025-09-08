@@ -33,8 +33,8 @@ class CreateExpenseAction
         $finance = Finance::create($data);
 
         logActivity(
-            title: 'Finance Expense Created',
-            text: "Доход #{$finance->id} на сумму {$finance->amount} был создан."
+            title: 'Финансовые расходы созданы',
+            text: "Доход {$finance->category_expense} на сумму {$finance->amount} был создан."
         );
 
         return static::toResponse(
