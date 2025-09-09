@@ -11,6 +11,7 @@ use App\Http\Controllers\v1\Candidate\CandidateSkillController;
 use App\Http\Controllers\v1\Candidate\CandidateFileController;
 use App\Http\Controllers\v1\Client\ClientController;
 use App\Http\Controllers\v1\Client\ClientFileController;
+use App\Http\Controllers\v1\Dashboard\DashboardController;
 use App\Http\Controllers\v1\Finance\FinanceController;
 use App\Http\Controllers\v1\InteractionController;
 use App\Http\Controllers\v1\Project\ProjectController;
@@ -228,5 +229,13 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::post('/{id}/copy', [SelectionController::class, 'copy']);
         Route::delete('/delete/{id}', [SelectionController::class, 'delete']);
         Route::delete('/delete', [SelectionController::class, 'deleteMany']);
+    });
+
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/', [DashboardController::class, 'index']);
+        // Route::get('/{id}', [TaskController::class, 'show']);
+        // Route::post('/create', [TaskController::class, 'create']);
+        // Route::put('/update/{id}', [TaskController::class, 'update']);
+        // Route::delete('/delete/{id}', [TaskController::class, 'destroy']);
     });
 });
