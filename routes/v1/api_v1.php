@@ -18,6 +18,7 @@ use App\Http\Controllers\v1\Project\ProjectFileController;
 use App\Http\Controllers\v1\Project\ProjectStageController;
 use App\Http\Controllers\v1\Project\StageTaskController;
 use App\Http\Controllers\v1\RegionController;
+use App\Http\Controllers\v1\Selection\SelectionItemController;
 use App\Http\Controllers\v1\Task\TaskController;
 use App\Http\Controllers\v1\Selection\SelectionController;
 use App\Http\Controllers\v1\TypeController;
@@ -229,5 +230,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::post('/{id}/copy', [SelectionController::class, 'copy']);
         Route::delete('/delete/{id}', [SelectionController::class, 'delete']);
         Route::delete('/delete', [SelectionController::class, 'deleteMany']);
+        // SelectionItem
+        Route::post('/attach-candidates', [SelectionItemController::class, 'attachCandidates']);
     });
 });
