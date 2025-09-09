@@ -8,6 +8,7 @@ use App\Actions\v1\Selection\DeleteAction;
 use App\Actions\v1\Selection\DeleteManyAction;
 use App\Actions\v1\Selection\IndexAction;
 use App\Actions\v1\Selection\ShowAction;
+use App\Actions\v1\Selection\ListAction;
 use App\Dto\v1\Selection\CopyDto;
 use App\Dto\v1\Selection\CreateDto;
 use App\Dto\v1\Selection\DeleteManyDto;
@@ -17,7 +18,6 @@ use App\Http\Requests\v1\Selection\CopyRequest;
 use App\Http\Requests\v1\Selection\CreateRequest;
 use App\Http\Requests\v1\Selection\DeleteManyRequest;
 use App\Http\Requests\v1\Selection\IndexRequest;
-use App\Models\Selection;
 use Illuminate\Http\JsonResponse;
 
 class SelectionController extends Controller
@@ -31,6 +31,16 @@ class SelectionController extends Controller
     public function index(IndexRequest $request, IndexAction $action): JsonResponse
     {
         return $action(IndexDto::from($request));
+    }
+
+    /**
+     * Summary of list
+     * @param \App\Actions\v1\User\ListAction $action
+     * @return JsonResponse
+     */
+    public function list(ListAction $action): JsonResponse
+    {
+        return $action();
     }
 
     /**
