@@ -4,6 +4,7 @@ namespace App\Actions\v1\Task;
 
 use App\Dto\v1\Task\CreateDto;
 use App\Models\Task;
+use App\Models\TaskHistory;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
 
@@ -25,9 +26,17 @@ class CreateAction
             'created_by' => auth()->user()->id,
             'status' => $dto->status,
             'priority' => $dto->priority,
+            'comment' => $dto->comment,
         ];
 
         $task = Task::create($data);
+
+        TaskHistory::create([
+            'task_id'    => $task->id,
+            'changed_by' => auth()->id(),
+            'type'       => 'task_created',
+            'comment'    => "Задача создана пользователем ID: " . auth()->id(),
+        ]);
 
         logActivity(
             "Создана задача",

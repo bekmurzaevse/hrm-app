@@ -213,14 +213,22 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::get('/{id}', [TaskController::class, 'show']);
         Route::post('/create', [TaskController::class, 'create']);
         Route::put('/update/{id}', [TaskController::class, 'update']);
-        Route::delete('/delete/{id}', [TaskController::class, 'destroy']);
+        Route::post('/complete', [TaskController::class, 'complete']);
+        Route::post('/{id}/add-executor', [TaskController::class, 'addExecutor']);
+        Route::post('/{id}/update-executor', [TaskController::class, 'updateExecutor']);
+        Route::delete('/{id}/remove-executor', [TaskController::class, 'removeExecutor']);
+        Route::post('/{id}/transfer', [TaskController::class, 'transfer']);
+        Route::get('/{id}/history', [TaskController::class, 'history']);
+        Route::post('/{id}/log-change', [TaskController::class, 'logChange']);
+        Route::post('/{id}/reject', [TaskController::class, 'reject']);
+        // Route::delete('/delete/{id}', [TaskController::class, 'destroy']);
     });
 
-    Route::prefix('task-users')->group(function () {
-        Route::get('/', [TaskUserController::class, 'index']);
-        Route::get('/{id}', [TaskUserController::class, 'show']);
-        Route::post('/create', [TaskUserController::class, 'create']);
-        Route::put('/update/{id}', [TaskUserController::class, 'update']);
-        Route::delete('/delete/{id}', [TaskUserController::class, 'delete']);
-    });
+    // Route::prefix('task-users')->group(function () {
+    //     Route::get('/', [TaskUserController::class, 'index']);
+    //     Route::get('/{id}', [TaskUserController::class, 'show']);
+    //     Route::post('/create', [TaskUserController::class, 'create']);
+    //     Route::put('/update/{id}', [TaskUserController::class, 'update']);
+    //     Route::delete('/delete/{id}', [TaskUserController::class, 'delete']);
+    // });
 });

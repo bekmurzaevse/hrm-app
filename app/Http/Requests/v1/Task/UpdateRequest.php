@@ -31,6 +31,8 @@ class UpdateRequest extends FormRequest
             'status' => ['required', Rule::enum(TaskStatusEnum::class)],
             'priority' => ['nullable', Rule::enum(TaskPriorityEnum::class)],
             'deadline' => 'nullable|date_format:m-d-Y',
+            'comment' => 'nullable|string|max:1000',
+            'created_by' => 'nullable|exists:users,id',
         ];
     }
 }

@@ -18,6 +18,7 @@ class Task extends Model
         'created_by',
         'status',
         'priority',
+        'comment'
     ];
 
     protected $casts = [
@@ -36,5 +37,10 @@ class Task extends Model
     public function taskUsers()
     {
         return $this->hasMany(TaskUser::class);
+    }
+
+    public function history()
+    {
+        return $this->hasMany(TaskHistory::class);
     }
 }
