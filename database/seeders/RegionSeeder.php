@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Region;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 
 class RegionSeeder extends Seeder
 {
@@ -35,5 +36,6 @@ class RegionSeeder extends Seeder
                 'title' => $title,
             ]);
         }
+        Cache::forever('regions', Region::all());
     }
 }
