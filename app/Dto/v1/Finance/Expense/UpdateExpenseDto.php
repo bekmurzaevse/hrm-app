@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Dto\v1\Finance;
+namespace App\Dto\v1\Finance\Expense;
 
-use App\Http\Requests\v1\Finance\CreateExpenseRequest;
+use App\Http\Requests\v1\Finance\Expense\UpdateExpenseRequest;
 
-readonly class CreateExpenseDto
+readonly class UpdateExpenseDto
 {
     public function __construct(
         public string $categoryExpense,
@@ -19,10 +19,10 @@ readonly class CreateExpenseDto
 
     /**
      * Summary of from
-     * @param \App\Http\Requests\v1\Finance\CreateExpenseRequest $request
-     * @return CreateExpenseDto
+     * @param \App\Http\Requests\v1\Finance\Expense\UpdateExpenseRequest $request
+     * @return UpdateExpenseDto
      */
-    public static function from(CreateExpenseRequest $request): self
+    public static function from(UpdateExpenseRequest $request): self
     {
         return new self(
             categoryExpense: $request->category_expense,

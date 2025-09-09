@@ -31,5 +31,15 @@ class SelectionSeeder extends Seeder
             'title' => 'Лидер по маркетингу',
             'created_by' => 5
         ]);
+
+        Selection::create([
+            'title' => 'Компанийный менеджер',
+            'created_by' => 1
+        ]);
+
+        Selection::create([
+            'title' => 'Заместитель директора по продажам',
+            'created_by' => 1
+        ]);
     }
 }

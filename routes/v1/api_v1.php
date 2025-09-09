@@ -11,6 +11,7 @@ use App\Http\Controllers\v1\Candidate\CandidateSkillController;
 use App\Http\Controllers\v1\Candidate\CandidateFileController;
 use App\Http\Controllers\v1\Client\ClientController;
 use App\Http\Controllers\v1\Client\ClientFileController;
+use App\Http\Controllers\v1\Dashboard\DashboardController;
 use App\Http\Controllers\v1\Finance\FinanceController;
 use App\Http\Controllers\v1\InteractionController;
 use App\Http\Controllers\v1\Project\ProjectController;
@@ -18,8 +19,10 @@ use App\Http\Controllers\v1\Project\ProjectFileController;
 use App\Http\Controllers\v1\Project\ProjectStageController;
 use App\Http\Controllers\v1\Project\StageTaskController;
 use App\Http\Controllers\v1\RegionController;
+use App\Http\Controllers\v1\Selection\SelectionItemController;
 use App\Http\Controllers\v1\Task\TaskController;
 use App\Http\Controllers\v1\TaskUser\TaskUserController;
+use App\Http\Controllers\v1\Selection\SelectionController;
 use App\Http\Controllers\v1\TypeController;
 use App\Http\Controllers\v1\UserController;
 use App\Http\Controllers\v1\Vacancy\VacancyController;
@@ -196,12 +199,16 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
     });
 
     Route::prefix('finances')->group(function () {
-        // Route::get('/', [InteractionController::class, 'index']);
+        Route::get('/', [FinanceController::class, 'index']);
         // Route::get('/{id}', [InteractionController::class, 'show']);
         Route::post('/create-income', [FinanceController::class, 'createIncome']);
         Route::post('/create-expense', [FinanceController::class, 'createExpense']);
+
+        Route::put('/update-income/{id}', [FinanceController::class, 'updateIncome']);
+        Route::put('/update-expense/{id}', [FinanceController::class, 'updateExpense']);
+
         // Route::put('/update/{id}', [InteractionController::class, 'update']);
-        // Route::delete('/delete/{id}', [InteractionController::class, 'delete']);
+        Route::delete('/delete/{id}', [FinanceController::class, 'delete']);
     });
 
     Route::prefix('regions')->group(function () {
@@ -231,4 +238,25 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
     //     Route::put('/update/{id}', [TaskUserController::class, 'update']);
     //     Route::delete('/delete/{id}', [TaskUserController::class, 'delete']);
     // });
+});
+    // Selection
+    Route::prefix('selections')->group(function () {
+        Route::get('/', [SelectionController::class, 'index']);
+        Route::get('/list', [SelectionController::class, 'list']);
+        Route::get('/{id}', [SelectionController::class, 'show']);
+        Route::post('/create', [SelectionController::class, 'create']);
+        Route::post('/{id}/copy', [SelectionController::class, 'copy']);
+        Route::delete('/delete/{id}', [SelectionController::class, 'delete']);
+        Route::delete('/delete', [SelectionController::class, 'deleteMany']);
+        // SelectionItem
+        Route::post('/attach-candidates', [SelectionItemController::class, 'attachCandidates']);
+    });
+
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/', [DashboardController::class, 'index']);
+        // Route::get('/{id}', [TaskController::class, 'show']);
+        // Route::post('/create', [TaskController::class, 'create']);
+        // Route::put('/update/{id}', [TaskController::class, 'update']);
+        // Route::delete('/delete/{id}', [TaskController::class, 'destroy']);
+    });
 });

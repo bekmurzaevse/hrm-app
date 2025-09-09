@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Dto\v1\Finance;
+namespace App\Dto\v1\Finance\Income;
 
-use App\Http\Requests\v1\Finance\CreateIncomeRequest;
+use App\Http\Requests\v1\Finance\Income\UpdateIncomeRequest;
 
-readonly class CreateIncomeDto
+readonly class UpdateIncomeDto
 {
     public function __construct(
         public string $categoryIncome,
@@ -18,10 +18,10 @@ readonly class CreateIncomeDto
 
     /**
      * Summary of from
-     * @param \App\Http\Requests\v1\Finance\CreateIncomeRequest $request
-     * @return CreateIncomeDto
+     * @param \App\Http\Requests\v1\Finance\Income\UpdateIncomeRequest $request
+     * @return UpdateIncomeDto
      */
-    public static function from(CreateIncomeRequest $request): self
+    public static function from(UpdateIncomeRequest $request): self
     {
         return new self(
             categoryIncome: $request->category_income,
@@ -33,4 +33,3 @@ readonly class CreateIncomeDto
         );
     }
 }
-

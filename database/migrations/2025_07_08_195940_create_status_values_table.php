@@ -12,10 +12,9 @@ return new class extends Migration {
     {
         Schema::create('status_values', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('selection_item_id')->constrained('selection_items')->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('status_id')->constrained('selection_statuses')->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreignId('selection_item_id')->constrained('selection_items')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('status_id')->constrained('selection_statuses')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('value');
-            $table->softDeletes();
 
             $table->unique(['selection_item_id', 'status_id'], 'selection_item_status_unique');
         });

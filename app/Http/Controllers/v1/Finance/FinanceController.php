@@ -2,22 +2,39 @@
 
 namespace App\Http\Controllers\v1\Finance;
 
-use App\Actions\v1\Finance\CreateExpenseAction;
-use App\Actions\v1\Finance\CreateIncomeAction;
-use App\Dto\v1\Finance\CreateExpenseDto;
-use App\Dto\v1\Finance\CreateIncomeDto;
+use App\Actions\v1\Finance\DeleteAction;
+use App\Actions\v1\Finance\Expense\CreateExpenseAction;
+use App\Actions\v1\Finance\Expense\UpdateExpenseAction;
+use App\Actions\v1\Finance\Income\CreateIncomeAction;
+use App\Actions\v1\Finance\Income\UpdateIncomeAction;
+use App\Actions\v1\Finance\IndexAction;
+use App\Dto\v1\Finance\Expense\CreateExpenseDto;
+use App\Dto\v1\Finance\Expense\UpdateExpenseDto;
+use App\Dto\v1\Finance\Income\CreateIncomeDto;
+use App\Dto\v1\Finance\Income\UpdateIncomeDto;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Finance\CreateExpenseRequest;
-use App\Http\Requests\v1\Finance\CreateIncomeRequest;
+use App\Http\Requests\v1\Finance\Expense\CreateExpenseRequest;
+use App\Http\Requests\v1\Finance\Expense\UpdateExpenseRequest;
+use App\Http\Requests\v1\Finance\Income\CreateIncomeRequest;
+use App\Http\Requests\v1\Finance\Income\UpdateIncomeRequest;
 use Illuminate\Http\JsonResponse;
 
 class FinanceController extends Controller
 {
+    /**
+     * Summary of index
+     * @param \App\Actions\v1\Finance\IndexAction $action
+     * @return JsonResponse
+     */
+    public function index(IndexAction $action): JsonResponse
+    {
+        return $action();
+    }
 
     /**
      * Summary of createIncome
-     * @param \App\Actions\v1\Finance\CreateIncomeAction $action
-     * @param \App\Http\Requests\v1\Finance\CreateIncomeRequest $request
+     * @param \App\Actions\v1\Finance\Income\CreateIncomeAction $action
+     * @param \App\Http\Requests\v1\Finance\Income\CreateIncomeRequest $request
      * @return JsonResponse
      */
     public function createIncome(CreateIncomeAction $action, CreateIncomeRequest $request): JsonResponse
@@ -27,13 +44,48 @@ class FinanceController extends Controller
 
     /**
      * Summary of createExpense
-     * @param \App\Actions\v1\Finance\CreateExpenseAction $action
-     * @param \App\Http\Requests\v1\Finance\CreateExpenseRequest $request
+     * @param \App\Actions\v1\Finance\Expense\CreateExpenseAction $action
+     * @param \App\Http\Requests\v1\Finance\Expense\CreateExpenseRequest $request
      * @return JsonResponse
      */
     public function createExpense(CreateExpenseAction $action, CreateExpenseRequest $request): JsonResponse
     {
         return $action(CreateExpenseDto::from($request));
+    }
+
+    /**
+     * Summary of updateIncome
+     * @param int $id
+     * @param \App\Actions\v1\Finance\Income\UpdateIncomeAction $action
+     * @param \App\Http\Requests\v1\Finance\Income\UpdateIncomeRequest $request
+     * @return JsonResponse
+     */
+    public function updateIncome(int $id, UpdateIncomeAction $action, UpdateIncomeRequest $request): JsonResponse
+    {
+        return $action($id, UpdateIncomeDto::from($request));
+    }
+
+    /**
+     * Summary of updateExpense
+     * @param int $id
+     * @param \App\Actions\v1\Finance\Expense\UpdateExpenseAction $action
+     * @param \App\Http\Requests\v1\Finance\Expense\UpdateExpenseRequest $request
+     * @return JsonResponse
+     */
+    public function updateExpense(int $id, UpdateExpenseAction $action, UpdateExpenseRequest $request): JsonResponse
+    {
+        return $action($id, UpdateExpenseDto::from($request));
+    }
+
+    /**
+     * Summary of delete
+     * @param int $id
+     * @param \App\Actions\v1\Finance\DeleteAction $action
+     * @return JsonResponse
+     */
+    public function delete(int $id, DeleteAction $action): JsonResponse
+    {
+        return $action($id);
     }
 
 }

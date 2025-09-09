@@ -13,8 +13,7 @@ return new class extends Migration {
         Schema::create('selections', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('created_by')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
-            $table->softDeletes();
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
