@@ -223,6 +223,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
     // Selection
     Route::prefix('selections')->group(function () {
         Route::get('/', [SelectionController::class, 'index']);
+        Route::get('/list', [SelectionController::class, 'list']);
         Route::get('/{id}', [SelectionController::class, 'show']);
         Route::post('/create', [SelectionController::class, 'create']);
         Route::post('/{id}/copy', [SelectionController::class, 'copy']);

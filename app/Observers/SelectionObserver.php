@@ -17,6 +17,7 @@ class SelectionObserver
         $this->clear([
             'selections',
             'selections:show',
+            'selections:list'
         ]);
     }
 
@@ -29,6 +30,7 @@ class SelectionObserver
         $this->clear([
             'selections',
             'selections:show',
+            'selections:list'
         ]);
     }
 
@@ -41,6 +43,7 @@ class SelectionObserver
         $this->clear([
             'selections',
             'selections:show',
+            'selections:list'
         ]);
     }
 
@@ -53,6 +56,7 @@ class SelectionObserver
         $this->clear([
             'selections',
             'selections:show',
+            'selections:list'
         ]);
     }
 
@@ -65,6 +69,7 @@ class SelectionObserver
         $this->clear([
             'selections',
             'selections:show',
+            'selections:list'
         ]);
     }
 }
