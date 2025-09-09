@@ -18,14 +18,16 @@ class ListAction
      */
     public function __invoke(): JsonResponse
     {
-        $key = 'selections:list' . app()->getLocale() . ':' . md5(request()->fullUrl());
+        $key = 'selections:list:' . auth()->id() . ':' . app()->getLocale() . ':' . md5(request()->fullUrl());
         $selections = Cache::remember($key, now()->addDay(), function () {
-            return Selection::all()->map(function ($selection) {
-                return [
-                    'id' => $selection->id,
-                    'title' => $selection->title,
-                ];
-            });
+            return Selection::where('created_by', auth()->id())
+                ->get()
+                ->map(function ($selection) {
+                    return [
+                        'id' => $selection->id,
+                        'title' => $selection->title,
+                    ];
+                });
         });
 
         return static::toResponse(
