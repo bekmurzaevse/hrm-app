@@ -26,6 +26,7 @@ class EventServiceProvider extends ServiceProvider
         \App\Models\User::observe(\App\Observers\UserObserver::class);
         \App\Models\Project::observe(\App\Observers\ProjectObserver::class);
         \App\Models\Vacancy::observe(\App\Observers\VacancyObserver::class);
+        \App\Models\Selection::observe(\App\Observers\SelectionObserver::class);
 
         \App\Models\Region::observe(\App\Observers\RegionObserver::class);
         \App\Models\District::observe(\App\Observers\DistrictObserver::class);

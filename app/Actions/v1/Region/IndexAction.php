@@ -21,30 +21,22 @@ class IndexAction
     public function __invoke(IndexDto $dto): JsonResponse
     {
         if ($dto->regionId) {
-            $key = 'districts:regionId:' . app()->getLocale() . ':' . md5(request()->fullUrl());
-            $regions = Cache::remember($key, now()->addDay(), function () use ($dto){
-                $query = District::query();
+            $districts = Cache::get('districts', collect());
 
-                if ($dto->regionId) {
-                    $query->where('region_id', $dto->regionId);
-                }
-
-                return $query->get();
-            });
-            return static::toResponse(
-                    message: 'Successfully received',
-                    data: $regions
-                );
-        } else {
-            $key = 'regions:' . app()->getLocale() . ':' . md5(request()->fullUrl());
-            $regions = Cache::remember($key, now()->addDay(), function () {
-                return Region::all();
-            });
+            $filtered = $districts->where('region_id', $dto->regionId)->values();
 
             return static::toResponse(
                 message: 'Successfully received',
-                data: $regions
+                data: $filtered
             );
         }
+
+        $regions = Cache::get('regions', collect());
+
+        return static::toResponse(
+            message: 'Successfully received',
+            data: $regions
+        );
     }
+
 }

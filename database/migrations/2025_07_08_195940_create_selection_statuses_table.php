@@ -12,10 +12,9 @@ return new class extends Migration {
     {
         Schema::create('selection_statuses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('selection_id')->constrained('selections')->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreignId('selection_id')->constrained('selections')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
             $table->unsignedTinyInteger('order')->default(0);
-            $table->softDeletes();
         });
     }
 

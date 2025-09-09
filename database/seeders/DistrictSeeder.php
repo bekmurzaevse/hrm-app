@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\District;
 use App\Models\Region;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 
 class DistrictSeeder extends Seeder
 {
@@ -218,7 +219,6 @@ class DistrictSeeder extends Seeder
             ],
         ];
 
-
         foreach ($regions as $regionName => $districts) {
             $region = Region::where('title', $regionName)->first();
 
@@ -229,5 +229,7 @@ class DistrictSeeder extends Seeder
                 ]);
             }
         }
+
+        Cache::forever('districts', District::all());
     }
 }

@@ -12,11 +12,11 @@ return new class extends Migration {
     {
         Schema::create('selection_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('selection_id')->constrained('selections')->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreignId('candidate_id')->nullable()->constrained('candidates')->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreignId('selection_id')->constrained('selections')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('candidate_id')->nullable()->constrained('candidates')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('external_name')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
+
+            $table->unique(['selection_id', 'candidate_id']);
         });
     }
 
