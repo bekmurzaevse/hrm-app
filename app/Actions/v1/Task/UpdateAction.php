@@ -2,6 +2,7 @@
 
 namespace App\Actions\v1\Task;
 
+use App\Models\TaskHistory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Exceptions\ApiResponseException;
@@ -29,9 +30,17 @@ class UpdateAction
                 'title' => $dto->title,
                 'description' => $dto->description ?? $task->description,
                 'deadline' => $dto->deadline ?? $task->deadline,
-                'created_by' => auth()->user()->id,
+                'created_by' => $dto->created_by ?? $task->created_by,
                 'status' => $dto->status,
                 'priority' => $dto->priority ?? $task->priority,
+                'comment' => $dto->comment ?? $task->comment,
+            ]);
+
+            TaskHistory::create([
+                'task_id'    => $task->id,
+                'changed_by' => auth()->id(),
+                'type'       => 'task_updated',
+                'comment'    => "Задача обновлена пользователем ID: " . auth()->id(),
             ]);
 
             logActivity(

@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('status')->default(TaskStatusEnum::IN_PROGRESS);
             $table->string('priority')->default(TaskPriorityEnum::MEDIUM);
             $table->foreignId('created_by')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
+            $table->text('comment');
             $table->softDeletes();
             $table->timestamps();
         });

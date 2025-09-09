@@ -20,6 +20,7 @@ class TaskSeeder extends Seeder
             'description' => "HR menejer ushin vakansiya jaratiw ha'm dag'aza qiliw",
             'deadline' => now()->addDays(5),
             'created_by' => 1,
+            'comment' => 'Ishni tez arada bitirish kerak',
             'status' => TaskStatusEnum::OPEN->value,
             'priority' => TaskPriorityEnum::MEDIUM->value,
         ]);
@@ -29,6 +30,7 @@ class TaskSeeder extends Seeder
             'description' => "Mag'liwmatlar bazasindag'i barliq jumisshilardi qayta tekseriw",
             'deadline' => now()->addDays(10),
             'created_by' => 1,
+            'comment' => 'Birinshi bosqichta barliq jumisshilar tekseriledi',
             'status' => TaskStatusEnum::IN_PROGRESS->value,
             'priority' => TaskPriorityEnum::HIGH->value,
         ]);
