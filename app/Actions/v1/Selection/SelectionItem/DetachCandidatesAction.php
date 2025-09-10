@@ -2,18 +2,18 @@
 
 namespace App\Actions\v1\Selection\SelectionItem;
 
-use App\Dto\v1\Selection\SelectionItem\DetachCandidateDto;
+use App\Dto\v1\Selection\SelectionItem\DetachCandidatesDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Selection;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class DetachCandidateAction
+class DetachCandidatesAction
 {
     use ResponseTrait;
 
-    public function __invoke($id, DetachCandidateDto $dto): JsonResponse
+    public function __invoke($id, DetachCandidatesDto $dto): JsonResponse
     {
         try {
             $selection = Selection::findOrFail($id);
