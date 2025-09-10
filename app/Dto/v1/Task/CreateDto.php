@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto\V1\Task;
+namespace App\Dto\v1\Task;
 
 use App\Http\Requests\v1\Task\CreateRequest;
 

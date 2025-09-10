@@ -32,22 +32,22 @@ class RemoveExecutorAction
             $task = Task::findOrFail($taskId);
             $user = User::findOrFail($userId);
 
-            $taskUser = TaskUser::where('task_id', $taskId)
-                ->where('user_id', $userId)
+            $taskUser = TaskUser::where('task_id', $task->id)
+                ->where('user_id', $user->id)
                 ->first();
 
             if (!$taskUser) {
                 throw new ModelNotFoundException();
             }
 
-            DB::transaction(function () use ($taskUser, $dto, $taskId, $userId) {
+            DB::transaction(function () use ($taskUser, $dto, $task, $user) {
                 $taskUser->delete();
 
                 TaskHistory::create([
-                    'task_id'    => $taskId,
+                    'task_id'    => $task->id,
                     'changed_by' => auth()->id(),
                     'type'       => 'executor_removed',
-                    'comment'    => "Исполнитель удален (ID: {$userId})"
+                    'comment'    => "Исполнитель удален (ID: {$user->id})"
                         . ($dto->comment ? ". Комментарий: {$dto->comment}" : ''),
                 ]);
             });
