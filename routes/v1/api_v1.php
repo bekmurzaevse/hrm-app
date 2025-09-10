@@ -234,7 +234,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         // SelectionItem
         Route::post('/attach-candidates', [SelectionItemController::class, 'attachCandidates']);
         Route::post('/{id}/detach-candidates', [SelectionItemController::class, 'detachCandidates']);
-        
+        Route::post('/{id}/add-external-candidates', [SelectionItemController::class, 'addExternalCandidates']);
     });
 
     Route::prefix('dashboard')->group(function () {
