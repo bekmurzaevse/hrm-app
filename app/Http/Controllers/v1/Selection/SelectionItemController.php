@@ -3,28 +3,28 @@
 namespace App\Http\Controllers\v1\Selection;
 
 use App\Actions\v1\Selection\SelectionItem\AddExternalCandidatesAction;
-use App\Actions\v1\Selection\SelectionItem\AttachCandidateAction;
+use App\Actions\v1\Selection\SelectionItem\AttachCandidatesAction;
 use App\Actions\v1\Selection\SelectionItem\DetachCandidatesAction;
 use App\Dto\v1\Selection\SelectionItem\AddExternalCandidatesDto;
-use App\Dto\v1\Selection\SelectionItem\AttachCandidateDto;
+use App\Dto\v1\Selection\SelectionItem\AttachCandidatesDto;
 use App\Dto\v1\Selection\SelectionItem\DetachCandidatesDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Selection\SelectionItem\AddExternalCandidatesRequest;
-use App\Http\Requests\v1\Selection\SelectionItem\AttachCandidateRequest;
+use App\Http\Requests\v1\Selection\SelectionItem\AttachCandidatesRequest;
 use App\Http\Requests\v1\Selection\SelectionItem\DetachCandidatesRequest;
 use Illuminate\Http\JsonResponse;
 
 class SelectionItemController extends Controller
 {
     /**
-     * Summary of attachCandidates
-     * @param \App\Http\Requests\v1\Selection\SelectionItem\AttachCandidateRequest $request
-     * @param \App\Actions\v1\Selection\SelectionItem\AttachCandidateAction $action
+     * Summary of attachCandidatess
+     * @param \App\Http\Requests\v1\Selection\SelectionItem\AttachCandidatesRequest $request
+     * @param \App\Actions\v1\Selection\SelectionItem\AttachCandidatesAction $action
      * @return JsonResponse
      */
-    public function attachCandidates(AttachCandidateRequest $request, AttachCandidateAction $action): JsonResponse
+    public function attachCandidates(AttachCandidatesRequest $request, AttachCandidatesAction $action): JsonResponse
     {
-        return $action(AttachCandidateDto::from($request));
+        return $action(AttachCandidatesDto::from($request));
     }
 
     /**
