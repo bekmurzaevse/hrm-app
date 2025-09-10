@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\v1\Task\History;
 
+use App\Enums\Task\TaskHistoryType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class LogChangeRequest extends FormRequest
 {
@@ -15,7 +17,7 @@ class LogChangeRequest extends FormRequest
     {
         return [
             'comment' => 'required|string|max:1000',
-            'type'    => 'nullable|string|in:executor_added,executor_removed,task_sent,task_completed,note',
+            'type' => ['required', new Enum(TaskHistoryType::class)],
         ];
     }
 }

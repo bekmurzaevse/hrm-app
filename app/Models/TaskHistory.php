@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Task\TaskHistoryType;
 use Illuminate\Database\Eloquent\Model;
 
 class TaskHistory extends Model
@@ -14,6 +15,7 @@ class TaskHistory extends Model
     ];
 
     protected $casts = [
+        'type' => TaskHistoryType::class,
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

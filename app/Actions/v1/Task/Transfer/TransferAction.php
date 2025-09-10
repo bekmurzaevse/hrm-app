@@ -3,6 +3,7 @@
 namespace App\Actions\v1\Task\Transfer;
 
 use App\Dto\v1\Task\Transfer\TransferDto;
+use App\Enums\Task\TaskHistoryType;
 use App\Exceptions\ApiResponseException;
 use App\Models\Task;
 use App\Models\TaskHistory;
@@ -36,7 +37,7 @@ class TransferAction
                 TaskHistory::create([
                     'task_id'    => $task->id,
                     'changed_by' => auth()->id(),
-                    'type'       => 'task_sent',
+                    'type'       => TaskHistoryType::TaskSent,
                     'comment'    => "Задача отправлена пользователю (ID: {$user->id})"
                         . ($dto->comment ? ". Комментарий: {$dto->comment}" : ''),
                 ]);
