@@ -42,7 +42,7 @@ class UpdateRequest extends FormRequest
             'address' => 'required|string',
             'desired_salary' => 'required|numeric',
             'source' => 'nullable|string',
-            'experience' => 'nullable|numeric',
+            // 'experience' => 'nullable|numeric',
             'description' => 'nullable|string',
             'photo' => 'nullable|image|mimes:png,jpg,png,jpeg',
         ];

@@ -8,7 +8,7 @@ use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class DeleteAction 
+class DeleteAction
 {
     use ResponseTrait;
 
@@ -18,22 +18,22 @@ class DeleteAction
      * @throws \App\Exceptions\ApiResponseException
      * @return JsonResponse
      */
-     public function __invoke(int $id): JsonResponse
-    {
-        try {
-            $task = Task::findOrFail($id);
-            $task->delete();
+    // public function __invoke(int $id): JsonResponse
+    // {
+    //     try {
+    //         $task = Task::findOrFail($id);
+    //         $task->delete();
 
-            logActivity(
-                "Задача удалена",
-                "Задача '{$task->title}' удалена пользователем " . auth()->user()->first_name . " " . auth()->user()->last_name
-            );
+    //         logActivity(
+    //             "Задача удалена",
+    //             "Задача '{$task->title}' удалена пользователем " . auth()->user()->first_name . " " . auth()->user()->last_name
+    //         );
 
-            return static::toResponse(
-                message: "$id - id li Task O'shirildi",
-            );
-        } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('Task Not Found', 404);
-        }
-    }
+    //         return static::toResponse(
+    //             message: "$id - id li Task O'shirildi",
+    //         );
+    //     } catch (ModelNotFoundException $ex) {
+    //         throw new ApiResponseException('Task Not Found', 404);
+    //     }
+    // }
 }

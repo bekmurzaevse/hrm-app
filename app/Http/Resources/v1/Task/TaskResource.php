@@ -19,14 +19,14 @@ class TaskResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'deadline' => $this->deadline,
-            'created_by'  => [
-                'id'   => $this->creator?->id,
-                'name' => $this->creator?->name,
+            'created_by' => [
+                'id' => $this->createdBy?->id,
+                'name' => trim($this->createdBy?->first_name . ' ' . $this->createdBy?->last_name),
             ],
             'status' => $this->status,
             'priority' => $this->priority,
-            'created_at' => $this->created_at->format('Y-m-d'),
-            'updated_at' => $this->updated_at,
+            'created_at' => $this->created_at->format('Y-m-d H:i'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i'),
         ];
     }
 }

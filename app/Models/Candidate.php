@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\Candidate\CandidateStatusEnum;
 use App\Enums\Candidate\FamilyStatusEnum;
 use App\Enums\GenderEnum;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -143,5 +144,27 @@ class Candidate extends Model
     public function district(): BelongsTo
     {
         return $this->belongsTo(District::class);
+    }
+
+    /**
+     * Summary of getTotalWorkExperienceAttribute
+     * @return string
+     */
+    public function getTotalWorkExperienceAttribute()
+    {
+        $totalMonths = 0;
+
+        foreach ($this->workExperience as $exp) {
+            $start = Carbon::parse($exp->start_work);
+            $end = $exp->end_work ? Carbon::parse($exp->end_work) : Carbon::now();
+
+            $totalMonths += $start->diffInMonths($end);
+        }
+
+        $years = floor($totalMonths / 12);
+        $months = $totalMonths % 12;
+
+        // return "{$years} год {$months} месяц";
+        return $months != 0 ? "{$years} год {$months} месяц" : "{$years} год";
     }
 }
