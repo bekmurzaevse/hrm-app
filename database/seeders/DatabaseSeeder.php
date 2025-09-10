@@ -40,7 +40,8 @@ class DatabaseSeeder extends Seeder
             TaskUserSeeder::class,
             FinanceSeeder::class,
             SelectionStatusSeeder::class,
-            StatusValueSeeder::class
+            StatusValueSeeder::class,
+            TaskHistorySeeder::class,
         ]);
     }
 }

@@ -4,7 +4,6 @@ namespace App\Actions\v1\Task\Transfer;
 
 use App\Dto\v1\Task\Transfer\TransferDto;
 use App\Exceptions\ApiResponseException;
-use App\Http\Resources\v1\Task\TaskHistoryResource;
 use App\Models\Task;
 use App\Models\TaskHistory;
 use App\Models\User;
@@ -29,16 +28,16 @@ class TransferAction
             $task = Task::findOrFail($dto->task_id);
             $user = User::findOrFail($dto->user_id);
 
-            DB::transaction(function () use ($task, $dto) {
+            DB::transaction(function () use ($task, $user, $dto) {
                 $task->update([
-                    'executor_id' => $dto->user_id,
+                    'executor_id' => $user->id,
                 ]);
 
                 TaskHistory::create([
                     'task_id'    => $task->id,
                     'changed_by' => auth()->id(),
                     'type'       => 'task_sent',
-                    'comment'    => "Задача отправлена пользователю (ID: {$dto->user_id})"
+                    'comment'    => "Задача отправлена пользователю (ID: {$user->id})"
                         . ($dto->comment ? ". Комментарий: {$dto->comment}" : ''),
                 ]);
             });

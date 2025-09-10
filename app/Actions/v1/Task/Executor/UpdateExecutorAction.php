@@ -2,7 +2,6 @@
 
 namespace App\Actions\v1\Task\Executor;
 
-use App\Dto\v1\Task\Executor\UpdateDto;
 use App\Dto\v1\Task\Executor\UpdateExecutorDto;
 use App\Enums\Task\TaskStatusEnum;
 use App\Exceptions\ApiResponseException;

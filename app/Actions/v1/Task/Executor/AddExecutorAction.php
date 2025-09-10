@@ -33,8 +33,8 @@ class AddExecutorAction
             $task = Task::findOrFail($taskId);
             $user = User::findOrFail($userId);
 
-            $exists = TaskUser::where('task_id', $taskId)
-                ->where('user_id', $userId)
+            $exists = TaskUser::where('task_id', $task->id)
+                ->where('user_id', $user->id)
                 ->exists();
 
             if ($exists) {
@@ -43,18 +43,18 @@ class AddExecutorAction
                 );
             }
 
-            DB::transaction(function () use ($taskId, $userId, $dto) {
+            DB::transaction(function () use ($task, $user, $dto) {
                 TaskUser::create([
-                    'task_id' => $taskId,
-                    'user_id' => $userId,
+                    'task_id' => $task->id,
+                    'user_id' => $user->id,
                     'status' => TaskStatusEnum::OPEN->value,
                 ]);
 
                 TaskHistory::create([
-                    'task_id'    => $taskId,
+                    'task_id'    => $task->id,
                     'changed_by' => auth()->id(),
                     'type'       => 'executor_added',
-                    'comment'    => "Добавлен исполнитель (ID: {$userId})"
+                    'comment'    => "Добавлен исполнитель (ID: {$user->id})"
                         . ($dto->comment ? ". Комментарий: {$dto->comment}" : ''),
                 ]);
             });
