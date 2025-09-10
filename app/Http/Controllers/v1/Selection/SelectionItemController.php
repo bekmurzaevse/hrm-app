@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\v1\Selection;
 
 use App\Actions\v1\Selection\SelectionItem\AttachCandidateAction;
+use App\Actions\v1\Selection\SelectionItem\DetachCandidateAction;
 use App\Dto\v1\Selection\SelectionItem\AttachCandidateDto;
+use App\Dto\v1\Selection\SelectionItem\DetachCandidateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Selection\SelectionItem\AttachCandidateRequest;
+use App\Http\Requests\v1\Selection\SelectionItem\DetachCandidateRequest;
 use Illuminate\Http\JsonResponse;
 
 class SelectionItemController extends Controller
@@ -19,5 +22,16 @@ class SelectionItemController extends Controller
     public function attachCandidates(AttachCandidateRequest $request, AttachCandidateAction $action): JsonResponse
     {
         return $action(AttachCandidateDto::from($request));
+    }
+
+    /**
+     * Summary of detachCandidates
+     * @param \App\Http\Requests\v1\Selection\SelectionItem\DetachCandidateRequest $request
+     * @param \App\Actions\v1\Selection\SelectionItem\DetachCandidateAction $action
+     * @return JsonResponse
+     */
+    public function detachCandidates(int $id, DetachCandidateRequest $request, DetachCandidateAction $action): JsonResponse
+    {
+        return $action($id, DetachCandidateDto::from($request));
     }
 }
