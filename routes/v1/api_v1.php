@@ -21,7 +21,7 @@ use App\Http\Controllers\v1\Project\StageTaskController;
 use App\Http\Controllers\v1\RegionController;
 use App\Http\Controllers\v1\Selection\SelectionItemController;
 use App\Http\Controllers\v1\Task\TaskController;
-use App\Http\Controllers\v1\TaskUser\TaskUserController;
+<<<<<<<<< Temporary merge branch 1
 use App\Http\Controllers\v1\Selection\SelectionController;
 use App\Http\Controllers\v1\TypeController;
 use App\Http\Controllers\v1\UserController;
@@ -231,14 +231,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         // Route::delete('/delete/{id}', [TaskController::class, 'destroy']);
     });
 
-    // Route::prefix('task-users')->group(function () {
-    //     Route::get('/', [TaskUserController::class, 'index']);
-    //     Route::get('/{id}', [TaskUserController::class, 'show']);
-    //     Route::post('/create', [TaskUserController::class, 'create']);
-    //     Route::put('/update/{id}', [TaskUserController::class, 'update']);
-    //     Route::delete('/delete/{id}', [TaskUserController::class, 'delete']);
-    // });
-    
+<<<<<<<<< Temporary merge branch 1
     // Selection
     Route::prefix('selections')->group(function () {
         Route::get('/', [SelectionController::class, 'index']);
