@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\v1\Project\Stage;
 
+use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateStageRequest extends FormRequest
 {
+    use FailedValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */

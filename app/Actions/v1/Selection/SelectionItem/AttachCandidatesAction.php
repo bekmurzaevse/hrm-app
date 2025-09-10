@@ -2,17 +2,17 @@
 
 namespace App\Actions\v1\Selection\SelectionItem;
 
-use App\Dto\v1\Selection\SelectionItem\AttachCandidateDto;
+use App\Dto\v1\Selection\SelectionItem\AttachCandidatesDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\SelectionItem;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
-class AttachCandidateAction
+class AttachCandidatesAction
 {
     use ResponseTrait;
-    public function __invoke(AttachCandidateDto $dto): JsonResponse
+    public function __invoke(AttachCandidatesDto $dto): JsonResponse
     {
         $selections = $dto->selections;
         $candidates = $dto->candidates;
