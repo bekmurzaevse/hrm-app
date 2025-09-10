@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('company');
             $table->string('position');
             $table->foreignId('candidate_id')->constrained('candidates')->restrictOnDelete()->cascadeOnUpdate();
-            $table->string('start_work');
-            $table->string('end_work')->nullable();
+            $table->date('start_work');
+            $table->date('end_work')->nullable();
             $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();

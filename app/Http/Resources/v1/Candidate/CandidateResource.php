@@ -35,6 +35,7 @@ class CandidateResource extends JsonResource
                 'family_info' => $this->family_info,
                 'address' => $this->address,
                 'district' => $this->district->title,
+                'experience' => $this->total_work_experience,
             ],
             'about' => [
                 'short_summary' => $this->short_summary,
@@ -52,7 +53,11 @@ class CandidateResource extends JsonResource
             ],
             'history' => InteractionResource::collection($this->interactions),
             'work_experience' => WorkExperienceResource::collection($this->workExperience),
-            'desired_salary' => $this->desired_salary,
+            'desired' => [
+                'desired_salary' => $this->desired_salary,
+                'workplace' => $this->workplace,
+                'position' => $this->position,
+            ],
             'esucations' => EducationResource::collection($this->educations),
             'files' => FileResource::collection($this->files()->where('type', null)->get()),
             'photo' => new PhotoResource($this->photo),
