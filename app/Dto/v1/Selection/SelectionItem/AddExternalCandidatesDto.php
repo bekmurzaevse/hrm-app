@@ -14,7 +14,7 @@ readonly class AddExternalCandidatesDto
     /**
      * Summary of from
      * @param \App\Http\Requests\v1\Selection\SelectionItem\AddExternalCandidatesRequest $request
-     * @return AttachCandidateDto
+     * @return AttachCandidatesDto
      */
     public static function from(AddExternalCandidatesRequest $request): self
     {

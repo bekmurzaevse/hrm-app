@@ -15,7 +15,9 @@ class AddExternalCandidatesAction
     public function __invoke(int $id, AddExternalCandidatesDto $dto): JsonResponse
     {
         try {
-            $selection = Selection::findOrFail($id);
+            $selection = Selection::where('id', $id)
+                ->where('created_by', auth()->id())
+                ->firstOrFail();
 
             $items = collect($dto->externalCandidates)
                 ->map(fn($name) => [

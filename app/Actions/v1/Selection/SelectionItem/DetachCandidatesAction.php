@@ -16,19 +16,16 @@ class DetachCandidatesAction
     public function __invoke($id, DetachCandidatesDto $dto): JsonResponse
     {
         try {
-            $selection = Selection::findOrFail($id);
+            $selection = Selection::where('id', $id)
+                ->where('created_by', auth()->id())
+                ->firstOrFail();
 
-            $foundIds = $selection->items()
+            $foundCount = $selection->items()
                 ->whereIn('id', $dto->items)
-                ->pluck('id')
-                ->toArray();
+                ->count();
 
-            if (count($foundIds) !== count($dto->items)) {
-                $missing = array_diff($dto->items, $foundIds);
-                throw new ApiResponseException(
-                    'Some items not found: ' . implode(',', $missing),
-                    404
-                );
+            if ($foundCount !== count($dto->items)) {
+                throw new ApiResponseException('Some items not found', 404);
             }
 
             $selection->items()
