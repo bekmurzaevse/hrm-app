@@ -25,6 +25,8 @@ class WorkExperience extends Model
     protected function casts(): array
     {
         return [
+            'start_work' => 'date',
+            'end_work' => 'date',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];

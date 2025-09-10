@@ -15,133 +15,70 @@ class IndexAction
 
     public function __invoke()
     {
+
         $year = now()->year;
         $maxMonth = now()->month;
 
-        // $year = now()->year;
-
-        // return Cache::remember("dashboard:$year", now()->addMinutes(30), function () use ($year) {
-        //     // 🔹 Vacancies oyma-oy
-        //     $vacanciesByMonth = Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-        //         ->whereYear('created_at', $year)
-        //         ->groupBy('month')
-        //         ->pluck('total', 'month');
-
-        //     // 🔹 Projects oyma-oy
-        //     $projectsByMonth = Project::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-        //         ->whereYear('created_at', $year)
-        //         ->groupBy('month')
-        //         ->pluck('total', 'month');
-
-        //     // 🔹 Income oyma-oy
-        //     $incomesByMonth = Finance::selectRaw('MONTH(created_at) as month, SUM(amount) as total')
-        //         ->where('type', 'income')
-        //         ->whereYear('created_at', $year)
-        //         ->groupBy('month')
-        //         ->pluck('total', 'month');
-
-        //     // 🔹 Expense oyma-oy
-        //     $expensesByMonth = Finance::selectRaw('MONTH(created_at) as month, SUM(amount) as total')
-        //         ->where('type', 'expense')
-        //         ->whereYear('created_at', $year)
-        //         ->groupBy('month')
-        //         ->pluck('total', 'month');
-
-        //     // 🔹 1-oydan hozirgi oygacha to‘ldirish
-        //     $months = collect(range(1, now()->month))->map(function ($month) use ($vacanciesByMonth, $projectsByMonth, $incomesByMonth, $expensesByMonth) {
-        //         $monthName = Carbon::create()->month($month)->format('F');
-        //         return [
-        //             'month'     => $monthName,
-        //             'vacancies' => $vacanciesByMonth->get($month, 0),
-        //             'projects'  => $projectsByMonth->get($month, 0),
-        //             'income'    => $incomesByMonth->get($month, 0),
-        //             'expense'   => $expensesByMonth->get($month, 0),
-        //         ];
-        //     })->values();
-
-        //     return [
-        //         'data' => $months
-        //     ];
-        // });
-
         return Cache::remember("dashboard:$year", now()->addMinutes(30), function () use ($year, $maxMonth) {
-
-            // raw pluck: key = month number, value = total
             $vacanciesRaw = \App\Models\Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
                 ->whereYear('created_at', $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $projectsRaw = \App\Models\Project::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-                ->whereYear('created_at', $year)
-                ->whereHas('closeProject', function ($q) {
-                    $q->whereColumn('project_closures.project_id', 'projects.id');
-                })
+            $projectsRaw = \App\Models\ProjectClosure::selectRaw('MONTH(closed_at) as month, COUNT(*) as total')
+                ->whereYear('closed_at', $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $incomesRaw = \App\Models\Finance::selectRaw('MONTH(created_at) as month, SUM(amount) as total')
+            $incomesRaw = \App\Models\Finance::selectRaw('MONTH(date) as month, SUM(amount) as total')
                 ->where('type', 'income')
-                ->whereYear('created_at', $year)
+                ->whereYear('date', $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $expensesRaw = \App\Models\Finance::selectRaw('MONTH(created_at) as month, SUM(amount) as total')
+            $expensesRaw = \App\Models\Finance::selectRaw('MONTH(date) as month, SUM(amount) as total')
                 ->where('type', 'expense')
-                ->whereYear('created_at', $year)
+                ->whereYear('date', $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            // Helper to build month array (1..current month)
-            $buildList = function ($raw) use ($maxMonth) {
-                return collect(range(1, $maxMonth))->map(function ($m) use ($raw) {
+            $honorarsRaw = \App\Models\Finance::selectRaw('MONTH(date) as month, SUM(amount) as total')
+                ->where('type', 'expense')
+                ->where('category_expense', 'honorarium')
+                ->whereYear('date', $year)
+                ->groupBy('month')
+                ->pluck('total', 'month');
+
+            $uzMonths = [
+                1 => "Январь", 2 => "Февраль", 3 => "Март", 4 => "Апрель",
+                5 => "Май", 6 => "Июнь", 7 => "Июль", 8 => "Август",
+                9 => "Сентябрь", 10 => "Октябрь", 11 => "Ноябрь", 12 => "Декабрь"
+            ];
+
+            $buildList = function ($raw) use ($maxMonth, $uzMonths) {
+                return collect(range(1, $maxMonth))->map(function ($m) use ($raw, $uzMonths) {
                     return [
-                        'month_number' => $m,
-                        'month' => Carbon::create()->month($m)->format('F'), // English month name; o'zgartirish mumkin
-                        'total' => $raw->get($m, 0) ? (0 + $raw->get($m)) : 0, // int/float safe cast
+                        'month' => $uzMonths[$m],
+                        'count' => $raw->get($m, 0),
                     ];
                 })->values();
             };
 
+            $profitRaw = collect(range(1, $maxMonth))->mapWithKeys(function ($m) use ($incomesRaw, $expensesRaw) {
+                $income  = $incomesRaw->get($m, 0);
+                $expense = $expensesRaw->get($m, 0);
+                return [$m => $income - $expense];
+            });
+
             return [
                 'vacancies' => $buildList($vacanciesRaw),
-                'projects'  => $buildList($projectsRaw),
-                'income'    => $buildList($incomesRaw),
-                'expense'   => $buildList($expensesRaw),
+                'projects' => $buildList($projectsRaw),
+                'income' => $buildList($incomesRaw),
+                'expense' => $buildList($expensesRaw),
+                'expense_honorariums' => $buildList($honorarsRaw),
+                'profit' => $buildList($profitRaw),
             ];
         });
 
-        // dd("ok");
-        // $key = 'projects:dashboard:' . app()->getLocale() . ':' . md5(request()->fullUrl());
-        // $datas = Cache::remember($key, now()->addDay(), function () {
-        //     return Project::whereHas('closeProject', function ($q) {
-        //             $q->whereColumn('project_closures.project_id', 'projects.id');
-        //         })
-        //         ->selectRaw('MONTHNAME(created_at) as month, COUNT(*) as total')
-        //         ->whereYear('created_at', now()->year)
-        //         ->groupBy('month')
-        //         ->pluck('total', 'month');
-        // });
-
-        // // 1 dan 12 gacha bo‘sh joylarni 0 qilib to‘ldirish
-        // $contractsByMonth = collect(range(1, now()->month))->mapWithKeys(function ($month) use ($datas) {
-        //     $monthName = Carbon::create()->month($month)->format('F'); // January, February...
-        //     return [$monthName => $datas->get($month, 0)];
-        // });
-        // dd($contractsByMonth);
-
-        // return static::toResponse(
-        //     message: 'Successfully received',
-        //     data: $datas
-        //     // data: new TypeCollection($types)
-        // );
-        // // $contractsByMonth = Project::whereHas('closeProject', function ($q) {
-        // //     $q->whereColumn('project_closures.project_id', 'projects.id');
-        // // })
-        // //     ->selectRaw('MONTHNAME(created_at) as month, COUNT(*) as total')
-        // //     ->whereYear('created_at', now()->year)
-        // //     ->groupBy('month')
-        // //     ->pluck('total', 'month');
-        // //     dd($contractsByMonth);
     }
 }
