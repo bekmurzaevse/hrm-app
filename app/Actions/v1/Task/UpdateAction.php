@@ -2,6 +2,7 @@
 
 namespace App\Actions\v1\Task;
 
+use App\Enums\Task\TaskHistoryType;
 use App\Models\TaskHistory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -39,7 +40,7 @@ class UpdateAction
             TaskHistory::create([
                 'task_id'    => $task->id,
                 'changed_by' => auth()->id(),
-                'type'       => 'task_updated',
+                'type'       => TaskHistoryType::TaskUpdated,
                 'comment'    => "Задача обновлена пользователем ID: " . auth()->id(),
             ]);
 

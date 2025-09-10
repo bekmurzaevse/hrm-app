@@ -3,6 +3,7 @@
 namespace App\Actions\v1\Task\Complete;
 
 use App\Dto\v1\Task\Complete\CompleteDto;
+use App\Enums\Task\TaskHistoryType;
 use App\Enums\Task\TaskStatusEnum;
 use App\Exceptions\ApiResponseException;
 use App\Models\Task;
@@ -37,7 +38,7 @@ class CompleteAction
 
             TaskHistory::create([
                 'task_id' => $dto->taskId,
-                'type' => 'task_completed',
+                'type' => TaskHistoryType::TaskCompleted,
                 'changed_by' => $userId,
                 'comment' => "Задача выполнена. Комментарий: {$dto->comment}",
             ]);

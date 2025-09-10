@@ -3,6 +3,7 @@
 namespace App\Actions\v1\Task\Reject;
 
 use App\Dto\v1\Task\Reject\RejectDto;
+use App\Enums\Task\TaskHistoryType;
 use App\Models\Task;
 use App\Models\TaskHistory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -32,7 +33,7 @@ class RejectAction
             TaskHistory::create([
                 'task_id'    => $task->id,
                 'changed_by' => auth()->id(),
-                'type'       => 'task_rejected',
+                'type'       => TaskHistoryType::TaskRejected,
                 'comment'    => $dto->comment,
             ]);
 

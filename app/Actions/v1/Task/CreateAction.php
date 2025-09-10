@@ -3,6 +3,7 @@
 namespace App\Actions\v1\Task;
 
 use App\Dto\v1\Task\CreateDto;
+use App\Enums\Task\TaskHistoryType;
 use App\Models\Task;
 use App\Models\TaskHistory;
 use App\Traits\ResponseTrait;
@@ -34,7 +35,7 @@ class CreateAction
         TaskHistory::create([
             'task_id'    => $task->id,
             'changed_by' => auth()->id(),
-            'type'       => 'task_created',
+            'type'       => TaskHistoryType::TaskCreated,
             'comment'    => "Задача создана пользователем ID: " . auth()->id(),
         ]);
 

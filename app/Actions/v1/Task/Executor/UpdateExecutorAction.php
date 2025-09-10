@@ -3,6 +3,7 @@
 namespace App\Actions\v1\Task\Executor;
 
 use App\Dto\v1\Task\Executor\UpdateExecutorDto;
+use App\Enums\Task\TaskHistoryType;
 use App\Enums\Task\TaskStatusEnum;
 use App\Exceptions\ApiResponseException;
 use App\Models\Task;
@@ -57,7 +58,7 @@ class UpdateExecutorAction
                 TaskHistory::create([
                     'task_id' => $taskId,
                     'changed_by' => auth()->id(),
-                    'type' => 'executor_changed',
+                    'type' => TaskHistoryType::ExecutorChanged,
                     'comment' => "Исполнитель изменен: {$oldUserId} → {$newUserId}"
                         . ($dto->comment ? ". Комментарий: {$dto->comment}" : ''),
                 ]);

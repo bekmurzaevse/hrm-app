@@ -3,6 +3,7 @@
 namespace App\Actions\v1\Task\Executor;
 
 use App\Dto\v1\Task\Executor\RemoveExecutorDto;
+use App\Enums\Task\TaskHistoryType;
 use App\Exceptions\ApiResponseException;
 use App\Models\Task;
 use App\Models\TaskHistory;
@@ -46,7 +47,7 @@ class RemoveExecutorAction
                 TaskHistory::create([
                     'task_id'    => $task->id,
                     'changed_by' => auth()->id(),
-                    'type'       => 'executor_removed',
+                    'type'       => TaskHistoryType::ExecutorRemoved,
                     'comment'    => "Исполнитель удален (ID: {$user->id})"
                         . ($dto->comment ? ". Комментарий: {$dto->comment}" : ''),
                 ]);
