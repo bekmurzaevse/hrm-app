@@ -72,7 +72,10 @@ class SelectionResource extends JsonResource
                 ];
             });
 
-            return $statusValues;
+            return [
+                'item_id' => $item->id,
+                'status_values' => $statusValues
+            ];
         });
 
         return array_merge($baseData, [
