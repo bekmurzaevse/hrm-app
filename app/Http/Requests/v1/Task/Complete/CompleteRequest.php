@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\v1\Task\Complete;
 
+use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CompleteRequest extends FormRequest
 {
+    use FailedValidation;
 
     /**
      * Summary of authorize
@@ -16,7 +18,7 @@ class CompleteRequest extends FormRequest
         return true;
     }
 
-    
+
     public function rules(): array
     {
         return [
@@ -25,4 +27,3 @@ class CompleteRequest extends FormRequest
         ];
     }
 }
-    

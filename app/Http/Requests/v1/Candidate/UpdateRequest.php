@@ -5,11 +5,14 @@ namespace App\Http\Requests\v1\Candidate;
 use App\Enums\Candidate\CandidateStatusEnum;
 use App\Enums\Candidate\FamilyStatusEnum;
 use App\Enums\GenderEnum;
+use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
+    use FailedValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */

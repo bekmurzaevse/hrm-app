@@ -3,12 +3,15 @@
 namespace App\Http\Requests\v1\Selection\SelectionItem;
 
 use App\Exceptions\ApiResponseException;
+use App\Http\Requests\v1\Traits\FailedValidation;
 use App\Models\Selection;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
 
-class AttachCandidateRequest extends FormRequest
+class AttachCandidatesRequest extends FormRequest
 {
+    use FailedValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */

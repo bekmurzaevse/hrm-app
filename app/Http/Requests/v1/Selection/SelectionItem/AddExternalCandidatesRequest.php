@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\v1\Project;
+namespace App\Http\Requests\v1\Selection\SelectionItem;
 
 use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateContractRequest extends FormRequest
+class AddExternalCandidatesRequest extends FormRequest
 {
     use FailedValidation;
 
@@ -25,9 +25,8 @@ class CreateContractRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'contract_number' => 'nullable|string',
-            'contract_budget' => 'nullable|numeric|required_with:contract_number',
-            // 'contract_currency' => 'nullable|string|in:USD,|required_with:contract_budget',
+            'external_candidates' => 'required|array|min:1',
+            'external_candidates.*' => 'required|string|max:255',
         ];
     }
 }

@@ -9,11 +9,14 @@ use App\Enums\Vacancy\PeriodEnum;
 use App\Enums\Vacancy\VacancyStatusEnum;
 use App\Enums\Vacancy\WorkExperienceEnum;
 use App\Enums\Vacancy\WorkScheduleEnum;
+use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
+    use FailedValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */

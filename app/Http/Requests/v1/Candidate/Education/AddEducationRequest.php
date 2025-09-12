@@ -3,11 +3,14 @@
 namespace App\Http\Requests\v1\Candidate\Education;
 
 use App\Enums\Candidate\Education\DegreeEnum;
+use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class AddEducationRequest extends FormRequest
 {
+    use FailedValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */
