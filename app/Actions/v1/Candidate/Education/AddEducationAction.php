@@ -38,7 +38,7 @@ class AddEducationAction
 
             logActivity(
                 "Добавлено образование кандидату",
-                "Кандидату {$candidate->first_name} {$candidate->last_name} $candidate->first_name $candidate->first_name добавлено образование: {$education->title}, степень: {$education->degree}, специальность: {$education->specialty}, годы: {$education->start_year}-{$education->end_year}. Файл: " . __FILE__
+                "Кандидату {$candidate->first_name} {$candidate->last_name} $candidate->first_name $candidate->first_name добавлено образование: {$education->title}, степень: {$education->degree->value}, специальность: {$education->specialty}, годы: {$education->start_year}-{$education->end_year}. Файл: " . __FILE__
             );
 
             return static::toResponse(

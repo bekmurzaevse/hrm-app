@@ -10,8 +10,8 @@ class UpdateEducationDto
         public string $title,
         public string $degree,
         public string $specialty,
-        public string $startYear,
-        public ?string $endYear,
+        public int $startYear,
+        public ?int $endYear,
         public ?string $description,
     ) {
     }

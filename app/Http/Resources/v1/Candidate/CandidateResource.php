@@ -58,7 +58,7 @@ class CandidateResource extends JsonResource
                 'workplace' => $this->workplace,
                 'position' => $this->position,
             ],
-            'esucations' => EducationResource::collection($this->educations),
+            'educations' => EducationResource::collection($this->educations),
             'files' => FileResource::collection($this->files()->where('type', null)->get()),
             'photo' => new PhotoResource($this->photo),
             'description' => $this->description,
