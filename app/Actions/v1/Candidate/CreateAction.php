@@ -36,7 +36,7 @@ class CreateAction
             'address' => $dto->address,
             'desired_salary' => $dto->desiredSalary,
             'source' => $dto->source,
-            'experience' => $dto->experience,
+            // 'experience' => $dto->experience,
             'short_summary' => $dto->shortSummary,
             'achievments' => $dto->achievments,
             'comment' => $dto->comment,

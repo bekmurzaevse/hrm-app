@@ -2,8 +2,12 @@
 
 namespace App\Actions\v1\Dashboard;
 
+use App\Enums\Vacancy\VacancyStatusEnum;
+use App\Models\Candidate;
+use App\Models\Client;
 use App\Models\Finance;
 use App\Models\Project;
+use App\Models\ProjectClosure;
 use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
 use Carbon\Carbon;
@@ -13,6 +17,9 @@ class IndexAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     */
     public function __invoke()
     {
 
@@ -20,32 +27,71 @@ class IndexAction
         $maxMonth = now()->month;
 
         return Cache::remember("dashboard:$year", now()->addMinutes(30), function () use ($year, $maxMonth) {
-            $vacanciesRaw = \App\Models\Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+
+            //Personal
+            $personalCandidates = Candidate::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+                ->whereYear('created_at', $year)
+                ->where('user_id', auth()->user()->id)
+                ->groupBy('month')
+                ->pluck('total', 'month');
+
+            $personalVacancies = Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+                ->whereYear('created_at', $year)
+                ->where('created_by', auth()->user()->id)
+                ->where('status', VacancyStatusEnum::CLOSED)
+                ->groupBy('month')
+                ->pluck('total', 'month');
+
+            // Total
+            // $totalVacanciesOpen = Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+            //     ->whereYear('created_at', $year)
+            //     ->where('status', VacancyStatusEnum::OPEN)
+            //     ->groupBy('month')
+            //     ->pluck('total', 'month');
+
+            $totalVacanciesClosed = Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+                ->whereYear('created_at', $year)
+                ->where('status', VacancyStatusEnum::CLOSED)
+                ->groupBy('month')
+                ->pluck('total', 'month');
+
+            //
+            $vacanciesRaw = Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
                 ->whereYear('created_at', $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $projectsRaw = \App\Models\ProjectClosure::selectRaw('MONTH(closed_at) as month, COUNT(*) as total')
+            $projectsRaw = ProjectClosure::selectRaw('MONTH(closed_at) as month, COUNT(*) as total')
                 ->whereYear('closed_at', $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $incomesRaw = \App\Models\Finance::selectRaw('MONTH(date) as month, SUM(amount) as total')
+            $incomesRaw = Finance::selectRaw('MONTH(date) as month, SUM(amount) as total')
                 ->where('type', 'income')
                 ->whereYear('date', $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $expensesRaw = \App\Models\Finance::selectRaw('MONTH(date) as month, SUM(amount) as total')
+            $expensesRaw = Finance::selectRaw('MONTH(date) as month, SUM(amount) as total')
                 ->where('type', 'expense')
                 ->whereYear('date', $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $honorarsRaw = \App\Models\Finance::selectRaw('MONTH(date) as month, SUM(amount) as total')
+            $honorarsRaw = Finance::selectRaw('MONTH(date) as month, SUM(amount) as total')
                 ->where('type', 'expense')
                 ->where('category_expense', 'honorarium')
                 ->whereYear('date', $year)
+                ->groupBy('month')
+                ->pluck('total', 'month');
+
+            $candidatesRaw = Candidate::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+                ->whereYear('created_at', $year)
+                ->groupBy('month')
+                ->pluck('total', 'month');
+
+            $clientsRaw = Client::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+                ->whereYear('created_at', $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
@@ -71,12 +117,27 @@ class IndexAction
             });
 
             return [
+                'personal' => [
+                    'vacancies_count' => Vacancy::where('status', VacancyStatusEnum::CLOSED->value)
+                    ->where('created_by', auth()->user()->id)
+                    ->count(),
+                    'vacancies' => $buildList($personalVacancies),
+                    'candidates' => $buildList($personalCandidates),
+                ],
+                'total' => [
+                    'candidates_count' => Candidate::count(),
+                    'vacancies_open_count' => Vacancy::where('status', VacancyStatusEnum::OPEN->value)->count(),
+                    'vacancies_closed_count' => Vacancy::where('status', VacancyStatusEnum::CLOSED->value)->count(),
+                    'vacancies_closed' => $buildList($totalVacanciesClosed),
+                ],
                 'vacancies' => $buildList($vacanciesRaw),
                 'projects' => $buildList($projectsRaw),
                 'income' => $buildList($incomesRaw),
                 'expense' => $buildList($expensesRaw),
                 'expense_honorariums' => $buildList($honorarsRaw),
                 'profit' => $buildList($profitRaw),
+                'candidates' => $buildList($candidatesRaw),
+                'clients' => $buildList($clientsRaw),
             ];
         });
 
