@@ -34,6 +34,11 @@ class AddExternalCandidatesAction
                 $message = 'External Candidates added to selections';
             }
 
+            // Log user activity
+            $title = 'Добавление кандидата в подборку';
+            $text = "Кандидаты были добавлены в подборку «{$selection->title}».";
+            logActivity($title, $text);
+
             return static::toResponse(
                 message: $message,
             );
