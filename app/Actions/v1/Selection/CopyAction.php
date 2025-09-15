@@ -66,6 +66,11 @@ class CopyAction
 
             DB::commit();
 
+            // Log user activity
+            $title = 'Копирование подборки';
+            $text = "Подборка «{$dto->title}» была скопирована.";
+            logActivity($title, $text);
+
             return static::toResponse(
                 message: 'Selection copied',
             );

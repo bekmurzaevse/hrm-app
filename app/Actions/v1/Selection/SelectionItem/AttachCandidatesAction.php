@@ -76,6 +76,11 @@ class AttachCandidatesAction
             ];
         }
 
+        // Log user activity
+        $title = 'Добавление кандидатов к подборкам';
+        $text = "Кандидаты были добавлены к подборкам.";
+        logActivity($title, $text);
+
         // Return
         return static::toResponse(
             message: 'Candidates attached to selections',

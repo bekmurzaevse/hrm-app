@@ -32,6 +32,11 @@ class DetachCandidatesAction
                 ->whereIn('id', $dto->items)
                 ->delete();
 
+            // Log user activity
+            $title = 'Удаление кандидатов из подборок';
+            $text = "Кандидаты были удалены из подборки «{$selection->title}».";
+            logActivity($title, $text);
+
             return static::toResponse(
                 message: 'Candidates detached from selection',
             );
