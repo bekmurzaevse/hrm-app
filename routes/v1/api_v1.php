@@ -21,6 +21,7 @@ use App\Http\Controllers\v1\Project\StageTaskController;
 use App\Http\Controllers\v1\RegionController;
 use App\Http\Controllers\v1\Selection\SelectionItemController;
 use App\Http\Controllers\v1\Selection\SelectionStatusController;
+use App\Http\Controllers\v1\Selection\SelectionStatusValueController;
 use App\Http\Controllers\v1\Task\TaskController;
 use App\Http\Controllers\v1\Selection\SelectionController;
 use App\Http\Controllers\v1\TypeController;
@@ -250,6 +251,11 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
             Route::post('/statuses', [SelectionStatusController::class, 'store']);
             Route::put('/statuses/{statusId}', [SelectionStatusController::class, 'update']);
             Route::delete('/statuses/{statusId}', [SelectionStatusController::class, 'delete']);
+        });
+        // SelectionStatusValue
+        Route::prefix('/{selectionId}')->group(function () {
+            Route::post('status-values', [SelectionStatusValueController::class, 'store']);
+            Route::put('/status-values/{statusValueId}', [SelectionStatusValueController::class, 'update']);
         });
     });
 
