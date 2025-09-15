@@ -32,7 +32,7 @@ class AttachCandidatesAction
         $existing = SelectionItem::whereIn('selection_id', $selections)
             ->whereIn('candidate_id', $candidates)
             ->get(['selection_id', 'candidate_id'])
-            ->map(fn($it) => $it->selection_id . '-' . $it->candidate_id)
+            ->map(fn($item) => $item->selection_id . '-' . $item->candidate_id)
             ->toArray();
 
         // Convert to array

@@ -52,12 +52,12 @@ class CopyAction
             foreach ($itemKeys as $item) {
                 $oldItem = $item['old'];
                 $newItem = $item['new'];
-                $oldStatusValues = $oldItem->statusValues->keyBy('status_id');
+                $oldStatusValues = $oldItem->statusValues->keyBy('selection_status_id');
 
                 foreach ($statusKeys as $oldStatusId => $newStatusId) {
                     if ($oldStatusValues->has($oldStatusId)) {
                         $newItem->statusValues()->create([
-                            'status_id' => $newStatusId,
+                            'selection_status_id' => $newStatusId,
                             'value' => $oldStatusValues[$oldStatusId]->value,
                         ]);
                     }

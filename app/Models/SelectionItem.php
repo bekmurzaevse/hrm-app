@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SelectionItem extends Model
 {
+    protected $table = 'selection_items';
+
     protected $fillable = [
         'selection_id',
         'candidate_id',
@@ -22,7 +24,7 @@ class SelectionItem extends Model
      */
     public function selection(): BelongsTo
     {
-        return $this->belongsTo(Selection::class);
+        return $this->belongsTo(Selection::class, 'selection_id');
     }
 
     /**
@@ -31,15 +33,15 @@ class SelectionItem extends Model
      */
     public function candidate(): BelongsTo
     {
-        return $this->belongsTo(Candidate::class);
+        return $this->belongsTo(Candidate::class, 'candidate_id');
     }
 
     /**
      * Summary of statusValues
-     * @return HasMany<StatusValue, SelectionItem>
+     * @return HasMany<SelectionStatusValue, SelectionItem>
      */
     public function statusValues(): HasMany
     {
-        return $this->hasMany(StatusValue::class);
+        return $this->hasMany(SelectionStatusValue::class, 'selection_item_id');
     }
 }

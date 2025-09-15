@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Selection extends Model
 {
+    protected $table = 'selections';
+
     protected $fillable = [
         'title',
         'created_by',
@@ -40,7 +42,7 @@ class Selection extends Model
      */
     public function items(): HasMany
     {
-        return $this->hasMany(SelectionItem::class);
+        return $this->hasMany(SelectionItem::class, 'selection_id');
     }
 
     /**
@@ -49,6 +51,6 @@ class Selection extends Model
      */
     public function statuses(): HasMany
     {
-        return $this->hasMany(SelectionStatus::class);
+        return $this->hasMany(SelectionStatus::class, 'selection_id');
     }
 }
