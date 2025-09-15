@@ -2,7 +2,9 @@
 
 namespace App\Actions\v1\Dashboard;
 
+use App\Dto\v1\Dashboard\IndexDto;
 use App\Enums\Vacancy\VacancyStatusEnum;
+use App\Http\Resources\v1\Dashboard\ProjectResource;
 use App\Models\Candidate;
 use App\Models\Client;
 use App\Models\Finance;
@@ -10,7 +12,6 @@ use App\Models\Project;
 use App\Models\ProjectClosure;
 use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 class IndexAction
@@ -20,13 +21,13 @@ class IndexAction
     /**
      * Summary of __invoke
      */
-    public function __invoke()
+    public function __invoke(IndexDto $dto)
     {
 
         $year = now()->year;
         $maxMonth = now()->month;
 
-        return Cache::remember("dashboard:$year", now()->addMinutes(30), function () use ($year, $maxMonth) {
+        return Cache::remember("dashboard:$year", now()->addMinutes(30), function () use ($year, $maxMonth, $dto) {
 
             //Personal
             $personalCandidates = Candidate::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
@@ -95,16 +96,50 @@ class IndexAction
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $uzMonths = [
+
+            $projectQuery = Project::with([
+                'client',
+                'vacancy',
+                'inProgressStage',
+                'performers',
+            ]);
+
+            if ($dto->projectSearch) {
+                $projectQuery
+                    ->orWhere('comment', 'LIKE', "%{$dto->projectSearch}%")
+                    ->orWhereHas('client', function ($q) use ($dto) {
+                        $q->where('name', 'LIKE', "%{$dto->projectSearch}%");
+                    })
+                    ->orWhereHas('performers', function ($q) use ($dto) {
+                        $q->where('first_name', 'LIKE', "%{$dto->projectSearch}%");
+                        $q->where('last_name', 'LIKE', "%{$dto->projectSearch}%");
+                        $q->where('patronymic', 'LIKE', "%{$dto->projectSearch}%");
+                    })
+                    ->orWhereHas('vacancy', function ($q) use ($dto) {
+                        $q->where('title', 'LIKE', "%{$dto->projectSearch}%");
+                    });
+            }
+
+            if ($dto->projectStatus) {
+                $projectQuery->where('status', $dto->projectStatus);
+            }
+            // $projects = auth()->user()->projects()->with([
+            //     'client',
+            //     'vacancy',
+            //     'inProgressStage',
+            //     'performers',
+            //     ])->get();
+
+            $months = [
                 1 => "Январь", 2 => "Февраль", 3 => "Март", 4 => "Апрель",
                 5 => "Май", 6 => "Июнь", 7 => "Июль", 8 => "Август",
                 9 => "Сентябрь", 10 => "Октябрь", 11 => "Ноябрь", 12 => "Декабрь"
             ];
 
-            $buildList = function ($raw) use ($maxMonth, $uzMonths) {
-                return collect(range(1, $maxMonth))->map(function ($m) use ($raw, $uzMonths) {
+            $buildList = function ($raw) use ($maxMonth, $months) {
+                return collect(range(1, $maxMonth))->map(function ($m) use ($raw, $months) {
                     return [
-                        'month' => $uzMonths[$m],
+                        'month' => $months[$m],
                         'count' => $raw->get($m, 0),
                     ];
                 })->values();
@@ -117,6 +152,7 @@ class IndexAction
             });
 
             return [
+                'my_projects' => ProjectResource::collection($projectQuery->get()),
                 'personal' => [
                     'vacancies_count' => Vacancy::where('status', VacancyStatusEnum::CLOSED->value)
                     ->where('created_by', auth()->user()->id)
