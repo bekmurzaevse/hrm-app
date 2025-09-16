@@ -4,12 +4,13 @@ namespace App\Models;
 
 use App\Enums\Task\TaskPriorityEnum;
 use App\Enums\Task\TaskStatusEnum;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     protected $fillable = [
         'title',
@@ -32,6 +33,11 @@ class Task extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function executors()
+    {
+        return $this->belongsToMany(User::class, 'task_users');
     }
 
     public function taskUsers()
