@@ -161,17 +161,6 @@ class TaskController extends Controller
     }
 
     /**
-     * Summary of logChange
-     * @param \App\Http\Requests\v1\Task\History\LogChangeRequest $request
-     * @param \App\Actions\v1\Task\History\LogChangeAction $action
-     * @return JsonResponse
-     */
-    public function logChange(LogChangeRequest $request, LogChangeAction $action): JsonResponse
-    {
-        return $action(LogChangeDto::from($request));
-    }
-
-    /**
      * Summary of reject
      * @param \App\Http\Requests\v1\Task\Reject\RejectRequest $request
      * @param \App\Actions\v1\Task\Reject\RejectAction $action

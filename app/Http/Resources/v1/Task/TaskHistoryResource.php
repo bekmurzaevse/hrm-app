@@ -15,7 +15,7 @@ class TaskHistoryResource extends JsonResource
             'comment' => $this->comment,
             'changed_by' => [
                 'id' => $this->changedBy?->id,
-                'name' => $this->changedBy?->first_name,
+                'name' => trim($this->changedBy?->first_name . ' ' . $this->changedBy?->last_name),
             ],
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
