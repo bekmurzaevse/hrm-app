@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Vacancy;
 
-use App\Models\Selection;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;

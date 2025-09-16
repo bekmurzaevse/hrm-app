@@ -29,9 +29,9 @@ class AddExternalCandidatesAction
             $selection->items()->insert($items);
 
             if (count($items) == 1) {
-                $message = 'External Candidate added to selection';
+                $message = 'External candidate added to selection';
             } else {
-                $message = 'External Candidates added to selections';
+                $message = 'External candidates added to selection';
             }
 
             // Log user activity
