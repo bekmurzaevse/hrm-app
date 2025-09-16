@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Vacancy;
+namespace Tests\Feature\Selection;
 
 use App\Models\Selection;
 use App\Models\SelectionItem;
