@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Finance;
 use App\Models\Project;
 use App\Models\ProjectClosure;
+use App\Models\User;
 use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
 use Illuminate\Support\Facades\Cache;
@@ -23,7 +24,6 @@ class IndexAction
      */
     public function __invoke(IndexDto $dto)
     {
-
         $year = now()->year;
         $maxMonth = now()->month;
 
@@ -42,13 +42,6 @@ class IndexAction
                 ->where('status', VacancyStatusEnum::CLOSED)
                 ->groupBy('month')
                 ->pluck('total', 'month');
-
-            // Total
-            // $totalVacanciesOpen = Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-            //     ->whereYear('created_at', $year)
-            //     ->where('status', VacancyStatusEnum::OPEN)
-            //     ->groupBy('month')
-            //     ->pluck('total', 'month');
 
             $totalVacanciesClosed = Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
                 ->whereYear('created_at', $year)
@@ -96,6 +89,7 @@ class IndexAction
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
+            $users = User::role(['manager', 'recruiter'])->with(['vacancies'])->get();
 
             $projectQuery = Project::with([
                 'client',
@@ -123,12 +117,6 @@ class IndexAction
             if ($dto->projectStatus) {
                 $projectQuery->where('status', $dto->projectStatus);
             }
-            // $projects = auth()->user()->projects()->with([
-            //     'client',
-            //     'vacancy',
-            //     'inProgressStage',
-            //     'performers',
-            //     ])->get();
 
             $months = [
                 1 => "Январь", 2 => "Февраль", 3 => "Март", 4 => "Апрель",
@@ -166,14 +154,32 @@ class IndexAction
                     'vacancies_closed_count' => Vacancy::where('status', VacancyStatusEnum::CLOSED->value)->count(),
                     'vacancies_closed' => $buildList($totalVacanciesClosed),
                 ],
-                'vacancies' => $buildList($vacanciesRaw),
-                'projects' => $buildList($projectsRaw),
-                'income' => $buildList($incomesRaw),
-                'expense' => $buildList($expensesRaw),
-                'expense_honorariums' => $buildList($honorarsRaw),
-                'profit' => $buildList($profitRaw),
+                'fin_stats' => [
+                    'vacancies' => $buildList($vacanciesRaw),
+                    'projects' => $buildList($projectsRaw),
+                    'income' => $buildList($incomesRaw),
+                    'expense' => $buildList($expensesRaw),
+                    'expense_honorariums' => $buildList($honorarsRaw),
+                    'profit' => $buildList($profitRaw),
+                ],
                 'candidates' => $buildList($candidatesRaw),
                 'clients' => $buildList($clientsRaw),
+                'users' => $users->map(function ($user) {
+                    return [
+                        'first_name' => $user->first_name,
+                        'last_name' => $user->last_name,
+                        'patronymic' => $user->patronymic,
+                        'role' => $user->getRoleNames()->first(),
+                        'closed_month' => $user->vacancies()->where('status', VacancyStatusEnum::CLOSED)
+                            ->whereMonth('updated_at', now()->month)
+                            ->whereYear('updated_at', now()->year)
+                            ->count(),
+                        'closed_year' => $user->vacancies()->where('status', VacancyStatusEnum::CLOSED)
+                            ->whereYear('updated_at', now()->year)
+                            ->count(),
+                        'closed_all' => $user->vacancies()->where('status', VacancyStatusEnum::CLOSED)->count(),
+                    ];
+                }),
             ];
         });
 

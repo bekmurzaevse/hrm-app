@@ -82,4 +82,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class, 'created_by');
     }
+
+    /**
+     * Summary of vacancies
+     * @return HasMany<Vacancy, User>
+     */
+    public function vacancies(): HasMany
+    {
+        return $this->hasMany(Vacancy::class, 'created_by');
+    }
 }

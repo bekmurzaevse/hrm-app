@@ -26,6 +26,11 @@ class UpdateContactAction
             $candidate = Candidate::findOrFail($id);
             $contact   = $candidate->contacts()->findOrFail($contactId);
 
+            $contact->update([
+                'title' => $dto->title,
+                'value' => $dto->value,
+            ]);
+
             $oldData = $contact->only(['title', 'value']);
 
             logActivity(
