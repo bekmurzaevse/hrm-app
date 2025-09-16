@@ -4,11 +4,14 @@ namespace App\Http\Requests\v1\Task;
 
 use App\Enums\Task\TaskPriorityEnum;
 use App\Enums\Task\TaskStatusEnum;
+use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class CreateRequest extends FormRequest
 {
+    use FailedValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -29,6 +32,7 @@ class CreateRequest extends FormRequest
             'description' => 'nullable|string',
             // 'deadline' => 'required|date_format:m-d-Y',
             'deadline' => 'required|date_format:Y-m-d H:i',
+            //'deadline' => 'required|date_format:Y-m-d',
             'status' => ['required', Rule::enum(TaskStatusEnum::class)],
             'priority' => ['required', Rule::enum(TaskPriorityEnum::class)],
             'comment' => 'nullable|string|max:1000',

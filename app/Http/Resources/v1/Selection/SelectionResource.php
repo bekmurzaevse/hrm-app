@@ -63,7 +63,7 @@ class SelectionResource extends JsonResource
                 }
 
                 // Other statuses
-                $statusValue = $item->statusValues->where('status_id', $status['id'])->first();
+                $statusValue = $item->statusValues->where('selection_status_id', $status['id'])->first();
 
                 return [
                     'status_id' => $status['id'],
@@ -72,7 +72,10 @@ class SelectionResource extends JsonResource
                 ];
             });
 
-            return $statusValues;
+            return [
+                'item_id' => $item->id,
+                'status_values' => $statusValues
+            ];
         });
 
         return array_merge($baseData, [

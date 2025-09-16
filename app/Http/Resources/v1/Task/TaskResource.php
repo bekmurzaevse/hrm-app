@@ -18,7 +18,9 @@ class TaskResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'deadline' => $this->deadline,
+            'deadline' => $this->deadline->format('Y-m-d'),
+            'deadline_human' => $this->deadline_human,
+            'color' => $this->urgency_color,
             'created_by' => [
                 'id' => $this->createdBy?->id,
                 'name' => trim($this->createdBy?->first_name . ' ' . $this->createdBy?->last_name),

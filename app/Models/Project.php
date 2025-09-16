@@ -94,7 +94,7 @@ class Project extends Model
     }
 
     /**
-     * Summary of vacancy
+     * Summary of `vaca`ncy
      * @return BelongsTo<Vacancy, Project>
      */
     public function vacancy(): BelongsTo

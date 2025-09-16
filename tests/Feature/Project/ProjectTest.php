@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Vacancy;
+namespace Tests\Feature\Project;
 
 use App\Models\Project;
 use App\Models\User;
@@ -38,16 +38,6 @@ class ProjectTest extends TestCase
                 'status',
                 'message',
                 'data' => [
-                    'filter' => [
-                        'user' => [
-                            '*' => [
-                                'id',
-                                'first_name',
-                                'last_name',
-                                'patronymic'
-                            ]
-                        ]
-                    ],
                     'cards' => [
                         'total',
                         'in_progress',

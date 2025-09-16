@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 
-class StatusValueSeeder extends Seeder
+class SelectionStatusValueSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -47,12 +47,12 @@ class StatusValueSeeder extends Seeder
             foreach ($statusIds as $statusId) {
                 $items[] = [
                     'selection_item_id' => $selectionItemId,
-                    'status_id' => $statusId,
+                    'selection_status_id' => $statusId,
                     'value' => $faker->word(),
                 ];
             }
         }
 
-        DB::table('status_values')->insert($items);
+        DB::table('selection_status_values')->insert($items);
     }
 }

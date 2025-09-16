@@ -2,17 +2,17 @@
 
 namespace App\Actions\v1\Selection\SelectionItem;
 
-use App\Dto\v1\Selection\SelectionItem\AttachCandidateDto;
+use App\Dto\v1\Selection\SelectionItem\AttachCandidatesDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\SelectionItem;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
-class AttachCandidateAction
+class AttachCandidatesAction
 {
     use ResponseTrait;
-    public function __invoke(AttachCandidateDto $dto): JsonResponse
+    public function __invoke(AttachCandidatesDto $dto): JsonResponse
     {
         $selections = $dto->selections;
         $candidates = $dto->candidates;
@@ -32,7 +32,7 @@ class AttachCandidateAction
         $existing = SelectionItem::whereIn('selection_id', $selections)
             ->whereIn('candidate_id', $candidates)
             ->get(['selection_id', 'candidate_id'])
-            ->map(fn($it) => $it->selection_id . '-' . $it->candidate_id)
+            ->map(fn($item) => $item->selection_id . '-' . $item->candidate_id)
             ->toArray();
 
         // Convert to array
@@ -75,6 +75,11 @@ class AttachCandidateAction
                 'candidate_ids' => $candidateIds,
             ];
         }
+
+        // Log user activity
+        $title = 'Добавление кандидатов к подборкам';
+        $text = "Кандидаты были добавлены к подборкам.";
+        logActivity($title, $text);
 
         // Return
         return static::toResponse(

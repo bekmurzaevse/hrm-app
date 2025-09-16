@@ -3,11 +3,14 @@
 namespace App\Http\Requests\v1\Client;
 
 use App\Enums\Client\EmlpoyeeCountEnum;
+use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class CreateRequest extends FormRequest
 {
+    use FailedValidation;
+
     /*
      * Determine if the user is authorized to make this request.
      */

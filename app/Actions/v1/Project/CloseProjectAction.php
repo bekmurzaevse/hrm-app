@@ -4,6 +4,7 @@ namespace App\Actions\v1\Project;
 
 use App\Dto\v1\Project\CloseProjectDto;
 use App\Enums\ProjectStatusEnum;
+use App\Enums\Vacancy\VacancyStatusEnum;
 use App\Exceptions\ApiResponseException;
 use App\Models\Project;
 use App\Traits\ResponseTrait;
@@ -33,12 +34,18 @@ class CloseProjectAction
 
                 $project->closeProject()->create($data);
 
+                // close vacancy
+                $vacancy = $project->vacancy()->first();
+                $vacancy->status = VacancyStatusEnum::CLOSED;
+                $vacancy->save();
+
+                // close project
                 $project->status = ProjectStatusEnum::CANCELLED;
                 $project->save();
 
                 // Log user activity
-                $title = 'Закрытие проекта';
-                $text = "Проект «{$project->title}» был закрыт";
+                $title = 'Закрытие проекта с вакансией';
+                $text = "Вакансия «{$vacancy->title}» проекта «{$project->title}» была закрыта";
                 logActivity($title, $text);
 
                 return static::toResponse(
