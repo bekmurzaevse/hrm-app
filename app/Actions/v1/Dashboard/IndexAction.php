@@ -13,6 +13,7 @@ use App\Models\ProjectClosure;
 use App\Models\User;
 use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 class IndexAction
@@ -116,6 +117,19 @@ class IndexAction
 
             if ($dto->projectStatus) {
                 $projectQuery->where('status', $dto->projectStatus);
+            }
+
+            if ($dto->projectStart && $dto->projectEnd) {
+                $start = Carbon::parse($dto->projectStart)->startOfDay(); // 00:00:00
+                $end = Carbon::parse($dto->projectEnd)->endOfDay();       // 23:59:59
+
+                $projectQuery->whereBetween('created_at', [$start, $end]);
+            } elseif ($dto->projectStart) {
+                $start = Carbon::parse($dto->projectStart)->startOfDay();
+                $projectQuery->where('created_at', '>=', $start);
+            } elseif ($dto->projectEnd) {
+                $end = Carbon::parse($dto->projectEnd)->endOfDay();
+                $projectQuery->where('created_at', '<=', $end);
             }
 
             $months = [

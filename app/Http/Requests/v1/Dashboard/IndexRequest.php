@@ -27,6 +27,8 @@ class IndexRequest extends FormRequest
         return [
             'project_search' => 'nullable|string',
             'project_status' => 'nullable|string',
+            'project_start' => 'nullable|string|date_format:Y-m-d',
+            'project_end' => 'nullable|string|date_format:Y-m-d',
             // 'status' => 'nullable|string',
             // 'user_id' => 'nullable|integer',
             // 'project_from_sum' => 'nullable|integer',

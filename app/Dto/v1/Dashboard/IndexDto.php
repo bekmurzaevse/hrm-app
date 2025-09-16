@@ -9,6 +9,8 @@ readonly class IndexDto
     public function __construct(
         public ?string $projectSearch,
         public ?string $projectStatus,
+        public ?string $projectStart,
+        public ?string $projectEnd,
         public ?int $perPage,
     ) {
     }
@@ -18,6 +20,8 @@ readonly class IndexDto
         return new self(
             projectSearch: $request->project_search,
             projectStatus: $request->project_status,
+            projectStart: $request->project_start,
+            projectEnd: $request->project_end,
             perPage: $request->per_page,
         );
     }
