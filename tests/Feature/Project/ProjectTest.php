@@ -38,16 +38,6 @@ class ProjectTest extends TestCase
                 'status',
                 'message',
                 'data' => [
-                    'filter' => [
-                        'user' => [
-                            '*' => [
-                                'id',
-                                'first_name',
-                                'last_name',
-                                'patronymic'
-                            ]
-                        ]
-                    ],
                     'cards' => [
                         'total',
                         'in_progress',

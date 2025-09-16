@@ -37,30 +37,6 @@ class VacancyTest extends TestCase
                 'status',
                 'message',
                 'data' => [
-                    'filter' => [
-                        'regions' => [
-                            '*' => [
-                                'id',
-                                'title',
-                            ]
-                        ],
-                        'districts' => [
-                            '*' => [
-                                'id',
-                                'region_id',
-                                'title',
-                            ]
-                        ],
-                        'created_by' => [
-                            '*' => [
-                                'id',
-                                'first_name',
-                                'last_name',
-                                'patronymic'
-                            ]
-                        ],
-                        'statuses'
-                    ],
                     'items' => [
                         [
                             'id',
