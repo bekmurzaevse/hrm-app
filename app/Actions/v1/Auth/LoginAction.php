@@ -16,6 +16,12 @@ class LoginAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param \App\Dto\v1\Auth\LoginDto $dto
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(LoginDto $dto): JsonResponse
     {
         try {
@@ -49,7 +55,7 @@ class LoginAction
                     'refresh_token' => $refreshToken->plainTextToken,
                     'at_expired_at' => $accessTokenExpiration->format('Y-m-d H:i:s'),
                     'rf_expired_at' => $refreshTokenExpiration->format('Y-m-d H:i:s'),
-                    'user' =>  new GetMeResource(auth()->user())
+                    'user' => new GetMeResource($user)
                 ]
             );
         } catch (ModelNotFoundException $ex) {

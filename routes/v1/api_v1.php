@@ -31,18 +31,20 @@ use App\Http\Controllers\v1\Vacancy\VacancyFileController;
 use App\Http\Controllers\v1\Vacancy\VacancySkillController;
 use Illuminate\Support\Facades\Route;
 
-Route::pattern('id', '\d+');
-Route::pattern('hash', '[a-z0-9]+');
-Route::pattern('hex', '[a-f0-9]+');
-Route::pattern('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
-Route::pattern('base', '[a-zA-Z0-9]+');
-Route::pattern('slug', '[a-z0-9-]+');
-Route::pattern('username', '[a-z0-9_-]{3,16}');
-
-
-Route::get('/', function () {
-    return "API v1";
-});
+Route::patterns([
+    'id' => '\d+',
+    'fileId' => '\d+',
+    'workId' => '\d+',
+    'langId' => '\d+',
+    'skillId' => '\d+',
+    'educationId' => '\d+',
+    'contactId' => '\d+',
+    'stageId' => '\d+',
+    'taskId' => '\d+',
+    'statusId' => '\d+',
+    'selectionId' => '\d+',
+    'statusValueId' => '\d+',
+]);
 
 /**
  * Guest
@@ -63,9 +65,6 @@ Route::prefix('auth')->middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum
  */
 Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->value])->group(function () {
 
-    /**
-     * Routs for Auth logout
-     */
     Route::prefix('auth')->group(function () {
         Route::get('get-me', [AuthController::class, 'getMe']);
         Route::post('logout', [AuthController::class, 'logout']);
