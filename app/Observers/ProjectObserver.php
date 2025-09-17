@@ -17,6 +17,7 @@ class ProjectObserver
         $this->clear([
             'projects',
             'projects:show',
+            'dashboard',
         ]);
     }
 
@@ -29,6 +30,7 @@ class ProjectObserver
         $this->clear([
             'projects',
             'projects:show',
+            'dashboard',
         ]);
     }
 
@@ -41,6 +43,7 @@ class ProjectObserver
         $this->clear([
             'projects',
             'projects:show',
+            'dashboard',
         ]);
     }
 
@@ -53,6 +56,7 @@ class ProjectObserver
         $this->clear([
             'projects',
             'projects:show',
+            'dashboard',
         ]);
     }
 
@@ -65,6 +69,7 @@ class ProjectObserver
         $this->clear([
             'projects',
             'projects:show',
+            'dashboard',
         ]);
     }
 }

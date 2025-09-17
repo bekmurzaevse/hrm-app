@@ -10,8 +10,10 @@ use App\Models\Client;
 use App\Models\Finance;
 use App\Models\Project;
 use App\Models\ProjectClosure;
+use App\Models\User;
 use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 class IndexAction
@@ -23,42 +25,31 @@ class IndexAction
      */
     public function __invoke(IndexDto $dto)
     {
-
         $year = now()->year;
         $maxMonth = now()->month;
 
         return Cache::remember("dashboard:$year", now()->addMinutes(30), function () use ($year, $maxMonth, $dto) {
+            $candidates = Candidate::all(['id', 'created_at', 'user_id']);
 
-            //Personal
-            $personalCandidates = Candidate::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-                ->whereYear('created_at', $year)
-                ->where('user_id', auth()->user()->id)
+            $personalCandidates = $candidates
+                ->filter(fn($v) => $v->created_at->year == $year && $v->user_id == auth()->id())
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $personalVacancies = Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-                ->whereYear('created_at', $year)
-                ->where('created_by', auth()->user()->id)
-                ->where('status', VacancyStatusEnum::CLOSED)
+            $vacancies = Vacancy::all(['id', 'created_by', 'status', 'created_at']);
+
+            $personalVacancies = $vacancies
+                ->filter(fn($v) => $v->created_at->year == $year && $v->created_by == auth()->id() && $v->status == VacancyStatusEnum::CLOSED)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            // Total
-            // $totalVacanciesOpen = Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-            //     ->whereYear('created_at', $year)
-            //     ->where('status', VacancyStatusEnum::OPEN)
-            //     ->groupBy('month')
-            //     ->pluck('total', 'month');
-
-            $totalVacanciesClosed = Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-                ->whereYear('created_at', $year)
-                ->where('status', VacancyStatusEnum::CLOSED)
+            $totalVacanciesClosed = $vacancies
+                ->filter(fn($v) => $v->created_at->year == $year && $v->status == VacancyStatusEnum::CLOSED)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            //
-            $vacanciesRaw = Vacancy::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-                ->whereYear('created_at', $year)
+            $vacanciesRaw = $vacancies
+                ->filter(fn($v) => $v->created_at->year == $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
@@ -67,27 +58,25 @@ class IndexAction
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $incomesRaw = Finance::selectRaw('MONTH(date) as month, SUM(amount) as total')
-                ->where('type', 'income')
-                ->whereYear('date', $year)
+            $finances = Finance::all(['id', 'type', 'date', 'category_expense']);
+
+            $incomesRaw = $finances
+                ->filter(fn($v) => $v->date->year == $year && $v->type == 'income')
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $expensesRaw = Finance::selectRaw('MONTH(date) as month, SUM(amount) as total')
-                ->where('type', 'expense')
-                ->whereYear('date', $year)
+            $expensesRaw = $finances
+                ->filter(fn($v) => $v->date->year == $year && $v->type == 'expense')
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $honorarsRaw = Finance::selectRaw('MONTH(date) as month, SUM(amount) as total')
-                ->where('type', 'expense')
-                ->where('category_expense', 'honorarium')
-                ->whereYear('date', $year)
+            $honorarsRaw = $finances
+                ->filter(fn($v) => $v->date->year == $year && $v->type == 'expense' && $v->category_expense == 'honorarium')
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $candidatesRaw = Candidate::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-                ->whereYear('created_at', $year)
+            $candidatesRaw = $candidates
+                ->filter(fn($v) => $v->created_at->year == $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
@@ -96,6 +85,22 @@ class IndexAction
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
+            $users = User::with(['roles'])->role(['manager', 'recruiter'])
+                ->withCount([
+                    'vacancies as closed_month' => function ($query) {
+                        $query->where('status', VacancyStatusEnum::CLOSED)
+                            ->whereMonth('updated_at', now()->month)
+                            ->whereYear('updated_at', now()->year);
+                    },
+                    'vacancies as closed_year' => function ($query) {
+                        $query->where('status', VacancyStatusEnum::CLOSED)
+                            ->whereYear('updated_at', now()->year);
+                    },
+                    'vacancies as closed_all' => function ($query) {
+                        $query->where('status', VacancyStatusEnum::CLOSED);
+                    },
+                ])
+                ->get();
 
             $projectQuery = Project::with([
                 'client',
@@ -123,12 +128,19 @@ class IndexAction
             if ($dto->projectStatus) {
                 $projectQuery->where('status', $dto->projectStatus);
             }
-            // $projects = auth()->user()->projects()->with([
-            //     'client',
-            //     'vacancy',
-            //     'inProgressStage',
-            //     'performers',
-            //     ])->get();
+
+            if ($dto->projectStart && $dto->projectEnd) {
+                $start = Carbon::parse($dto->projectStart)->startOfDay(); // 00:00:00
+                $end = Carbon::parse($dto->projectEnd)->endOfDay();       // 23:59:59
+
+                $projectQuery->whereBetween('created_at', [$start, $end]);
+            } elseif ($dto->projectStart) {
+                $start = Carbon::parse($dto->projectStart)->startOfDay();
+                $projectQuery->where('created_at', '>=', $start);
+            } elseif ($dto->projectEnd) {
+                $end = Carbon::parse($dto->projectEnd)->endOfDay();
+                $projectQuery->where('created_at', '<=', $end);
+            }
 
             $months = [
                 1 => "Январь", 2 => "Февраль", 3 => "Март", 4 => "Апрель",
@@ -154,28 +166,41 @@ class IndexAction
             return [
                 'my_projects' => ProjectResource::collection($projectQuery->get()),
                 'personal' => [
-                    'vacancies_count' => Vacancy::where('status', VacancyStatusEnum::CLOSED->value)
-                    ->where('created_by', auth()->user()->id)
-                    ->count(),
+                    'vacancies_count' => $vacancies
+                        ->where('status', VacancyStatusEnum::CLOSED->value)
+                        ->where('created_by', auth()->user()->id)
+                        ->count(),
                     'vacancies' => $buildList($personalVacancies),
                     'candidates' => $buildList($personalCandidates),
                 ],
                 'total' => [
-                    'candidates_count' => Candidate::count(),
-                    'vacancies_open_count' => Vacancy::where('status', VacancyStatusEnum::OPEN->value)->count(),
-                    'vacancies_closed_count' => Vacancy::where('status', VacancyStatusEnum::CLOSED->value)->count(),
+                    'candidates_count' => $candidates->count(),
+                    'vacancies_open_count' => $vacancies->where('status', VacancyStatusEnum::OPEN->value)->count(),
+                    'vacancies_closed_count' => $vacancies->where('status', VacancyStatusEnum::CLOSED->value)->count(),
                     'vacancies_closed' => $buildList($totalVacanciesClosed),
                 ],
-                'vacancies' => $buildList($vacanciesRaw),
-                'projects' => $buildList($projectsRaw),
-                'income' => $buildList($incomesRaw),
-                'expense' => $buildList($expensesRaw),
-                'expense_honorariums' => $buildList($honorarsRaw),
-                'profit' => $buildList($profitRaw),
+                'fin_stats' => [
+                    'vacancies' => $buildList($vacanciesRaw),
+                    'projects' => $buildList($projectsRaw),
+                    'income' => $buildList($incomesRaw),
+                    'expense' => $buildList($expensesRaw),
+                    'expense_honorariums' => $buildList($honorarsRaw),
+                    'profit' => $buildList($profitRaw),
+                ],
                 'candidates' => $buildList($candidatesRaw),
                 'clients' => $buildList($clientsRaw),
+                'users' => $users->map(function ($user) {
+                    return [
+                        'first_name' => $user->first_name,
+                        'last_name' => $user->last_name,
+                        'patronymic' => $user->patronymic,
+                        'role' => $user->getRoleNames()->first(),
+                        'closed_month' => $user->closed_month,
+                        'closed_year' => $user->closed_year,
+                        'closed_all' => $user->closed_all,
+                    ];
+                }),
             ];
         });
-
     }
 }
