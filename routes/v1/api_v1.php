@@ -223,11 +223,10 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::put('/update/{id}', [TaskController::class, 'update']);
         Route::post('/complete', [TaskController::class, 'complete']);
         Route::post('/{id}/add-executor', [TaskController::class, 'addExecutor']);
-        Route::post('/{id}/update-executor', [TaskController::class, 'updateExecutor']);
+        Route::put('/{id}/update-executor', [TaskController::class, 'updateExecutor']);
         Route::delete('/{id}/remove-executor', [TaskController::class, 'removeExecutor']);
         Route::post('/{id}/transfer', [TaskController::class, 'transfer']);
         Route::get('/{id}/history', [TaskController::class, 'history']);
-        Route::post('/{id}/log-change', [TaskController::class, 'logChange']);
         Route::post('/{id}/reject', [TaskController::class, 'reject']);
         // Route::delete('/delete/{id}', [TaskController::class, 'destroy']);
     });
