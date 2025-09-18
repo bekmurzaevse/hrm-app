@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1\Client;
 use App\Actions\v1\Client\CreateAction;
 use App\Actions\v1\Client\DeleteAction;
 use App\Actions\v1\Client\IndexAction;
+use App\Actions\v1\Client\ListAction;
 use App\Actions\v1\Client\ShowAction;
 use App\Actions\v1\Client\UpdateAction;
 use App\Dto\v1\Client\CreateDto;
@@ -27,6 +28,11 @@ class ClientController extends Controller
     public function index(IndexAction $action, IndexRequest $request): JsonResponse
     {
         return $action(IndexDto::from($request));
+    }
+
+    public function list(ListAction $action): JsonResponse
+    {
+        return $action();
     }
 
     /**
