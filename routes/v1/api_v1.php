@@ -76,7 +76,19 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
      * Routs for Auth & Admin & Manager
      */
     Route::middleware(['role:admin|manager'])->group(function () {
-
+        // Vacancies
+        Route::prefix('vacancies')->group(function () {
+            Route::post('/create', [VacancyController::class, 'create']);
+            Route::put('/update/{id}', [VacancyController::class, 'update']);
+            Route::delete('/delete/{id}', [VacancyController::class, 'delete']);
+            //File
+            Route::post('/{id}/upload', [VacancyFileController::class, 'uploadFile']);
+            Route::delete('/{id}/delete/{fileId}', [VacancyFileController::class, 'deleteFile']);
+            // Skills
+            Route::post('/{id}/skills/create', [VacancySkillController::class, 'createSkills']);
+            Route::put('/{id}/skills/update/{skillId}', [VacancySkillController::class, 'updateSkill']);
+            Route::delete('/{id}/skills/delete/{skillId}', [VacancySkillController::class, 'deleteSkill']);
+        });
     });
 
     /**
@@ -130,18 +142,9 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
     Route::prefix('vacancies')->group(function () {
         Route::get('/', [VacancyController::class, 'index']);
         Route::get('/{id}', [VacancyController::class, 'show']);
-        Route::post('/create', [VacancyController::class, 'create']);
-        Route::put('/update/{id}', [VacancyController::class, 'update']);
-        Route::delete('/delete/{id}', [VacancyController::class, 'delete']);
         //File
         Route::get('/{id}/download/{fileId}', [VacancyFileController::class, 'downloadFile']);
         Route::get('/{id}/file/{fileId}', [VacancyFileController::class, 'showFile']);
-        Route::post('/{id}/upload', [VacancyFileController::class, 'uploadFile']);
-        Route::delete('/{id}/delete/{fileId}', [VacancyFileController::class, 'deleteFile']);
-        // Skills
-        Route::post('/{id}/skills/create', [VacancySkillController::class, 'createSkills']);
-        Route::put('/{id}/skills/update/{skillId}', [VacancySkillController::class, 'updateSkill']);
-        Route::delete('/{id}/skills/delete/{skillId}', [VacancySkillController::class, 'deleteSkill']);
     });
 
     // Projects

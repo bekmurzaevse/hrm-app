@@ -29,6 +29,7 @@ class IndexAction
                 'district.region:id,title',
             ]);
 
+            // Search
             if ($dto->search) {
                 $query->where(function ($q) use ($dto) {
                     $q->where('title', 'like', '%' . $dto->search . '%');
@@ -37,10 +38,6 @@ class IndexAction
                         $q2->where('name', 'like', '%' . $dto->search . '%');
                     });
                 });
-            }
-
-            if ($dto->positionCount) {
-                $query->where('position_count', $dto->positionCount);
             }
 
             if ($dto->salaryFrom) {
@@ -66,14 +63,20 @@ class IndexAction
             }
 
             if ($dto->from) {
-                $query->whereBetween('created_at', [$dto->from, $dto->to]);
+                $query->whereBetween('created_at', [
+                    $dto->from . ' 00:00:00',
+                    $dto->to . ' 23:59:59'
+                ]);
             }
 
             if ($dto->status) {
                 $query->where('status', $dto->status);
             }
 
-            return $query->paginate($dto->perPage ?? 10);
+            // Sort
+            $query->orderBy('created_at', 'desc');
+
+            return $query->paginate(perPage: $dto->perPage, page: $dto->page);
         });
 
         return static::toResponse(
