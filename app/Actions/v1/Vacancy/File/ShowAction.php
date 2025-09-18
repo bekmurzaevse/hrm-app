@@ -5,19 +5,12 @@ namespace App\Actions\v1\Vacancy\File;
 use App\Exceptions\ApiResponseException;
 use App\Models\Vacancy;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class DownloadFileAction
+class ShowAction
 {
-    /**
-     * Summary of __invoke
-     * @param int $id
-     * @param int $fileId
-     * @throws \App\Exceptions\ApiResponseException
-     * @return BinaryFileResponse
-     */
-    public function __invoke(int $id, int $fileId): BinaryFileResponse
+    public function __invoke(int $id, int $fileId): Response
     {
         try {
             $file = Vacancy::findOrFail($id)
@@ -28,10 +21,12 @@ class DownloadFileAction
                 throw new ApiResponseException('File Not Found', 404);
             }
 
-            return response()->download(
-                file: Storage::disk('public')->path($file->path),
-                name: $file->name,
-            );
+            $mime = Storage::disk('public')->mimeType($file->path);
+            $content = Storage::disk('public')->get($file->path);
+
+            return response($content, 200)
+                ->header('Content-Type', $mime)
+                ->header('Content-Disposition', 'inline; filename="' . $file->name . '"');
         } catch (ModelNotFoundException $e) {
             $model = class_basename($e->getModel());
             throw new ApiResponseException("{$model} Not Found", 404);

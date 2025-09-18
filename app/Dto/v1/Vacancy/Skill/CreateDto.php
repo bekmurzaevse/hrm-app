@@ -2,9 +2,9 @@
 
 namespace App\Dto\v1\Vacancy\Skill;
 
-use App\Http\Requests\v1\Vacancy\Skill\CreateSkillRequest;
+use App\Http\Requests\v1\Vacancy\Skill\CreateRequest;
 
-readonly class CreateSkillDto
+readonly class CreateDto
 {
     public function __construct(
         public array $titles,
@@ -12,7 +12,7 @@ readonly class CreateSkillDto
     }
 
 
-    public static function from(CreateSkillRequest $request): self
+    public static function from(CreateRequest $request): self
     {
         return new self(
             titles: $request->titles,

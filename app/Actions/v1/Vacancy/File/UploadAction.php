@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Vacancy\File;
 
-use App\Dto\v1\Vacancy\File\UploadFileDto;
+use App\Dto\v1\Vacancy\File\UploadDto;
 use App\Exceptions\ApiResponseException;
 use App\Helpers\FileUploadHelper;
 use App\Models\Vacancy;
@@ -10,17 +10,17 @@ use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class UploadFileAction
+class UploadAction
 {
     use ResponseTrait;
 
     /**
      * Summary of __invoke
      * @param int $id
-     * @param \App\Dto\v1\Vacancy\File\UploadFileDto $dto
+     * @param \App\Dto\v1\Vacancy\File\UploadDto $dto
      * @return JsonResponse
      */
-    public function __invoke(int $id, UploadFileDto $dto): JsonResponse
+    public function __invoke(int $id, UploadDto $dto): JsonResponse
     {
         try {
             $vacancy = Vacancy::findOrFail($id);

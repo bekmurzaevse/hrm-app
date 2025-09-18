@@ -2,16 +2,16 @@
 
 namespace App\Dto\v1\Vacancy\Skill;
 
-use App\Http\Requests\v1\Vacancy\Skill\UpdateSkillRequest;
+use App\Http\Requests\v1\Vacancy\Skill\UpdateRequest;
 
-readonly class UpdateSkillDto
+readonly class UpdateDto
 {
     public function __construct(
         public string $title,
     ) {
     }
 
-    public static function from(UpdateSkillRequest $request): self
+    public static function from(UpdateRequest $request): self
     {
         return new self(
             title: $request->title,

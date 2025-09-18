@@ -8,7 +8,7 @@ use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class DeleteSkillAction
+class DeleteAction
 {
     use ResponseTrait;
 

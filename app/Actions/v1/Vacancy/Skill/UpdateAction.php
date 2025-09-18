@@ -2,14 +2,14 @@
 
 namespace App\Actions\v1\Vacancy\Skill;
 
-use App\Dto\v1\Vacancy\Skill\UpdateSkillDto;
+use App\Dto\v1\Vacancy\Skill\UpdateDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class UpdateSkillAction
+class UpdateAction
 {
     use ResponseTrait;
 
@@ -17,11 +17,11 @@ class UpdateSkillAction
      * Summary of __invoke
      * @param int $id
      * @param int $skillId
-     * @param \App\Dto\v1\Vacancy\Skill\UpdateSkillDto $dto
+     * @param \App\Dto\v1\Vacancy\Skill\UpdateDto $dto
      * @return JsonResponse
      *@throws \App\Exceptions\ApiResponseException
      */
-    public function __invoke(int $id, int $skillId, UpdateSkillDto $dto): JsonResponse
+    public function __invoke(int $id, int $skillId, UpdateDto $dto): JsonResponse
     {
         try {
             $vacancy = Vacancy::findOrFail($id);

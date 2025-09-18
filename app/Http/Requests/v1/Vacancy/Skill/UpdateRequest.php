@@ -5,7 +5,7 @@ namespace App\Http\Requests\v1\Vacancy\Skill;
 use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateSkillRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     use FailedValidation;
 
@@ -25,8 +25,7 @@ class CreateSkillRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titles' => 'required|array',
-            'titles.*' => 'required|string|max:255',
+            'title' => 'required|string',
         ];
     }
 }
