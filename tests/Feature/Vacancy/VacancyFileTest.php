@@ -20,18 +20,19 @@ class VacancyFileTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->seed();
-
-        $user = User::find(1);
-        Sanctum::actingAs($user, ['access-token']);
-        // TODO: Need test with unauthorized user by role, actingAs * 
     }
 
     /**
-     * Summary of test_vacancy_file_upload
+     * Summary of test_admin_manager_can_upload_file_for_vacancy
      * @return void
      */
-    public function test_vacancy_file_upload()
+    public function test_admin_manager_can_upload_file_for_vacancy()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $vacancy = Vacancy::find(1);
         $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');
 
@@ -53,11 +54,14 @@ class VacancyFileTest extends TestCase
     }
 
     /**
-     * Summary of test_vacancy_file_download
+     * Summary of test_all_users_can_download_file_for_vacancy
      * @return void
      */
-    public function test_vacancy_file_download()
+    public function test_all_users_can_download_file_for_vacancy()
     {
+        $user = User::inRandomOrder()->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $vacancy = Vacancy::find(1);
 
         $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');
@@ -77,11 +81,14 @@ class VacancyFileTest extends TestCase
     }
 
     /**
-     * Summary of test_vacancy_file_show
+     * Summary of test_all_users_can_show_file_for_vacancy
      * @return void
      */
-    public function test_vacancy_file_show()
+    public function test_all_users_can_show_file_for_vacancy()
     {
+        $user = User::inRandomOrder()->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $vacancy = Vacancy::find(1);
 
         $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');
@@ -101,11 +108,16 @@ class VacancyFileTest extends TestCase
     }
 
     /**
-     * Summary of test_vacancy_file_delete
+     * Summary of test_admin_manager_can_delete_file_for_vacancy
      * @return void
      */
-    public function test_vacancy_file_delete()
+    public function test_admin_manager_can_delete_file_for_vacancy()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $vacancy = Vacancy::find(1);
 
         $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');
