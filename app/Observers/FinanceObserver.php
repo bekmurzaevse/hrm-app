@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Traits\ClearCache;
 
-class CandidateObserver
+class FinanceObserver
 {
     use ClearCache;
 
@@ -15,8 +15,8 @@ class CandidateObserver
     public function created(): void
     {
         $this->clear([
-            'candidates',
-            'candidates:show',
+            'finances',
+            'finances:show',
             'dashboard',
         ]);
     }
@@ -28,8 +28,8 @@ class CandidateObserver
     public function updated(): void
     {
         $this->clear([
-            'candidates',
-            'candidates:show',
+            'finances',
+            'finances:show',
             'dashboard',
         ]);
     }
@@ -41,8 +41,8 @@ class CandidateObserver
     public function deleted(): void
     {
         $this->clear([
-            'candidates',
-            'candidates:show',
+            'finances',
+            'finances:show',
             'dashboard',
         ]);
     }
@@ -54,8 +54,8 @@ class CandidateObserver
     public function restored(): void
     {
         $this->clear([
-            'candidates',
-            'candidates:show',
+            'finances',
+            'finances:show',
             'dashboard',
         ]);
     }
@@ -67,8 +67,8 @@ class CandidateObserver
     public function forceDeleted(): void
     {
         $this->clear([
-            'candidates',
-            'candidates:show',
+            'finances',
+            'finances:show',
             'dashboard',
         ]);
     }

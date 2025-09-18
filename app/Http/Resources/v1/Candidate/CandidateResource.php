@@ -29,12 +29,21 @@ class CandidateResource extends JsonResource
                 'birth_date' => $this->birth_date->format('Y-m-d'),
                 'age' => Carbon::parse($this->birth_date)->age,
                 'citizenship' => $this->citizenship,
+                'country_residence' => $this->country_residence,
                 'gender' => $this->gender,
                 'status' => $this->status,
                 'family_status' => $this->family_status,
                 'family_info' => $this->family_info,
                 'address' => $this->address,
-                'district' => $this->district->title,
+                // 'district' => $this->district->title,
+                'district' => [
+                    'id' => $this->district->id,
+                    'title' => $this->district->title,
+                ],
+                'region' => [
+                    'id' => $this->district->region->id,
+                    'title' => $this->district->region->title,
+                ],
                 'experience' => $this->total_work_experience,
             ],
             'about' => [

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Enums\Candidate\CandidateStatusEnum;
+use App\Enums\Candidate\Education\DegreeEnum;
 use App\Enums\Candidate\FamilyStatusEnum;
 use App\Enums\GenderEnum;
 use App\Helpers\FileUploadHelper;
@@ -43,21 +44,6 @@ class CandidateTest extends TestCase
                 "status",
                 "message",
                 "data" => [
-                    "filters" => [
-                        "regions" => [
-                            '*' => [
-                                "id",
-                                "title",
-                            ],
-                        ],
-                        "districts" => [
-                            '*' => [
-                                "id",
-                                "region_id",
-                                "title",
-                            ],
-                        ],
-                    ],
                     "items" => [
                         "*" => [
                             "full_name",
@@ -101,7 +87,7 @@ class CandidateTest extends TestCase
                         "full_name",
                         "birth_date",
                         "age",
-                        "citizen",
+                        "citizenship",
                         "gender",
                         "status",
                     ],
@@ -140,8 +126,12 @@ class CandidateTest extends TestCase
                     ],
                     "history",
                     "work_experience",
-                    "desired_salary",
-                    "esucations",
+                    "desired" => [
+                        "desired_salary",
+                        "workplace",
+                        "position",
+                    ],
+                    "educations",
                     "files" => [
                         "*" => [
                             "id",
@@ -217,7 +207,6 @@ class CandidateTest extends TestCase
             'address' => "1 Mikro rayon",
             'desired_salary' => 12000,
             'source' => "hh.uz",
-            'experience' => 11,
             'short_summary' => "short summary",
             'achievments' => "diplom, Sertificate ...",
             'comment' => "some text",
@@ -306,7 +295,6 @@ class CandidateTest extends TestCase
             'address' => "Beruniy street",
             'desired_salary' => 8000,
             'source' => "hh.ru",
-            'experience' => 3,
             'short_summary' => "short summary",
             'achievments' => "diplom, Sertificate ...",
             'comment' => "some text",
@@ -415,7 +403,7 @@ class CandidateTest extends TestCase
 
         $data = [
             'title' => "test title",
-            'degree' => "test degree",
+            'degree' => DegreeEnum::BACHELOR,
             'specialty' => 'test specialty',
             'start_year' => '2019',
             'end_year' => '2024',
@@ -443,7 +431,7 @@ class CandidateTest extends TestCase
 
         $candidate->educations()->create([
             'title' => "test title new",
-            'degree' => "test degree new",
+            'degree' => DegreeEnum::MAGISTRATE,
             'specialty' => 'test specialty new',
             'start_year' => '2020',
             'end_year' => '2024',
@@ -453,7 +441,7 @@ class CandidateTest extends TestCase
 
         $data = [
             'title' => "test title",
-            'degree' => "test degree",
+            'degree' => DegreeEnum::DOCTORATE,
             'specialty' => 'test specialty',
             'start_year' => '2019',
             'end_year' => '2024',
@@ -483,7 +471,7 @@ class CandidateTest extends TestCase
 
         $candidate->educations()->create([
             'title' => "test title",
-            'degree' => "test degree",
+            'degree' => DegreeEnum::COLLEGE,
             'specialty' => 'test specialty',
             'start_year' => '2019',
             'end_year' => '2023',
@@ -503,7 +491,7 @@ class CandidateTest extends TestCase
 
         $this->assertDatabaseHas('education', [
             'title' => "test title",
-            'degree' => "test degree",
+            'degree' => DegreeEnum::COLLEGE,
             'specialty' => 'test specialty',
             'start_year' => '2019',
             'end_year' => '2023',
@@ -542,8 +530,6 @@ class CandidateTest extends TestCase
             'company' => "Goole",
             'position' => "Senior Software Ingeneer",
             'candidate_id' => $candidate->id,
-            'start_work' => "2013",
-            'end_work' => "2018",
             'description' => "test description",
         ]);
     }
@@ -589,8 +575,6 @@ class CandidateTest extends TestCase
             'company' => "Yandex new",
             'position' => "Intern new",
             'candidate_id' => $candidate->id,
-            'start_work' => "2018",
-            'end_work' => "2018",
             'description' => "test description",
         ]);
     }

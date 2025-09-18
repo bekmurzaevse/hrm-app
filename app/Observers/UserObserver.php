@@ -18,6 +18,7 @@ class UserObserver
             'users',
             'users:show',
             'users:list',
+            'dashboard',
         ]);
     }
 
@@ -31,6 +32,7 @@ class UserObserver
             'users',
             'users:show',
             'users:list',
+            'dashboard',
         ]);
     }
 
@@ -44,6 +46,7 @@ class UserObserver
             'users',
             'users:show',
             'users:list',
+            'dashboard',
         ]);
     }
 
@@ -57,6 +60,7 @@ class UserObserver
             'users',
             'users:show',
             'users:list',
+            'dashboard',
         ]);
     }
 
@@ -70,6 +74,7 @@ class UserObserver
             'users',
             'users:show',
             'users:list',
+            'dashboard',
         ]);
     }
 }

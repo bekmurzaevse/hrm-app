@@ -30,5 +30,6 @@ class EventServiceProvider extends ServiceProvider
 
         \App\Models\Region::observe(\App\Observers\RegionObserver::class);
         \App\Models\District::observe(\App\Observers\DistrictObserver::class);
+        \App\Models\Finance::observe(\App\Observers\FinanceObserver::class);
     }
 }
