@@ -27,17 +27,17 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:50',
+            'name' => 'required|string|max:50|unique:clients,name',
             'status' => 'nullable|string|in:Active,Potential,Inactive',
             'leader' => 'required|string|max:50',
             'contact_person' => 'required|string|max:50',
             'person_position' => 'required|string|max:50',
-            'person_phone' => 'required|string',
-            'person_email' => 'nullable|string|email',
-            'phone' => 'required|string',
-            'email' => 'nullable|string|email',
+            'person_phone' => 'required|string|unique:clients,person_phone',
+            'person_email' => 'nullable|string|email|unique:clients,person_email',
+            'phone' => 'required|string|unique:clients,phone',
+            'email' => 'nullable|string|email|unique:clients,email',
             'address' => 'required|string',
-            'INN' => 'required|string',
+            'INN' => 'required|string|unique:clients,INN',
             'employee_count' => ['nullable', Rule::enum(EmlpoyeeCountEnum::class)],
             'source' => 'required|string',
             'activity' => 'required|string',
