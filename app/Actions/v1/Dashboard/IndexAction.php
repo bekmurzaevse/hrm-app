@@ -15,7 +15,6 @@ use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\LazyCollection;
 
 class IndexAction
 {
@@ -30,18 +29,10 @@ class IndexAction
         $maxMonth = now()->month;
 
         return Cache::remember("dashboard:$year", now()->addMinutes(30), function () use ($year, $maxMonth, $dto) {
-            // $candidates = Candidate::all(['id', 'created_at', 'user_id']);
-
-            // $personalCandidates = $candidates
-            //     ->filter(fn($v) => $v->created_at->year == $year && $v->user_id == auth()->id())
-            //     ->groupBy('month')
-            //     ->pluck('total', 'month');
-
             $candidates = Candidate::select(['id', 'created_at', 'user_id'])->cursor();
 
             $personalCandidates = [];
 
-            // Foydalanuvchi ID va yilni oldindan olish
             $authId = auth()->id();
 
             foreach ($candidates as $candidate) {
@@ -74,13 +65,11 @@ class IndexAction
                 $vacancyYear = $vacancy->created_at->year;
 
                 if ($vacancyYear == $year) {
-                    // vacanciesRaw (hamma vacancy)
                     if (!isset($vacanciesRaw[$month])) {
                         $vacanciesRaw[$month] = 0;
                     }
                     $vacanciesRaw[$month]++;
 
-                    // totalVacanciesClosed (status = CLOSED)
                     if ($vacancy->status == VacancyStatusEnum::CLOSED) {
                         if (!isset($totalVacanciesClosed[$month])) {
                             $totalVacanciesClosed[$month] = 0;
@@ -88,7 +77,6 @@ class IndexAction
                         $totalVacanciesClosed[$month]++;
                     }
 
-                    // personalVacancies (status = CLOSED && user = current)
                     if ($vacancy->status == VacancyStatusEnum::CLOSED && $vacancy->created_by == $authId) {
                         if (!isset($personalVacancies[$month])) {
                             $personalVacancies[$month] = 0;
@@ -98,49 +86,14 @@ class IndexAction
                 }
             }
 
-            // Collection holatiga o'tkazish (agar buildList ishlatilsa)
             $vacanciesRaw = collect($vacanciesRaw);
             $totalVacanciesClosed = collect($totalVacanciesClosed);
             $personalVacancies = collect($personalVacancies);
-
-            // $vacancies = Vacancy::all(['id', 'created_by', 'status', 'created_at']);
-
-            // $personalVacancies = $vacancies
-            //     ->filter(fn($v) => $v->created_at->year == $year && $v->created_by == auth()->id() && $v->status == VacancyStatusEnum::CLOSED)
-            //     ->groupBy('month')
-            //     ->pluck('total', 'month');
-
-            // $totalVacanciesClosed = $vacancies
-            //     ->filter(fn($v) => $v->created_at->year == $year && $v->status == VacancyStatusEnum::CLOSED)
-            //     ->groupBy('month')
-            //     ->pluck('total', 'month');
-
-            // $vacanciesRaw = $vacancies
-            //     ->filter(fn($v) => $v->created_at->year == $year)
-            //     ->groupBy('month')
-            //     ->pluck('total', 'month');
 
             $projectsRaw = ProjectClosure::selectRaw('MONTH(closed_at) as month, COUNT(*) as total')
                 ->whereYear('closed_at', $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
-
-            // $finances = Finance::all(['id', 'type', 'date', 'category_expense']);
-
-            // $incomesRaw = $finances
-            //     ->filter(fn($v) => $v->date->year == $year && $v->type == 'income')
-            //     ->groupBy('month')
-            //     ->pluck('total', 'month');
-
-            // $expensesRaw = $finances
-            //     ->filter(fn($v) => $v->date->year == $year && $v->type == 'expense')
-            //     ->groupBy('month')
-            //     ->pluck('total', 'month');
-
-            // $honorarsRaw = $finances
-            //     ->filter(fn($v) => $v->date->year == $year && $v->type == 'expense' && $v->category_expense == 'honorarium')
-            //     ->groupBy('month')
-            //     ->pluck('total', 'month');
 
             $incomesRaw = [];
             $expensesRaw = [];
@@ -168,16 +121,9 @@ class IndexAction
                 }
             }
 
-            // Optional: convert to collection to match original code structure
             $incomesRaw = collect($incomesRaw);
             $expensesRaw = collect($expensesRaw);
             $honorarsRaw = collect($honorarsRaw);
-
-
-            // $candidatesRaw = $candidates
-            //     ->filter(fn($v) => $v->created_at->year == $year)
-            //     ->groupBy('month')
-            //     ->pluck('total', 'month');
 
             $candidatesRaw = [];
 
