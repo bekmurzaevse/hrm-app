@@ -50,15 +50,16 @@ class IndexAction
             $from = $dto->projectFromSum ? (int) $dto->projectFromSum : null;
             $to   = $dto->projectToSum   ? (int) $dto->projectToSum   : null;
 
-            $query->whereHas('projects', function ($q) use ($from, $to) {
-                if ($from && $to) {
-                    $q->whereBetween('projects.contract_budget', [$from, $to]);
-                }
-                 elseif ($from) {
-                    $q->where('projects.contract_budget', '>=', $from);
-                } elseif ($to) {
-                    $q->where('projects.contract_budget', '<=', $to);
-                }
+            $query->when($from || $to, function ($q) use ($from, $to) {
+                $q->whereHas('projects', function ($q2) use ($from, $to) {
+                    if ($from && $to) {
+                        $q2->whereBetween('projects.contract_budget', [$from, $to]);
+                    } elseif ($from) {
+                        $q2->where('projects.contract_budget', '>=', $from);
+                    } elseif ($to) {
+                        $q2->where('projects.contract_budget', '<=', $to);
+                    }
+                });
             });
 
             $query->withCount('projects');

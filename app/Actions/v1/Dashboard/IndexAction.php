@@ -15,6 +15,7 @@ use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\LazyCollection;
 
 class IndexAction
 {
@@ -29,56 +30,170 @@ class IndexAction
         $maxMonth = now()->month;
 
         return Cache::remember("dashboard:$year", now()->addMinutes(30), function () use ($year, $maxMonth, $dto) {
-            $candidates = Candidate::all(['id', 'created_at', 'user_id']);
+            // $candidates = Candidate::all(['id', 'created_at', 'user_id']);
 
-            $personalCandidates = $candidates
-                ->filter(fn($v) => $v->created_at->year == $year && $v->user_id == auth()->id())
-                ->groupBy('month')
-                ->pluck('total', 'month');
+            // $personalCandidates = $candidates
+            //     ->filter(fn($v) => $v->created_at->year == $year && $v->user_id == auth()->id())
+            //     ->groupBy('month')
+            //     ->pluck('total', 'month');
 
-            $vacancies = Vacancy::all(['id', 'created_by', 'status', 'created_at']);
+            $candidates = Candidate::select(['id', 'created_at', 'user_id'])->cursor();
 
-            $personalVacancies = $vacancies
-                ->filter(fn($v) => $v->created_at->year == $year && $v->created_by == auth()->id() && $v->status == VacancyStatusEnum::CLOSED)
-                ->groupBy('month')
-                ->pluck('total', 'month');
+            $personalCandidates = [];
 
-            $totalVacanciesClosed = $vacancies
-                ->filter(fn($v) => $v->created_at->year == $year && $v->status == VacancyStatusEnum::CLOSED)
-                ->groupBy('month')
-                ->pluck('total', 'month');
+            // Foydalanuvchi ID va yilni oldindan olish
+            $authId = auth()->id();
 
-            $vacanciesRaw = $vacancies
-                ->filter(fn($v) => $v->created_at->year == $year)
-                ->groupBy('month')
-                ->pluck('total', 'month');
+            foreach ($candidates as $candidate) {
+                if ($candidate->created_at->year == $year && $candidate->user_id == $authId) {
+                    $month = $candidate->created_at->format('m'); // '01', '02', ...
+
+                    if (!isset($personalCandidates[$month])) {
+                        $personalCandidates[$month] = 0;
+                    }
+
+                    $personalCandidates[$month]++;
+                }
+            }
+            $personalCandidates = collect($personalCandidates);
+
+            $vacancies = Vacancy::select(['id', 'created_by', 'status', 'created_at'])->cursor();
+
+            $personalVacancies = [];
+            $totalVacanciesClosed = [];
+            $vacanciesRaw = [];
+
+            $authId = auth()->id();
+
+            foreach ($vacancies as $vacancy) {
+                if (!$vacancy->created_at instanceof \Carbon\Carbon) {
+                    $vacancy->created_at = \Carbon\Carbon::parse($vacancy->created_at);
+                }
+
+                $month = (int) $vacancy->created_at->format('m');
+                $vacancyYear = $vacancy->created_at->year;
+
+                if ($vacancyYear == $year) {
+                    // vacanciesRaw (hamma vacancy)
+                    if (!isset($vacanciesRaw[$month])) {
+                        $vacanciesRaw[$month] = 0;
+                    }
+                    $vacanciesRaw[$month]++;
+
+                    // totalVacanciesClosed (status = CLOSED)
+                    if ($vacancy->status == VacancyStatusEnum::CLOSED) {
+                        if (!isset($totalVacanciesClosed[$month])) {
+                            $totalVacanciesClosed[$month] = 0;
+                        }
+                        $totalVacanciesClosed[$month]++;
+                    }
+
+                    // personalVacancies (status = CLOSED && user = current)
+                    if ($vacancy->status == VacancyStatusEnum::CLOSED && $vacancy->created_by == $authId) {
+                        if (!isset($personalVacancies[$month])) {
+                            $personalVacancies[$month] = 0;
+                        }
+                        $personalVacancies[$month]++;
+                    }
+                }
+            }
+
+            // Collection holatiga o'tkazish (agar buildList ishlatilsa)
+            $vacanciesRaw = collect($vacanciesRaw);
+            $totalVacanciesClosed = collect($totalVacanciesClosed);
+            $personalVacancies = collect($personalVacancies);
+
+            // $vacancies = Vacancy::all(['id', 'created_by', 'status', 'created_at']);
+
+            // $personalVacancies = $vacancies
+            //     ->filter(fn($v) => $v->created_at->year == $year && $v->created_by == auth()->id() && $v->status == VacancyStatusEnum::CLOSED)
+            //     ->groupBy('month')
+            //     ->pluck('total', 'month');
+
+            // $totalVacanciesClosed = $vacancies
+            //     ->filter(fn($v) => $v->created_at->year == $year && $v->status == VacancyStatusEnum::CLOSED)
+            //     ->groupBy('month')
+            //     ->pluck('total', 'month');
+
+            // $vacanciesRaw = $vacancies
+            //     ->filter(fn($v) => $v->created_at->year == $year)
+            //     ->groupBy('month')
+            //     ->pluck('total', 'month');
 
             $projectsRaw = ProjectClosure::selectRaw('MONTH(closed_at) as month, COUNT(*) as total')
                 ->whereYear('closed_at', $year)
                 ->groupBy('month')
                 ->pluck('total', 'month');
 
-            $finances = Finance::all(['id', 'type', 'date', 'category_expense']);
+            // $finances = Finance::all(['id', 'type', 'date', 'category_expense']);
 
-            $incomesRaw = $finances
-                ->filter(fn($v) => $v->date->year == $year && $v->type == 'income')
-                ->groupBy('month')
-                ->pluck('total', 'month');
+            // $incomesRaw = $finances
+            //     ->filter(fn($v) => $v->date->year == $year && $v->type == 'income')
+            //     ->groupBy('month')
+            //     ->pluck('total', 'month');
 
-            $expensesRaw = $finances
-                ->filter(fn($v) => $v->date->year == $year && $v->type == 'expense')
-                ->groupBy('month')
-                ->pluck('total', 'month');
+            // $expensesRaw = $finances
+            //     ->filter(fn($v) => $v->date->year == $year && $v->type == 'expense')
+            //     ->groupBy('month')
+            //     ->pluck('total', 'month');
 
-            $honorarsRaw = $finances
-                ->filter(fn($v) => $v->date->year == $year && $v->type == 'expense' && $v->category_expense == 'honorarium')
-                ->groupBy('month')
-                ->pluck('total', 'month');
+            // $honorarsRaw = $finances
+            //     ->filter(fn($v) => $v->date->year == $year && $v->type == 'expense' && $v->category_expense == 'honorarium')
+            //     ->groupBy('month')
+            //     ->pluck('total', 'month');
 
-            $candidatesRaw = $candidates
-                ->filter(fn($v) => $v->created_at->year == $year)
-                ->groupBy('month')
-                ->pluck('total', 'month');
+            $incomesRaw = [];
+            $expensesRaw = [];
+            $honorarsRaw = [];
+
+            $finances = Finance::select(['id', 'type', 'date', 'category_expense'])->cursor();
+
+            foreach ($finances as $finance) {
+                if ($finance->date->year !== $year) {
+                    continue;
+                }
+
+                $month = $finance->date->format('m'); // '01', '02', ...
+
+                if ($finance->type === 'income') {
+                    $incomesRaw[$month] = ($incomesRaw[$month] ?? 0) + $finance->total;
+                }
+
+                if ($finance->type === 'expense') {
+                    $expensesRaw[$month] = ($expensesRaw[$month] ?? 0) + $finance->total;
+
+                    if ($finance->category_expense === 'honorarium') {
+                        $honorarsRaw[$month] = ($honorarsRaw[$month] ?? 0) + $finance->total;
+                    }
+                }
+            }
+
+            // Optional: convert to collection to match original code structure
+            $incomesRaw = collect($incomesRaw);
+            $expensesRaw = collect($expensesRaw);
+            $honorarsRaw = collect($honorarsRaw);
+
+
+            // $candidatesRaw = $candidates
+            //     ->filter(fn($v) => $v->created_at->year == $year)
+            //     ->groupBy('month')
+            //     ->pluck('total', 'month');
+
+            $candidatesRaw = [];
+
+            foreach (Candidate::select(['id', 'created_at'])->cursor() as $candidate) {
+                if ($candidate->created_at->year == $year) {
+                    $month = (int) $candidate->created_at->format('m'); // 1–12
+
+                    if (!isset($candidatesRaw[$month])) {
+                        $candidatesRaw[$month] = 0;
+                    }
+
+                    $candidatesRaw[$month]++;
+                }
+            }
+
+            $candidatesRaw = collect($candidatesRaw);
 
             $clientsRaw = Client::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
                 ->whereYear('created_at', $year)

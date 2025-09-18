@@ -26,18 +26,19 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id');
         return [
-            'name' => 'required|string|max:50',
+            'name' => ['required', 'string', 'max:50', Rule::unique('clients', 'name')->ignore($id)],
             'status' => 'nullable|string|in:Active,Potential,Inactive',
             'leader' => 'required|string|max:50',
             'contact_person' => 'required|string|max:50',
             'person_position' => 'required|string|max:50',
-            'person_phone' => 'required|string',
-            'person_email' => 'nullable|string|email',
-            'phone' => 'required|string',
-            'email' => 'nullable|string',
+            'person_phone' => ['required', 'string', Rule::unique('clients', 'person_phone')->ignore($id)],
+            'person_email' => ['nullable', 'string', 'email', Rule::unique('clients', 'person_email')->ignore($id)],
+            'phone' => ['required', 'string', Rule::unique('clients', 'phone')->ignore($id)],
+            'email' => ['nullable', 'string', 'email', Rule::unique('clients', 'email')->ignore($id)],
             'address' => 'required|string',
-            'INN' => 'required|string',
+            'INN' => ['required', 'string', Rule::unique('clients', 'INN')->ignore($id)],
             'employee_count' => ['nullable', Rule::enum(EmlpoyeeCountEnum::class)],
             'source' => 'required|string',
             'activity' => 'required|string',
