@@ -54,11 +54,9 @@ class IndexAction
             $totalVacanciesClosed = [];
             $vacanciesRaw = [];
 
-            $authId = auth()->id();
-
             foreach ($vacancies as $vacancy) {
-                if (!$vacancy->created_at instanceof \Carbon\Carbon) {
-                    $vacancy->created_at = \Carbon\Carbon::parse($vacancy->created_at);
+                if (!$vacancy->created_at instanceof Carbon) {
+                    $vacancy->created_at = Carbon::parse($vacancy->created_at);
                 }
 
                 $month = (int) $vacancy->created_at->format('m');
@@ -127,7 +125,7 @@ class IndexAction
 
             $candidatesRaw = [];
 
-            foreach (Candidate::select(['id', 'created_at'])->cursor() as $candidate) {
+            foreach ($candidates as $candidate) {
                 if ($candidate->created_at->year == $year) {
                     $month = (int) $candidate->created_at->format('m'); // 1–12
 
@@ -229,7 +227,7 @@ class IndexAction
                 'personal' => [
                     'vacancies_count' => $vacancies
                         ->where('status', VacancyStatusEnum::CLOSED->value)
-                        ->where('created_by', auth()->user()->id)
+                        ->where('created_by', $authId)
                         ->count(),
                     'vacancies' => $buildList($personalVacancies),
                     'candidates' => $buildList($personalCandidates),

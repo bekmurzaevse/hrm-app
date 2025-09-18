@@ -117,6 +117,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
 
     Route::prefix('clients')->group(function () {
         Route::get('/', [ClientController::class, 'index']);
+        Route::get('/list', [ClientController::class, 'list']);
         Route::get('/{id}', [ClientController::class, 'show']);
         Route::post('/create', [ClientController::class, 'create']);
         Route::put('/update/{id}', [ClientController::class, 'update']);
