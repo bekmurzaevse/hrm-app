@@ -87,16 +87,17 @@ class Vacancy extends Model
     protected function salary(): Attribute
     {
         return Attribute::make(
-            get: function ($value, $attributes) {
-                $currency = $attributes['currency'];
+            get: function () {
+                $currency = $this->currency->symbol();
 
-                if (isset($attributes['salary_from']) && isset($attributes['salary_to'])) {
-                    if ($attributes['salary_to'] === 0) {
-                        return $attributes['salary_from'] . ' ' . $currency; // 1000 RUB
-                    }
+                $from = $this->salary_from;
+                $to = $this->salary_to;
 
-                    return $attributes['salary_from'] . '-' . $attributes['salary_to'] . ' ' . $currency; // 1000-2000 RUB
+                if ($to === 0) {
+                    return "{$from} {$currency}"; // 1000 ₽
                 }
+
+                return "{$from}-{$to} {$currency}";
             },
             set: function ($value) {
                 // Split the value into parts based on the hyphen
@@ -104,7 +105,6 @@ class Vacancy extends Model
                 $parts = explode('-', $value);
 
                 $from = trim($parts[0]);
-
                 $to = isset($parts[1]) ? trim($parts[1]) : 0;
 
                 return [
@@ -126,7 +126,14 @@ class Vacancy extends Model
                 $salary = $this->salary;
                 $period = $this->period;
 
-                return $salary . ' ' . $period->value; // 1000 RUB В месяц, 1000-2000 RUB В месяц
+                $periodMap = [
+                    'hour' => 'в час',
+                    'day' => 'в день',
+                    'week' => 'в неделю',
+                    'month' => 'в месяц',
+                ];
+
+                return $salary . ' ' . $periodMap[$period->value]; // 1000 RUB В месяц, 1000-2000 RUB В месяц
             }
         );
     }
@@ -147,7 +154,6 @@ class Vacancy extends Model
                 );
             }
         );
-
     }
 
     /**

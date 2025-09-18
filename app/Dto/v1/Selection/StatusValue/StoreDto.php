@@ -4,7 +4,7 @@ namespace App\Dto\v1\Selection\StatusValue;
 
 use App\Http\Requests\v1\Selection\StatusValue\StoreRequest;
 
-readonly class StoreDTo
+readonly class StoreDto
 {
     public function __construct(
         public int $selectionItemId,

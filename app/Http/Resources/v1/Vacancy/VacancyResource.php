@@ -19,10 +19,10 @@ class VacancyResource extends JsonResource
             'id' => $this->id,
             'main_info' => [
                 'title' => $this->title,
-                'client' => $this->client->name,
+                'client' => $this->client?->name,
                 'salary' => $this->salaryDetail,
-                'region' => $this->district->region->title,
-                'district' => $this->district->title,
+                'region' => $this->district?->region?->title,
+                'district' => $this->district?->title,
                 'type_employment' => $this->type_employment,
                 'work_experience' => $this->work_experience,
                 'position_count' => $this->position_count,
@@ -37,33 +37,34 @@ class VacancyResource extends JsonResource
                 'work_conditions' => $this->work_conditions,
                 'benefits' => $this->benefits,
             ],
-            'skills' => $this->skills->map->only(['id', 'title']),
+            'skills' => $this->skills?->map->only(['id', 'title']),
             'contact_info' => [
-                'contact_person' => $this->client->contact_person,
-                'person_position' => $this->client->person_position,
-                'person_phone' => $this->client->person_phone,
-                'person_email' => $this->client?->person_email,
+                'contact_person' => $this->client?->contact_person,
+                'position' => $this->client?->person_position,
+                'phone' => $this->client?->person_phone,
+                'email' => $this->client?->person_email,
             ],
             'status' => $this->status,
             'position_count' => $this->position_count,
-            'city' => $this->city,
+            'region' => $this->district?->region?->title,
+            'district' => $this->district?->title,
             'key_data' => [
                 'created_at' => $this->created_at->format('Y-m-d'),
                 'created_by' => $this->creator,
             ],
-            'files' => $this->files->map(function ($file) {
+            'files' => $this->files?->map(function ($file) {
                 return [
                     'id' => $file->id,
                     'name' => $file->name,
                     'type' => $file->type,
                     'size' => round($file->size / 1024, 2) . ' KB',
                     // TODO: add creator of File
-                    'created_at' => $file->created_at->format('Y-m-d'),
+                    'created_at' => $file?->created_at->format('Y-m-d'),
                     'download_url' => $file->path && Storage::disk('public')->exists($file->path)
                         ? url("/api/v1/vacancies/{$this->id}/download/{$file->id}")
                         : null,
                     'show_url' => $file->path && Storage::disk('public')->exists($file->path)
-                        ? url('/api/v1/vacancies/' . $this->id . '/file/' . $file->id)
+                        ? url("/api/v1/vacancies/{$this->id}/file/{$file->id}")
                         : null,
                 ];
             }),

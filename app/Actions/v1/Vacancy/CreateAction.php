@@ -29,7 +29,7 @@ class CreateAction
             'education' => $dto->education,
             'status' => $dto->status,
             'position_count' => $dto->positionCount,
-            'created_by' => auth()->user()->id,
+            'created_by' => auth()->id(),
             'salary' => $dto->salary,
             'currency' => $dto->currency,
             'period' => $dto->period,
@@ -52,6 +52,7 @@ class CreateAction
         Vacancy::create($data);
 
         return static::toResponse(
+            code: 201,
             message: 'Vacancy created'
         );
     }

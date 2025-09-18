@@ -31,18 +31,20 @@ use App\Http\Controllers\v1\Vacancy\VacancyFileController;
 use App\Http\Controllers\v1\Vacancy\VacancySkillController;
 use Illuminate\Support\Facades\Route;
 
-Route::pattern('id', '\d+');
-Route::pattern('hash', '[a-z0-9]+');
-Route::pattern('hex', '[a-f0-9]+');
-Route::pattern('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
-Route::pattern('base', '[a-zA-Z0-9]+');
-Route::pattern('slug', '[a-z0-9-]+');
-Route::pattern('username', '[a-z0-9_-]{3,16}');
-
-
-Route::get('/', function () {
-    return "API v1";
-});
+Route::patterns([
+    'id' => '\d+',
+    'fileId' => '\d+',
+    'workId' => '\d+',
+    'langId' => '\d+',
+    'skillId' => '\d+',
+    'educationId' => '\d+',
+    'contactId' => '\d+',
+    'stageId' => '\d+',
+    'taskId' => '\d+',
+    'statusId' => '\d+',
+    'selectionId' => '\d+',
+    'statusValueId' => '\d+',
+]);
 
 /**
  * Guest
@@ -63,9 +65,6 @@ Route::prefix('auth')->middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum
  */
 Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->value])->group(function () {
 
-    /**
-     * Routs for Auth logout
-     */
     Route::prefix('auth')->group(function () {
         Route::get('get-me', [AuthController::class, 'getMe']);
         Route::post('logout', [AuthController::class, 'logout']);
@@ -77,7 +76,19 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
      * Routs for Auth & Admin & Manager
      */
     Route::middleware(['role:admin|manager'])->group(function () {
-
+        // Vacancies
+        Route::prefix('vacancies')->group(function () {
+            Route::post('/create', [VacancyController::class, 'create']);
+            Route::put('/update/{id}', [VacancyController::class, 'update']);
+            Route::delete('/delete/{id}', [VacancyController::class, 'delete']);
+            //File
+            Route::post('/{id}/upload', [VacancyFileController::class, 'uploadFile']);
+            Route::delete('/{id}/delete/{fileId}', [VacancyFileController::class, 'deleteFile']);
+            // Skills
+            Route::post('/{id}/skills/create', [VacancySkillController::class, 'createSkills']);
+            Route::put('/{id}/skills/update/{skillId}', [VacancySkillController::class, 'updateSkill']);
+            Route::delete('/{id}/skills/delete/{skillId}', [VacancySkillController::class, 'deleteSkill']);
+        });
     });
 
     /**
@@ -132,18 +143,9 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
     Route::prefix('vacancies')->group(function () {
         Route::get('/', [VacancyController::class, 'index']);
         Route::get('/{id}', [VacancyController::class, 'show']);
-        Route::post('/create', [VacancyController::class, 'create']);
-        Route::put('/update/{id}', [VacancyController::class, 'update']);
-        Route::delete('/delete/{id}', [VacancyController::class, 'delete']);
         //File
         Route::get('/{id}/download/{fileId}', [VacancyFileController::class, 'downloadFile']);
         Route::get('/{id}/file/{fileId}', [VacancyFileController::class, 'showFile']);
-        Route::post('/{id}/upload', [VacancyFileController::class, 'uploadFile']);
-        Route::delete('/{id}/delete/{fileId}', [VacancyFileController::class, 'deleteFile']);
-        // Skills
-        Route::post('/{id}/skills/create', [VacancySkillController::class, 'createSkills']);
-        Route::put('/{id}/skills/update/{skillId}', [VacancySkillController::class, 'updateSkill']);
-        Route::delete('/{id}/skills/delete/{skillId}', [VacancySkillController::class, 'deleteSkill']);
     });
 
     // Projects

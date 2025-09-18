@@ -18,18 +18,17 @@ class VacancyTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->seed();
-
-        $user = User::find(1);
-        Sanctum::actingAs($user, ['access-token']);
-        // TODO: Need test with unauthorized user by role, actingAs * 
     }
 
     /**
-     * View list of vacancies
+     * View all vacancies by all users
      * @return void
      */
-    public function test_authorized_user_can_view_list_of_vacancies(): void
+    public function test_all_user_can_view_all_vacancies(): void
     {
+        $user = User::inRandomOrder()->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $response = $this->getJson("/api/v1/vacancies");
         $response
             ->assertStatus(200)
@@ -62,11 +61,14 @@ class VacancyTest extends TestCase
     }
 
     /**
-     * View single vacancy
+     * View single vacancy by all users
      * @return void
      */
-    public function test_authorized_user_can_view_vacancy(): void
+    public function test_all_user_can_view_vacancy(): void
     {
+        $user = User::inRandomOrder()->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $vacancy = Vacancy::find(1);
 
         $response = $this->getJson("/api/v1/vacancies/1");
@@ -105,13 +107,14 @@ class VacancyTest extends TestCase
                     ],
                     'contact_info' => [
                         'contact_person',
-                        'person_position',
-                        'person_phone',
-                        'person_email',
+                        'position',
+                        'phone',
+                        'email',
                     ],
                     'status',
                     'position_count',
-                    'city',
+                    'region',
+                    'district',
                     'key_data' => [
                         'created_at',
                         'created_by'
@@ -138,8 +141,13 @@ class VacancyTest extends TestCase
      * Create vacancy by admin and manager
      * @return void
      */
-    public function test_admin_and_manager_can_create_vacancy(): void
+    public function test_admin_manager_can_create_vacancy(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $data = [
             'title' => 'Test vacancy',
             'client_id' => 1,
@@ -151,7 +159,6 @@ class VacancyTest extends TestCase
             'education' => 'secondary',
             'status' => 'not_active',
             'position_count' => 2,
-            'created_by' => 1,
             'salary' => '1000-2000',
             'currency' => 'USD',
             'period' => 'month',
@@ -168,9 +175,9 @@ class VacancyTest extends TestCase
         $response = $this->postJson("/api/v1/vacancies/create", $data);
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(201)
             ->assertExactJson([
-                'status' => 200,
+                'status' => 201,
                 'message' => 'Vacancy created',
             ]);
 
@@ -185,7 +192,7 @@ class VacancyTest extends TestCase
             'education' => 'secondary',
             'status' => 'not_active',
             'position_count' => $data['position_count'],
-            'created_by' => $data['created_by'],
+            'created_by' => $user->id,
             'salary_from' => '1000',
             'salary_to' => '2000',
             'currency' => 'USD',
@@ -205,8 +212,13 @@ class VacancyTest extends TestCase
      * Update vacancy by admin and manager
      * @return void
      */
-    public function test_admin_and_manager_can_update_vacancy(): void
+    public function test_admin_manager_can_update_vacancy(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $vacancy = Vacancy::find(1);
 
         $data = [
@@ -220,7 +232,6 @@ class VacancyTest extends TestCase
             'education' => 'secondary',
             'status' => 'not_active',
             'position_count' => 2,
-            'created_by' => 1,
             'salary' => '1000-2000',
             'currency' => 'USD',
             'period' => 'month',
@@ -240,7 +251,7 @@ class VacancyTest extends TestCase
             ->assertStatus(200)
             ->assertExactJson([
                 'status' => 200,
-                'message' => 'id-1 Vacancy updated',
+                'message' => 'Vacancy updated',
             ]);
 
         $this->assertDatabaseHas('vacancies', [
@@ -255,7 +266,7 @@ class VacancyTest extends TestCase
             'education' => 'secondary',
             'status' => 'not_active',
             'position_count' => $data['position_count'],
-            'created_by' => $data['created_by'],
+            'created_by' => $user->id,
             'salary_from' => 1000,
             'salary_to' => 2000,
             'currency' => 'USD',
@@ -277,6 +288,11 @@ class VacancyTest extends TestCase
      */
     public function test_admin_manager_can_delete_vacancy(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $vacancy = Vacancy::find(1);
 
         $response = $this->deleteJson("/api/v1/vacancies/delete/{$vacancy->id}");
@@ -285,7 +301,7 @@ class VacancyTest extends TestCase
             ->assertStatus(200)
             ->assertExactJson([
                 'status' => 200,
-                'message' => 'id-1 Vacancy Deleted',
+                'message' => 'Vacancy Deleted',
             ]);
 
         $this->assertSoftDeleted('vacancies', [

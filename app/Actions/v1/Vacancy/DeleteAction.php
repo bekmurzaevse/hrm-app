@@ -29,6 +29,7 @@ class DeleteAction
             if (Storage::disk('public')->exists('vacancies/' . $vacancy->id)) {
                 Storage::disk('public')->deleteDirectory("vacancies/" . $vacancy->id);
             }
+
             $vacancy->files()->delete();
 
             // Log user activity
@@ -39,7 +40,7 @@ class DeleteAction
             $vacancy->delete();
 
             return static::toResponse(
-                message: "id-{$id} Vacancy Deleted",
+                message: "Vacancy Deleted",
             );
         } catch (ModelNotFoundException $ex) {
             throw new ApiResponseException('Vacancy Not Found', 404);

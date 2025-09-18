@@ -10,6 +10,10 @@ class RefreshTokenAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @return JsonResponse
+     */
     public function __invoke(): JsonResponse
     {
         $accessTokenExpiration = now()->addMinutes(config('sanctum.at_expiration'));

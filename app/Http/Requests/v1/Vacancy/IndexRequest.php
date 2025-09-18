@@ -26,7 +26,6 @@ class IndexRequest extends FormRequest
     {
         return [
             'search' => 'nullable|string|min:2',
-            'position_count' => 'nullable|integer',
             'salary_from' => 'nullable|integer|min:0',
             'salary_to' => 'nullable|integer|min:0',
             'region_id' => 'nullable|integer',
@@ -35,7 +34,8 @@ class IndexRequest extends FormRequest
             'from' => 'nullable|date_format:Y-m-d|required_with:to',
             'to' => 'nullable|date_format:Y-m-d|required_with:from',
             'status' => 'nullable|string',
-            'per_page' => 'nullable|integer',
+            'per_page' => 'nullable|integer|min:1',
+            'page' => 'nullable|integer|min:1',
         ];
     }
 }

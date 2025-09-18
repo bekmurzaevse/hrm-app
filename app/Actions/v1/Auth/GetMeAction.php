@@ -10,6 +10,10 @@ class GetMeAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @return JsonResponse
+     */
     public function __invoke(): JsonResponse
     {
         return static::toResponse(

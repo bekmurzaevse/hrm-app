@@ -36,7 +36,7 @@ class UpdateAction
                 'education' => $dto->education,
                 'status' => $dto->status,
                 'position_count' => $dto->positionCount,
-                'created_by' => auth()->user()->id,
+                'created_by' => auth()->id(),
                 'salary' => $dto->salary,
                 'currency' => $dto->currency,
                 'period' => $dto->period,
@@ -57,7 +57,7 @@ class UpdateAction
             logActivity($title, $text);
 
             return static::toResponse(
-                message: "id-{$id} Vacancy updated",
+                message: "Vacancy updated",
                 // data: new VacancyResource($vacancy)
             );
         } catch (ModelNotFoundException $ex) {
