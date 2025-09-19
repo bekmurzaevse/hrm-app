@@ -147,7 +147,6 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::get('/{id}', [VacancyController::class, 'show']);
         //File
         Route::get('/{id}/download/{fileId}', [VacancyFileController::class, 'download']);
-        Route::get('/{id}/file/{fileId}', [VacancyFileController::class, 'show']);
     });
 
     // Projects

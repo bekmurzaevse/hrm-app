@@ -4,13 +4,11 @@ namespace App\Http\Controllers\v1\Vacancy;
 
 use App\Actions\v1\Vacancy\File\DeleteAction;
 use App\Actions\v1\Vacancy\File\DownloadAction;
-use App\Actions\v1\Vacancy\File\ShowAction;
 use App\Actions\v1\Vacancy\File\UploadAction;
 use App\Dto\v1\Vacancy\File\UploadDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Vacancy\File\UploadRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class VacancyFileController extends Controller
@@ -23,18 +21,6 @@ class VacancyFileController extends Controller
      * @return BinaryFileResponse
      */
     public function download(int $id, int $fileId, DownloadAction $action): BinaryFileResponse
-    {
-        return $action($id, $fileId);
-    }
-
-    /**
-     * Summary of show
-     * @param int $id
-     * @param int $fileId
-     * @param \App\Actions\v1\Vacancy\File\ShowAction $action
-     * @return Response
-     */
-    public function show(int $id, int $fileId, ShowAction $action): Response
     {
         return $action($id, $fileId);
     }

@@ -81,33 +81,6 @@ class VacancyFileTest extends TestCase
     }
 
     /**
-     * Summary of test_all_users_can_show_file_for_vacancy
-     * @return void
-     */
-    public function test_all_users_can_show_file_for_vacancy()
-    {
-        $user = User::inRandomOrder()->first();
-        Sanctum::actingAs($user, ['access-token']);
-
-        $vacancy = Vacancy::find(1);
-
-        $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');
-        $uploadedFile = FileUploadHelper::file($file, "vacancies/1");
-
-        $vacancyFile = $vacancy->files()->create([
-            'name' => $uploadedFile['name'],
-            'path' => $uploadedFile['path'],
-            'size' => $uploadedFile['size'],
-            'type' => 'document',
-        ]);
-
-        $response = $this->getJson('/api/v1/vacancies/' . $vacancy->id . '/file/' . $vacancyFile->id);
-
-        $response->assertStatus(200)
-            ->assertHeader('Content-Disposition', 'inline; filename="document.pdf"');
-    }
-
-    /**
      * Summary of test_admin_manager_can_delete_file_for_vacancy
      * @return void
      */
