@@ -2,9 +2,9 @@
 
 namespace App\Dto\v1\Project\Stage;
 
-use App\Http\Requests\v1\Project\Stage\CompleteStageRequest;
+use App\Http\Requests\v1\Project\Stage\CompleteRequest;
 
-readonly class CompleteStageDto
+readonly class CompleteDto
 {
     public function __construct(
         public int $candidateCount,
@@ -14,10 +14,10 @@ readonly class CompleteStageDto
 
     /**
      * Summary of from
-     * @param \App\Http\Requests\v1\Project\Stage\CompleteStageRequest $request
-     * @return CompleteStageDto
+     * @param \App\Http\Requests\v1\Project\Stage\CompleteRequest $request
+     * @return CompleteDto
      */
-    public static function from(CompleteStageRequest $request): self
+    public static function from(CompleteRequest $request): self
     {
         return new self(
             candidateCount: $request->candidate_count,

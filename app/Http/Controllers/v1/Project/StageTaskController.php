@@ -2,49 +2,49 @@
 
 namespace App\Http\Controllers\v1\Project;
 
-use App\Actions\v1\Project\StageTask\CreateStageTaskAction;
-use App\Actions\v1\Project\StageTask\DeleteStageTaskAction;
-use App\Actions\v1\Project\StageTask\UpdateStageTaskAction;
-use App\Dto\v1\Project\StageTask\CreateStageTaskDto;
-use App\Dto\v1\Project\StageTask\UpdateStageTaskDto;
+use App\Actions\v1\Project\Stage\Task\CreateAction;
+use App\Actions\v1\Project\Stage\Task\DeleteAction;
+use App\Actions\v1\Project\Stage\Task\UpdateAction;
+use App\Dto\v1\Project\Stage\Task\CreateDto;
+use App\Dto\v1\Project\Stage\Task\UpdateDto;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Project\StageTask\CreateStageTaskRequest;
-use App\Http\Requests\v1\Project\StageTask\UpdateStageTaskRequest;
+use App\Http\Requests\v1\Project\Stage\Task\CreateRequest;
+use App\Http\Requests\v1\Project\Stage\Task\UpdateRequest;
 use Illuminate\Http\JsonResponse;
 
 class StageTaskController extends Controller
 {
     /**
-     * Summary of createStageTask
+     * Summary of create
      * @param int $stageId
-     * @param \App\Http\Requests\v1\Project\StageTask\CreateStageTaskRequest $request
-     * @param \App\Actions\v1\Project\StageTask\CreateStageTaskAction $action
+     * @param \App\Http\Requests\v1\Project\Stage\Task\CreateRequest $request
+     * @param \App\Actions\v1\Project\Stage\Task\CreateAction $action
      * @return JsonResponse
      */
-    public function createStageTask(CreateStageTaskRequest $request, CreateStageTaskAction $action): JsonResponse
+    public function create(CreateRequest $request, CreateAction $action): JsonResponse
     {
-        return $action(CreateStageTaskDto::from($request));
+        return $action(CreateDto::from($request));
     }
 
     /**
-     * Summary of updateStageTask
+     * Summary of update
      * @param int $taskId
-     * @param \App\Http\Requests\v1\Project\StageTask\UpdateStageTaskRequest $request
-     * @param \App\Actions\v1\Project\StageTask\UpdateStageTaskAction $action
+     * @param \App\Http\Requests\v1\Project\Stage\Task\UpdateRequest $request
+     * @param \App\Actions\v1\Project\Stage\Task\UpdateAction $action
      * @return JsonResponse
      */
-    public function updateStageTask(int $taskId, UpdateStageTaskRequest $request, UpdateStageTaskAction $action): JsonResponse
+    public function update(int $taskId, UpdateRequest $request, UpdateAction $action): JsonResponse
     {
-        return $action($taskId, UpdateStageTaskDto::from($request));
+        return $action($taskId, UpdateDto::from($request));
     }
 
     /**
-     * Summary of deleteStageTask
+     * Summary of delete
      * @param int $taskId
-     * @param \App\Actions\v1\Project\StageTask\DeleteStageTaskAction $action
+     * @param \App\Actions\v1\Project\Stage\Task\DeleteAction $action
      * @return JsonResponse
      */
-    public function deleteStageTask(int $taskId, DeleteStageTaskAction $action): JsonResponse
+    public function delete(int $taskId, DeleteAction $action): JsonResponse
     {
         return $action($taskId);
     }

@@ -18,10 +18,6 @@ class ProjectTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->seed();
-
-        $user = User::find(1);
-        Sanctum::actingAs($user, ['access-token']);
-        // TODO: Need test with unauthorized user by role, actingAs * 
     }
 
     /**
@@ -30,6 +26,9 @@ class ProjectTest extends TestCase
      */
     public function test_project_can_view_all(): void
     {
+        $user = User::inRandomOrder()->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $response = $this->getJson("/api/v1/projects");
 
         $response
@@ -75,6 +74,9 @@ class ProjectTest extends TestCase
      */
     public function test_project_can_view_one(): void
     {
+        $user = User::inRandomOrder()->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $project = Project::find(1);
 
         $response = $this->getJson("/api/v1/projects/1");
@@ -105,6 +107,11 @@ class ProjectTest extends TestCase
      */
     public function test_project_can_create(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $data = [
             'title' => 'test title',
             'client_id' => 1,
@@ -145,6 +152,11 @@ class ProjectTest extends TestCase
      */
     public function test_project_can_update(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $data = [
             'title' => 'test title',
             'client_id' => 1,
@@ -188,6 +200,11 @@ class ProjectTest extends TestCase
      */
     public function test_project_can_close(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $project = Project::find(1);
 
         $comment = "test comment";
@@ -218,12 +235,17 @@ class ProjectTest extends TestCase
      */
     public function test_project_can_create_contract(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $project = Project::find(1);
 
         $response = $this->patchJson("/api/v1/projects/{$project->id}/create-contract", [
             'contract_number' => 'test contract number',
             'contract_budget' => 1000,
-            // 'contract_currency' => 'USD',
+            // 'contract_currency' => 'USD', // TODO: add currency to Project
         ]);
 
         $response
@@ -247,6 +269,11 @@ class ProjectTest extends TestCase
      */
     public function test_project_performers_can_update(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $project = Project::find(1);
         $data = [
             'performers' => [1, 2],

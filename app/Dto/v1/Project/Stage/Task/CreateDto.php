@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Dto\v1\Project\StageTask;
+namespace App\Dto\v1\Project\Stage\Task;
 
-use App\Http\Requests\v1\Project\StageTask\UpdateStageTaskRequest;
+use App\Http\Requests\v1\Project\Stage\Task\CreateRequest;
 
-readonly class UpdateStageTaskDto
+readonly class CreateDto
 {
     public function __construct(
         public int $stageId,
@@ -18,10 +18,10 @@ readonly class UpdateStageTaskDto
 
     /**
      * Summary of from
-     * @param \App\Http\Requests\v1\Project\StageTask\UpdateStageTaskRequest $request
-     * @return UpdateStageTaskDto
+     * @param \App\Http\Requests\v1\Project\Stage\Task\CreateRequest $request
+     * @return CreateDto
      */
-    public static function from(UpdateStageTaskRequest $request): self
+    public static function from(CreateRequest $request): self
     {
         return new self(
             stageId: $request->stage_id,

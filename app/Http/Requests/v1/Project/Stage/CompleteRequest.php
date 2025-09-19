@@ -5,7 +5,7 @@ namespace App\Http\Requests\v1\Project\Stage;
 use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateStageRequest extends FormRequest
+class CompleteRequest extends FormRequest
 {
     use FailedValidation;
 
@@ -25,11 +25,8 @@ class CreateStageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'stage_id' => 'required|integer|exists:stages,id',
-            'title' => 'required|string|min:2|max:255',
-            'description' => 'nullable|string',
-            'executor_id' => 'required|integer|exists:users,id',
-            'deadline' => 'required|date_format:m-d-Y',
+            'candidate_count' => 'required|integer|min:1',
+            'comment' => 'nullable|string',
         ];
     }
 }

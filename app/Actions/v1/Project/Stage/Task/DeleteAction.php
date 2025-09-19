@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\v1\Project\StageTask;
+namespace App\Actions\v1\Project\Stage\Task;
 
 use App\Exceptions\ApiResponseException;
 use App\Models\StageTask;
@@ -8,7 +8,7 @@ use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class DeleteStageTaskAction
+class DeleteAction
 {
     use ResponseTrait;
 

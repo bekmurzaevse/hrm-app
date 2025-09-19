@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Project\Stage;
 
-use App\Dto\v1\Project\Stage\CreateStageDto;
+use App\Dto\v1\Project\Stage\CreateDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Project;
 use App\Models\Stage;
@@ -10,16 +10,16 @@ use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class CreateStageAction
+class CreateAction
 {
     use ResponseTrait;
 
     /**
      * Summary of __invoke
-     * @param \App\Dto\v1\Project\Stage\CreateStageDto $dto
+     * @param \App\Dto\v1\Project\Stage\CreateDto $dto
      * @return JsonResponse
      */
-    public function __invoke(int $id, CreateStageDto $dto): JsonResponse
+    public function __invoke(int $id, CreateDto $dto): JsonResponse
     {
         try {
             $project = Project::findOrFail($id);

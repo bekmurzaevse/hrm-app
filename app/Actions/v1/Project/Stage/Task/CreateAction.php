@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Actions\v1\Project\StageTask;
+namespace App\Actions\v1\Project\Stage\Task;
 
-use App\Dto\v1\Project\StageTask\CreateStageTaskDto;
+use App\Dto\v1\Project\Stage\Task\CreateDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Stage;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class CreateStageTaskAction
+class CreateAction
 {
     use ResponseTrait;
 
-    public function __invoke(CreateStageTaskDto $dto): JsonResponse
+    public function __invoke(CreateDto $dto): JsonResponse
     {
         try {
             $stage = Stage::findOrFail($dto->stageId);

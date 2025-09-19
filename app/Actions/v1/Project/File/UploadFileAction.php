@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Project\File;
 
-use App\Dto\v1\Project\File\UploadFileDto;
+use App\Dto\v1\Project\File\UploadDto;
 use App\Exceptions\ApiResponseException;
 use App\Helpers\FileUploadHelper;
 use App\Models\Project;
@@ -17,11 +17,11 @@ class UploadFileAction
     /**
      * Summary of __invoke
      * @param int $id
-     * @param \App\Dto\v1\Project\File\UploadFileDto $dto
+     * @param \App\Dto\v1\Project\File\UploadDto $dto
      * @return JsonResponse
      *@throws \App\Exceptions\ApiResponseException
      */
-    public function __invoke(int $id, UploadFileDto $dto): JsonResponse
+    public function __invoke(int $id, UploadDto $dto): JsonResponse
     {
         try {
             $project = Project::findOrFail($id);

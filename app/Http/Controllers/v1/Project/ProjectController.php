@@ -88,13 +88,13 @@ class ProjectController extends Controller
     }
 
     /**
-     * Summary of closeProject
+     * Summary of close
      * @param int $id
      * @param \App\Http\Requests\v1\Project\CloseProjectRequest $request
      * @param \App\Actions\v1\Project\CloseProjectAction $action
      * @return JsonResponse
      */
-    public function closeProject(int $id, CloseProjectRequest $request, CloseProjectAction $action): JsonResponse
+    public function close(int $id, CloseProjectRequest $request, CloseProjectAction $action): JsonResponse
     {
         return $action($id, CloseProjectDto::from($request));
     }

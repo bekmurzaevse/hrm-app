@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Project\Stage;
 
-use App\Dto\v1\Project\Stage\CompleteStageDto;
+use App\Dto\v1\Project\Stage\CompleteDto;
 use App\Enums\StageStatusEnum;
 use App\Exceptions\ApiResponseException;
 use App\Models\Stage;
@@ -10,18 +10,18 @@ use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class CompleteStageAction
+class CompleteAction
 {
     use ResponseTrait;
 
     /**
      * Summary of __invoke
      * @param int $stageId
-     * @param \App\Dto\v1\Project\Stage\CompleteStageDto $dto
+     * @param \App\Dto\v1\Project\Stage\CompleteDto $dto
      * @return JsonResponse
      *@throws \App\Exceptions\ApiResponseException
      */
-    public function __invoke(int $stageId, CompleteStageDto $dto): JsonResponse
+    public function __invoke(int $stageId, CompleteDto $dto): JsonResponse
     {
         try {
             $stage = Stage::findOrFail($stageId);

@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Requests\v1\Project\StageTask;
+namespace App\Http\Requests\v1\Project\Stage;
 
-use App\Enums\StageTaskPriorityEnum;
+use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateStageTaskRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
+    use FailedValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -24,11 +25,9 @@ class UpdateStageTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'stage_id' => 'required|integer|exists:stages,id',
             'title' => 'required|string|min:2|max:255',
             'description' => 'nullable|string',
             'executor_id' => 'required|integer|exists:users,id',
-            'priority' => ['required', 'string', Rule::enum(StageTaskPriorityEnum::class)],
             'deadline' => 'required|date_format:m-d-Y',
         ];
     }

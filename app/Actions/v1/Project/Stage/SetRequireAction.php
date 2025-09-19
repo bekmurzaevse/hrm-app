@@ -8,13 +8,13 @@ use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class SetRequireStageAction
+class SetRequireAction
 {
     use ResponseTrait;
 
     /**
      * Summary of __invoke
-     * @param \App\Dto\v1\Project\Stage\UpdateStageDto $dto
+     * @param \App\Dto\v1\Project\Stage\UpdateDto $dto
      * @return JsonResponse
      */
     public function __invoke(int $stageId): JsonResponse

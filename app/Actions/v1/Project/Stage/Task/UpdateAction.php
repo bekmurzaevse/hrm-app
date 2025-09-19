@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Actions\v1\Project\StageTask;
+namespace App\Actions\v1\Project\Stage\Task;
 
-use App\Dto\v1\Project\StageTask\UpdateStageTaskDto;
+use App\Dto\v1\Project\Stage\Task\UpdateDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Stage;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class UpdateStageTaskAction
+class UpdateAction
 {
     use ResponseTrait;
 
     /**
      * Summary of __invoke
      * @param int $taskId
-     * @param \App\Dto\v1\Project\StageTask\UpdateStageTaskDto $dto
+     * @param \App\Dto\v1\Project\Stage\Task\UpdateDto $dto
      * @return JsonResponse
      *@throws \App\Exceptions\ApiResponseException
      */
-    public function __invoke(int $taskId, UpdateStageTaskDto $dto): JsonResponse
+    public function __invoke(int $taskId, UpdateDto $dto): JsonResponse
     {
         try {
             $stage = Stage::findOrFail($dto->stageId);

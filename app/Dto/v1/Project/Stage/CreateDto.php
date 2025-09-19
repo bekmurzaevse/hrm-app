@@ -2,11 +2,12 @@
 
 namespace App\Dto\v1\Project\Stage;
 
-use App\Http\Requests\v1\Project\Stage\UpdateStageRequest;
+use App\Http\Requests\v1\Project\Stage\CreateRequest;
 
-readonly class UpdateStageDto
+readonly class CreateDto
 {
     public function __construct(
+        public int $stageId,
         public string $title,
         public ?string $description,
         public int $executorId,
@@ -14,14 +15,11 @@ readonly class UpdateStageDto
     ) {
     }
 
-    /**
-     * Summary of from
-     * @param \App\Http\Requests\v1\Project\Stage\UpdateStageRequest $request
-     * @return UpdateStageDto
-     */
-    public static function from(UpdateStageRequest $request): self
+
+    public static function from(CreateRequest $request): self
     {
         return new self(
+            stageId: $request->stage_id,
             title: $request->title,
             description: $request->description,
             executorId: $request->executor_id,

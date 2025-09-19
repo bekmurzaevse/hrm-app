@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\v1\Project\StageTask;
+namespace App\Http\Requests\v1\Project\Stage\Task;
 
 use App\Enums\StageTaskPriorityEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateStageTaskRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

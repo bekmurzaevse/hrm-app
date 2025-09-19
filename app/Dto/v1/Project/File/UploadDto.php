@@ -5,7 +5,7 @@ namespace App\Dto\v1\Project\File;
 use App\Http\Requests\v1\Project\File\UploadFileRequest;
 use Illuminate\Http\UploadedFile;
 
-readonly class UploadFileDto
+readonly class UploadDto
 {
     public function __construct(
         public UploadedFile $file,
@@ -16,7 +16,7 @@ readonly class UploadFileDto
     /**
      * Summary of from
      * @param \App\Http\Requests\v1\Project\File\UploadFileRequest $request
-     * @return UploadFileDto
+     * @return UploadDto
      */
     public static function from(UploadFileRequest $request): self
     {

@@ -18,18 +18,19 @@ class ProjectStageTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->seed();
-
-        $user = User::find(1);
-        Sanctum::actingAs($user, ['access-token']);
-        // TODO: Need test with unauthorized user by role, actingAs * 
     }
 
     /**
-     * Summary of test_create_project_stage
+     * Summary of test_admin_manager_can_create_project_stage
      * @return void
      */
-    public function test_create_project_stage()
+    public function test_admin_manager_can_create_project_stage()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $data = [
             'stage_id' => 2,
             'title' => 'Test Stage',
@@ -54,11 +55,16 @@ class ProjectStageTest extends TestCase
     }
 
     /**
-     * Summary of test_update_project_stage
+     * Summary of test_admin_manager_can_update_project_stage
      * @return void
      */
-    public function test_update_project_stage()
+    public function test_admin_manager_can_update_project_stage()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $data = [
             'stage_id' => 2,
             'title' => 'Test Stage',
@@ -87,8 +93,13 @@ class ProjectStageTest extends TestCase
      * Summary of test_delete_project_stage
      * @return void
      */
-    public function test_delete_project_stage()
+    public function test_admin_manager_can_delete_project_stage()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $stage = Stage::find(1);
 
         $response = $this->deleteJson('/api/v1/projects/stage/delete/1');
@@ -104,11 +115,16 @@ class ProjectStageTest extends TestCase
     }
 
     /**
-     * Summary of test_set_required_stage
+     * Summary of test_admin_can_set_required_stage
      * @return void
      */
-    public function test_set_required_stage()
+    public function test_admin_can_set_required_stage()
     {
+        $user = User::role(['admin'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $stage = Stage::create([
             'title' => 'Test Stage',
             'description' => 'Test Description',
@@ -134,11 +150,16 @@ class ProjectStageTest extends TestCase
     }
 
     /**
-     * Summary of test_complete_stage
+     * Summary of test_admin_manager_can_complete_stage
      * @return void
      */
-    public function test_complete_stage(): void
+    public function test_admin_manager_can_complete_stage(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $stage = Stage::find(2);
         $data = [
             'candidate_count' => 5,
