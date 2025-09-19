@@ -28,7 +28,7 @@ class CompleteAction
 
             if ($stage->status === StageStatusEnum::IN_PROGRESS) {
                 $stage->stageCompletion()->create([
-                    'completed_by' => auth()->user()->id,
+                    'completed_by' => auth()->id(),
                     'candidate_count' => $dto->candidateCount,
                     'comment' => $dto->comment
                 ]);
