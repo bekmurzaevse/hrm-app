@@ -2,7 +2,7 @@
 
 namespace App\Actions\v1\Project;
 
-use App\Dto\v1\Project\CloseProjectDto;
+use App\Dto\v1\Project\CloseDto;
 use App\Enums\ProjectStatusEnum;
 use App\Enums\Vacancy\VacancyStatusEnum;
 use App\Exceptions\ApiResponseException;
@@ -11,7 +11,7 @@ use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class CloseProjectAction
+class CloseAction
 {
     use ResponseTrait;
 
@@ -20,7 +20,7 @@ class CloseProjectAction
      * @param \App\Dto\v1\Project\UpdateDto $dto
      * @return JsonResponse
      */
-    public function __invoke(int $id, CloseProjectDto $dto): JsonResponse
+    public function __invoke(int $id, CloseDto $dto): JsonResponse
     {
         try {
             $project = Project::findOrFail($id);

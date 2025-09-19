@@ -21,10 +21,10 @@ class ProjectTest extends TestCase
     }
 
     /**
-     * Summary of test_project_can_view_all
+     * Summary of test_all_users_can_view_all_projects
      * @return void
      */
-    public function test_project_can_view_all(): void
+    public function test_all_users_can_view_all_projects(): void
     {
         $user = User::inRandomOrder()->first();
         Sanctum::actingAs($user, ['access-token']);
@@ -69,10 +69,10 @@ class ProjectTest extends TestCase
     }
 
     /**
-     * Summary of test_project_can_view_one
+     * Summary of test_all_users_can_view_one_project
      * @return void
      */
-    public function test_project_can_view_one(): void
+    public function test_all_users_can_view_one_project(): void
     {
         $user = User::inRandomOrder()->first();
         Sanctum::actingAs($user, ['access-token']);
@@ -102,10 +102,10 @@ class ProjectTest extends TestCase
     }
 
     /**
-     * Summary of test_project_can_create
+     * Summary of test_admin_manager_can_create_project
      * @return void
      */
-    public function test_project_can_create(): void
+    public function test_admin_manager_can_create_project(): void
     {
         $user = User::role(['admin', 'manager'])
             ->inRandomOrder()
@@ -147,10 +147,10 @@ class ProjectTest extends TestCase
     }
 
     /**
-     * Summary of test_project_can_update
+     * Summary of test_admin_manager_can_update_project
      * @return void
      */
-    public function test_project_can_update(): void
+    public function test_admin_manager_can_update_project(): void
     {
         $user = User::role(['admin', 'manager'])
             ->inRandomOrder()
@@ -198,7 +198,7 @@ class ProjectTest extends TestCase
      * Summary of test_project_can_close
      * @return void
      */
-    public function test_project_can_close(): void
+    public function test_admin_manager_can_close_project(): void
     {
         $user = User::role(['admin', 'manager'])
             ->inRandomOrder()
@@ -230,10 +230,10 @@ class ProjectTest extends TestCase
     }
 
     /**
-     * Summary of test_project_can_create_contract
+     * Summary of test_admin_manager_can_create_project_contract
      * @return void
      */
-    public function test_project_can_create_contract(): void
+    public function test_admin_manager_can_create_project_contract(): void
     {
         $user = User::role(['admin', 'manager'])
             ->inRandomOrder()
@@ -264,10 +264,10 @@ class ProjectTest extends TestCase
     }
 
     /**
-     * Summary of test_project_performers_can_update
+     * Summary of test_admin_manager_can_update_project_performers
      * @return void
      */
-    public function test_project_performers_can_update(): void
+    public function test_admin_manager_can_update_project_performers(): void
     {
         $user = User::role(['admin', 'manager'])
             ->inRandomOrder()

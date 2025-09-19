@@ -10,7 +10,7 @@ use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class UploadFileAction
+class UploadAction
 {
     use ResponseTrait;
 

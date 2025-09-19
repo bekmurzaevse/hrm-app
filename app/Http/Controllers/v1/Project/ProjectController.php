@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\v1\Project;
 
-use App\Actions\v1\Project\CloseProjectAction;
+use App\Actions\v1\Project\CloseAction;
 use App\Actions\v1\Project\CreateAction;
 use App\Actions\v1\Project\CreateContractAction;
 use App\Actions\v1\Project\IndexAction;
 use App\Actions\v1\Project\ShowAction;
 use App\Actions\v1\Project\UpdateAction;
 use App\Actions\v1\Project\UpdatePerformerAction;
-use App\Dto\v1\Project\CloseProjectDto;
+use App\Dto\v1\Project\CloseDto;
 use App\Dto\v1\Project\CreateContractDto;
 use App\Dto\v1\Project\CreateDto;
 use App\Dto\v1\Project\IndexDto;
 use App\Dto\v1\Project\UpdateDto;
 use App\Dto\v1\Project\UpdatePerformerDto;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Project\CloseProjectRequest;
+use App\Http\Requests\v1\Project\CloseRequest;
 use App\Http\Requests\v1\Project\CreateContractRequest;
 use App\Http\Requests\v1\Project\CreateRequest;
 use App\Http\Requests\v1\Project\IndexRequest;
@@ -90,12 +90,12 @@ class ProjectController extends Controller
     /**
      * Summary of close
      * @param int $id
-     * @param \App\Http\Requests\v1\Project\CloseProjectRequest $request
-     * @param \App\Actions\v1\Project\CloseProjectAction $action
+     * @param \App\Http\Requests\v1\Project\CloseRequest $request
+     * @param \App\Actions\v1\Project\CloseAction $action
      * @return JsonResponse
      */
-    public function close(int $id, CloseProjectRequest $request, CloseProjectAction $action): JsonResponse
+    public function close(int $id, CloseRequest $request, CloseAction $action): JsonResponse
     {
-        return $action($id, CloseProjectDto::from($request));
+        return $action($id, CloseDto::from($request));
     }
 }

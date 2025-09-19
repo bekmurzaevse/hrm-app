@@ -5,7 +5,7 @@ namespace App\Http\Requests\v1\Project\File;
 use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UploadFileRequest extends FormRequest
+class UploadRequest extends FormRequest
 {
     use FailedValidation;
 

@@ -5,7 +5,7 @@ namespace App\Http\Requests\v1\Project;
 use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CloseProjectRequest extends FormRequest
+class CloseRequest extends FormRequest
 {
     use FailedValidation;
 
