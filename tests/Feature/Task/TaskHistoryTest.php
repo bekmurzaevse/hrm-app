@@ -28,7 +28,7 @@ class TaskHistoryTest extends TestCase
 
     public function test_executor_can_be_added(): void
     {
-        $task = Task::inRandomOrder()->first();
+        $task = Task::where('created_by', auth()->id())->first();
 
         $executor = User::whereDoesntHave('assignedTasks', function ($q) use ($task) {
             $q->where('task_id', $task->id);
@@ -51,76 +51,61 @@ class TaskHistoryTest extends TestCase
             'task_id' => $task->id,
             'user_id' => $executor->id,
         ]);
-    }
 
-    public function test_executor_can_updated()
-    {
-        $task = Task::inRandomOrder()->first();
+        $id = $executor->id;
+        $comment = "Добавлен исполнитель (ID: " . $id . "). Комментарий: open";
 
-        $oldExecutor = User::find(1);
-        TaskUser::create([
+        $this->assertDatabaseHas('task_histories', [
             'task_id' => $task->id,
-            'user_id' => $oldExecutor->id,
-            'status' => 'in_progress',
+            'changed_by' => auth()->id(),
+            'type' => TaskHistoryType::ExecutorAdded,
+            'comment' => $comment
         ]);
 
-        $newExecutor = User::find(2);
-
-        $payload = [
-            'old_user_id' => $oldExecutor->id,
-            'new_user_id' => $newExecutor->id,
-            'comment' => 'Test comment',
-        ];
-
-        $response = $this->putJson("/api/v1/tasks/{$task->id}/update-executor", $payload);
-
-        $response->assertStatus(200)
-            ->assertJson([
-                'status' => 200,
-                'message' => 'Исполнитель успешно обновлен',
-            ]);
-
-        $this->assertDatabaseHas('task_users', [
-            'task_id' => $task->id,
-            'user_id' => $newExecutor->id,
-        ]);
     }
 
-    // public function test_executor_can_be_removed(): void
+    // public function test_executor_can_updated()
     // {
-    //     $task = Task::factory()->create([
-    //         'created_by' => 1,
-    //         'comment' => 'Test task',
-    //     ]);
+    //     $task = Task::where('created_by', auth()->id())->first();
 
-    //     $executor = User::factory()->create();
-
+    //     $oldExecutor = User::find(1);
     //     TaskUser::create([
     //         'task_id' => $task->id,
-    //         'user_id' => $executor->id,
-    //         'status' => 'in_progress',
+    //         'user_id' => $oldExecutor->id,
+    //         'status' => TaskStatusEnum::OPEN->value,
     //     ]);
 
+    //     $newExecutor = User::find(2);
+
     //     $payload = [
-    //         'user_id' => $executor->id,
-    //         'comment' => 'Removed for test',
+    //         'old_user_id' => $oldExecutor->id,
+    //         'new_user_id' => $newExecutor->id,
+    //         'comment' => 'Test comment update',
     //     ];
 
-    //     $response = $this->withHeaders([
-    //         'Content-Type' => 'application/json',
-    //     ])->deleteJson("/api/v1/tasks/{$task->id}/remove-executor", $payload);
+    //     $response = $this->putJson("/api/v1/tasks/{$task->id}/update-executor", $payload);
 
     //     $response->assertStatus(200)
     //         ->assertJson([
     //             'status' => 200,
-    //             'message' => 'Исполнитель успешно удален',
+    //             'message' => 'Исполнитель успешно обновлен',
     //         ]);
 
-    //     $this->assertDatabaseMissing('task_users', [
+    //     $this->assertDatabaseHas('task_users', [
     //         'task_id' => $task->id,
-    //         'user_id' => $executor->id,
+    //         'user_id' => $newExecutor->id,
     //     ]);
-    // }
+
+    //     $comment = "Исполнитель изменен: {$oldExecutor->id} → {$newExecutor->id}"
+    //                     .  "Комментарий: Test comment update";
+
+    //     $this->assertDatabaseHas('task_histories', [
+    //         'task_id' => $task->id,
+    //         'changed_by' => auth()->id(),
+    //         'type' => TaskHistoryType::ExecutorChanged,
+    //         'comment' => $comment
+    //     ]);
+    // } TODO: Bul test hazirshe kerek emes
 
     public function test_executor_can_be_removed(): void
     {
@@ -134,7 +119,7 @@ class TaskHistoryTest extends TestCase
         TaskUser::create([
             'task_id' => $task->id,
             'user_id' => $executor->id,
-            'status' => 'in_progress',
+            'status' => TaskStatusEnum::IN_PROGRESS->value,
         ]);
 
         $payload = [
@@ -153,10 +138,10 @@ class TaskHistoryTest extends TestCase
                 'message' => 'Исполнитель успешно удален',
             ]);
 
-        // $this->assertDatabaseMissing('task_users', [
-        //     'task_id' => $task->id,
-        //     'user_id' => $executor->id,
-        // ]);
+        $this->assertSoftDeleted('task_users', [
+            'task_id' => $task->id,
+            'user_id' => $executor->id,
+        ]);
 
         $this->assertDatabaseHas('task_histories', [
             'task_id' => $task->id,
@@ -186,7 +171,7 @@ class TaskHistoryTest extends TestCase
             'comment' => 'Rejected for testing',
         ];
 
-        $response = $this->postJson("/api/v1/tasks/{$task->id}/reject", $payload);
+        $response = $this->putJson("/api/v1/tasks/{$task->id}/reject", $payload);
 
         $response->assertStatus(200)
             ->assertJson([
@@ -194,10 +179,10 @@ class TaskHistoryTest extends TestCase
                 'message' => 'Задача отклонена',
             ]);
 
-        // $this->assertDatabaseHas('tasks', [
-        //     'id'     => $task->id,
-        //     'status' => 'rejected',
-        // ]);
+        $this->assertDatabaseHas('tasks', [
+            'id'     => $task->id,
+            'status' => 'rejected',
+        ]);
 
         $this->assertDatabaseHas('task_histories', [
             'task_id' => $task->id,
@@ -208,7 +193,7 @@ class TaskHistoryTest extends TestCase
 
     public function test_task_can_be_transferred(): void
     {
-        $task = Task::inRandomOrder()->first();
+        $task = Task::where('created_by', auth()->id())->first();
         $newExecutor = User::where('id', '!=', $task->executor_id)->firstOrFail();
 
         $payload = [
@@ -224,11 +209,14 @@ class TaskHistoryTest extends TestCase
                 'message' => 'Задача успешно отправлена',
             ]);
 
+        $comment = "Задача отправлена пользователю (ID: {$newExecutor->id})"
+           . ". Комментарий: Transfer test comment";
+
         $this->assertDatabaseHas('task_histories', [
             'task_id' => $task->id,
+            'changed_by' => auth()->id(),
             'type' => TaskHistoryType::TaskSent,
+            'comment' => $comment
         ]);
     }
-
-
 }

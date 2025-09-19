@@ -45,10 +45,10 @@ class RemoveExecutorAction
                 $taskUser->delete();
 
                 TaskHistory::create([
-                    'task_id'    => $task->id,
+                    'task_id' => $task->id,
                     'changed_by' => auth()->id(),
-                    'type'       => TaskHistoryType::ExecutorRemoved,
-                    'comment'    => "Исполнитель удален (ID: {$user->id})"
+                    'type' => TaskHistoryType::ExecutorRemoved,
+                    'comment' => "Исполнитель удален (ID: {$user->id})"
                         . ($dto->comment ? ". Комментарий: {$dto->comment}" : ''),
                 ]);
             });
@@ -63,4 +63,4 @@ class RemoveExecutorAction
             throw new ApiResponseException('Server Error', 500);
         }
     }
-} 
+}
