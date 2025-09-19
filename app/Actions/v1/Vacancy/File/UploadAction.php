@@ -40,7 +40,7 @@ class UploadAction
             logActivity($title, $text);
 
             return static::toResponse(
-                message: "Uploaded file to Vacancy-{$id}",
+                message: "Uploaded file to Vacancy",
             );
         } catch (ModelNotFoundException $e) {
             throw new ApiResponseException('Vacancy Not Found', 404);

@@ -11,10 +11,15 @@ readonly class UpdateDto
     ) {
     }
 
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Vacancy\Skill\UpdateRequest $request
+     * @return UpdateDto
+     */
     public static function from(UpdateRequest $request): self
     {
         return new self(
-            title: $request->title,
+            title: $request->input('title'),
         );
     }
 }

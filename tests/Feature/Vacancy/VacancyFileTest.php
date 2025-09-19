@@ -43,7 +43,7 @@ class VacancyFileTest extends TestCase
 
         $response->assertStatus(200)->assertJson([
             "status" => 200,
-            "message" => "Uploaded file to Vacancy-1"
+            "message" => "Uploaded file to Vacancy"
         ]);
 
         $this->assertDatabaseHas('files', [

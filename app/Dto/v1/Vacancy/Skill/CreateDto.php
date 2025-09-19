@@ -11,11 +11,15 @@ readonly class CreateDto
     ) {
     }
 
-
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Vacancy\Skill\CreateRequest $request
+     * @return CreateDto
+     */
     public static function from(CreateRequest $request): self
     {
         return new self(
-            titles: $request->titles,
+            titles: $request->input('titles'),
         );
     }
 }

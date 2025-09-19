@@ -78,7 +78,7 @@ class VacancySkillTest extends TestCase
 
         $response->assertStatus(200)->assertJson([
             'status' => 200,
-            'message' => 'Vacancy\'s Skill Updated',
+            'message' => "Vacancy's Skill Updated",
         ]);
 
         $this->assertDatabaseHas('skills', [
@@ -102,7 +102,7 @@ class VacancySkillTest extends TestCase
 
         $response->assertStatus(200)->assertJson([
             'status' => 200,
-            'message' => "Id-{$skill->id} skill deleted"
+            'message' => "Vacancy's skill deleted"
         ]);
 
         $this->assertSoftDeleted('skills', [

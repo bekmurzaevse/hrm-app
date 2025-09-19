@@ -31,7 +31,7 @@ class DeleteAction
             logActivity($title, $text);
 
             return static::toResponse(
-                message: "Id-{$skillId} skill deleted",
+                message: "Vacancy's skill deleted",
             );
         } catch (ModelNotFoundException $ex) {
             $model = class_basename($ex->getModel());

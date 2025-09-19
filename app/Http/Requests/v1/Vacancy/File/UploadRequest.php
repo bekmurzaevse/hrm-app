@@ -10,6 +10,25 @@ class UploadRequest extends FormRequest
     use FailedValidation;
 
     /**
+     * Summary of ALLOWED_MIME_TYPES
+     * @var array
+     */
+    private const ALLOWED_MIME_TYPES = [
+        // Documents
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+
+        // Spreadsheets
+        'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+
+        // Presentations
+        'application/vnd.ms-powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    ];
+
+    /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
@@ -28,8 +47,8 @@ class UploadRequest extends FormRequest
             'file' => [
                 'required',
                 'file',
-                'mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'max:4096'
+                'mimetypes:' . implode(',', self::ALLOWED_MIME_TYPES),
+                'max:5120', // 5MB
             ],
             'type' => 'required|string|max:255',
         ];

@@ -22,7 +22,7 @@ readonly class UploadDto
     {
         return new self(
             file: $request->file('file'),
-            type: $request->type,
+            type: $request->input('type'),
         );
     }
 }
