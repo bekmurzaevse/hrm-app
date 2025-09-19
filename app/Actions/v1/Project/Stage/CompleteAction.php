@@ -52,7 +52,7 @@ class CompleteAction
                 logActivity($title, $text);
             } else {
                 return static::toResponse(
-                    message: "Stage status need in_progress, now it is {$stage->status}"
+                    message: "Stage status need in_progress, now it is {$stage->status->value}"
                 );
             }
 
