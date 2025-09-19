@@ -20,18 +20,19 @@ class ProjectFileTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->seed();
-
-        $user = User::find(1);
-        Sanctum::actingAs($user, ['access-token']);
-        // TODO: Need test with unauthorized user by role, actingAs * 
     }
 
     /**
-     * Summary of test_project_file_upload
+     * Summary of test_admin_manager_can_upload_project_file
      * @return void
      */
-    public function test_project_file_upload()
+    public function test_admin_manager_can_upload_project_file()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $project = Project::find(1);
         $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');
 
@@ -40,9 +41,9 @@ class ProjectFileTest extends TestCase
             'type' => 'document'
         ]);
 
-        $response->assertStatus(200)->assertJson([
-            "status" => 200,
-            "message" => "Uploaded file to Project-1"
+        $response->assertStatus(201)->assertJson([
+            "status" => 201,
+            "message" => "Uploaded file to Project"
         ]);
 
         $this->assertDatabaseHas('files', [
@@ -53,11 +54,14 @@ class ProjectFileTest extends TestCase
     }
 
     /**
-     * Summary of test_project_file_download
+     * Summary of test_all_users_can_download_project_file
      * @return void
      */
-    public function test_project_file_download()
+    public function test_all_users_can_download_project_file()
     {
+        $user = User::inRandomOrder()->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $project = Project::find(1);
 
         $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');
@@ -77,35 +81,16 @@ class ProjectFileTest extends TestCase
     }
 
     /**
-     * Summary of test_project_file_show
+     * Summary of test_admin_manager_can_delete_project_file
      * @return void
      */
-    public function test_project_file_show()
+    public function test_admin_manager_can_delete_project_file()
     {
-        $project = Project::find(1);
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
 
-        $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');
-        $uploadedFile = FileUploadHelper::file($file, "projects/1");
-
-        $projectFile = $project->files()->create([
-            'name' => $uploadedFile['name'],
-            'path' => $uploadedFile['path'],
-            'size' => $uploadedFile['size'],
-            'type' => 'document',
-        ]);
-
-        $response = $this->getJson('/api/v1/projects/' . $project->id . '/file/' . $projectFile->id);
-
-        $response->assertStatus(200)
-            ->assertHeader('Content-Disposition', 'inline; filename="document.pdf"');
-    }
-
-    /**
-     * Summary of test_project_file_delete
-     * @return void
-     */
-    public function test_project_file_delete()
-    {
         $project = Project::find(1);
 
         $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');

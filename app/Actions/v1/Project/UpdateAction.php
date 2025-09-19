@@ -47,7 +47,7 @@ class UpdateAction
             }
 
             return static::toResponse(
-                message: "{$id}-Project updated"
+                message: "Project updated"
             );
         } catch (ModelNotFoundException $e) {
             throw new ApiResponseException('Project Not Found', 404);

@@ -21,8 +21,8 @@ readonly class CreateContractDto
     public static function from(CreateContractRequest $request): self
     {
         return new self(
-            contractNumber: $request->contract_number,
-            contractBudget: $request->contract_budget,
+            contractNumber: $request->input('contract_number'),
+            contractBudget: $request->input('contract_budget'),
             // contractCurrency: $request->contract_currency,
         );
     }

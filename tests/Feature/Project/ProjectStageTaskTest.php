@@ -18,18 +18,19 @@ class ProjectStageTaskTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->seed();
-
-        $user = User::find(1);
-        Sanctum::actingAs($user, ['access-token']);
-        // TODO: Need test with unauthorized user by role, actingAs * 
     }
 
     /**
-     * Summary of test_create_project_stage_task
+     * Summary of test_admin_manager_can_create_project_stage_task
      * @return void
      */
-    public function test_create_project_stage_task()
+    public function test_admin_manager_can_create_project_stage_task()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $data = [
             'stage_id' => 2,
             'title' => 'Test Stage',
@@ -42,7 +43,7 @@ class ProjectStageTaskTest extends TestCase
         $response = $this->postJson('/api/v1/projects/stage/task/create', $data);
 
         $response->assertJson([
-            'status' => 200,
+            'status' => 201,
             'message' => "Stage's task created",
         ]);
 
@@ -56,11 +57,16 @@ class ProjectStageTaskTest extends TestCase
     }
 
     /**
-     * Summary of test_update_project_stage_task
+     * Summary of test_admin_manager_can_update_project_stage_task
      * @return void
      */
-    public function test_update_project_stage_task()
+    public function test_admin_manager_can_update_project_stage_task()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $data = [
             'stage_id' => 2,
             'title' => 'Test Stage',
@@ -87,11 +93,16 @@ class ProjectStageTaskTest extends TestCase
     }
 
     /**
-     * Summary of test_delete_project_stage_task
+     * Summary of test_admin_manager_can_delete_project_stage_task
      * @return void
      */
-    public function test_delete_project_stage_task()
+    public function test_admin_manager_can_delete_project_stage_task()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $stage = StageTask::find(1);
 
         $response = $this->deleteJson('/api/v1/projects/stage/task/1/delete');

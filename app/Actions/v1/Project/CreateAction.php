@@ -40,6 +40,7 @@ class CreateAction
         $project->performers()->attach($dto->performers);
 
         return static::toResponse(
+            code: 201,
             message: 'Project created'
         );
     }
