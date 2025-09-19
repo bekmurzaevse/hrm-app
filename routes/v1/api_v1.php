@@ -105,7 +105,6 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
             // Stage
             Route::post('/{id}/stage/create', [ProjectStageController::class, 'create']);
             Route::patch('/stage/{stageId}/update', [ProjectStageController::class, 'update']);
-            Route::patch('/stage/{stageId}/require', [ProjectStageController::class, 'setRequire']);
             Route::patch('/stage/{stageId}/complete', [ProjectStageController::class, 'complete']);
             Route::delete('/stage/delete/{stageId}', [ProjectStageController::class, 'delete']);
             // Stage Task
@@ -114,6 +113,8 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
             Route::delete('/stage/task/{taskId}/delete', [StageTaskController::class, 'delete']);
         });
     });
+
+    Route::patch('projects/stage/{stageId}/require', [ProjectStageController::class, 'setRequire'])->middleware(['role:admin']);
 
     /**
      * Routs for Auth & Admin & Manager & Recruiter

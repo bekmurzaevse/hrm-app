@@ -21,8 +21,14 @@ class ProjectResource extends JsonResource
             'stages' => StageResource::collection($this->stages),
             'main_info' => [
                 'title' => $this->title,
-                'client_name' => $this->client?->name,
-                'vacancy_title' => $this->vacancy?->title,
+                'client' => [
+                    'id' => $this->client?->id,
+                    'name' => $this->client?->name,
+                ],
+                'vacancy' => [
+                    'id' => $this->vacancy?->id,
+                    'title' => $this->vacancy?->title,
+                ],
                 'performers' => $this->performers_fio,
                 'description' => $this->description,
                 'comment' => $this->comment,
@@ -40,7 +46,7 @@ class ProjectResource extends JsonResource
                 'salary' => $this->vacancy?->salaryDetail,
                 'benefits' => $this->vacancy?->benefits,
             ],
-            'files' => $this->files->map(function ($file) {
+            'files' => $this->files?->map(function ($file) {
                 $fileExists = Storage::disk('public')->exists($file->path);
                 return [
                     'id' => $file->id,
