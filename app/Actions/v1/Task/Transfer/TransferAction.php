@@ -35,12 +35,18 @@ class TransferAction
                 ]);
 
                 TaskHistory::create([
-                    'task_id'    => $task->id,
+                    'task_id' => $task->id,
                     'changed_by' => auth()->id(),
-                    'type'       => TaskHistoryType::TaskSent,
-                    'comment'    => "Задача отправлена пользователю (ID: {$user->id})"
+                    'type' => TaskHistoryType::TaskSent,
+                    'comment' => "Задача отправлена пользователю (ID: {$user->id})"
                         . ($dto->comment ? ". Комментарий: {$dto->comment}" : ''),
                 ]);
+
+                logActivity(
+                    "Передача задачи",
+                    "{$task->title} → {$user->first_name} {$user->last_name}" . ($dto->comment ? " — {$dto->comment}" : '')
+                );
+
             });
 
             return static::toResponse(

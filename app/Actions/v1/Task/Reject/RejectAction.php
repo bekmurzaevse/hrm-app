@@ -31,11 +31,16 @@ class RejectAction
             ]);
 
             TaskHistory::create([
-                'task_id'    => $task->id,
+                'task_id' => $task->id,
                 'changed_by' => auth()->id(),
-                'type'       => TaskHistoryType::TaskRejected,
-                'comment'    => $dto->comment,
+                'type' => TaskHistoryType::TaskRejected,
+                'comment' => $dto->comment,
             ]);
+
+            logActivity(
+                "Task Rejected!",
+                "Отклонена задача: {$task->title}",
+            );
 
             return static::toResponse(message: 'Задача отклонена');
         } catch (ModelNotFoundException $ex) {
