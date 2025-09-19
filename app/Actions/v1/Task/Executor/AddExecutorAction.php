@@ -58,6 +58,14 @@ class AddExecutorAction
                     'comment'    => "Добавлен исполнитель (ID: {$user->id})"
                         . ($dto->comment ? ". Комментарий: {$dto->comment}" : ''),
                 ]);
+
+                $initiator = auth()->user();
+                logActivity(
+                    "Добавлен исполнитель",
+                    "Задача '{$task->title}' — {$user->first_name} {$user->last_name} добавлен инициатором {$initiator->first_name} {$initiator->last_name}"
+                    . ($dto->comment ? " — {$dto->comment}" : '')
+                );
+
             });
 
             return static::toResponse(

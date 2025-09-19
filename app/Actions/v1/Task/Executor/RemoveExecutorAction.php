@@ -51,6 +51,13 @@ class RemoveExecutorAction
                     'comment' => "Исполнитель удален (ID: {$user->id})"
                         . ($dto->comment ? ". Комментарий: {$dto->comment}" : ''),
                 ]);
+                
+                $initiator = auth()->user();
+                logActivity(
+                    "Удаление исполнителя",
+                    "Из задачи '{$task->title}' удален {$user->first_name} {$user->last_name} инициатором {$initiator->first_name} {$initiator->last_name}"
+                    . ($dto->comment ? " — {$dto->comment}" : '')
+                );
             });
 
             return static::toResponse(

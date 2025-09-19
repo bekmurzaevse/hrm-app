@@ -53,10 +53,13 @@ class CompleteAction
                 ]);
             }
 
+            $task = Task::findOrFail($dto->taskId);
+            $user = auth()->user();
+            $userName = $user->first_name . ' ' . $user->last_name;
+
             logActivity(
                 "Задача выполнена!",
-                "Задача (ID: {$dto->taskId}) была отмечена как выполненная пользователем"
-                //auth()->user()->first_name . " " . auth()->user()->last_name
+                "Задача '{$task->title}' (ID: {$task->id}) была отмечена как выполненная пользователем {$userName}"
             );
 
             return static::toResponse(
