@@ -37,7 +37,8 @@ class CreateContractAction
             logActivity($title, $text);
 
             return static::toResponse(
-                message: 'Contract created successfully for project-' . $id
+                code: 201,
+                message: 'Contract created successfully for project'
             );
         } catch (ModelNotFoundException $e) {
             throw new ApiResponseException('Project not found', 404);

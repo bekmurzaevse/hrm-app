@@ -6,6 +6,7 @@ use App\Dto\v1\Project\IndexDto;
 use App\Http\Resources\v1\Project\ProjectCollection;
 use App\Models\Project;
 use App\Traits\ResponseTrait;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 
@@ -49,14 +50,19 @@ class IndexAction
             }
 
             if ($dto->deadlineFrom) {
-                $query->whereBetween('deadline', [$dto->deadlineFrom, $dto->deadlineTo]);
+                $from = Carbon::createFromFormat('d-m-Y', $dto->deadlineFrom)->startOfDay();
+                $to = Carbon::createFromFormat('d-m-Y', $dto->deadlineTo)->endOfDay();
+
+                $query->whereBetween('deadline', [$from, $to]);
             }
 
             if ($dto->contractBudgetFrom) {
                 $query->whereBetween('contract_budget', [$dto->contractBudgetFrom, $dto->contractBudgetTo]);
             }
 
-            return $query->paginate($dto->perPage ?? 10);
+            $query->orderBy('created_at', 'desc');
+
+            return $query->paginate(perPage: $dto->perPage, page: $dto->page);
         });
 
         return static::toResponse(

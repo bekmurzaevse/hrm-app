@@ -31,7 +31,7 @@ class UpdatePerformerAction
             $project->performers()->sync($dto->performers);
 
             return static::toResponse(
-                message: 'Performers updated successfully for project-' . $id
+                message: 'Performers updated successfully for project'
             );
         } catch (ModelNotFoundException $e) {
             throw new ApiResponseException('Project not found', 404);

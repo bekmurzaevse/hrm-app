@@ -18,17 +18,18 @@ class VacancySkillTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->seed();
-        
-        $user = User::find(1);
+
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
         Sanctum::actingAs($user, ['access-token']);
-        // TODO: Need test with unauthorized user by role, actingAs * 
     }
 
     /**
-     * Summary of test_vacancy_skills_can_create
+     * Summary of test_admin_manager_can_create_skill_for_vacancy
      * @return void
      */
-    public function test_vacancy_skills_can_create(): void
+    public function test_admin_manager_can_create_skill_for_vacancy(): void
     {
         $vacancy = Vacancy::find(1);
 
@@ -65,10 +66,10 @@ class VacancySkillTest extends TestCase
     }
 
     /**
-     * Summary of test_vacancy_skills_can_update
+     * Summary of test_admin_manager_can_update_skill_for_vacancy
      * @return void
      */
-    public function test_vacancy_skills_can_update(): void
+    public function test_admin_manager_can_update_skill_for_vacancy(): void
     {
         $vacancy = Vacancy::find(1);
         $skill = $vacancy->skills()->first();
@@ -77,7 +78,7 @@ class VacancySkillTest extends TestCase
 
         $response->assertStatus(200)->assertJson([
             'status' => 200,
-            'message' => 'Vacancy\'s Skill Updated',
+            'message' => "Vacancy's Skill Updated",
         ]);
 
         $this->assertDatabaseHas('skills', [
@@ -89,10 +90,10 @@ class VacancySkillTest extends TestCase
     }
 
     /**
-     * Summary of test_vacancy_skill_can_delete
+     * Summary of test_admin_manager_can_delete_skill_for_vacancy
      * @return void
      */
-    public function test_vacancy_skill_can_delete(): void
+    public function test_admin_manager_can_delete_skill_for_vacancy(): void
     {
         $vacancy = Vacancy::find(1);
         $skill = $vacancy->skills()->first();
@@ -101,7 +102,7 @@ class VacancySkillTest extends TestCase
 
         $response->assertStatus(200)->assertJson([
             'status' => 200,
-            'message' => "Id-{$skill->id} skill deleted"
+            'message' => "Vacancy's skill deleted"
         ]);
 
         $this->assertSoftDeleted('skills', [

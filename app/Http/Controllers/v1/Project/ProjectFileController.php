@@ -2,63 +2,49 @@
 
 namespace App\Http\Controllers\v1\Project;
 
-use App\Actions\v1\Project\File\DeleteFileAction;
-use App\Actions\v1\Project\File\DownloadFileAction;
-use App\Actions\v1\Project\File\ShowFileAction;
-use App\Actions\v1\Project\File\UploadFileAction;
-use App\Dto\v1\Project\File\UploadFileDto;
+use App\Actions\v1\Project\File\DeleteAction;
+use App\Actions\v1\Project\File\DownloadAction;
+use App\Actions\v1\Project\File\UploadAction;
+use App\Dto\v1\Project\File\UploadDto;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Project\File\UploadFileRequest;
+use App\Http\Requests\v1\Project\File\UploadRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ProjectFileController extends Controller
 {
     /**
-     * Summary of downloadFile
+     * Summary of download
      * @param int $id
      * @param int $fileId
-     * @param \App\Actions\v1\Project\File\DownloadFileAction $action
+     * @param \App\Actions\v1\Project\File\DownloadAction $action
      * @return BinaryFileResponse
      */
-    public function downloadFile(int $id, int $fileId, DownloadFileAction $action): BinaryFileResponse
+    public function download(int $id, int $fileId, DownloadAction $action): BinaryFileResponse
     {
         return $action($id, $fileId);
     }
 
     /**
-     * Summary of showFile
+     * Summary of upload
      * @param int $id
-     * @param int $fileId
-     * @param \App\Actions\v1\Project\File\ShowFileAction $action
-     * @return Response
+     * @param \App\Http\Requests\v1\Project\File\UploadRequest $request
+     * @param \App\Actions\v1\Project\File\UploadAction $action
+     * @return JsonResponse
      */
-    public function showFile(int $id, int $fileId, ShowFileAction $action): Response
+    public function upload(int $id, UploadRequest $request, UploadAction $action): JsonResponse
     {
-        return $action($id, $fileId);
+        return $action($id, UploadDto::from($request));
     }
 
     /**
-     * Summary of uploadFile
-     * @param int $id
-     * @param \App\Http\Requests\v1\Project\File\UploadFileRequest $request
-     * @param \App\Actions\v1\Project\File\UploadFileAction $action
-     * @return JsonResponse
-     */
-    public function uploadFile(int $id, UploadFileRequest $request, UploadFileAction $action): JsonResponse
-    {
-        return $action($id, UploadFileDto::from($request));
-    }
-
-    /**
-     * Summary of deleteFile
+     * Summary of delete
      * @param int $id
      * @param int $fileId
-     * @param \App\Actions\v1\Project\File\DeleteFileAction $action
+     * @param \App\Actions\v1\Project\File\DeleteAction $action
      * @return JsonResponse
      */
-    public function deleteFile(int $id, int $fileId, DeleteFileAction $action): JsonResponse
+    public function delete(int $id, int $fileId, DeleteAction $action): JsonResponse
     {
         return $action($id, $fileId);
     }

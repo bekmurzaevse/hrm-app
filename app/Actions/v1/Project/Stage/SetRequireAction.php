@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Actions\v1\Project\Stage;
+
+use App\Exceptions\ApiResponseException;
+use App\Models\Stage;
+use App\Traits\ResponseTrait;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
+
+class SetRequireAction
+{
+    use ResponseTrait;
+
+    /**
+     * Summary of __invoke
+     * @param \App\Dto\v1\Project\Stage\UpdateDto $dto
+     * @return JsonResponse
+     */
+    public function __invoke(int $stageId): JsonResponse
+    {
+        try {
+            $stage = Stage::findOrFail($stageId);
+
+            if (!$stage->is_required) {
+                $stage->is_required = true;
+                $stage->save();
+
+                // Log user activity
+                $title = 'Установка этапа как обязательного';
+                $description = 'Админ установил этап "' . $stage->title . '" как обязательный';
+                logActivity($title, $description);
+            } else {
+                return static::toResponse(
+                    message: 'Stage already marked as required'
+                );
+            }
+
+            return static::toResponse(
+                message: 'Stage marked as required'
+            );
+        } catch (ModelNotFoundException $e) {
+            throw new ApiResponseException("Stage Not Found", 404);
+        }
+    }
+}

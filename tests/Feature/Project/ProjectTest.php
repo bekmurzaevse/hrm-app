@@ -18,18 +18,17 @@ class ProjectTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->seed();
-
-        $user = User::find(1);
-        Sanctum::actingAs($user, ['access-token']);
-        // TODO: Need test with unauthorized user by role, actingAs * 
     }
 
     /**
-     * Summary of test_project_can_view_all
+     * Summary of test_all_users_can_view_all_projects
      * @return void
      */
-    public function test_project_can_view_all(): void
+    public function test_all_users_can_view_all_projects(): void
     {
+        $user = User::inRandomOrder()->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $response = $this->getJson("/api/v1/projects");
 
         $response
@@ -70,11 +69,14 @@ class ProjectTest extends TestCase
     }
 
     /**
-     * Summary of test_project_can_view_one
+     * Summary of test_all_users_can_view_one_project
      * @return void
      */
-    public function test_project_can_view_one(): void
+    public function test_all_users_can_view_one_project(): void
     {
+        $user = User::inRandomOrder()->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $project = Project::find(1);
 
         $response = $this->getJson("/api/v1/projects/1");
@@ -100,11 +102,16 @@ class ProjectTest extends TestCase
     }
 
     /**
-     * Summary of test_project_can_create
+     * Summary of test_admin_manager_can_create_project
      * @return void
      */
-    public function test_project_can_create(): void
+    public function test_admin_manager_can_create_project(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $data = [
             'title' => 'test title',
             'client_id' => 1,
@@ -121,9 +128,9 @@ class ProjectTest extends TestCase
         $response = $this->postJson('/api/v1/projects/create', $data);
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(201)
             ->assertJson([
-                'status' => 200,
+                'status' => 201,
                 'message' => 'Project created',
             ]);
 
@@ -140,11 +147,16 @@ class ProjectTest extends TestCase
     }
 
     /**
-     * Summary of test_project_can_update
+     * Summary of test_admin_manager_can_update_project
      * @return void
      */
-    public function test_project_can_update(): void
+    public function test_admin_manager_can_update_project(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $data = [
             'title' => 'test title',
             'client_id' => 1,
@@ -166,7 +178,7 @@ class ProjectTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'status' => 200,
-                'message' => '1-Project updated',
+                'message' => 'Project updated',
             ]);
 
         $this->assertDatabaseHas('projects', [
@@ -186,8 +198,13 @@ class ProjectTest extends TestCase
      * Summary of test_project_can_close
      * @return void
      */
-    public function test_project_can_close(): void
+    public function test_admin_manager_can_close_project(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $project = Project::find(1);
 
         $comment = "test comment";
@@ -198,7 +215,7 @@ class ProjectTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'status' => 200,
-                'message' => '1-Project closed',
+                'message' => 'Project closed',
             ]);
 
         $this->assertDatabaseHas('project_closures', [
@@ -213,24 +230,29 @@ class ProjectTest extends TestCase
     }
 
     /**
-     * Summary of test_project_can_create_contract
+     * Summary of test_admin_manager_can_create_project_contract
      * @return void
      */
-    public function test_project_can_create_contract(): void
+    public function test_admin_manager_can_create_project_contract(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $project = Project::find(1);
 
         $response = $this->patchJson("/api/v1/projects/{$project->id}/create-contract", [
             'contract_number' => 'test contract number',
             'contract_budget' => 1000,
-            // 'contract_currency' => 'USD',
+            // 'contract_currency' => 'USD', // TODO: add currency to Project
         ]);
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(201)
             ->assertJson([
-                'status' => 200,
-                'message' => 'Contract created successfully for project-1',
+                'status' => 201,
+                'message' => 'Contract created successfully for project',
             ]);
 
         $this->assertDatabaseHas('projects', [
@@ -242,11 +264,16 @@ class ProjectTest extends TestCase
     }
 
     /**
-     * Summary of test_project_performers_can_update
+     * Summary of test_admin_manager_can_update_project_performers
      * @return void
      */
-    public function test_project_performers_can_update(): void
+    public function test_admin_manager_can_update_project_performers(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $project = Project::find(1);
         $data = [
             'performers' => [1, 2],
@@ -258,7 +285,7 @@ class ProjectTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'status' => 200,
-                'message' => 'Performers updated successfully for project-1',
+                'message' => 'Performers updated successfully for project',
             ]);
 
         $this->assertDatabaseHas('project_user', [
