@@ -44,7 +44,7 @@ class UpdateExecutorAction
                 throw new ModelNotFoundException();
             }
 
-            DB::transaction(function () use ($taskId, $newUserId, $dto, $oldUserId, $newUser) {
+            DB::transaction(function () use ($taskId, $newUserId, $dto, $oldUserId) {
                 TaskUser::firstOrCreate(
                     [
                         'task_id' => $taskId,
