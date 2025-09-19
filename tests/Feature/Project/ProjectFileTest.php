@@ -77,30 +77,6 @@ class ProjectFileTest extends TestCase
     }
 
     /**
-     * Summary of test_project_file_show
-     * @return void
-     */
-    public function test_project_file_show()
-    {
-        $project = Project::find(1);
-
-        $file = UploadedFile::fake()->create('document.pdf', 1024, 'application/pdf');
-        $uploadedFile = FileUploadHelper::file($file, "projects/1");
-
-        $projectFile = $project->files()->create([
-            'name' => $uploadedFile['name'],
-            'path' => $uploadedFile['path'],
-            'size' => $uploadedFile['size'],
-            'type' => 'document',
-        ]);
-
-        $response = $this->getJson('/api/v1/projects/' . $project->id . '/file/' . $projectFile->id);
-
-        $response->assertStatus(200)
-            ->assertHeader('Content-Disposition', 'inline; filename="document.pdf"');
-    }
-
-    /**
      * Summary of test_project_file_delete
      * @return void
      */

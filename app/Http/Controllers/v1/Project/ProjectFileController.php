@@ -4,13 +4,11 @@ namespace App\Http\Controllers\v1\Project;
 
 use App\Actions\v1\Project\File\DeleteFileAction;
 use App\Actions\v1\Project\File\DownloadFileAction;
-use App\Actions\v1\Project\File\ShowFileAction;
 use App\Actions\v1\Project\File\UploadFileAction;
 use App\Dto\v1\Project\File\UploadFileDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Project\File\UploadFileRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ProjectFileController extends Controller
@@ -23,18 +21,6 @@ class ProjectFileController extends Controller
      * @return BinaryFileResponse
      */
     public function downloadFile(int $id, int $fileId, DownloadFileAction $action): BinaryFileResponse
-    {
-        return $action($id, $fileId);
-    }
-
-    /**
-     * Summary of showFile
-     * @param int $id
-     * @param int $fileId
-     * @param \App\Actions\v1\Project\File\ShowFileAction $action
-     * @return Response
-     */
-    public function showFile(int $id, int $fileId, ShowFileAction $action): Response
     {
         return $action($id, $fileId);
     }

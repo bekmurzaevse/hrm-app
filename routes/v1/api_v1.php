@@ -160,7 +160,6 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::patch('/{id}/close', [ProjectController::class, 'closeProject']);
         // File
         Route::get('/{id}/download/{fileId}', [ProjectFileController::class, 'downloadFile']);
-        Route::get('/{id}/file/{fileId}', [ProjectFileController::class, 'showFile']);
         Route::post('/{id}/upload', [ProjectFileController::class, 'uploadFile']);
         Route::delete('/{id}/delete/{fileId}', [ProjectFileController::class, 'deleteFile']);
         // Stage
