@@ -49,7 +49,7 @@ class CloseAction
                 logActivity($title, $text);
 
                 return static::toResponse(
-                    message: "{$id}-Project closed"
+                    message: "Project closed"
                 );
             } else {
                 return static::toResponse(

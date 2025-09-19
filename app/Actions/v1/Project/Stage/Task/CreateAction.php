@@ -24,7 +24,7 @@ class CreateAction
                 'executor_id' => $dto->executorId,
                 'priority' => $dto->priority,
                 'deadline' => $dto->deadline,
-                'created_by' => auth()->user()->id,
+                'created_by' => auth()->id(),
             ];
             $stage->stageTasks()->create($data);
 
@@ -34,6 +34,7 @@ class CreateAction
             logActivity($title, $text);
 
             return static::toResponse(
+                code: 201,
                 message: "Stage's task created"
             );
         } catch (ModelNotFoundException $e) {

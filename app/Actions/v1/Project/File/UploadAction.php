@@ -19,7 +19,7 @@ class UploadAction
      * @param int $id
      * @param \App\Dto\v1\Project\File\UploadDto $dto
      * @return JsonResponse
-     *@throws \App\Exceptions\ApiResponseException
+     * @throws \App\Exceptions\ApiResponseException
      */
     public function __invoke(int $id, UploadDto $dto): JsonResponse
     {
@@ -42,7 +42,8 @@ class UploadAction
             );
 
             return static::toResponse(
-                message: "Uploaded file to Project-{$id}",
+                code: 201,
+                message: "Uploaded file to Project",
             );
         } catch (ModelNotFoundException $e) {
             throw new ApiResponseException('Project Not Found', 404);

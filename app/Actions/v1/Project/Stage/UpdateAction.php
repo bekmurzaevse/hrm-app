@@ -29,7 +29,6 @@ class UpdateAction
                 'deadline' => $dto->deadline,
                 'executor_id' => $dto->executorId,
             ];
-            // TODO: add StageDetail, stageOrder
 
             // Log user activity
             $title = 'Обновление этапа';

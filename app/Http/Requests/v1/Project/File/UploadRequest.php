@@ -18,18 +18,22 @@ class UploadRequest extends FormRequest
     }
 
     /**
-     * Allowed mime types
-     *
+     * Summary of ALLOWED_MIME_TYPES
      * @var array
      */
-    protected array $allowedMimes = [
+    private const ALLOWED_MIME_TYPES = [
+        // Documents
         'application/pdf',
         'application/msword',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'application/vnd.ms-powerpoint',
-        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+
+        // Spreadsheets
         'application/vnd.ms-excel',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+
+        // Presentations
+        'application/vnd.ms-powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
     ];
 
     /**
@@ -43,8 +47,8 @@ class UploadRequest extends FormRequest
             'file' => [
                 'required',
                 'file',
-                'mimetypes:' . implode(',', $this->allowedMimes),
-                'max:4096'
+                'mimetypes:' . implode(',', self::ALLOWED_MIME_TYPES),
+                'max:5120', // 5MB
             ],
             'type' => 'required|string|max:255',
         ];

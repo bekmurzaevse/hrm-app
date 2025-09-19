@@ -20,20 +20,24 @@ readonly class CreateDto
     ) {
     }
 
-
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Project\CreateRequest $request
+     * @return CreateDto
+     */
     public static function from(CreateRequest $request): self
     {
         return new self(
-            title: $request->title,
-            clientId: $request->client_id,
-            vacancyId: $request->vacancy_id,
-            performers: $request->performers,
-            deadline: $request->deadline,
-            contractNumber: $request->contract_number,
-            contractBudget: $request->contract_budget,
-            // contractCurrency: $request->contract_currency,
-            description: $request->description,
-            comment: $request->comment,
+            title: $request->input('title'),
+            clientId: $request->input('client_id'),
+            vacancyId: $request->input('vacancy_id'),
+            performers: $request->input('performers'),
+            deadline: $request->input('deadline'),
+            contractNumber: $request->input('contract_number'),
+            contractBudget: $request->input('contract_budget'),
+            // contractCurrency: $request->input('contract_currency'),
+            description: $request->input('description'),
+            comment: $request->input('comment'),
         );
     }
 }

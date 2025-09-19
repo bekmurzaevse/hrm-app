@@ -15,15 +15,19 @@ readonly class CreateDto
     ) {
     }
 
-
+    /**
+     * Summary of from
+     * @param \App\Http\Requests\v1\Project\Stage\CreateRequest $request
+     * @return CreateDto
+     */
     public static function from(CreateRequest $request): self
     {
         return new self(
-            stageId: $request->stage_id,
-            title: $request->title,
-            description: $request->description,
-            executorId: $request->executor_id,
-            deadline: $request->deadline
+            stageId: $request->input('stage_id'),
+            title: $request->input('title'),
+            description: $request->input('description'),
+            executorId: $request->input('executor_id'),
+            deadline: $request->input('deadline')
         );
     }
 }

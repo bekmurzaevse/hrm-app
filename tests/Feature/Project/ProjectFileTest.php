@@ -41,9 +41,9 @@ class ProjectFileTest extends TestCase
             'type' => 'document'
         ]);
 
-        $response->assertStatus(200)->assertJson([
-            "status" => 200,
-            "message" => "Uploaded file to Project-1"
+        $response->assertStatus(201)->assertJson([
+            "status" => 201,
+            "message" => "Uploaded file to Project"
         ]);
 
         $this->assertDatabaseHas('files', [

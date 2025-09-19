@@ -19,7 +19,7 @@ readonly class UpdatePerformerDto
     public static function from(UpdatePerformerRequest $request): self
     {
         return new self(
-            performers: $request->performers
+            performers: $request->input('performers')
         );
     }
 }

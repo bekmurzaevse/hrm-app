@@ -20,8 +20,8 @@ readonly class CompleteDto
     public static function from(CompleteRequest $request): self
     {
         return new self(
-            candidateCount: $request->candidate_count,
-            comment: $request->comment,
+            candidateCount: $request->input('candidate_count'),
+            comment: $request->input('comment'),
         );
     }
 }

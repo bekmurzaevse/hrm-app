@@ -19,7 +19,7 @@ class CompleteAction
      * @param int $stageId
      * @param \App\Dto\v1\Project\Stage\CompleteDto $dto
      * @return JsonResponse
-     *@throws \App\Exceptions\ApiResponseException
+     * @throws \App\Exceptions\ApiResponseException
      */
     public function __invoke(int $stageId, CompleteDto $dto): JsonResponse
     {

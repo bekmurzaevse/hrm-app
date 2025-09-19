@@ -31,7 +31,7 @@ class UpdateAction
                 'executor_id' => $dto->executorId,
                 'priority' => $dto->priority,
                 'deadline' => $dto->deadline,
-                'created_by' => auth()->user()->id,
+                'created_by' => auth()->id(),
             ];
 
             // Log user activity

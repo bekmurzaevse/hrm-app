@@ -128,9 +128,9 @@ class ProjectTest extends TestCase
         $response = $this->postJson('/api/v1/projects/create', $data);
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(201)
             ->assertJson([
-                'status' => 200,
+                'status' => 201,
                 'message' => 'Project created',
             ]);
 
@@ -178,7 +178,7 @@ class ProjectTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'status' => 200,
-                'message' => '1-Project updated',
+                'message' => 'Project updated',
             ]);
 
         $this->assertDatabaseHas('projects', [
@@ -215,7 +215,7 @@ class ProjectTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'status' => 200,
-                'message' => '1-Project closed',
+                'message' => 'Project closed',
             ]);
 
         $this->assertDatabaseHas('project_closures', [
@@ -249,10 +249,10 @@ class ProjectTest extends TestCase
         ]);
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(201)
             ->assertJson([
-                'status' => 200,
-                'message' => 'Contract created successfully for project-1',
+                'status' => 201,
+                'message' => 'Contract created successfully for project',
             ]);
 
         $this->assertDatabaseHas('projects', [
@@ -285,7 +285,7 @@ class ProjectTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'status' => 200,
-                'message' => 'Performers updated successfully for project-1',
+                'message' => 'Performers updated successfully for project',
             ]);
 
         $this->assertDatabaseHas('project_user', [

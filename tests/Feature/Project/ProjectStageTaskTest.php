@@ -43,7 +43,7 @@ class ProjectStageTaskTest extends TestCase
         $response = $this->postJson('/api/v1/projects/stage/task/create', $data);
 
         $response->assertJson([
-            'status' => 200,
+            'status' => 201,
             'message' => "Stage's task created",
         ]);
 

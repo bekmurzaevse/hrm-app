@@ -3,6 +3,7 @@
 namespace App\Actions\v1\Project\Stage;
 
 use App\Dto\v1\Project\Stage\CreateDto;
+use App\Enums\StageStatusEnum;
 use App\Exceptions\ApiResponseException;
 use App\Models\Project;
 use App\Models\Stage;
@@ -25,6 +26,13 @@ class CreateAction
             $project = Project::findOrFail($id);
             $afterStage = Stage::findOrFail($dto->stageId);
 
+            if ($afterStage->status === StageStatusEnum::COMPLETED) {
+                throw new ApiResponseException(
+                    'You cannot create a new stage after a completed stage.',
+                    400
+                );
+            }
+
             Stage::where('order', '>', $afterStage->order)
                 ->where('project_id', $project->id)
                 ->increment('order');
@@ -33,11 +41,10 @@ class CreateAction
                 'title' => $dto->title,
                 'description' => $dto->description,
                 'deadline' => $dto->deadline,
-                'created_by' => auth()->user()->id,
+                'created_by' => auth()->id(),
                 'order' => $afterStage->order + 1,
                 'executor_id' => $dto->executorId,
             ];
-            // TODO: status stage need to remake logic
             $project->stages()->create($data);
 
             // Log user activity
@@ -46,6 +53,7 @@ class CreateAction
             logActivity($title, $text);
 
             return static::toResponse(
+                code: 201,
                 message: 'Stage created'
             );
         } catch (ModelNotFoundException $e) {

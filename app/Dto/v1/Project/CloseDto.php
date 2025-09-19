@@ -19,7 +19,7 @@ readonly class CloseDto
     public static function from(CloseRequest $request): self
     {
         return new self(
-            comment: $request->comment,
+            comment: $request->input('comment'),
         );
     }
 }

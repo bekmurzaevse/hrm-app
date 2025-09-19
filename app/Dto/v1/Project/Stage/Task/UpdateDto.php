@@ -24,12 +24,12 @@ readonly class UpdateDto
     public static function from(UpdateRequest $request): self
     {
         return new self(
-            stageId: $request->stage_id,
-            title: $request->title,
-            description: $request->description,
-            executorId: $request->executor_id,
-            priority: $request->priority,
-            deadline: $request->deadline
+            stageId: $request->input('stage_id'),
+            title: $request->input('title'),
+            description: $request->input('description'),
+            executorId: $request->input('executor_id'),
+            priority: $request->input('priority'),
+            deadline: $request->input('deadline')
         );
     }
 }
