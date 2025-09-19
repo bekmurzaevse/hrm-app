@@ -82,12 +82,14 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
             Route::put('/update/{id}', [VacancyController::class, 'update']);
             Route::delete('/delete/{id}', [VacancyController::class, 'delete']);
             //File
-            Route::post('/{id}/upload', [VacancyFileController::class, 'uploadFile']);
-            Route::delete('/{id}/delete/{fileId}', [VacancyFileController::class, 'deleteFile']);
+            Route::post('/{id}/upload', [VacancyFileController::class, 'upload']);
+            Route::delete('/{id}/delete/{fileId}', [VacancyFileController::class, 'delete']);
             // Skills
-            Route::post('/{id}/skills/create', [VacancySkillController::class, 'createSkills']);
-            Route::put('/{id}/skills/update/{skillId}', [VacancySkillController::class, 'updateSkill']);
-            Route::delete('/{id}/skills/delete/{skillId}', [VacancySkillController::class, 'deleteSkill']);
+            Route::prefix('/{id}/skills')->group(function () {
+                Route::post('/create', [VacancySkillController::class, 'create']);
+                Route::put('/update/{skillId}', [VacancySkillController::class, 'update']);
+                Route::delete('/delete/{skillId}', [VacancySkillController::class, 'delete']);
+            });
         });
     });
 
@@ -144,8 +146,8 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::get('/', [VacancyController::class, 'index']);
         Route::get('/{id}', [VacancyController::class, 'show']);
         //File
-        Route::get('/{id}/download/{fileId}', [VacancyFileController::class, 'downloadFile']);
-        Route::get('/{id}/file/{fileId}', [VacancyFileController::class, 'showFile']);
+        Route::get('/{id}/download/{fileId}', [VacancyFileController::class, 'download']);
+        Route::get('/{id}/file/{fileId}', [VacancyFileController::class, 'show']);
     });
 
     // Projects

@@ -15,38 +15,38 @@ use Illuminate\Http\JsonResponse;
 class VacancySkillController extends Controller
 {
     /**
-     * Summary of createSkills
+     * Summary of create
      * @param int $id
      * @param \App\Http\Requests\v1\Vacancy\Skill\CreateRequest $request
      * @param \App\Actions\v1\Vacancy\Skill\CreateAction $action
      * @return JsonResponse
      */
-    public function createSkills(int $id, CreateRequest $request, CreateAction $action): JsonResponse
+    public function create(int $id, CreateRequest $request, CreateAction $action): JsonResponse
     {
         return $action($id, CreateDto::from($request));
     }
 
     /**
-     * Summary of updateSkill
+     * Summary of update
      * @param int $id
      * @param int $skillId
      * @param \App\Http\Requests\v1\Vacancy\Skill\UpdateRequest $request
      * @param \App\Actions\v1\Vacancy\Skill\UpdateAction $action
      * @return JsonResponse
      */
-    public function updateSkill(int $id, int $skillId, UpdateRequest $request, UpdateAction $action): JsonResponse
+    public function update(int $id, int $skillId, UpdateRequest $request, UpdateAction $action): JsonResponse
     {
         return $action($id, $skillId, UpdateDto::from($request));
     }
 
     /**
-     * Summary of deleteSkill
+     * Summary of delete
      * @param int $id
      * @param int $skillId
      * @param \App\Actions\v1\Vacancy\Skill\DeleteAction $action
      * @return JsonResponse
      */
-    public function deleteSkill(int $id, int $skillId, DeleteAction $action): JsonResponse
+    public function delete(int $id, int $skillId, DeleteAction $action): JsonResponse
     {
         return $action($id, $skillId);
     }
