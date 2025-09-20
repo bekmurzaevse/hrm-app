@@ -32,7 +32,7 @@ return new class extends Migration {
             $table->double('desired_salary')->default(0);
             $table->string('source')->nullable();
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
-            $table->double('experience')->nullable();
+            $table->integer('experience')->nullable();
             $table->text('short_summary')->nullable();
             $table->text('achievments')->nullable();
             $table->text('comment')->nullable();
