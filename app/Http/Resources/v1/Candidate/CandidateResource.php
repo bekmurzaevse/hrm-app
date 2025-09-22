@@ -35,7 +35,6 @@ class CandidateResource extends JsonResource
                 'family_status' => $this->family_status,
                 'family_info' => $this->family_info,
                 'address' => $this->address,
-                // 'district' => $this->district->title,
                 'district' => [
                     'id' => $this->district->id,
                     'title' => $this->district->title,

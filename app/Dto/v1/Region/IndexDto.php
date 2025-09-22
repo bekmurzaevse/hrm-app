@@ -19,7 +19,7 @@ readonly class IndexDto
     public static function from(IndexRequest $request): self
     {
         return new self(
-            regionId: $request->region_id,
+            regionId: $request->input('region_id'),
         );
     }
 }

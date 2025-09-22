@@ -50,6 +50,5 @@ class UpdateContactAction
             $model = class_basename($ex->getModel());
             throw new ApiResponseException("{$model} Not Found", 404);
         }
-
     }
 }

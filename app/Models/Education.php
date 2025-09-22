@@ -42,5 +42,4 @@ class Education extends Model
     {
         return $this->belongsTo(Candidate::class);
     }
-
 }

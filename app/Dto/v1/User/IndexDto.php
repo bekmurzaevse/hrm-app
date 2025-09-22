@@ -21,9 +21,9 @@ readonly class IndexDto
     public static function from(IndexRequest $request): self
     {
         return new self(
-            status: $request->status,
-            search: $request->search,
-            perPage: $request->per_page,
+            status: $request->input('status'),
+            search: $request->input('search'),
+            perPage: $request->input('per_page'),
         );
     }
 }

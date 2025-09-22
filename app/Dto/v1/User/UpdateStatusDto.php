@@ -19,7 +19,7 @@ readonly class UpdateStatusDto
     public static function from(UpdateStatusRequest $request): self
     {
         return new self(
-            status: $request->status,
+            status: $request->input('status'),
         );
     }
 }

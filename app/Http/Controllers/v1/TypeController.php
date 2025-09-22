@@ -70,5 +70,4 @@ class TypeController extends Controller
     {
         return $action($id);
     }
-
 }

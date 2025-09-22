@@ -16,8 +16,8 @@ class WorkExperienceSeeder extends Seeder
         WorkExperience::create([
             'company' => 'Google',
             'position' => 'Backend developer',
-            'start_work' => '2020',
-            'end_work' => '2024',
+            'start_work' => '2020-01-03',
+            'end_work' => '2021-10-12',
             'candidate_id' => Candidate::inRandomOrder()->first()->id,
             'description' => 'Work experience description',
         ]);
@@ -25,8 +25,8 @@ class WorkExperienceSeeder extends Seeder
         WorkExperience::create([
             'company' => 'Microsoft',
             'position' => 'CTO',
-            'start_work' => '2024',
-            // 'end_work' => '',
+            'start_work' => '2023-05-05',
+            'end_work' => '2023-12-12',
             'candidate_id' => Candidate::inRandomOrder()->first()->id,
             'description' => 'Work experience description',
         ]);

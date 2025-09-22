@@ -20,8 +20,8 @@ readonly class UpdateDto
     public static function from(UpdateRequest $request): self
     {
         return new self(
-            title: $request->title,
-            description: $request->description,
+            title: $request->input('title'),
+            description: $request->input('description'),
         );
     }
 }

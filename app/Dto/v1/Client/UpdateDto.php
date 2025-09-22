@@ -34,22 +34,22 @@ readonly class UpdateDto
     public static function from(UpdateRequest $request): self
     {
         return new self(
-            name: $request->get('name'),
-            status: $request->get('status'),
-            leader: $request->get('leader'),
-            contactPerson: $request->get('contact_person'),
-            personPosition: $request->get('person_position'),
-            personPhone: $request->get('person_phone'),
-            personEmail: $request->get('person_email'),
-            phone: $request->get('phone'),
-            email: $request->get('email'),
-            address: $request->get('address'),
-            INN: $request->get('INN'),
-            employeeCount: $request->get('employee_count'),
-            source: $request->get('source'),
-            activity: $request->get('activity'),
-            description: $request->get('description'),
-            notes: $request->get('notes'),
+            name: $request->input('name'),
+            status: $request->input('status'),
+            leader: $request->input('leader'),
+            contactPerson: $request->input('contact_person'),
+            personPosition: $request->input('person_position'),
+            personPhone: $request->input('person_phone'),
+            personEmail: $request->input('person_email'),
+            phone: $request->input('phone'),
+            email: $request->input('email'),
+            address: $request->input('address'),
+            INN: $request->input('INN'),
+            employeeCount: $request->input('employee_count'),
+            source: $request->input('source'),
+            activity: $request->input('activity'),
+            description: $request->input('description'),
+            notes: $request->input('notes'),
         );
     }
 }

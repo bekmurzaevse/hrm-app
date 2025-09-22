@@ -25,7 +25,6 @@ class IndexAction
 
         return static::toResponse(
             message: 'Successfully received',
-            // data: InteractionResource::collection($interactions)
             data: new FinanceCollection($finances)
         );
     }

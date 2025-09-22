@@ -19,7 +19,7 @@ readonly class UpdateSkillDto
     public static function from(UpdateSkillRequest $request): self
     {
         return new self(
-            title: $request->title,
+            title: $request->input('title'),
         );
     }
 }

@@ -3,8 +3,6 @@
 namespace App\Actions\v1\Region;
 
 use App\Dto\v1\Region\IndexDto;
-use App\Models\District;
-use App\Models\Region;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;

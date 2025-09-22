@@ -57,7 +57,6 @@ class UpdateEducationAction
 
             return static::toResponse(
                 message: "$id - id li candidate tin' education jan'alandi!",
-                // data: new CandidateResource($candidate)
             );
         } catch (ModelNotFoundException $ex) {
             throw new ApiResponseException('Candidate not found', 404);

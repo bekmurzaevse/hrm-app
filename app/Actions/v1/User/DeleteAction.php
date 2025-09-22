@@ -37,8 +37,4 @@ class DeleteAction
             throw new ApiResponseException('User Not Found', 404);
         }
     }
-
-
-
-
 }
