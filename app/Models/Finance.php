@@ -41,11 +41,19 @@ class Finance extends Model
         ];
     }
 
+    /**
+     * Summary of project
+     * @return BelongsTo<Project, Finance>
+     */
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
     }
 
+    /**
+     * Summary of project
+     * @return BelongsTo<User, Finance>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

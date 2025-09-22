@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Region;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Cache;
 

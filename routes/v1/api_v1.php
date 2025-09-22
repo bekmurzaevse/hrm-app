@@ -270,9 +270,5 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
 
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index']);
-        // Route::get('/{id}', [TaskController::class, 'show']);
-        // Route::post('/create', [TaskController::class, 'create']);
-        // Route::put('/update/{id}', [TaskController::class, 'update']);
-        // Route::delete('/delete/{id}', [TaskController::class, 'destroy']);
     });
 });

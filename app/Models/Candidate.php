@@ -183,7 +183,6 @@ class Candidate extends Model
         $years = floor($totalMonths / 12);
         $months = $totalMonths % 12;
 
-        // return "{$years} год {$months} месяц";
         return $months != 0 ? "{$years} год {$months} месяц" : "{$years} год";
     }
 }

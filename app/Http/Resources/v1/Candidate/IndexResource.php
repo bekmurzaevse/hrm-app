@@ -24,7 +24,6 @@ class IndexResource extends JsonResource
             'workplace' => $this->workplace,
             'position' => $this->position,
             'last_contact' => new LastContactResource($this->interactions()->orderBy('created_at', 'desc')->first()),
-            // 'district' => $this->district,
             'experience' => $this->experience,
             'source' => $this->source,
             'desired_salary' => $this->desired_salary,

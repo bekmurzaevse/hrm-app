@@ -44,7 +44,6 @@ class UpdateExpenseAction
 
             return static::toResponse(
                 message: "$id - id li Finance jan'alandi",
-                // data: new CandidateResource($candidate)
             );
         } catch (ModelNotFoundException $ex) {
             throw new ApiResponseException('Fianace Not Found', 404);

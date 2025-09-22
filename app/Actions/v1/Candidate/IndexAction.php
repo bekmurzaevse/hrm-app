@@ -104,7 +104,7 @@ class IndexAction
                 $query->where('family_status', $dto->familyStatus);
             }
 
-            return $query->paginate($dto->perPage ?? 10);
+            return $query->orderBy('created_at', 'desc')->paginate($dto->perPage ?? 10);
         });
 
         return static::toResponse(

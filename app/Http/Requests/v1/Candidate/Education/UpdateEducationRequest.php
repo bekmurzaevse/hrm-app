@@ -47,21 +47,18 @@ class UpdateEducationRequest extends FormRequest
             'title.string' => "title string boliw kerek.",
             'title.max' => "title 50 belgiden ko'p bolmawi kerek.",
 
-            // 'degree.required' => "degree ma'jbu'riy.",
-            // 'degree.string' => "degree string boliw kerek.",
-            // 'degree.max' => "degree 50 belgiden ko'p bolmawi kerek.",
+            'degree.required' => "Degree ma'jbu'riy.",
+            'degree.in' => "Degree ma'nisleri (male yoki female) boliwi kerek.",
 
             'specialty.required' => "specialty ma'jbu'riy.",
             'specialty.string' => "specialty string boliw kerek.",
             'specialty.max' => "specialty 50 belgiden ko'p bolmawi kerek.",
 
             'start_year.required' => "start_year ma'jbu'riy.",
-            'start_year.string' => "start_year integer boliw kerek.",
-            'start_year.max' => "start_year 50 belgiden ko'p bolmawi kerek.",
+            'start_year.integer' => "start_year pu'tin san boliw kerek.",
 
             'end_year.required' => "end_year ma'jbu'riy.",
-            'end_year.string' => "end_year integer boliw kerek.",
-            'end_year.max' => "end_year 50 belgiden ko'p bolmawi kerek.",
+            'end_year.integer' => "end_year pu'tin san boliw kerek.",
         ];
     }
 }

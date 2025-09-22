@@ -34,5 +34,4 @@ class CreateAction
             message: "Type created"
         );
     }
-
 }

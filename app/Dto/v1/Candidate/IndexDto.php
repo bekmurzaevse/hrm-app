@@ -31,19 +31,19 @@ readonly class IndexDto
     public static function from(IndexRequest $request): self
     {
         return new self(
-            gender: $request->gender,
-            status: $request->status,
-            familyStatus: $request->family_status,
-            fromAge: $request->from_age,
-            regionId: $request->region_id,
-            districtId: $request->district_id,
-            toAge: $request->to_age,
-            search: $request->search,
-            salaryFrom: $request->salary_from,
-            salaryTo: $request->salary_to,
-            experienceFrom: $request->experience_from,
-            experienceTo: $request->experience_to,
-            perPage: $request->per_page,
+            gender: $request->input('gender'),
+            status: $request->input('status'),
+            familyStatus: $request->input('family_status'),
+            fromAge: $request->input('from_age'),
+            regionId: $request->input('region_id'),
+            districtId: $request->input('district_id'),
+            toAge: $request->input('to_age'),
+            search: $request->input('search'),
+            salaryFrom: $request->input('salary_from'),
+            salaryTo: $request->input('salary_to'),
+            experienceFrom: $request->input('experience_from'),
+            experienceTo: $request->input('experience_to'),
+            perPage: $request->input('per_page'),
         );
     }
 }

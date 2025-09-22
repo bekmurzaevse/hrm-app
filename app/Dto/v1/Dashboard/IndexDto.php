@@ -18,11 +18,11 @@ readonly class IndexDto
     public static function from(IndexRequest $request): self
     {
         return new self(
-            projectSearch: $request->project_search,
-            projectStatus: $request->project_status,
-            projectStart: $request->project_start,
-            projectEnd: $request->project_end,
-            perPage: $request->per_page,
+            projectSearch: $request->input('project_search'),
+            projectStatus: $request->input('project_status'),
+            projectStart: $request->input('project_start'),
+            projectEnd: $request->input('project_end'),
+            perPage: $request->input('per_page'),
         );
     }
 }

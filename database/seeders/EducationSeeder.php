@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Enums\Candidate\Education\DegreeEnum;
 use App\Models\Candidate;
 use App\Models\Education;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class EducationSeeder extends Seeder

@@ -28,16 +28,16 @@ readonly class UpdateDto
     public static function from(UpdateRequest $request): self
     {
         return new self(
-            firstName: $request->first_name,
-            lastName: $request->last_name,
-            patronymic: $request->patronymic,
-            birthDate: $request->birth_date,
-            address: $request->address,
-            position: $request->position,
-            status: $request->status,
-            phone: $request->phone,
-            email: $request->email,
-            password: $request->password,
+            firstName: $request->input('first_name'),
+            lastName: $request->input('last_name'),
+            patronymic: $request->input('patronymic'),
+            birthDate: $request->input('birth_date'),
+            address: $request->input('address'),
+            position: $request->input('position'),
+            status: $request->input('status'),
+            phone: $request->input('phone'),
+            email: $request->input('email'),
+            password: $request->input('password'),
         );
     }
 }

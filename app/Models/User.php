@@ -92,12 +92,20 @@ class User extends Authenticatable
         return $this->hasMany(UserActivity::class)->with('user');
     }
 
+    /**
+     * Summary of finances
+     * @return HasMany<Finance, User>
+     */
     public function finances(): HasMany
     {
         return $this->hasMany(Finance::class);
     }
 
-    public function tasks()
+    /**
+     * Summary of tasks
+     * @return HasMany<Task, User>
+     */
+    public function tasks(): HasMany
     {
         return $this->hasMany(Task::class, 'created_by');
     }
@@ -111,6 +119,10 @@ class User extends Authenticatable
         return $this->hasMany(Vacancy::class, 'created_by');
     }
 
+    /**
+     * Summary of assignedTasks
+     * @return BelongsToMany<Task, User, \Illuminate\Database\Eloquent\Relations\Pivot>
+     */
     public function assignedTasks(): BelongsToMany
     {
         return $this->belongsToMany(Task::class, 'task_users');

@@ -27,7 +27,6 @@ class AddWorkExperienceRequest extends FormRequest
         return [
             'company' => 'required|string|max:50',
             'position' => 'required|string|max:50',
-            // 'candidate_id' => 'required|integer|exists:candidates,id',
             'start_work' => 'required|string|max:50',
             'end_work' => 'nullable|string|max:50',
             'description' => 'nullable|string',
