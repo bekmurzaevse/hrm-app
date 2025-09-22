@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Enums\User\UserStatusEnum;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -56,6 +57,24 @@ class User extends Authenticatable
     }
 
     /**
+     * Summary of creator
+     * @return Attribute
+     */
+    protected function shortFio(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                return sprintf(
+                    '%s %s.%s',
+                    $this->last_name,
+                    mb_substr($this->first_name, 0, 1, 'UTF-8'),
+                    mb_substr($this->patronymic, 0, 1, 'UTF-8')
+                );
+            }
+        );
+    }
+
+    /**
      * Summary of projects
      * @return BelongsToMany<Project, User, \Illuminate\Database\Eloquent\Relations\Pivot>
      */
@@ -91,7 +110,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Vacancy::class, 'created_by');
     }
-  
+
     public function assignedTasks(): BelongsToMany
     {
         return $this->belongsToMany(Task::class, 'task_users');

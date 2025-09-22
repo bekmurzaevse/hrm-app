@@ -22,7 +22,7 @@ class IndexResource extends JsonResource
             'salary' => $this->salary,
             'region' => $this->district?->region?->title,
             'district' => $this->district?->title,
-            'created_by' => $this->creator,
+            'created_by' => $this->createdBy?->shortFio,
             'created_at' => $this->created_at->format('Y-m-d'),
             'status' => $this->status,
         ];

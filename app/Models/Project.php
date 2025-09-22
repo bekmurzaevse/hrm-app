@@ -59,21 +59,6 @@ class Project extends Model
     }
 
     /**
-     * Summary of getPerformersFioAttribute
-     */
-    public function getPerformersFioAttribute()
-    {
-        return $this->performers->map(function ($user) {
-            return sprintf(
-                '%s %s.%s',
-                $user->last_name,
-                mb_substr($user->first_name, 0, 1, 'UTF-8'),
-                mb_substr($user->patronymic, 0, 1, 'UTF-8')
-            );
-        });
-    }
-
-    /**
      * Summary of deadline
      * @return Attribute
      */
@@ -94,7 +79,7 @@ class Project extends Model
     }
 
     /**
-     * Summary of `vaca`ncy
+     * Summary of `vacancy`
      * @return BelongsTo<Vacancy, Project>
      */
     public function vacancy(): BelongsTo

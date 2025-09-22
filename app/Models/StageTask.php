@@ -38,20 +38,6 @@ class StageTask extends Model
     }
 
     /**
-     * Summary of getExecutorFioAttribute
-     * @return string
-     */
-    public function getExecutorFioAttribute()
-    {
-        return sprintf(
-            '%s %s.%s',
-            $this->executor->last_name,
-            mb_substr($this->executor->first_name, 0, 1, 'UTF-8'),
-            mb_substr($this->executor->patronymic, 0, 1, 'UTF-8')
-        );
-    }
-
-    /**
      * Summary of deadline
      * @return Attribute
      */

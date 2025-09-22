@@ -6,6 +6,7 @@ use App\Enums\Candidate\CandidateStatusEnum;
 use App\Enums\Candidate\FamilyStatusEnum;
 use App\Enums\GenderEnum;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,6 +59,24 @@ class Candidate extends Model
             'updated_at' => 'datetime',
             'birth_date' => 'date',
         ];
+    }
+
+    /**
+     * Summary of creator
+     * @return Attribute
+     */
+    protected function shortFio(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                return sprintf(
+                    '%s %s.%s',
+                    $this->last_name,
+                    mb_substr($this->first_name, 0, 1, 'UTF-8'),
+                    mb_substr($this->patronymic, 0, 1, 'UTF-8')
+                );
+            }
+        );
     }
 
     /**

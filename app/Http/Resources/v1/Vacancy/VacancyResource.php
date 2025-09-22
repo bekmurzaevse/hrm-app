@@ -50,9 +50,10 @@ class VacancyResource extends JsonResource
             'district' => $this->district?->title,
             'key_data' => [
                 'created_at' => $this->created_at->format('Y-m-d'),
-                'created_by' => $this->creator,
+                'created_by' => $this->createdBy?->shortFio,
             ],
             'files' => $this->files?->map(function ($file) {
+                $fileExists = Storage::disk('public')->exists($file?->path);
                 return [
                     'id' => $file->id,
                     'name' => $file->name,
@@ -60,12 +61,7 @@ class VacancyResource extends JsonResource
                     'size' => round($file->size / 1024, 2) . ' KB',
                     // TODO: add creator of File
                     'created_at' => $file?->created_at->format('Y-m-d'),
-                    'download_url' => $file->path && Storage::disk('public')->exists($file->path)
-                        ? url("/api/v1/vacancies/{$this->id}/download/{$file->id}")
-                        : null,
-                    'show_url' => $file->path && Storage::disk('public')->exists($file->path)
-                        ? url("/api/v1/vacancies/{$this->id}/file/{$file->id}")
-                        : null,
+                    'download_url' => $fileExists ? url("/api/v1/vacancies/{$this->id}/download/{$file->id}") : null,
                 ];
             }),
         ];

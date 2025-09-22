@@ -18,11 +18,7 @@ class SelectionResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'created_at' => $this->created_at?->format('Y-m-d'),
-            'created_by' => $this->createdBy
-                ? $this->createdBy->last_name . ' ' .
-                mb_substr($this->createdBy->first_name, 0, 1, 'UTF-8') . '.' .
-                mb_substr($this->createdBy->patronymic, 0, 1, 'UTF-8') . '.'
-                : null,
+            'created_by' => $this->createdBy?->shortFio,
             'candidates' => $this->items->count(),
             'candidates_count' => $this->items->whereNotNull('candidate_id')->count(),
             'external_count' => $this->items->whereNotNull('external_name')->count(),
@@ -50,9 +46,7 @@ class SelectionResource extends JsonResource
 
                 // For first status
                 if ($status['id'] === null) {
-                    $candidateName = $item->candidate?->last_name . ' ' .
-                        mb_substr($item->candidate?->first_name, 0, 1, 'UTF-8') . '.' .
-                        mb_substr($item->candidate?->patronymic, 0, 1, 'UTF-8') . '.';
+                    $candidateName = $item->candidate?->shortFio;
 
                     return [
                         'status_id' => null,
