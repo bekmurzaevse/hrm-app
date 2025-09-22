@@ -16,7 +16,8 @@ class IndexAction
 
     /**
      * Summary of __invoke
-     * @return \Illuminate\Http\JsonResponse
+     * @param \App\Dto\v1\Project\IndexDto $dto
+     * @return JsonResponse
      */
     public function __invoke(IndexDto $dto): JsonResponse
     {

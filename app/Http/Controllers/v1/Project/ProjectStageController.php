@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1\Project;
 use App\Actions\v1\Project\Stage\CompleteAction;
 use App\Actions\v1\Project\Stage\CreateAction;
 use App\Actions\v1\Project\Stage\DeleteAction;
+use App\Actions\v1\Project\Stage\ListAction;
 use App\Actions\v1\Project\Stage\SetRequireAction;
 use App\Actions\v1\Project\Stage\UpdateAction;
 use App\Dto\v1\Project\Stage\CompleteDto;
@@ -18,6 +19,17 @@ use Illuminate\Http\JsonResponse;
 
 class ProjectStageController extends Controller
 {
+    /**
+     * Summary of list
+     * @param int $id
+     * @param \App\Actions\v1\Project\Stage\ListAction $action
+     * @return JsonResponse
+     */
+    public function list(int $id, ListAction $action): JsonResponse
+    {
+        return $action($id);
+    }
+    
     /**
      * Summary of create
      * @param int $id

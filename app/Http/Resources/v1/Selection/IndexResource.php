@@ -17,7 +17,7 @@ class IndexResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'creator' => $this->createdBy?->last_name . ' ' . mb_substr($this->createdBy?->first_name, 0, 1, 'UTF-8') . '.' . mb_substr($this->createdBy?->patronymic, 0, 1, 'UTF-8'),
+            'creator' => $this->createdBy?->shortFio,
             'created_at' => $this->created_at->format('Y-m-d'),
             'updated_at' => $this->updated_at->format('Y-m-d'),
         ];

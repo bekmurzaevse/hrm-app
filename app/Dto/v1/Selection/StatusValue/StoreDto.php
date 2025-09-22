@@ -21,9 +21,9 @@ readonly class StoreDto
     public static function from(StoreRequest $request): self
     {
         return new self(
-            selectionItemId: $request->selection_item_id,
-            selectionStatusId: $request->selection_status_id,
-            value: $request->value
+            selectionItemId: $request->input('selection_item_id'),
+            selectionStatusId: $request->input('selection_status_id'),
+            value: $request->input('value')
         );
     }
 }

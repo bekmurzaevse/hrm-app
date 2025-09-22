@@ -103,6 +103,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
             Route::post('/{id}/upload', [ProjectFileController::class, 'upload']);
             Route::delete('/{id}/delete/{fileId}', [ProjectFileController::class, 'delete']);
             // Stage
+            Route::get('/{id}/stage/list', [ProjectStageController::class, 'list']);
             Route::post('/{id}/stage/create', [ProjectStageController::class, 'create']);
             Route::patch('/stage/{stageId}/update', [ProjectStageController::class, 'update']);
             Route::patch('/stage/{stageId}/complete', [ProjectStageController::class, 'complete']);

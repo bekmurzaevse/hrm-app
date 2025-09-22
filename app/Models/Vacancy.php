@@ -140,24 +140,6 @@ class Vacancy extends Model
 
     /**
      * Summary of creator
-     * @return Attribute
-     */
-    protected function creator(): Attribute
-    {
-        return Attribute::make(
-            get: function () {
-                return sprintf(
-                    '%s %s.%s',
-                    $this->createdBy->last_name,
-                    mb_substr($this->createdBy->first_name, 0, 1, 'UTF-8'),
-                    mb_substr($this->createdBy->patronymic, 0, 1, 'UTF-8')
-                );
-            }
-        );
-    }
-
-    /**
-     * Summary of creator
      * @return BelongsTo<User, Vacancy>
      */
     public function createdBy(): BelongsTo

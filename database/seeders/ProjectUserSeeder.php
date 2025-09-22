@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Project;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ProjectUserSeeder extends Seeder
@@ -16,10 +15,9 @@ class ProjectUserSeeder extends Seeder
     {
         $projects = Project::all();
         $userIds = User::pluck('id');
-        $userCount = $userIds->count();
 
-        $projects->each(function ($project) use ($userIds, $userCount) {
-            $randomUserIds = $userIds->random(rand(1, $userCount))->all();
+        $projects->each(function ($project) use ($userIds) {
+            $randomUserIds = $userIds->random(rand(1, 4))->all();
 
             $project->performers()->attach($randomUserIds);
         });

@@ -19,7 +19,7 @@ class UpdateAction
      * @param int $skillId
      * @param \App\Dto\v1\Vacancy\Skill\UpdateDto $dto
      * @return JsonResponse
-     *@throws \App\Exceptions\ApiResponseException
+     * @throws \App\Exceptions\ApiResponseException
      */
     public function __invoke(int $id, int $skillId, UpdateDto $dto): JsonResponse
     {

@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\DB;
 class AttachCandidatesAction
 {
     use ResponseTrait;
+
+    /**
+     * Summary of __invoke
+     * @param \App\Dto\v1\Selection\SelectionItem\AttachCandidatesDto $dto
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(AttachCandidatesDto $dto): JsonResponse
     {
         $selections = $dto->selections;

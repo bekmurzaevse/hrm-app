@@ -19,7 +19,7 @@ readonly class AddExternalCandidatesDto
     public static function from(AddExternalCandidatesRequest $request): self
     {
         return new self(
-            externalCandidates: $request->external_candidates,
+            externalCandidates: $request->input('external_candidates'),
         );
     }
 }
