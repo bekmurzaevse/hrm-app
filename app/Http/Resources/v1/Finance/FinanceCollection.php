@@ -17,8 +17,6 @@ class FinanceCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        // dd("ok");
-
         $incomeSum = $this->collection->where('type', 'income')->sum('amount');
         $expenseSum = $this->collection->where('type', 'expense')->sum('amount');
         $profit = $incomeSum - $expenseSum;
@@ -69,9 +67,9 @@ class FinanceCollection extends ResourceCollection
                         'percent' => $otherPercent,
                     ],
                 ],
-                'dynamics' => [
+                // 'dynamics' => [
 
-                ],
+                // ],
             ],
             'items' => IndexResource::collection($this->collection),
             'pagination' => [

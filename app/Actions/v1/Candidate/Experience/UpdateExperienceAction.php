@@ -6,6 +6,7 @@ use App\Dto\v1\Candidate\Experience\UpdateExperienceDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\WorkExperience;
 use App\Traits\ResponseTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
@@ -30,6 +31,11 @@ class UpdateExperienceAction
                 'company', 'position', 'candidate_id', 'start_work', 'end_work', 'description'
             ]);
 
+            $date1 = Carbon::parse($experience->start_work);
+            $date2 = Carbon::parse($experience->end_work);
+
+            $oldMonthsDifference = (int) $date1->diffInMonths($date2);
+
             $experience->update([
                 'company'      => $dto->company,
                 'position'     => $dto->position,
@@ -37,6 +43,18 @@ class UpdateExperienceAction
                 'start_work'   => $dto->startWork,
                 'end_work'     => $dto->endWork,
                 'description'  => $dto->description,
+            ]);
+
+            $date3 = Carbon::parse($dto->startWork);
+            $date4 = Carbon::parse($dto->endWork);
+
+            $candidate = $experience->candidate;
+
+            $monthsDifference = (int) $date3->diffInMonths($date4);
+            $total = $monthsDifference - $oldMonthsDifference + $candidate->experience ?? 0;
+
+            $candidate->update([
+                'experience' => $total,
             ]);
 
             logActivity(

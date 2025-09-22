@@ -5,6 +5,7 @@ namespace App\Actions\v1\Candidate\Experience;
 use App\Exceptions\ApiResponseException;
 use App\Models\WorkExperience;
 use App\Traits\ResponseTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
@@ -25,6 +26,17 @@ class DeleteExperienceAction
 
             $expInfo = $experience->company ?? "Опыт работы #{$id}";
             $candidate = $experience->candidate;
+
+            $date1 = Carbon::parse($experience->start_work);
+            $date2 = Carbon::parse($experience->end_work);
+
+            $monthsDifference = (int) $date1->diffInMonths($date2);
+
+            $total = $candidate->experience - $monthsDifference;
+
+            $candidate->update([
+                'experience' => $total,
+            ]);
 
             $experience->delete();
 

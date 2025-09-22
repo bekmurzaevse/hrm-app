@@ -20,7 +20,6 @@ class IndexResource extends JsonResource
         $incomeSum = $this->where('type', 'income')->sum('amount');
         $expenseSum = $this->where('type', 'expense')->sum('amount');
         $profit = $incomeSum - $expenseSum;
-        // dd($profit);
 
         $honorariumSum = $this->where('category_expense', CategoryExpenseEnum::HONORARIUM->value)->sum('amount');
         $honorariumPercent = round($honorariumSum / $expenseSum * 100, 2);

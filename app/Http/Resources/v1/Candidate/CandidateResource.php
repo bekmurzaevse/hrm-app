@@ -61,6 +61,7 @@ class CandidateResource extends JsonResource
                 'updated_at' => $this->updated_at->format('Y-m-d'),
             ],
             'history' => InteractionResource::collection($this->interactions),
+            'experience' => $this->experience,
             'work_experience' => WorkExperienceResource::collection($this->workExperience),
             'desired' => [
                 'desired_salary' => $this->desired_salary,
