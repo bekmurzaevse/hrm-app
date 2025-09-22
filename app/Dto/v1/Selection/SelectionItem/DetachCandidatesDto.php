@@ -19,7 +19,7 @@ readonly class DetachCandidatesDto
     public static function from(DetachCandidatesRequest $request): self
     {
         return new self(
-            items: $request->items,
+            items: $request->input('items'),
         );
     }
 }

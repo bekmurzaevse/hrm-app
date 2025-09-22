@@ -15,6 +15,7 @@ class IndexAction
 
     /**
      * Summary of __invoke
+     * @param \App\Dto\v1\Vacancy\IndexDto $dto
      * @return JsonResponse
      */
     public function __invoke(IndexDto $dto): JsonResponse
