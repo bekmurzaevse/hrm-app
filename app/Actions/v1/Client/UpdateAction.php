@@ -51,7 +51,6 @@ class UpdateAction
 
             return static::toResponse(
                 message: "$id - id li client jan'alandi",
-                // data: new CandidateResource($candidate)
             );
         } catch (ModelNotFoundException $ex) {
             throw new ApiResponseException('Client Not Found', 404);

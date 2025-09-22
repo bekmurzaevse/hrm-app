@@ -20,8 +20,8 @@ readonly class CreateDto
     public static function from(CreateRequest $request): self
     {
         return new self(
-            title: $request->title,
-            description: $request->description,
+            title: $request->input('title'),
+            description: $request->input('description'),
         );
     }
 }

@@ -51,7 +51,6 @@ class UpdateLanguageAction
 
             return static::toResponse(
                 message: "$id - id li candidate tin' tilleri jan'alandi!",
-                // data: new CandidateResource($candidate)
             );
         } catch (ModelNotFoundException $ex) {
             throw new ApiResponseException('Language Not Found', 404);

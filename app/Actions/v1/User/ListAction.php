@@ -2,8 +2,6 @@
 
 namespace App\Actions\v1\User;
 
-use App\Dto\v1\User\IndexDto;
-use App\Http\Resources\v1\User\UserCollection;
 use App\Models\User;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;

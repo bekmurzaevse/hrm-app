@@ -21,9 +21,9 @@ readonly class UpdateLanguageDto
     public static function from(UpdateLanguageRequest $request): self
     {
         return new self(
-            title: $request->title,
-            degree: $request->degree,
-            description: $request->description,
+            title: $request->input('title'),
+            degree: $request->input('degree'),
+            description: $request->input('description'),
         );
     }
 }

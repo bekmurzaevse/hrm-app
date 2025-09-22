@@ -7,6 +7,7 @@ use App\Exceptions\ApiResponseException;
 use App\Models\Candidate;
 use App\Models\WorkExperience;
 use App\Traits\ResponseTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
@@ -34,6 +35,16 @@ class AddExperienceAction
                 'description' => $dto->description,
             ]);
 
+            $date1 = Carbon::parse($dto->startWork);
+            $date2 = Carbon::parse($dto->endWork);
+
+            $monthsDifference = (int) $date1->diffInMonths($date2);
+            $total = $monthsDifference + $candidate->experience ?? 0;
+
+            $candidate->update([
+                'experience' => $total,
+            ]);
+
             logActivity(
                 "Опыт работы добавлен!",
                 "Кандидату с $candidate->first_name $candidate->last_name добавлен новый опыт работы в компании {$experience->company} на должности {$experience->position}."
@@ -41,7 +52,6 @@ class AddExperienceAction
 
             return static::toResponse(
                 message: "$id - id li candidate qa work experience qosildi!",
-                // data: new CandidateResource($candidate)
             );
         } catch (ModelNotFoundException $ex) {
             throw new ApiResponseException('Candidate Not Found!', 404);

@@ -52,7 +52,6 @@ class UpdateStatusAction
 
             return static::toResponse(
                 message: "$id - id li userdin' statusi $dto->status qa jan'alandi",
-                // data: new CandidateResource($candidate)
             );
         } catch (ModelNotFoundException $ex) {
             throw new ApiResponseException('User Not Found', 404);

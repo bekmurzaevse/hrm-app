@@ -35,7 +35,6 @@ class CandidateResource extends JsonResource
                 'family_status' => $this->family_status,
                 'family_info' => $this->family_info,
                 'address' => $this->address,
-                // 'district' => $this->district->title,
                 'district' => [
                     'id' => $this->district->id,
                     'title' => $this->district->title,
@@ -61,6 +60,7 @@ class CandidateResource extends JsonResource
                 'updated_at' => $this->updated_at->format('Y-m-d'),
             ],
             'history' => InteractionResource::collection($this->interactions),
+            'experience' => $this->experience,
             'work_experience' => WorkExperienceResource::collection($this->workExperience),
             'desired' => [
                 'desired_salary' => $this->desired_salary,

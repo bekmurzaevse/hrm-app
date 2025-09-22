@@ -22,10 +22,10 @@ readonly class UpdateDto
     public static function from(UpdateRequest $request): self
     {
         return new self(
-            value: $request->value,
-            typeId: $request->type_id,
-            candidateId: $request->candidate_id,
-            description: $request->description,
+            value: $request->input('value'),
+            typeId: $request->input('type_id'),
+            candidateId: $request->input('candidate_id'),
+            description: $request->input('description'),
         );
     }
 }

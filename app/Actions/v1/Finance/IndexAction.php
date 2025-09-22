@@ -20,14 +20,11 @@ class IndexAction
     {
         $key = 'finances:' . app()->getLocale() . ':' . md5(request()->fullUrl());
         $finances = Cache::remember($key, now()->addDay(), function () {
-            return Finance::
-            with(['project:title', 'user:first_name,last_name,patronymic'])->
-            paginate(10);
+            return Finance::with(['project:title', 'user:first_name,last_name,patronymic'])->paginate(10);
         });
 
         return static::toResponse(
             message: 'Successfully received',
-            // data: InteractionResource::collection($interactions)
             data: new FinanceCollection($finances)
         );
     }

@@ -25,13 +25,13 @@ readonly class CreateExpenseDto
     public static function from(CreateExpenseRequest $request): self
     {
         return new self(
-            categoryExpense: $request->category_expense,
-            projectId: $request->project_id,
-            userId: $request->user_id,
-            date: $request->date,
-            amount: $request->amount,
-            comment: $request->comment,
-            description: $request->description,
+            categoryExpense: $request->input('category_expense'),
+            projectId: $request->input('project_id'),
+            userId: $request->input('user_id'),
+            date: $request->input('date'),
+            amount: $request->input('amount'),
+            comment: $request->input('comment'),
+            description: $request->input('description'),
         );
     }
 }

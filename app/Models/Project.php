@@ -156,6 +156,10 @@ class Project extends Model
         return $this->hasOne(ProjectClosure::class);
     }
 
+    /**
+     * Summary of finances
+     * @return HasMany<Finance, Project>
+     */
     public function finances(): HasMany
     {
         return $this->hasMany(Finance::class);

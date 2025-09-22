@@ -82,7 +82,7 @@ class UserSeeder extends Seeder
             'email' => 'jack.ma@example.com',
             'password' => '12345678',
         ]);
-        $recruiter1->assignRole('recruiter');
+        $recruiter1->assignRole('admin');
 
         $recruiter2 = User::create([
             'first_name' => 'Satya',

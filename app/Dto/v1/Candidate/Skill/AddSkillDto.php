@@ -19,7 +19,7 @@ readonly class AddSkillDto
     public static function from(AddSkillRequest $request): self
     {
         return new self(
-            titles: $request->titles,
+            titles: $request->input('titles'),
         );
     }
 }
