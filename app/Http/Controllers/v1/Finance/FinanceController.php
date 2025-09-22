@@ -87,5 +87,4 @@ class FinanceController extends Controller
     {
         return $action($id);
     }
-
 }

@@ -27,15 +27,15 @@ readonly class IndexDto
     public static function from(IndexRequest $request): self
     {
         return new self(
-            employeeCount: $request->employee_count,
-            status: $request->status,
-            userId: $request->user_id,
-            projectFromSum: $request->project_from_sum,
-            projectToSum: $request->project_to_sum,
-            fromProject: $request->from_project,
-            toProject: $request->to_project,
-            search: $request->search,
-            perPage: $request->per_page,
+            employeeCount: $request->input('employee_count'),
+            status: $request->input('status'),
+            userId: $request->input('user_id'),
+            projectFromSum: $request->input('project_from_sum'),
+            projectToSum: $request->input('project_to_sum'),
+            fromProject: $request->input('from_project'),
+            toProject: $request->input('to_project'),
+            search: $request->input('search'),
+            perPage: $request->input('per_page'),
         );
     }
 }

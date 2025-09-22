@@ -39,7 +39,6 @@ class UpdateAction
 
             return static::toResponse(
                 message: "$id - id li Interaction jan'alandi",
-                // data: new CandidateResource($candidate)
             );
         } catch (ModelNotFoundException $ex) {
             throw new ApiResponseException('Interaction Not Found', 404);

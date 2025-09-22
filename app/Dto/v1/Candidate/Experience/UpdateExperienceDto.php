@@ -23,11 +23,11 @@ readonly class UpdateExperienceDto
     public static function from(UpdateWorkExperienceRequest $request): self
     {
         return new self(
-            company: $request->company,
-            position: $request->position,
-            startWork: $request->start_work,
-            endWork: $request->end_work,
-            description: $request->description,
+            company: $request->input('company'),
+            position: $request->input('position'),
+            startWork: $request->input('start_work'),
+            endWork: $request->input('end_work'),
+            description: $request->input('description'),
         );
     }
 }

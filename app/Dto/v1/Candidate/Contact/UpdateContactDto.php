@@ -20,8 +20,8 @@ readonly class UpdateContactDto
     public static function from(UpdateContactRequest $request): self
     {
         return new self(
-            title: $request->title,
-            value: $request->value,
+            title: $request->input('title'),
+            value: $request->input('value'),
         );
     }
 }

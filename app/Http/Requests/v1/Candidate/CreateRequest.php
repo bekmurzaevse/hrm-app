@@ -45,7 +45,6 @@ class CreateRequest extends FormRequest
             'address' => 'required|string',
             'desired_salary' => 'nullable|numeric',
             'source' => 'nullable|string',
-            // 'experience' => 'nullable|numeric',
             'description' => 'nullable|string',
             'short_summary' => 'nullable|string',
             'achievments' => 'nullable|string',

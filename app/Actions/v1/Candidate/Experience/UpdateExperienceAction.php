@@ -73,7 +73,6 @@ class UpdateExperienceAction
 
             return static::toResponse(
                 message: "$id - id li candidate tin' work experience jan'alandi!",
-                // data: new CandidateResource($candidate)
             );
         } catch (ModelNotFoundException $ex) {
             throw new ApiResponseException('Error', 404);

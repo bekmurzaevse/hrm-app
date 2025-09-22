@@ -43,7 +43,6 @@ class UpdateAction
                 'address' => $dto->address,
                 'desired_salary' => $dto->desiredSalary,
                 'source' => $dto->source,
-                // 'experience' => $dto->experience,
                 'short_summary' => $dto->shortSummary,
                 'achievments' => $dto->achievments,
                 'comment' => $dto->comment,
@@ -73,7 +72,6 @@ class UpdateAction
 
             return static::toResponse(
                 message: "$id - id li candidate jan'alandi",
-                // data: new CandidateResource($candidate)
             );
         } catch (ModelNotFoundException $ex) {
             $model = class_basename($ex->getModel());

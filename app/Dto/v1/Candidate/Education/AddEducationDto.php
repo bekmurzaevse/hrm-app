@@ -24,12 +24,12 @@ readonly class AddEducationDto
     public static function from(AddEducationRequest $request): self
     {
         return new self(
-            title: $request->title,
-            degree: $request->degree,
-            specialty: $request->specialty,
-            startYear: $request->start_year,
-            endYear: $request->end_year,
-            description: $request->description,
+            title: $request->input('title'),
+            degree: $request->input('degree'),
+            specialty: $request->input('specialty'),
+            startYear: $request->input('start_year'),
+            endYear: $request->input('end_year'),
+            description: $request->input('description'),
         );
     }
 }

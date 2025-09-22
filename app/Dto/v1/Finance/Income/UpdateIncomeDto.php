@@ -24,12 +24,12 @@ readonly class UpdateIncomeDto
     public static function from(UpdateIncomeRequest $request): self
     {
         return new self(
-            categoryIncome: $request->category_income,
-            projectId: $request->project_id,
-            date: $request->date,
-            amount: $request->amount,
-            comment: $request->comment,
-            description: $request->description,
+            categoryIncome: $request->input('category_income'),
+            projectId: $request->input('project_id'),
+            date: $request->input('date'),
+            amount: $request->input('amount'),
+            comment: $request->input('comment'),
+            description: $request->input('description'),
         );
     }
 }

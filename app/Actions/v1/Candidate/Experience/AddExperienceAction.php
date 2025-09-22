@@ -52,7 +52,6 @@ class AddExperienceAction
 
             return static::toResponse(
                 message: "$id - id li candidate qa work experience qosildi!",
-                // data: new CandidateResource($candidate)
             );
         } catch (ModelNotFoundException $ex) {
             throw new ApiResponseException('Candidate Not Found!', 404);

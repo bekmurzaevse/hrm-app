@@ -28,7 +28,6 @@ class AddEducationRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:50',
-            // 'degree' => 'required|string|max:50',
             'degree' => ['required', Rule::enum(DegreeEnum::class)],
             'specialty' => 'required|string|max:50',
             'start_year' => 'required|integer',
@@ -37,20 +36,12 @@ class AddEducationRequest extends FormRequest
         ];
     }
 
-    /**
-     * Summary of messages
-     * @return array{degree.max: string, degree.required: string, degree.string: string, end_year.max: string, end_year.required: string, end_year.string: string, specialty.max: string, specialty.required: string, specialty.string: string, start_year.max: string, start_year.required: string, start_year.string: string, title.max: string, title.required: string, title.string: string}
-     */
     public function messages(): array
     {
         return [
             'title.required' => "title ma'jbu'riy.",
             'title.string' => "title string boliw kerek.",
             'title.max' => "title 50 belgiden ko'p bolmawi kerek.",
-
-            'degree.required' => "degree ma'jbu'riy.",
-            'degree.string' => "degree string boliw kerek.",
-            'degree.max' => "degree 50 belgiden ko'p bolmawi kerek.",
 
             'degree.required' => "Degree ma'jbu'riy.",
             'degree.in' => "Degree ma'nisleri (male yoki female) boliwi kerek.",
@@ -59,13 +50,11 @@ class AddEducationRequest extends FormRequest
             'specialty.string' => "specialty string boliw kerek.",
             'specialty.max' => "specialty 50 belgiden ko'p bolmawi kerek.",
 
-            // 'start_year.required' => "start_year ma'jbu'riy.",
-            // 'start_year.string' => "start_year integer boliw kerek.",
-            // 'start_year.max' => "start_year 50 belgiden ko'p bolmawi kerek.",
+            'start_year.required' => "start_year ma'jbu'riy.",
+            'start_year.integer' => "start_year pu'tin san boliw kerek.",
 
-            // 'end_year.required' => "end_year ma'jbu'riy.",
-            // 'end_year.string' => "end_year integer boliw kerek.",
-            // 'end_year.max' => "end_year 50 belgiden ko'p bolmawi kerek.",
+            'end_year.required' => "end_year ma'jbu'riy.",
+            'end_year.integer' => "end_year pu'tin san boliw kerek.",
         ];
     }
 }
