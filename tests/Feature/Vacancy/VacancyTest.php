@@ -127,7 +127,6 @@ class VacancyTest extends TestCase
                             'size',
                             'created_at',
                             'download_url',
-                            'show_url',
                         ]
                     ]
                 ]

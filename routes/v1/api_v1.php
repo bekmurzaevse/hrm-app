@@ -250,6 +250,9 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::post('/{id}/copy', [SelectionController::class, 'copy']);
         Route::delete('/delete/{id}', [SelectionController::class, 'delete']);
         Route::delete('/delete', [SelectionController::class, 'deleteMany']);
+        // Export Excel
+        Route::get('/export', [SelectionController::class, 'exportIndex']);
+        Route::get('/{selectionId}/export', [SelectionController::class, 'exportShow']);
         // SelectionItem
         Route::post('/attach-candidates', [SelectionItemController::class, 'attachCandidates']);
         Route::post('/{id}/detach-candidates', [SelectionItemController::class, 'detachCandidates']);

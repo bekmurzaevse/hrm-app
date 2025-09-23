@@ -6,6 +6,8 @@ use App\Actions\v1\Selection\CopyAction;
 use App\Actions\v1\Selection\CreateAction;
 use App\Actions\v1\Selection\DeleteAction;
 use App\Actions\v1\Selection\DeleteManyAction;
+use App\Actions\v1\Selection\ExportIndexAction;
+use App\Actions\v1\Selection\ExportShowAction;
 use App\Actions\v1\Selection\IndexAction;
 use App\Actions\v1\Selection\ShowAction;
 use App\Actions\v1\Selection\ListAction;
@@ -19,6 +21,7 @@ use App\Http\Requests\v1\Selection\CreateRequest;
 use App\Http\Requests\v1\Selection\DeleteManyRequest;
 use App\Http\Requests\v1\Selection\IndexRequest;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class SelectionController extends Controller
 {
@@ -97,5 +100,26 @@ class SelectionController extends Controller
     public function deleteMany(DeleteManyRequest $request, DeleteManyAction $action): JsonResponse
     {
         return $action(DeleteManyDto::from($request));
+    }
+
+    /**
+     * Summary of exportIndex
+     * @param \App\Actions\v1\Selection\ExportIndexAction $action
+     * @return BinaryFileResponse
+     */
+    public function exportIndex(ExportIndexAction $action): BinaryFileResponse
+    {
+        return $action();
+    }
+
+    /**
+     * Summary of exportShow
+     * @param int $selectionId
+     * @param \App\Actions\v1\Selection\ExportShowAction $action
+     * @return BinaryFileResponse
+     */
+    public function exportShow(int $selectionId, ExportShowAction $action): BinaryFileResponse
+    {
+        return $action($selectionId);
     }
 }
