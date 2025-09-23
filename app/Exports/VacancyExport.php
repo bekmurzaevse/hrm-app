@@ -13,34 +13,31 @@ class VacancyExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
 {
     public function collection()
     {
-        return Vacancy::all()->map(function ($vacancy) {
+        return Vacancy::with(['client', 'district', 'createdBy'])->get()->map(function ($vacancy) {
             return [
-                'ID' => $vacancy->id,
-                'Title' => $vacancy->title,
-                'Client ID' => $vacancy->client_id,
-                'Department' => $vacancy->department,
-                'District ID' => $vacancy->district_id,
-                'Type Employment' => $vacancy->type_employment?->value,
-                'Work Schedule' => $vacancy->work_schedule?->value,
-                'Work Experience' => $vacancy->work_experience?->value,
-                'Education' => $vacancy->education?->value,
-                'Status' => $vacancy->status?->value,
-                'Position Count' => $vacancy->position_count,
-                'Created By' => $vacancy->created_by,
-                'Salary From' => $vacancy->salary_from,
-                'Salary To' => $vacancy->salary_to,
-                'Currency' => $vacancy->currency?->value,
-                'Period' => $vacancy->period?->value,
-                'Bonus' => $vacancy->bonus,
-                'Probation' => $vacancy->probation,
-                'Probation Salary' => $vacancy->probation_salary,
-                'Description' => $vacancy->description,
-                'Requirements' => $vacancy->requirements,
-                'Responsibilities' => $vacancy->responsibilities,
-                'Work Conditions' => $vacancy->work_conditions,
-                'Benefits' => $vacancy->benefits,
-                'Created At' => $vacancy->created_at?->format('Y-m-d H:i:s'),
-                'Updated At' => $vacancy->updated_at?->format('Y-m-d H:i:s'),
+                'title' => $vacancy->title,
+                'client_name' => $vacancy->client->name ?? '',
+                'department' => $vacancy->department,
+                'district_title' => $vacancy->district->title ?? '',
+                'type_employment' => $vacancy->type_employment->value ?? '',
+                'work_schedule' => $vacancy->work_schedule->value ?? '',
+                'work_experience' => $vacancy->work_experience->value ?? '',
+                'education' => $vacancy->education->value ?? '',
+                'status' => $vacancy->status->value ?? '',
+                'position_count' => $vacancy->position_count,
+                'created_by_name' => $vacancy->createdBy->first_name ?? '',
+                'salary_from' => $vacancy->salary_from,
+                'salary_to' => $vacancy->salary_to,
+                'currency' => $vacancy->currency->value ?? '',
+                'period' => $vacancy->period->value ?? '',
+                'bonus' => $vacancy->bonus->value ?? '',
+                'probation' => $vacancy->probation,
+                'probation_salary' => $vacancy->probation_salary,
+                'description' => $vacancy->description,
+                'requirements' => $vacancy->requirements,
+                'responsibilities' => $vacancy->responsibilities,
+                'work_conditions' => $vacancy->work_conditions,
+                'benefits' => $vacancy->benefits,
             ];
         });
     }
@@ -50,16 +47,16 @@ class VacancyExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
         return [
             'ID',
             'Title',
-            'Client ID',
+            'Client Name',
             'Department',
-            'District ID',
+            'District Title',
             'Type Employment',
             'Work Schedule',
             'Work Experience',
             'Education',
             'Status',
             'Position Count',
-            'Created By',
+            'Created By Name',
             'Salary From',
             'Salary To',
             'Currency',
@@ -72,8 +69,8 @@ class VacancyExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
             'Responsibilities',
             'Work Conditions',
             'Benefits',
-            'Created At',
-            'Updated At',
+            'Created_at',
+            'Updated_at',
         ];
     }
 
@@ -102,14 +99,14 @@ class VacancyExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     public function columnWidths(): array
     {
         return [
-            'B' => 5,   // ID ustuni
-            'C' => 25,  // Title
-            'D' => 20,  // Department
-            'E' => 15,  // Salary From
-            'F' => 15,  // Salary To
-            'G' => 10,  // Currency
-            'H' => 15,  // Status
-            'I' => 20,  // Created At
+            'B' => 5, 
+            'C' => 25,  
+            'D' => 20,  
+            'E' => 15,  
+            'F' => 15,  
+            'G' => 10, 
+            'H' => 15,  
+            'I' => 20,  
         ];
     }
 
