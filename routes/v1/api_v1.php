@@ -7,9 +7,11 @@ use App\Http\Controllers\v1\Candidate\CandidateExperienceController;
 use App\Http\Controllers\v1\Candidate\CandidateLanguageController;
 use App\Http\Controllers\v1\Candidate\CandidateEducationController;
 use App\Http\Controllers\v1\Candidate\CandidateContactController;
+use App\Http\Controllers\v1\Candidate\CandidateExcelController;
 use App\Http\Controllers\v1\Candidate\CandidateSkillController;
 use App\Http\Controllers\v1\Candidate\CandidateFileController;
 use App\Http\Controllers\v1\Client\ClientController;
+use App\Http\Controllers\v1\Client\ClientExcelController;
 use App\Http\Controllers\v1\Client\ClientFileController;
 use App\Http\Controllers\v1\Dashboard\DashboardController;
 use App\Http\Controllers\v1\Finance\FinanceController;
@@ -120,6 +122,8 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
      * Routs for Auth & Admin & Manager & Recruiter
      */
     Route::prefix('candidates')->group(function () {
+        Route::get('/export', [CandidateExcelController::class, 'export']);
+
         Route::get('/', [CandidateController::class, 'index']);
         Route::get('/{id}', [CandidateController::class, 'show']);
         Route::post('/create', [CandidateController::class, 'create']);
@@ -152,6 +156,8 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
     });
 
     Route::prefix('clients')->group(function () {
+        Route::get('/export', [ClientExcelController::class, 'export']);
+
         Route::get('/', [ClientController::class, 'index']);
         Route::get('/list', [ClientController::class, 'list']);
         Route::get('/{id}', [ClientController::class, 'show']);
