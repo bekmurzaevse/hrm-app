@@ -20,6 +20,7 @@ class IndexResource extends JsonResource
             'creator' => $this->createdBy?->shortFio,
             'created_at' => $this->created_at->format('Y-m-d'),
             'updated_at' => $this->updated_at->format('Y-m-d'),
+            'candidates' => $this->items()->count(),
         ];
     }
 }

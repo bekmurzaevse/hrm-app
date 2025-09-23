@@ -33,8 +33,9 @@ class StoreAction
 
         $selection->statuses()->create([
             'title' => $dto->title,
-            'order' => $selection->statuses()->max('order') + 1
+            'order' => ($selection->statuses()->max('order') ?? 0) + 1,
         ]);
+
         return static::toResponse(
             message: 'Selection status created',
         );

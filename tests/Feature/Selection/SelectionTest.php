@@ -45,6 +45,7 @@ class SelectionTest extends TestCase
                             'creator',
                             'created_at',
                             'updated_at',
+                            'candidates',
                         ]
                     ],
                     'pagination' => [
