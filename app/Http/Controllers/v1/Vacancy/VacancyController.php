@@ -88,13 +88,4 @@ class VacancyController extends Controller
         return Excel::download(new VacancyExport, $fileName);
     }
 
-    /**
-     * Summary of import
-     * @param \Illuminate\Http\Request $request
-     * @return void
-     */
-    public function import(Request $request)
-    {
-        Excel::import(new VacancyImport, $request->file('file'));
-    }
 }

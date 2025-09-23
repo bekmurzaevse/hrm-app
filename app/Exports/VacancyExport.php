@@ -15,29 +15,15 @@ class VacancyExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     {
         return Vacancy::with(['client', 'district', 'createdBy'])->get()->map(function ($vacancy) {
             return [
-                'title' => $vacancy->title,
-                'client_name' => $vacancy->client->name ?? '',
-                'department' => $vacancy->department,
-                'district_title' => $vacancy->district->title ?? '',
-                'type_employment' => $vacancy->type_employment->value ?? '',
-                'work_schedule' => $vacancy->work_schedule->value ?? '',
-                'work_experience' => $vacancy->work_experience->value ?? '',
-                'education' => $vacancy->education->value ?? '',
-                'status' => $vacancy->status->value ?? '',
-                'position_count' => $vacancy->position_count,
+                'title' => $vacancy->title, // Job title
+                'client_name' => $vacancy->client->name ?? '', // Client name
+                'district_title' => $vacancy->district->title ?? '', // District title
+                'status' => $vacancy->status->value ?? '', // Status
+                'position_count' => $vacancy->position_count, // Number of positions
                 'created_by_name' => $vacancy->createdBy->first_name ?? '',
                 'salary_from' => $vacancy->salary_from,
                 'salary_to' => $vacancy->salary_to,
-                'currency' => $vacancy->currency->value ?? '',
-                'period' => $vacancy->period->value ?? '',
-                'bonus' => $vacancy->bonus->value ?? '',
-                'probation' => $vacancy->probation,
-                'probation_salary' => $vacancy->probation_salary,
-                'description' => $vacancy->description,
-                'requirements' => $vacancy->requirements,
-                'responsibilities' => $vacancy->responsibilities,
-                'work_conditions' => $vacancy->work_conditions,
-                'benefits' => $vacancy->benefits,
+                'created_at' => $vacancy->created_at->format('Y-m-d'),
             ];
         });
     }
@@ -45,32 +31,15 @@ class VacancyExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     public function headings(): array
     {
         return [
-            'ID',
-            'Title',
-            'Client Name',
-            'Department',
-            'District Title',
-            'Type Employment',
-            'Work Schedule',
-            'Work Experience',
-            'Education',
-            'Status',
-            'Position Count',
+            'Title',  
+            'Client Name', 
+            'District Title', 
+            'Status', 
+            'Position Count', 
             'Created By Name',
             'Salary From',
             'Salary To',
-            'Currency',
-            'Period',
-            'Bonus',
-            'Probation',
-            'Probation Salary',
-            'Description',
-            'Requirements',
-            'Responsibilities',
-            'Work Conditions',
-            'Benefits',
             'Created_at',
-            'Updated_at',
         ];
     }
 
@@ -92,21 +61,6 @@ class VacancyExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
                     ],
                 ],
             ],
-        ];
-    }
-
-
-    public function columnWidths(): array
-    {
-        return [
-            'B' => 5, 
-            'C' => 25,  
-            'D' => 20,  
-            'E' => 15,  
-            'F' => 15,  
-            'G' => 10, 
-            'H' => 15,  
-            'I' => 20,  
         ];
     }
 

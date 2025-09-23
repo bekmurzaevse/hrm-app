@@ -91,7 +91,6 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
                 Route::delete('/delete/{skillId}', [VacancySkillController::class, 'delete']);
             });
             Route::get('/export', [VacancyController::class, 'export'])->name('vacancies.export');
-            Route::post('/import', [VacancyController::class, 'import'])->name('vacancies.import');
         });
 
         // Projects
