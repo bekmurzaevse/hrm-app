@@ -28,7 +28,7 @@ class CreateAction
 
             if ($afterStage->status === StageStatusEnum::COMPLETED) {
                 throw new ApiResponseException(
-                    'You cannot create a new stage after a completed stage.',
+                    'You cannot create a new stage after ' . $afterStage->title . ' stage',
                     400
                 );
             }

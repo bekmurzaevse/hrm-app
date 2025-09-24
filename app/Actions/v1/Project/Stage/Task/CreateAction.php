@@ -13,6 +13,12 @@ class CreateAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param \App\Dto\v1\Project\Stage\Task\CreateDto $dto
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(CreateDto $dto): JsonResponse
     {
         try {

@@ -7,9 +7,11 @@ use App\Http\Controllers\v1\Candidate\CandidateExperienceController;
 use App\Http\Controllers\v1\Candidate\CandidateLanguageController;
 use App\Http\Controllers\v1\Candidate\CandidateEducationController;
 use App\Http\Controllers\v1\Candidate\CandidateContactController;
+use App\Http\Controllers\v1\Candidate\CandidateExcelController;
 use App\Http\Controllers\v1\Candidate\CandidateSkillController;
 use App\Http\Controllers\v1\Candidate\CandidateFileController;
 use App\Http\Controllers\v1\Client\ClientController;
+use App\Http\Controllers\v1\Client\ClientExcelController;
 use App\Http\Controllers\v1\Client\ClientFileController;
 use App\Http\Controllers\v1\Dashboard\DashboardController;
 use App\Http\Controllers\v1\Finance\FinanceController;
@@ -104,6 +106,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
             Route::post('/{id}/upload', [ProjectFileController::class, 'upload']);
             Route::delete('/{id}/delete/{fileId}', [ProjectFileController::class, 'delete']);
             // Stage
+            Route::get('/{id}/stage/list', [ProjectStageController::class, 'list']);
             Route::post('/{id}/stage/create', [ProjectStageController::class, 'create']);
             Route::patch('/stage/{stageId}/update', [ProjectStageController::class, 'update']);
             Route::patch('/stage/{stageId}/complete', [ProjectStageController::class, 'complete']);
@@ -121,6 +124,8 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
      * Routs for Auth & Admin & Manager & Recruiter
      */
     Route::prefix('candidates')->group(function () {
+        Route::get('/export', [CandidateExcelController::class, 'export']);
+
         Route::get('/', [CandidateController::class, 'index']);
         Route::get('/{id}', [CandidateController::class, 'show']);
         Route::post('/create', [CandidateController::class, 'create']);
@@ -153,6 +158,8 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
     });
 
     Route::prefix('clients')->group(function () {
+        Route::get('/export', [ClientExcelController::class, 'export']);
+
         Route::get('/', [ClientController::class, 'index']);
         Route::get('/list', [ClientController::class, 'list']);
         Route::get('/{id}', [ClientController::class, 'show']);
@@ -250,6 +257,9 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::post('/{id}/copy', [SelectionController::class, 'copy']);
         Route::delete('/delete/{id}', [SelectionController::class, 'delete']);
         Route::delete('/delete', [SelectionController::class, 'deleteMany']);
+        // Export Excel
+        Route::get('/export', [SelectionController::class, 'exportIndex']);
+        Route::get('/{selectionId}/export', [SelectionController::class, 'exportShow']);
         // SelectionItem
         Route::post('/attach-candidates', [SelectionItemController::class, 'attachCandidates']);
         Route::post('/{id}/detach-candidates', [SelectionItemController::class, 'detachCandidates']);

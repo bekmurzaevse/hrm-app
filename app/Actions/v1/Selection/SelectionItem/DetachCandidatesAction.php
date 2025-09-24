@@ -13,6 +13,13 @@ class DetachCandidatesAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param mixed $id
+     * @param \App\Dto\v1\Selection\SelectionItem\DetachCandidatesDto $dto
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke($id, DetachCandidatesDto $dto): JsonResponse
     {
         try {

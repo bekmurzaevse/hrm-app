@@ -12,6 +12,14 @@ use Illuminate\Http\JsonResponse;
 class AddExternalCandidatesAction
 {
     use ResponseTrait;
+
+    /**
+     * Summary of __invoke
+     * @param int $id
+     * @param \App\Dto\v1\Selection\SelectionItem\AddExternalCandidatesDto $dto
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(int $id, AddExternalCandidatesDto $dto): JsonResponse
     {
         try {

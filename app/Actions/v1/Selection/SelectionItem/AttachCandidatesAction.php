@@ -5,13 +5,21 @@ namespace App\Actions\v1\Selection\SelectionItem;
 use App\Dto\v1\Selection\SelectionItem\AttachCandidatesDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\SelectionItem;
+use App\Traits\ClearCache;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 class AttachCandidatesAction
 {
-    use ResponseTrait;
+    use ResponseTrait, ClearCache;
+
+    /**
+     * Summary of __invoke
+     * @param \App\Dto\v1\Selection\SelectionItem\AttachCandidatesDto $dto
+     * @throws \App\Exceptions\ApiResponseException
+     * @return JsonResponse
+     */
     public function __invoke(AttachCandidatesDto $dto): JsonResponse
     {
         $selections = $dto->selections;
@@ -59,6 +67,9 @@ class AttachCandidatesAction
         // Insert
         DB::transaction(function () use ($new) {
             SelectionItem::insert($new);
+            $this->clear([
+                "selections:show:{auth()->id()}",
+            ]);
         });
 
         // Count duplicates

@@ -29,7 +29,9 @@ class ProjectResource extends JsonResource
                     'id' => $this->vacancy?->id,
                     'title' => $this->vacancy?->title,
                 ],
-                'performers' => $this->performers_fio,
+                'performers' => $this->performers?->map(function ($performer) {
+                    return $performer?->shortFio;
+                }),
                 'description' => $this->description,
                 'comment' => $this->comment,
             ],
@@ -47,7 +49,7 @@ class ProjectResource extends JsonResource
                 'benefits' => $this->vacancy?->benefits,
             ],
             'files' => $this->files?->map(function ($file) {
-                $fileExists = Storage::disk('public')->exists($file->path);
+                $fileExists = Storage::disk('public')->exists($file?->path);
                 return [
                     'id' => $file->id,
                     'name' => $file->name,
@@ -57,7 +59,6 @@ class ProjectResource extends JsonResource
                     'created_at' => $file->created_at->format('Y-m-d'),
                     // TODO: add file created by
                     'download_url' => $fileExists ? url('/api/v1/projects/' . $this->id . '/download/' . $file->id) : null,
-                    'show_url' => $fileExists ? url('/api/v1/projects/' . $this->id . '/file/' . $file->id) : null,
                 ];
             }),
         ];

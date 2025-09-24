@@ -19,7 +19,7 @@ class StageResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'deadline' => $this->deadline,
-            'executor_fio' => $this->executor_fio,
+            'executor_fio' => $this->executor->shortFio,
             'order' => $this->order,
             'is_required' => $this->is_required,
             'status' => $this->status,
@@ -29,7 +29,7 @@ class StageResource extends JsonResource
                     'id' => $task->id,
                     'title' => $task->title,
                     'description' => $task->description,
-                    'executor' => $task->executor_fio,
+                    'executor' => $task->executor?->shortFio,
                     'priority' => $task->priority,
                     'deadline' => $task->deadline,
                 ];

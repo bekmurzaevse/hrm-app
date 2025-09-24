@@ -28,7 +28,7 @@ class CompleteAction
 
             if ($stage->status === StageStatusEnum::IN_PROGRESS) {
                 $stage->stageCompletion()->create([
-                    'completed_by' => auth()->user()->id,
+                    'completed_by' => auth()->id(),
                     'candidate_count' => $dto->candidateCount,
                     'comment' => $dto->comment
                 ]);
@@ -52,7 +52,7 @@ class CompleteAction
                 logActivity($title, $text);
             } else {
                 return static::toResponse(
-                    message: "Stage status need in_progress, now it is {$stage->status}"
+                    message: "Stage status need in_progress, now it is {$stage->status->value}"
                 );
             }
 

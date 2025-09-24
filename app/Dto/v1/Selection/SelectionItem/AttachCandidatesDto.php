@@ -20,8 +20,8 @@ readonly class AttachCandidatesDto
     public static function from(AttachCandidatesRequest $request): self
     {
         return new self(
-            selections: $request->selections,
-            candidates: $request->candidates,
+            selections: $request->input('selections'),
+            candidates: $request->input('candidates'),
         );
     }
 }

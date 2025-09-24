@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('selection_id')->constrained('selections')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
-            $table->unsignedTinyInteger('order')->default(0);
+            $table->unsignedTinyInteger('order')->default(1);
         });
     }
 
