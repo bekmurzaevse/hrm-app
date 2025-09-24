@@ -15,11 +15,11 @@ class VacancyExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     {
         return Vacancy::with(['client', 'district', 'createdBy'])->get()->map(function ($vacancy) {
             return [
-                'title' => $vacancy->title, // Job title
-                'client_name' => $vacancy->client->name ?? '', // Client name
-                'district_title' => $vacancy->district->title ?? '', // District title
-                'status' => $vacancy->status->value ?? '', // Status
-                'position_count' => $vacancy->position_count, // Number of positions
+                'title' => $vacancy->title, 
+                'client_name' => $vacancy->client->name ?? '',
+                'district_title' => $vacancy->district->title ?? '', 
+                'status' => $vacancy->status->value ?? '',
+                'position_count' => $vacancy->position_count,
                 'created_by_name' => $vacancy->createdBy->first_name ?? '',
                 'salary_from' => $vacancy->salary_from,
                 'salary_to' => $vacancy->salary_to,
