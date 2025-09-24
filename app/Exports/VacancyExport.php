@@ -7,23 +7,27 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class VacancyExport implements FromCollection, WithHeadings, ShouldAutoSize, WithCustomStartCell
+class VacancyExport implements FromCollection, WithHeadings, ShouldAutoSize, WithCustomStartCell, WithStyles
 {
     public function collection()
     {
-        return Vacancy::with(['client', 'district', 'createdBy'])->get()->map(function ($vacancy) {
+        $vacancies = Vacancy::with(['client', 'district', 'createdBy'])->get();
+
+        return $vacancies->values()->map(function ($vacancy, $index) {
             return [
-                'title' => $vacancy->title, 
-                'client_name' => $vacancy->client->name ?? '',
-                'district_title' => $vacancy->district->title ?? '', 
-                'status' => $vacancy->status->value ?? '',
-                'position_count' => $vacancy->position_count,
-                'created_by_name' => $vacancy->createdBy->first_name ?? '',
-                'salary_from' => $vacancy->salary_from,
-                'salary_to' => $vacancy->salary_to,
-                'created_at' => $vacancy->created_at->format('Y-m-d'),
+                'No' => $index + 1,
+                'Title' => $vacancy->title,
+                'Client Name' => $vacancy->client->name ?? '',
+                'District Title' => $vacancy->district->title ?? '',
+                'Status' => $vacancy->status->value ?? '',
+                'Position Count' => $vacancy->position_count,
+                'Created By Name' => $vacancy->createdBy->first_name ?? '',
+                'Salary From' => $vacancy->salary_from,
+                'Salary To' => $vacancy->salary_to,
+                'Created At' => $vacancy->created_at->format('Y-m-d'),
             ];
         });
     }
@@ -31,37 +35,58 @@ class VacancyExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     public function headings(): array
     {
         return [
-            'Title',  
-            'Client Name', 
-            'District Title', 
-            'Status', 
-            'Position Count', 
-            'Created By Name',
-            'Salary From',
-            'Salary To',
-            'Created_at',
+            '№',
+            'Название',
+            'Клиент',
+            'Район',
+            'Статус',
+            'Количество позиций',
+            'Создано пользователем',
+            'Зарплата от',
+            'Зарплата до',
+            'Дата создания',
         ];
     }
 
     public function startCell(): string
     {
-        return 'B2';
+        return 'B3';
     }
 
     public function styles(Worksheet $sheet)
     {
-        return [
-            2 => ['font' => ['bold' => true]],
+        $highestRow = $sheet->getHighestRow();
 
-            'B2:I1000' => [
-                'borders' => [
-                    'allBorders' => [
-                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                        'color' => ['argb' => '000000'],
-                    ],
+        $sheet->mergeCells('B2:K2');
+        $sheet->setCellValue('B2', 'Вакансии');
+        $sheet->getStyle('B2')->applyFromArray([
+            'font' => ['bold' => true, 'size' => 14],
+            'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
+        ]);
+
+        $sheet->getStyle('B3:K3')->applyFromArray([
+            'font' => ['bold' => true],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['argb' => 'FFEFEFEF'],
+            ],
+        ]);
+
+        foreach (['B', 'D', 'E', 'F', 'G', 'H', 'K'] as $col) {
+            $sheet->getStyle("{$col}3:{$col}{$highestRow}")
+                ->getAlignment()
+                ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        }
+
+        $sheet->getStyle("B2:K{$highestRow}")->applyFromArray([
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
                 ],
             ],
-        ];
-    }
+        ]);
 
+        return [];
+    }
 }
