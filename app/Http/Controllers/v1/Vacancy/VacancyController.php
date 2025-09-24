@@ -10,11 +10,15 @@ use App\Actions\v1\Vacancy\UpdateAction;
 use App\Dto\v1\Vacancy\CreateDto;
 use App\Dto\v1\Vacancy\IndexDto;
 use App\Dto\v1\Vacancy\UpdateDto;
+use App\Exports\VacancyExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Vacancy\CreateRequest;
 use App\Http\Requests\v1\Vacancy\IndexRequest;
 use App\Http\Requests\v1\Vacancy\UpdateRequest;
+use App\Imports\VacancyImport;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VacancyController extends Controller
 {
@@ -73,4 +77,15 @@ class VacancyController extends Controller
     {
         return $action($id);
     }
+
+    /**
+     * Summary of export
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function export()
+    {
+        $fileName = 'vacancies_' . now()->format('Y_m_d_His') . '.xlsx';
+        return Excel::download(new VacancyExport, $fileName);
+    }
+
 }
