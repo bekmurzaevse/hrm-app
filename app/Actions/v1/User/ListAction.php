@@ -2,6 +2,7 @@
 
 namespace App\Actions\v1\User;
 
+use App\Enums\User\UserStatusEnum;
 use App\Models\User;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -20,6 +21,7 @@ class ListAction
         $key = 'users:list' . app()->getLocale() . ':' . md5(request()->fullUrl());
         $users = Cache::remember($key, now()->addDay(), function () {
             return User::role(['admin','manager'])
+                    ->whereNot('status', UserStatusEnum::DISMISSED->value)
                     ->select('id', 'first_name', 'last_name', 'patronymic')
                     ->get();
         });
