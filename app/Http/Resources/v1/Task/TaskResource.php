@@ -25,6 +25,7 @@ class TaskResource extends JsonResource
                 'id' => $this->createdBy?->id,
                 'name' => trim($this->createdBy?->first_name . ' ' . $this->createdBy?->last_name),
             ],
+            'executors' => $this->taskUsers->map(fn($tu) => $tu->user->first_name . ' ' . $tu->user->last_name),
             'status' => $this->status,
             'priority' => $this->priority,
             'created_at' => $this->created_at->format('Y-m-d H:i'),
