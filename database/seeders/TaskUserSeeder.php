@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\Task\TaskStatusEnum;
 use App\Models\TaskUser;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TaskUserSeeder extends Seeder
@@ -18,6 +17,7 @@ class TaskUserSeeder extends Seeder
             'task_id' => 1,
             'user_id' => 1,
             'assigned_at' => now(),
+            'accepted_at' => now(),
             'status' => TaskStatusEnum::IN_PROGRESS->value,
         ]);
 
@@ -30,7 +30,7 @@ class TaskUserSeeder extends Seeder
 
         TaskUser::create([
             'task_id' => 2,
-            'user_id' => 4,
+            'user_id' => 5,
             'assigned_at' => now(),
             'status' => TaskStatusEnum::OPEN->value,
         ]);

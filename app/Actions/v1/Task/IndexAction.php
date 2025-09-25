@@ -21,6 +21,11 @@ class IndexAction
         $key = 'tasks:' . app()->getLocale() . ':' . md5(request()->fullUrl());
         $tasks = Cache::remember($key, now()->addDay(), function () {
             return Task::with(['createdBy'])
+                ->whereHas('executors', function ($q) {
+                    $q->where('user_id', auth()->id())
+                      ->whereNotNull('accepted_at'); 
+                })
+                ->whereNotIn('status', ['completed', 'rejected']) // ✅ tek aktiv tasklar
                 ->orderBy('deadline', 'asc')
                 ->paginate(10);
         });

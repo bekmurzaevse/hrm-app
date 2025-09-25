@@ -12,4 +12,5 @@ enum TaskHistoryType: string
     case TaskSent          = 'task_sent';
     case TaskCreated       = 'task_created';
     case TaskUpdated       = 'task_updated';
+    case TaskAccepted      = 'task_accepted';
 }

@@ -14,12 +14,14 @@ class TaskUser extends Model
         'task_id',
         'user_id',
         'assigned_at',
+        'accepted_at',
         'status',
     ];
 
     protected $casts = [
         'status' => TaskStatusEnum::class,
         'assigned_at' => 'datetime',
+        'accepted_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

@@ -5,6 +5,7 @@ namespace App\Actions\v1\Task;
 use App\Exceptions\ApiResponseException;
 use App\Http\Resources\v1\Task\TaskResource;
 use App\Models\Task;
+use App\Models\TaskUser;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -23,6 +24,14 @@ class ShowAction
     public function __invoke(int $id): JsonResponse
     {
         try {
+            $isExecutor = TaskUser::where('task_id', $id)
+                ->where('user_id', auth()->id())
+                ->exists();
+
+            if (!$isExecutor) {
+                throw new ApiResponseException('Вы не являетесь исполнителем этой задачи', 403);
+            }
+            
             $key = 'tasks:show:' . app()->getLocale() . ':' . md5(request()->fullUrl());
             $task = Cache::remember($key, now()->addDay(), function () use ($id) {
                 return Task::with(['createdBy'])->findOrFail($id);

@@ -32,6 +32,10 @@ class CompleteAction
                 ->where('user_id', $userId)
                 ->firstOrFail();
 
+            if (!$taskUser->accepted_at) {
+                throw new ApiResponseException('Вы не приняли задачу. Сначала нажмите «Принять».', 403);
+            }
+
             $taskUser->update([
                 'status' => TaskStatusEnum::COMPLETED,
             ]);

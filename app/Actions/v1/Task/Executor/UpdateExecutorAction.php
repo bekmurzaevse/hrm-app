@@ -32,10 +32,6 @@ class UpdateExecutorAction
             $oldUserId = $dto->old_user_id;
             $newUserId = $dto->new_user_id;
 
-            $task = Task::findOrFail($taskId);
-            $oldUser = User::findOrFail($oldUserId);
-            $newUser = User::findOrFail($newUserId);
-
             $oldExecutor = TaskUser::where('task_id', $taskId)
                 ->where('user_id', $oldUserId)
                 ->first();
@@ -45,12 +41,15 @@ class UpdateExecutorAction
             }
 
             DB::transaction(function () use ($taskId, $newUserId, $dto, $oldUserId) {
+                TaskUser::where('task_id', $taskId)
+                    ->where('user_id', $oldUserId)
+                    ->delete();
+
                 TaskUser::firstOrCreate(
                     [
                         'task_id' => $taskId,
                         'user_id' => $newUserId,
-                    ],
-                    [
+                        'assigned_at' => now(),
                         'status' => TaskStatusEnum::OPEN->value,
                     ]
                 );
