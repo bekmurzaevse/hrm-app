@@ -74,7 +74,7 @@ class AddExecutorAction
 
         } catch (ModelNotFoundException $ex) {
             throw new ApiResponseException('Task or User not found', 404);
-        } catch (\Exception $ex) {
+        } catch (ModelNotFoundException $ex) {
             throw new ApiResponseException('Server Error', 500);
         }
     }

@@ -6,6 +6,7 @@ use App\Dto\v1\Task\Reject\RejectDto;
 use App\Enums\Task\TaskHistoryType;
 use App\Models\Task;
 use App\Models\TaskHistory;
+use App\Models\TaskUser;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use App\Traits\ResponseTrait;
@@ -24,29 +25,39 @@ class RejectAction
     public function __invoke(RejectDto $dto): JsonResponse
     {
         try {
-            $task = Task::findOrFail($dto->taskId);
+            $userId = auth()->id();
 
-            $task->update([
-                'status' => 'rejected',
+            $taskUser = TaskUser::where('task_id', $dto->taskId)
+                ->where('user_id', $userId)
+                ->firstOrFail();
+
+            if (!$taskUser->accepted_at) {
+                throw new ApiResponseException('Вы не приняли задачу. Сначала нажмите «Принять».', 403);
+            }
+
+            $taskUser->update([
+                'status' => TaskHistoryType::TaskRejected,
             ]);
 
             TaskHistory::create([
-                'task_id' => $task->id,
-                'changed_by' => auth()->id(),
+                'task_id' => $dto->taskId,
+                'changed_by' => $userId,
                 'type' => TaskHistoryType::TaskRejected,
                 'comment' => $dto->comment,
             ]);
 
+            $task = Task::findOrFail($dto->taskId);
+            $user = auth()->user();
+            $userName = $user->first_name . ' ' . $user->last_name;
+
             logActivity(
-                "Task Rejected!",
-                "Отклонена задача: {$task->title}",
+                "Задача отклонена!",
+                "Задача '{$task->title}' (ID: {$task->id}) была отклонена пользователем {$userName}"
             );
 
             return static::toResponse(message: 'Задача отклонена');
         } catch (ModelNotFoundException $ex) {
-            throw new ApiResponseException('Task not found', 404);
-        } catch (\Exception $ex) {
-            throw new ApiResponseException('Server Error', 500);
+            throw new ApiResponseException('Task User Not Found', 404);
         }
     }
 }

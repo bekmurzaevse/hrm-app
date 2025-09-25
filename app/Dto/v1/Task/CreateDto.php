@@ -10,7 +10,6 @@ readonly class CreateDto
         public string $title,
         public ?string $description,
         public string $deadline,
-        public string $status,
         public string $priority,
         public ?string $comment,
     ) {
@@ -27,7 +26,6 @@ readonly class CreateDto
             title: $request->title,
             description: $request->description,
             deadline: $request->deadline,
-            status: $request->status,
             priority: $request->priority,
             comment: $request->comment,
         );
