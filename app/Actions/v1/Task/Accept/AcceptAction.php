@@ -14,6 +14,12 @@ class AcceptAction
 {
     use ResponseTrait;
 
+    /**
+     * Summary of __invoke
+     * @param int $taskId
+     * @return JsonResponse
+     * @throws \App\Exceptions\ApiResponseException
+     */
     public function __invoke(int $taskId): JsonResponse
     {
         try {

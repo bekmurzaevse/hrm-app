@@ -172,6 +172,12 @@ class TaskController extends Controller
         return $action(RejectDto::from($request));
     }
 
+    /**
+     * Summary of accept
+     * @param int $id
+     * @param \App\Actions\v1\Task\Accept\AcceptAction $action
+     * @return JsonResponse
+     */
     public function accept(int $id, AcceptAction $action): JsonResponse
     {
         return $action($id);
