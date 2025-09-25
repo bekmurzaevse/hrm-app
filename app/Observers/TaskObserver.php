@@ -17,7 +17,6 @@ class TaskObserver
         $this->clear([
             'tasks',
             'tasks:show',
-            'dashboard',
         ]);
     }
 
@@ -30,7 +29,6 @@ class TaskObserver
         $this->clear([
             'tasks',
             'tasks:show',
-            'dashboard',
         ]);
     }
 
@@ -43,7 +41,6 @@ class TaskObserver
         $this->clear([
             'tasks',
             'tasks:show',
-            'dashboard',
         ]);
     }
 
@@ -56,7 +53,6 @@ class TaskObserver
         $this->clear([
             'tasks',
             'tasks:show',
-            'dashboard',
         ]);
     }
 
@@ -69,7 +65,6 @@ class TaskObserver
         $this->clear([
             'tasks',
             'tasks:show',
-            'dashboard',
         ]);
     }
 }

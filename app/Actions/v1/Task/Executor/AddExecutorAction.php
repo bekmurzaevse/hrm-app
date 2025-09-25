@@ -48,7 +48,6 @@ class AddExecutorAction
                 TaskUser::create([
                     'task_id' => $task->id,
                     'user_id' => $user->id,
-                    'assigned_at' => now(),
                     'status' => TaskStatusEnum::OPEN->value,
                 ]);
 

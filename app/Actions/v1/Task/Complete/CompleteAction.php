@@ -26,10 +26,10 @@ class CompleteAction
     public function __invoke(CompleteDto $dto): JsonResponse
     {
         try {
-            $userId = auth()->user()->id;
+            $user = auth()->user();
 
             $taskUser = TaskUser::where('task_id', $dto->taskId)
-                ->where('user_id', $userId)
+                ->where('user_id', $user->id)
                 ->firstOrFail();
 
             if (!$taskUser->accepted_at) {
@@ -43,7 +43,7 @@ class CompleteAction
             TaskHistory::create([
                 'task_id' => $dto->taskId,
                 'type' => TaskHistoryType::TaskCompleted,
-                'changed_by' => $userId,
+                'changed_by' => $user->id,
                 'comment' => "Задача выполнена. Комментарий: {$dto->comment}",
             ]);
 
@@ -58,7 +58,6 @@ class CompleteAction
             }
 
             $task = Task::findOrFail($dto->taskId);
-            $user = auth()->user();
             $userName = $user->first_name . ' ' . $user->last_name;
 
             logActivity(

@@ -16,7 +16,6 @@ class TaskUserSeeder extends Seeder
         TaskUser::create([
             'task_id' => 1,
             'user_id' => 1,
-            'assigned_at' => now(),
             'accepted_at' => now(),
             'status' => TaskStatusEnum::IN_PROGRESS->value,
         ]);
@@ -24,14 +23,12 @@ class TaskUserSeeder extends Seeder
         TaskUser::create([
             'task_id' => 1,
             'user_id' => 3,
-            'assigned_at' => now(),
             'status' => TaskStatusEnum::OPEN->value,
         ]);
 
         TaskUser::create([
             'task_id' => 2,
             'user_id' => 5,
-            'assigned_at' => now(),
             'status' => TaskStatusEnum::OPEN->value,
         ]);
     }

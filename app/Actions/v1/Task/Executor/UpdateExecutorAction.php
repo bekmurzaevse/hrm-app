@@ -32,27 +32,18 @@ class UpdateExecutorAction
             $oldUserId = $dto->old_user_id;
             $newUserId = $dto->new_user_id;
 
-            $oldExecutor = TaskUser::where('task_id', $taskId)
+            $executor = TaskUser::where('task_id', $taskId)
                 ->where('user_id', $oldUserId)
                 ->first();
 
-            if (!$oldExecutor) {
+            if (!$executor) {
                 throw new ModelNotFoundException();
             }
 
-            DB::transaction(function () use ($taskId, $newUserId, $dto, $oldUserId) {
-                TaskUser::where('task_id', $taskId)
-                    ->where('user_id', $oldUserId)
-                    ->delete();
-
-                TaskUser::firstOrCreate(
-                    [
-                        'task_id' => $taskId,
-                        'user_id' => $newUserId,
-                        'assigned_at' => now(),
-                        'status' => TaskStatusEnum::OPEN->value,
-                    ]
-                );
+            DB::transaction(function () use ($taskId, $newUserId, $dto, $oldUserId, $executor) {
+                $executor->update([
+                    'user_id' => $newUserId
+                ]);
 
                 TaskHistory::create([
                     'task_id' => $taskId,
