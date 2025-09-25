@@ -18,7 +18,7 @@ class UpdateAction
      * @param int $taskId
      * @param \App\Dto\v1\Project\Stage\Task\UpdateDto $dto
      * @return JsonResponse
-     *@throws \App\Exceptions\ApiResponseException
+     * @throws \App\Exceptions\ApiResponseException
      */
     public function __invoke(int $taskId, UpdateDto $dto): JsonResponse
     {

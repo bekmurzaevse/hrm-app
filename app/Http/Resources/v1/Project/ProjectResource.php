@@ -30,7 +30,7 @@ class ProjectResource extends JsonResource
                     'title' => $this->vacancy?->title,
                 ],
                 'performers' => $this->performers?->map(function ($performer) {
-                    return $performer?->shortFio;
+                    return $performer->shortFio;
                 }),
                 'description' => $this->description,
                 'comment' => $this->comment,
@@ -49,7 +49,7 @@ class ProjectResource extends JsonResource
                 'benefits' => $this->vacancy?->benefits,
             ],
             'files' => $this->files?->map(function ($file) {
-                $fileExists = Storage::disk('public')->exists($file?->path);
+                $fileExists = Storage::disk('public')->exists($file->path);
                 return [
                     'id' => $file->id,
                     'name' => $file->name,
