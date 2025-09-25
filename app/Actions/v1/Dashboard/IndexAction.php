@@ -27,16 +27,16 @@ class IndexAction
     {
         $year = now()->year;
         $maxMonth = now()->month;
+        $user = auth()->user();
+        $role = $user->getRoleNames()->first();
 
-        return Cache::remember("dashboard:$year", now()->addMinutes(30), function () use ($year, $maxMonth, $dto) {
+        return Cache::remember("dashboard:$year:$role:$user->id", now()->addMinutes(30), function () use ($year, $maxMonth, $dto, $user) {
             $candidates = Candidate::select(['id', 'created_at', 'user_id'])->cursor();
 
             $personalCandidates = [];
 
-            $authId = auth()->id();
-
             foreach ($candidates as $candidate) {
-                if ($candidate->created_at->year == $year && $candidate->user_id == $authId) {
+                if ($candidate->created_at->year == $year && $candidate->user_id == $user->id) {
                     $month = $candidate->created_at->format('m'); // '01', '02', ...
 
                     if (!isset($personalCandidates[$month])) {
@@ -75,7 +75,7 @@ class IndexAction
                         $totalVacanciesClosed[$month]++;
                     }
 
-                    if ($vacancy->status == VacancyStatusEnum::CLOSED && $vacancy->created_by == $authId) {
+                    if ($vacancy->status == VacancyStatusEnum::CLOSED && $vacancy->created_by == $user->id) {
                         if (!isset($personalVacancies[$month])) {
                             $personalVacancies[$month] = 0;
                         }
@@ -222,12 +222,12 @@ class IndexAction
                 return [$m => $income - $expense];
             });
 
-            return [
+            $result = [
                 'my_projects' => ProjectResource::collection($projectQuery->get()),
                 'personal' => [
                     'vacancies_count' => $vacancies
                         ->where('status', VacancyStatusEnum::CLOSED->value)
-                        ->where('created_by', $authId)
+                        ->where('created_by', $user->id)
                         ->count(),
                     'vacancies' => $buildList($personalVacancies),
                     'candidates' => $buildList($personalCandidates),
@@ -238,18 +238,21 @@ class IndexAction
                     'vacancies_closed_count' => $vacancies->where('status', VacancyStatusEnum::CLOSED->value)->count(),
                     'vacancies_closed' => $buildList($totalVacanciesClosed),
                 ],
-                'fin_stats' => [
-                    'vacancies' => $buildList($vacanciesRaw),
-                    'projects' => $buildList($projectsRaw),
-                    'income' => $buildList($incomesRaw),
-                    'expense' => $buildList($expensesRaw),
-                    'expense_honorariums' => $buildList($honorarsRaw),
-                    'profit' => $buildList($profitRaw),
-                ],
-                'candidates' => $buildList($candidatesRaw),
-                'clients' => $buildList($clientsRaw),
-                'users' => $users->map(function ($user) {
-                    return [
+            ];
+
+            if (auth()->user()->hasAnyRole(['admin', 'manager'])) {
+                $result = array_merge($result, [
+                    'fin_stats' => [
+                        'vacancies' => $buildList($vacanciesRaw),
+                        'projects' => $buildList($projectsRaw),
+                        'income' => $buildList($incomesRaw),
+                        'expense' => $buildList($expensesRaw),
+                        'expense_honorariums' => $buildList($honorarsRaw),
+                        'profit' => $buildList($profitRaw),
+                    ],
+                    'candidates' => $buildList($candidatesRaw),
+                    'clients' => $buildList($clientsRaw),
+                    'users' => $users->map(fn($user) => [
                         'first_name' => $user->first_name,
                         'last_name' => $user->last_name,
                         'patronymic' => $user->patronymic,
@@ -257,9 +260,11 @@ class IndexAction
                         'closed_month' => $user->closed_month,
                         'closed_year' => $user->closed_year,
                         'closed_all' => $user->closed_all,
-                    ];
-                }),
-            ];
+                    ]),
+                ]);
+            }
+
+            return $result;
         });
     }
 }
