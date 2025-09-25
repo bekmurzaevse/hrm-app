@@ -20,9 +20,6 @@ class InteractionTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->seed();
-
-        $user = User::find(1);
-        Sanctum::actingAs($user, ['access-token']);
     }
 
     /**
@@ -31,6 +28,11 @@ class InteractionTest extends TestCase
      */
     public function test_interaction_can_get_all(): void
     {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $response = $this->getJson("/api/v1/interactions");
 
         $response
@@ -47,6 +49,11 @@ class InteractionTest extends TestCase
      */
     public function test_type_can_show(): void
     {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $typeId = Type::inRandomOrder()->first()->id;
 
         $response = $this->getJson('/api/v1/types/' . $typeId);
@@ -61,17 +68,20 @@ class InteractionTest extends TestCase
      */
     public function test_interaction_can_create(): void
     {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $value = "test";
         $description = "description";
         $candidateId = Candidate::inRandomOrder()->first()->id;
-        $userId = auth()->user()->id;
         $typeId = Type::inRandomOrder()->first()->id;
 
         $data = [
             'value' => $value,
             'type_id' => $typeId,
             'candidate_id' => $candidateId,
-            'user_id' => $userId,
             'description' => $description,
         ];
 
@@ -83,7 +93,7 @@ class InteractionTest extends TestCase
             'value' => $value,
             'type_id' => $typeId,
             'candidate_id' => $candidateId,
-            'user_id' => $userId,
+            'user_id' => $user->id,
             'description' => $description,
         ]);
     }
@@ -94,19 +104,23 @@ class InteractionTest extends TestCase
      */
     public function test_interaction_can_update(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $interaction = Interaction::inRandomOrder()->first();
 
         $value = "new test";
         $description = "new description";
         $candidateId = Candidate::inRandomOrder()->first()->id;
-        $userId = auth()->user()->id;
         $typeId = Type::inRandomOrder()->first()->id;
 
         $data = [
             'value' => $value,
             'type_id' => $typeId,
             'candidate_id' => $candidateId,
-            'user_id' => $userId,
+            'user_id' => $user->id,
             'description' => $description,
         ];
 
@@ -123,7 +137,7 @@ class InteractionTest extends TestCase
             'value' => $value,
             'type_id' => $typeId,
             'candidate_id' => $candidateId,
-            'user_id' => $userId,
+            'user_id' => $user->id,
             'description' => $description,
         ]);
     }
@@ -134,6 +148,11 @@ class InteractionTest extends TestCase
      */
     public function test_interaction_can_delete(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $interactionId = Interaction::inRandomOrder()->first()->id;
 
         $response = $this->deleteJson('/api/v1/interactions/delete/' . $interactionId);

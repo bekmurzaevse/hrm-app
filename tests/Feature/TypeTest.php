@@ -18,9 +18,6 @@ class TypeTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->seed();
-
-        $user = User::find(1);
-        Sanctum::actingAs($user, ['access-token']);
     }
 
     /**
@@ -29,6 +26,11 @@ class TypeTest extends TestCase
      */
     public function test_type_can_get_all(): void
     {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $response = $this->getJson("/api/v1/types");
 
         $response
@@ -61,6 +63,11 @@ class TypeTest extends TestCase
      */
     public function test_type_can_show(): void
     {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $typeId = Type::inRandomOrder()->first()->id;
 
         $response = $this->getJson('/api/v1/types/' . $typeId);
@@ -84,6 +91,11 @@ class TypeTest extends TestCase
      */
     public function test_type_can_create(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $title = "test title";
 
         $data = [
@@ -105,6 +117,11 @@ class TypeTest extends TestCase
      */
     public function test_type_can_update(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $type = Type::inRandomOrder()->first();
 
         $title = "update test title";
@@ -133,6 +150,11 @@ class TypeTest extends TestCase
      */
     public function test_type_can_delete(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $typeId = Type::inRandomOrder()->first()->id;
 
         $response = $this->deleteJson('/api/v1/types/delete/' . $typeId);

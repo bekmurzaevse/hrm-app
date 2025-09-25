@@ -19,7 +19,9 @@ class UserTest extends TestCase
         Storage::fake('public');
         $this->seed();
 
-        $user = User::find(1);
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
         Sanctum::actingAs($user, ['access-token']);
     }
 

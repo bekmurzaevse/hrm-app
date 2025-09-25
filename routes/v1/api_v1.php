@@ -240,8 +240,9 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
     });
 
     Route::prefix('interactions')->group(function () {
-        Route::put('/update/{id}', [InteractionController::class, 'update']);
-        Route::delete('/delete/{id}', [InteractionController::class, 'delete']);
+        Route::get('/', [InteractionController::class, 'index']);
+        Route::get('/{id}', [InteractionController::class, 'show']);
+        Route::post('/create', [InteractionController::class, 'create']);
     });
 
     Route::prefix('regions')->group(function () {
