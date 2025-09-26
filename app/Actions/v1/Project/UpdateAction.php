@@ -42,10 +42,6 @@ class UpdateAction
             $text = "Проект «{$project->title}» был обновлен.";
             logActivity($title, $text);
 
-            if ($dto->performers) {
-                $project->performers()->sync($dto->performers);
-            }
-
             return static::toResponse(
                 message: "Project updated"
             );

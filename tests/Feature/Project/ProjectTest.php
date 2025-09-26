@@ -48,10 +48,10 @@ class ProjectTest extends TestCase
                             'id',
                             'client_name',
                             'vacancy_title',
+                            'executor',
                             'status',
                             'created_at',
                             'deadline',
-                            'performers',
                             'contract_number',
                             'contract_budget',
                             'progress',
@@ -138,6 +138,7 @@ class ProjectTest extends TestCase
             'title' => $data['title'],
             'client_id' => $data['client_id'],
             'vacancy_id' => $data['vacancy_id'],
+            'executor_id' => $user->id,
             'contract_number' => $data['contract_number'],
             'contract_budget' => $data['contract_budget'],
             // 'contract_currency' => $data['contract_currency'],
@@ -161,13 +162,13 @@ class ProjectTest extends TestCase
             'title' => 'test title',
             'client_id' => 1,
             'vacancy_id' => 1,
+            'executor_id' => 3,
             'deadline' => '01-01-2023',
             'contract_number' => 'test contract number',
             'contract_budget' => 1000,
             // 'contract_currency' => 'USD',
             'description' => 'test description',
             'comment' => 'test comment',
-            'performers' => [1, 2],
         ];
 
         $project = Project::find(1);
@@ -186,6 +187,7 @@ class ProjectTest extends TestCase
             'title' => $data['title'],
             'client_id' => $data['client_id'],
             'vacancy_id' => $data['vacancy_id'],
+            'executor_id' => $data['executor_id'],
             'contract_number' => $data['contract_number'],
             'contract_budget' => $data['contract_budget'],
             // 'contract_currency' => $data['contract_currency'],
@@ -267,34 +269,31 @@ class ProjectTest extends TestCase
      * Summary of test_admin_manager_can_update_project_performers
      * @return void
      */
-    public function test_admin_manager_can_update_project_performers(): void
+    public function test_admin_manager_can_update_project_executor(): void
     {
-        $user = User::role(['admin', 'manager'])
+        $user = User::role(['admin'])
             ->inRandomOrder()
             ->first();
         Sanctum::actingAs($user, ['access-token']);
 
         $project = Project::find(1);
-        $data = [
-            'performers' => [1, 2],
-        ];
 
-        $response = $this->putJson("/api/v1/projects/{$project->id}/update-performers", $data);
+
+        $response = $this->patchJson("/api/v1/projects/{$project->id}/update-executor", [
+            'executor_id' => 2,
+        ]);
 
         $response
             ->assertStatus(200)
             ->assertJson([
                 'status' => 200,
-                'message' => 'Performers updated successfully for project',
+                'message' => 'Executor updated successfully for project',
             ]);
 
-        $this->assertDatabaseHas('project_user', [
-            'project_id' => $project->id,
-            'user_id' => 1,
+        $this->assertDatabaseHas('projects', [
+            'id' => $project->id,
+            'executor_id' => 2,
         ]);
-        $this->assertDatabaseHas('project_user', [
-            'project_id' => $project->id,
-            'user_id' => 2,
-        ]);
+
     }
 }

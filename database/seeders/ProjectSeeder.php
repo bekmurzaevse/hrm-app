@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\User\UserStatusEnum;
 use App\Helpers\FileUploadHelper;
 use App\Models\Project;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\UploadedFile;
 
@@ -19,6 +20,7 @@ class ProjectSeeder extends Seeder
             'title' => 'Sample Project',
             'client_id' => 1,
             'vacancy_id' => 1,
+            'executor_id' => User::inRandomOrder()->where('status', UserStatusEnum::WORKING)->first()->id,
             'deadline' => now()->addDays(30)->format('m-d-Y'),
             'contract_number' => 'CN-123456',
             'contract_budget' => 10000,
@@ -61,6 +63,7 @@ class ProjectSeeder extends Seeder
             'title' => 'Another Project',
             'client_id' => 2,
             'vacancy_id' => 2,
+            'executor_id' => User::inRandomOrder()->where('status', UserStatusEnum::WORKING)->first()->id,
             'deadline' => now()->addDays(60)->format('m-d-Y'),
             'contract_number' => 'CN-654321',
             'contract_budget' => 20000,
@@ -103,6 +106,7 @@ class ProjectSeeder extends Seeder
             'title' => 'Cancelled Project',
             'client_id' => 2,
             'vacancy_id' => 3,
+            'executor_id' => User::inRandomOrder()->where('status', UserStatusEnum::WORKING)->first()->id,
             'deadline' => now()->addDays(15)->format('m-d-Y'),
             'contract_number' => 'CN-789012',
             'contract_budget' => 5000,

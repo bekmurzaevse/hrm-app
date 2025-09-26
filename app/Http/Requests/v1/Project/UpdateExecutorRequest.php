@@ -5,7 +5,7 @@ namespace App\Http\Requests\v1\Project;
 use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePerformerRequest extends FormRequest
+class UpdateExecutorRequest extends FormRequest
 {
     use FailedValidation;
 
@@ -25,8 +25,7 @@ class UpdatePerformerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'performers' => 'required|array',
-            'performers.*' => 'required|exists:users,id',
+            'executor_id' => 'required|integer|exists:users,id',
         ];
     }
 }

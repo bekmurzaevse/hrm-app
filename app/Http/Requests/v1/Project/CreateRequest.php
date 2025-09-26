@@ -26,10 +26,8 @@ class CreateRequest extends FormRequest
     {
         return [
             'title' => 'required|string|min:2|max:255',
-            'client_id' => 'required|exists:clients,id',
-            'vacancy_id' => 'required|exists:vacancies,id',
-            'performers' => 'required|array',
-            'performers.*' => 'required|exists:users,id',
+            'client_id' => 'required|integer|exists:clients,id',
+            'vacancy_id' => 'required|integer|exists:vacancies,id',
             'deadline' => 'required|date_format:m-d-Y',
             'contract_number' => 'nullable|string',
             'contract_budget' => 'nullable|numeric|required_with:contract_number',
