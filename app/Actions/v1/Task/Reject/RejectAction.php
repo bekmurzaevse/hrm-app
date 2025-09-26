@@ -4,6 +4,7 @@ namespace App\Actions\v1\Task\Reject;
 
 use App\Dto\v1\Task\Reject\RejectDto;
 use App\Enums\Task\TaskHistoryType;
+use App\Enums\Task\TaskStatusEnum;
 use App\Models\Task;
 use App\Models\TaskHistory;
 use App\Models\TaskUser;
@@ -36,7 +37,7 @@ class RejectAction
             }
 
             $taskUser->update([
-                'status' => TaskHistoryType::TaskRejected,
+                'status' => TaskStatusEnum::REJECTED->value,
             ]);
 
             TaskHistory::create([

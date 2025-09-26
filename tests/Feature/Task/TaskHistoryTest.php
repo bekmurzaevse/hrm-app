@@ -64,48 +64,50 @@ class TaskHistoryTest extends TestCase
 
     }
 
-    // public function test_executor_can_updated()
-    // {
-    //     $task = Task::where('created_by', auth()->id())->first();
+    public function test_executor_can_updated()
+    {
+        $creator = User::find(1);
+        $oldExecutor = User::find(2);
+        $newExecutor = User::find(3);
 
-    //     $oldExecutor = User::find(1);
-    //     TaskUser::create([
-    //         'task_id' => $task->id,
-    //         'user_id' => $oldExecutor->id,
-    //         'status' => TaskStatusEnum::OPEN->value,
-    //     ]);
+        $task = Task::factory()->create([
+            'created_by' => $creator->id,
+        ]);
 
-    //     $newExecutor = User::find(2);
+        TaskUser::create([
+            'task_id' => $task->id,
+            'user_id' => $oldExecutor->id,
+            'status' => TaskStatusEnum::OPEN->value,
+        ]);
 
-    //     $payload = [
-    //         'old_user_id' => $oldExecutor->id,
-    //         'new_user_id' => $newExecutor->id,
-    //         'comment' => 'Test comment update',
-    //     ];
+        $payload = [
+            'old_user_id' => $oldExecutor->id,
+            'new_user_id' => $newExecutor->id,
+            'comment' => 'Test comment update',
+        ];
 
-    //     $response = $this->putJson("/api/v1/tasks/{$task->id}/update-executor", $payload);
+        $response = $this->putJson("/api/v1/tasks/{$task->id}/update-executor", $payload);
 
-    //     $response->assertStatus(200)
-    //         ->assertJson([
-    //             'status' => 200,
-    //             'message' => 'Исполнитель успешно обновлен',
-    //         ]);
+        $response->assertStatus(200)
+            ->assertJson([
+                'status' => 200,
+                'message' => 'Исполнитель успешно обновлен',
+            ]);
 
-    //     $this->assertDatabaseHas('task_users', [
-    //         'task_id' => $task->id,
-    //         'user_id' => $newExecutor->id,
-    //     ]);
+        $this->assertDatabaseHas('task_users', [
+            'task_id' => $task->id,
+            'user_id' => $newExecutor->id,
+        ]);
 
-    //     $comment = "Исполнитель изменен: {$oldExecutor->id} → {$newExecutor->id}"
-    //                     .  "Комментарий: Test comment update";
+        $comment = "Исполнитель изменен: {$oldExecutor->id} → {$newExecutor->id}. Комментарий: Test comment update";
 
-    //     $this->assertDatabaseHas('task_histories', [
-    //         'task_id' => $task->id,
-    //         'changed_by' => auth()->id(),
-    //         'type' => TaskHistoryType::ExecutorChanged,
-    //         'comment' => $comment
-    //     ]);
-    // } TODO: Bul test hazirshe kerek emes
+        $this->assertDatabaseHas('task_histories', [
+            'task_id' => $task->id,
+            'changed_by' => $creator->id,
+            'type' => TaskHistoryType::ExecutorChanged,
+            'comment' => $comment
+        ]);
+    }
 
     public function test_executor_can_be_removed(): void
     {
@@ -164,7 +166,17 @@ class TaskHistoryTest extends TestCase
 
     public function test_task_can_be_rejected(): void
     {
-        $task = Task::inRandomOrder()->first();
+        $user = User::find(1);
+        $task = Task::factory()->create([
+            'created_by' => $user->id,
+        ]);
+
+        TaskUser::create([
+            'task_id' => $task->id,
+            'user_id' => $user->id,
+            'accepted_at' => now(),
+            'status' => TaskStatusEnum::IN_PROGRESS->value,
+        ]);
 
         $payload = [
             'task_id' => $task->id,
@@ -179,14 +191,16 @@ class TaskHistoryTest extends TestCase
                 'message' => 'Задача отклонена',
             ]);
 
-        $this->assertDatabaseHas('tasks', [
-            'id'     => $task->id,
-            'status' => 'rejected',
+        $this->assertDatabaseHas('task_users', [
+            'task_id' => $task->id,
+            'user_id' => $user->id,
+            'status' => TaskStatusEnum::REJECTED->value,
         ]);
 
         $this->assertDatabaseHas('task_histories', [
             'task_id' => $task->id,
-            'type' => TaskHistoryType::TaskRejected,
+            'type' => TaskHistoryType::TaskRejected->value,
+            'changed_by' => $user->id,
             'comment' => 'Rejected for testing',
         ]);
     }
@@ -210,7 +224,7 @@ class TaskHistoryTest extends TestCase
             ]);
 
         $comment = "Задача отправлена пользователю (ID: {$newExecutor->id})"
-           . ". Комментарий: Transfer test comment";
+            . ". Комментарий: Transfer test comment";
 
         $this->assertDatabaseHas('task_histories', [
             'task_id' => $task->id,
