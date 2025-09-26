@@ -2,6 +2,7 @@
 
 namespace App\Actions\v1\Task;
 
+use App\Enums\Task\TaskStatusEnum;
 use App\Http\Resources\v1\Task\TaskCollection;
 use App\Models\Task;
 use App\Traits\ResponseTrait;
@@ -20,12 +21,15 @@ class IndexAction
     {
         $key = 'tasks:' . app()->getLocale() . ':' . md5(request()->fullUrl());
         $tasks = Cache::remember($key, now()->addDay(), function () {
-            return Task::with(['createdBy'])
-                ->whereHas('executors', function ($q) {
+            return Task::with(['createdBy', 'taskUsers.user'])
+                ->whereHas('taskUsers', function ($q) {
                     $q->where('user_id', auth()->id())
                       ->whereNotNull('accepted_at'); 
                 })
-                ->whereNotIn('status', ['completed', 'rejected']) // ✅ tek aktiv tasklar
+                ->whereNotIn('status', [
+                    TaskStatusEnum::COMPLETED->value,
+                    TaskStatusEnum::REJECTED->value
+                ]) // ✅ tek aktiv tasklar
                 ->orderBy('deadline', 'asc')
                 ->paginate(10);
         });
