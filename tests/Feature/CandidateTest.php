@@ -8,6 +8,7 @@ use App\Enums\Candidate\FamilyStatusEnum;
 use App\Enums\GenderEnum;
 use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -909,7 +910,7 @@ class CandidateTest extends TestCase
 
         $file = UploadedFile::fake()->create(
             'document.pdf',
-            200, // 200 KB
+            200,
             'application/pdf'
         );
 
@@ -961,5 +962,41 @@ class CandidateTest extends TestCase
         $this->assertSoftDeleted('files', [
             'id' => $fileId,
         ]);
+    }
+
+    /**
+     * Summary of test_can_download_file_in_candidate
+     * @return void
+     */
+    public function test_can_download_file_in_candidate()
+    {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $file = File::inRandomOrder()->where('fileable_type', Candidate::class)->first();
+
+        $response = $this->get("/api/v1/candidates/$file->fileable_id/download/$file->id");
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Summary of test_can_download_file_in_candidate_list_to_excel
+     * @return void
+     */
+    public function test_can_download_file_in_candidate_list_to_excel()
+    {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $this->withoutExceptionHandling();
+
+        $response = $this->get("/api/v1/candidates/export");
+
+        $response->assertStatus(200);
     }
 }
