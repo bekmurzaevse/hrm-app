@@ -31,7 +31,7 @@ class ShowAction
                     'items.statusValues',
                     'statuses',
                 ])
-                    ->where('created_by', auth()->user()->id)
+                    ->where('created_by', auth()->id())
                     ->findOrFail($id);
             });
 
