@@ -9,6 +9,7 @@ use App\Models\Finance;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
@@ -23,7 +24,15 @@ class FinanceTest extends TestCase
         Storage::fake('public');
         $this->seed();
 
-        $user = User::find(1);
+        if (DB::getDriverName() === 'sqlite') {
+            DB::getPdo()->sqliteCreateFunction('MONTH', function ($date) {
+                return (int) date('m', strtotime($date));
+            });
+        }
+
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
         Sanctum::actingAs($user, ['access-token']);
     }
 

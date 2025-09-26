@@ -92,7 +92,6 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
                 Route::put('/update/{skillId}', [VacancySkillController::class, 'update']);
                 Route::delete('/delete/{skillId}', [VacancySkillController::class, 'delete']);
             });
-            Route::get('/export', [VacancyController::class, 'export'])->name('vacancies.export');
         });
 
         // Projects
@@ -116,6 +115,82 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
             Route::put('/stage/task/{taskId}/update', [StageTaskController::class, 'update']);
             Route::delete('/stage/task/{taskId}/delete', [StageTaskController::class, 'delete']);
         });
+
+        //Candidates
+        Route::prefix('candidates')->group(function () {
+            Route::post('/create', [CandidateController::class, 'create']);
+            Route::put('/update/{id}', [CandidateController::class, 'update']);
+            Route::delete('/delete/{id}', [CandidateController::class, 'delete']);
+            // File
+            Route::post('/{id}/upload', [CandidateFileController::class, 'upload']);
+            Route::post('/{id}/deleteFile/{fileId}', [CandidateFileController::class, 'deleteFile']);
+            //Experience
+            Route::post('/{id}/experience/create', [CandidateExperienceController::class, 'experienceCreate']);
+            Route::put('/{id}/experience/update/{workId}', [CandidateExperienceController::class, 'experienceUpdate']);
+            Route::delete('/experience/delete/{id}', [CandidateExperienceController::class, 'experienceDelete']);
+            // Language
+            Route::post('/{id}/languages/create', [CandidateLanguageController::class, 'languageCreate']);
+            Route::put('/{id}/languages/update/{langId}', [CandidateLanguageController::class, 'languageUpdate']);
+            Route::delete('/languages/delete/{id}', [CandidateLanguageController::class, 'languageDelete']);
+            // Skill
+            Route::post('/{id}/skills/create', [CandidateSkillController::class, 'skillCreate']);
+            Route::put('/{id}/skills/update/{skillId}', [CandidateSkillController::class, 'skillUpdate']);
+            Route::delete('{id}/skills/delete/{skillId}', [CandidateSkillController::class, 'skillDelete']);
+            //Education
+            Route::post('/{id}/educations/create', [CandidateEducationController::class, 'educationCreate']);
+            Route::put('/{id}/educations/update/{educationId}', [CandidateEducationController::class, 'educationUpdate']);
+            Route::delete('/educations/delete/{id}', [CandidateEducationController::class, 'educationDelete']);
+            //Contact
+            Route::post('/{id}/contacts/create', [CandidateContactController::class, 'contactCreate']);
+            Route::put('/{id}/contacts/update/{contactId}', [CandidateContactController::class, 'contactUpdate']);
+            Route::delete('/{id}/contacts/delete/{contactId}', [CandidateContactController::class, 'contactUDelete']);
+        });
+
+        //Clients
+        Route::prefix('clients')->group(function () {
+            Route::post('/create', [ClientController::class, 'create']);
+            Route::put('/update/{id}', [ClientController::class, 'update']);
+            Route::delete('/delete/{id}', [ClientController::class, 'delete']);
+            // File
+            Route::post('/{id}/files/upload', [ClientFileController::class, 'upload']);
+            Route::delete('/{id}/files/deleteFile/{fileId}', [ClientFileController::class, 'deleteFile']);
+        });
+
+        //Finance
+        Route::prefix('finances')->group(function () {
+            Route::get('/', [FinanceController::class, 'index']);
+            Route::post('/create-income', [FinanceController::class, 'createIncome']);
+            Route::post('/create-expense', [FinanceController::class, 'createExpense']);
+            Route::put('/update-income/{id}', [FinanceController::class, 'updateIncome']);
+            Route::put('/update-expense/{id}', [FinanceController::class, 'updateExpense']);
+            Route::delete('/delete/{id}', [FinanceController::class, 'delete']);
+        });
+
+        //Users
+        Route::prefix('users')->group(function () {
+            Route::get('/', [UserController::class, 'index']);
+            Route::get('/list', [UserController::class, 'list']);
+            Route::get('/{id}', [UserController::class, 'show']);
+
+            Route::put('/{id}/updateStatus', [UserController::class, 'updateStatus']);
+
+            Route::post('/create', [UserController::class, 'create']);
+            Route::put('/update/{id}', [UserController::class, 'update']);
+            Route::delete('/delete/{id}', [UserController::class, 'delete']);
+        });
+
+        //Types
+        Route::prefix('types')->group(function () {
+            Route::post('/create', [TypeController::class, 'create']);
+            Route::put('/update/{id}', [TypeController::class, 'update']);
+            Route::delete('/delete/{id}', [TypeController::class, 'delete']);
+        });
+
+        //Interactions
+        Route::prefix('interactions')->group(function () {
+            Route::put('/update/{id}', [InteractionController::class, 'update']);
+            Route::delete('/delete/{id}', [InteractionController::class, 'delete']);
+        });
     });
 
     Route::patch('projects/stage/{stageId}/require', [ProjectStageController::class, 'setRequire'])->middleware(['role:admin']);
@@ -128,33 +203,8 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
 
         Route::get('/', [CandidateController::class, 'index']);
         Route::get('/{id}', [CandidateController::class, 'show']);
-        Route::post('/create', [CandidateController::class, 'create']);
-        Route::put('/update/{id}', [CandidateController::class, 'update']);
-        Route::delete('/delete/{id}', [CandidateController::class, 'delete']);
         // File
-        Route::post('/{id}/upload', [CandidateFileController::class, 'upload']);
         Route::get('/{id}/download/{fileId}', [CandidateFileController::class, 'download']);
-        Route::post('/{id}/deleteFile/{fileId}', [CandidateFileController::class, 'deleteFile']);
-        //Experience
-        Route::post('/{id}/experience/create', [CandidateExperienceController::class, 'experienceCreate']);
-        Route::put('/{id}/experience/update/{workId}', [CandidateExperienceController::class, 'experienceUpdate']);
-        Route::delete('/experience/delete/{id}', [CandidateExperienceController::class, 'experienceDelete']);
-        // Language
-        Route::post('/{id}/languages/create', [CandidateLanguageController::class, 'languageCreate']);
-        Route::put('/{id}/languages/update/{langId}', [CandidateLanguageController::class, 'languageUpdate']);
-        Route::delete('/languages/delete/{id}', [CandidateLanguageController::class, 'languageDelete']);
-        // Skill
-        Route::post('/{id}/skills/create', [CandidateSkillController::class, 'skillCreate']);
-        Route::put('/{id}/skills/update/{skillId}', [CandidateSkillController::class, 'skillUpdate']);
-        Route::delete('{id}/skills/delete/{skillId}', [CandidateSkillController::class, 'skillDelete']);
-        //Education
-        Route::post('/{id}/educations/create', [CandidateEducationController::class, 'educationCreate']);
-        Route::put('/{id}/educations/update/{educationId}', [CandidateEducationController::class, 'educationUpdate']);
-        Route::delete('/educations/delete/{id}', [CandidateEducationController::class, 'educationDelete']);
-        //Contact
-        Route::post('/{id}/contacts/create', [CandidateContactController::class, 'contactCreate']);
-        Route::put('/{id}/contacts/update/{contactId}', [CandidateContactController::class, 'contactUpdate']);
-        Route::delete('/{id}/contacts/delete/{contactId}', [CandidateContactController::class, 'contactUDelete']);
     });
 
     Route::prefix('clients')->group(function () {
@@ -163,13 +213,8 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::get('/', [ClientController::class, 'index']);
         Route::get('/list', [ClientController::class, 'list']);
         Route::get('/{id}', [ClientController::class, 'show']);
-        Route::post('/create', [ClientController::class, 'create']);
-        Route::put('/update/{id}', [ClientController::class, 'update']);
-        Route::delete('/delete/{id}', [ClientController::class, 'delete']);
         // File
         Route::get('/{id}/files/download/{fileId}', [ClientFileController::class, 'download']);
-        Route::post('/{id}/files/upload', [ClientFileController::class, 'upload']);
-        Route::delete('/{id}/files/deleteFile/{fileId}', [ClientFileController::class, 'deleteFile']);
     });
 
     // Vacancies
@@ -178,6 +223,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::get('/{id}', [VacancyController::class, 'show']);
         //File
         Route::get('/{id}/download/{fileId}', [VacancyFileController::class, 'download']);
+        Route::get('/export', [VacancyController::class, 'export']);
     });
 
     // Projects
@@ -188,45 +234,15 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::get('/{id}/download/{fileId}', [ProjectFileController::class, 'download']);
     });
 
-    Route::prefix('users')->group(function () {
-        Route::get('/', [UserController::class, 'index']);
-        Route::get('/list', [UserController::class, 'list']);
-        Route::get('/{id}', [UserController::class, 'show']);
-
-        Route::put('/{id}/updateStatus', [UserController::class, 'updateStatus']);
-
-        Route::post('/create', [UserController::class, 'create']);
-        Route::put('/update/{id}', [UserController::class, 'update']);
-        Route::delete('/delete/{id}', [UserController::class, 'delete']);
-    });
-
     Route::prefix('types')->group(function () {
         Route::get('/', [TypeController::class, 'index']);
         Route::get('/{id}', [TypeController::class, 'show']);
-        Route::post('/create', [TypeController::class, 'create']);
-        Route::put('/update/{id}', [TypeController::class, 'update']);
-        Route::delete('/delete/{id}', [TypeController::class, 'delete']);
     });
 
     Route::prefix('interactions')->group(function () {
         Route::get('/', [InteractionController::class, 'index']);
         Route::get('/{id}', [InteractionController::class, 'show']);
         Route::post('/create', [InteractionController::class, 'create']);
-        Route::put('/update/{id}', [InteractionController::class, 'update']);
-        Route::delete('/delete/{id}', [InteractionController::class, 'delete']);
-    });
-
-    Route::prefix('finances')->group(function () {
-        Route::get('/', [FinanceController::class, 'index']);
-        // Route::get('/{id}', [InteractionController::class, 'show']);
-        Route::post('/create-income', [FinanceController::class, 'createIncome']);
-        Route::post('/create-expense', [FinanceController::class, 'createExpense']);
-
-        Route::put('/update-income/{id}', [FinanceController::class, 'updateIncome']);
-        Route::put('/update-expense/{id}', [FinanceController::class, 'updateExpense']);
-
-        // Route::put('/update/{id}', [InteractionController::class, 'update']);
-        Route::delete('/delete/{id}', [FinanceController::class, 'delete']);
     });
 
     Route::prefix('regions')->group(function () {
