@@ -24,25 +24,39 @@ class CreateAction
     {
         try {
             $project = Project::findOrFail($id);
-            $afterStage = Stage::findOrFail($dto->stageId);
 
-            if ($afterStage->status === StageStatusEnum::COMPLETED) {
+            if ($project->stages()->exists() && !$dto->stageId) {
                 throw new ApiResponseException(
-                    'You cannot create a new stage after ' . $afterStage->title . ' stage',
+                    'You cannot create a new stage without specifying previous stageId',
                     400
                 );
             }
 
-            Stage::where('order', '>', $afterStage->order)
-                ->where('project_id', $project->id)
-                ->increment('order');
+            if ($dto->stageId) {
+                $afterStage = $project->stages()->findOrFail($dto->stageId);
+
+                if ($afterStage->status === StageStatusEnum::COMPLETED) {
+                    throw new ApiResponseException(
+                        'You cannot create a new stage after completed stage: ' . $afterStage->title,
+                        400
+                    );
+                }
+
+                Stage::where('order', '>', $afterStage->order)
+                    ->where('project_id', $project->id)
+                    ->increment('order');
+
+                $order = $afterStage->order + 1;
+            } else {
+                $order = 1;
+            }
 
             $data = [
                 'title' => $dto->title,
                 'description' => $dto->description,
                 'deadline' => $dto->deadline,
                 'created_by' => auth()->id(),
-                'order' => $afterStage->order + 1,
+                'order' => $order,
                 'executor_id' => $dto->executorId,
             ];
             $project->stages()->create($data);
@@ -58,7 +72,16 @@ class CreateAction
             );
         } catch (ModelNotFoundException $e) {
             $model = class_basename($e->getModel());
-            throw new ApiResponseException("{$model} Not Found", 404);
+
+            if ($model === 'Project') {
+                throw new ApiResponseException("Project not found", 404);
+            }
+
+            if ($model === 'Stage') {
+                throw new ApiResponseException("Stage not found in this project", 404);
+            }
+
+            throw new ApiResponseException("Resource not found", 404);
         }
     }
 }
