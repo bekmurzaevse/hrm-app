@@ -202,6 +202,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::get('/export', [CandidateExcelController::class, 'export']);
 
         Route::get('/', [CandidateController::class, 'index']);
+        Route::get('/list', [CandidateController::class, 'list']);
         Route::get('/{id}', [CandidateController::class, 'show']);
         // File
         Route::get('/{id}/download/{fileId}', [CandidateFileController::class, 'download']);
@@ -236,6 +237,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
 
     Route::prefix('types')->group(function () {
         Route::get('/', [TypeController::class, 'index']);
+        Route::get('/list', [TypeController::class, 'list']);
         Route::get('/{id}', [TypeController::class, 'show']);
     });
 

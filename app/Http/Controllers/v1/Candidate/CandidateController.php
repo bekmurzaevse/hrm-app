@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1\Candidate;
 use App\Actions\v1\Candidate\CreateAction;
 use App\Actions\v1\Candidate\DeleteAction;
 use App\Actions\v1\Candidate\IndexAction;
+use App\Actions\v1\Candidate\ListAction;
 use App\Actions\v1\Candidate\ShowAction;
 use App\Actions\v1\Candidate\UpdateAction;
 use App\Dto\v1\Candidate\CreateDto;
@@ -72,5 +73,15 @@ class CandidateController extends Controller
     public function delete(int $id, DeleteAction $action): JsonResponse
     {
         return $action($id);
+    }
+
+    /**
+     * Summary of list
+     * @param \App\Actions\v1\Candidate\ListAction $action
+     * @return JsonResponse
+     */
+    public function list(ListAction $action): JsonResponse
+    {
+        return $action();
     }
 }
