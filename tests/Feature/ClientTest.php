@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Enums\Client\ClientStatusEnum;
 use App\Enums\Client\EmlpoyeeCountEnum;
 use App\Models\Client;
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -123,7 +124,6 @@ class ClientTest extends TestCase
             'phone' => $phone,
             'email' => $email,
             'address' => $address,
-            // 'user_id' => $user->id,
             'INN' => $INN,
             'employee_count' => $employeeCount,
             'source' => $source,
@@ -296,15 +296,6 @@ class ClientTest extends TestCase
 
         $client = Client::inRandomOrder()->first();
 
-        // $file = UploadedFile::fake()->create(
-        //     'document.pdf',
-        //     200, // 200 KB
-        //     'application/pdf'
-        // );
-        // $payload = [
-        //     'files' => [$file],
-        // ];
-
         $fileId = $client->files()->inRandomOrder()->first()->id;
 
         $response = $this->deleteJson("/api/v1/clients/$client->id/files/deleteFile/$fileId");
@@ -314,5 +305,41 @@ class ClientTest extends TestCase
         $this->assertSoftDeleted('files', [
             'id' => $fileId,
         ]);
+    }
+
+    /**
+     * Summary of test_can_download_file_in_client
+     * @return void
+     */
+    public function test_can_download_file_in_client()
+    {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $file = File::inRandomOrder()->where('fileable_type', Client::class)->first();
+
+        $response = $this->get("/api/v1/clients/$file->fileable_id/files/download/$file->id");
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Summary of test_can_download_file_in_client_list_to_excel
+     * @return void
+     */
+    public function test_can_download_file_in_client_list_to_excel()
+    {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $this->withoutExceptionHandling();
+
+        $response = $this->get("/api/v1/clients/export");
+
+        $response->assertStatus(200);
     }
 }
