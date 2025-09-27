@@ -21,12 +21,14 @@ class UpdateAction
      * @param int $id
      * @param \App\Dto\v1\Task\UpdateDto $dto
      * @return JsonResponse
-     * @throws \App\Exceptions\ApiResponseException
+     * @throws \App\Exceptions\ApiResponseException   
      */
     public function __invoke(int $id, UpdateDto $dto): JsonResponse
     {
         try {
             $task = Task::with(['createdBy'])->findOrFail($id);
+            $user = auth()->user();
+
             $task->update([
                 'title' => $dto->title,
                 'description' => $dto->description ?? $task->description,
@@ -39,15 +41,14 @@ class UpdateAction
 
             TaskHistory::create([
                 'task_id'    => $task->id,
-                'changed_by' => auth()->id(),
+                'changed_by' => $user->id,
                 'type'       => TaskHistoryType::TaskUpdated,
-                'comment'    => "Задача обновлена пользователем ID: " . auth()->id(),
+                'comment'    => "Задача обновлена пользователем ID: " . $user->id,
             ]);
 
             logActivity(
                 "Задача обновлена!",
-                "Задача '{$task->title}' (ID: {$task->id}) была обновлена пользователем"
-                //auth()->user()->first_name . " " . auth()->user()->last_name
+                "Задача '{$task->title}' (ID: {$task->id}) была обновлена пользователем " . $user->first_name . ' ' . $user->last_name
             );
 
             return static::toResponse(

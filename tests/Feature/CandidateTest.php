@@ -8,6 +8,7 @@ use App\Enums\Candidate\FamilyStatusEnum;
 use App\Enums\GenderEnum;
 use App\Helpers\FileUploadHelper;
 use App\Models\Candidate;
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -24,10 +25,6 @@ class CandidateTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->seed();
-
-        $user = User::find(1);
-        Sanctum::actingAs($user, ['access-token']);
-        // TODO: Need test with unauthorized user by role, actingAs *
     }
 
     /**
@@ -36,6 +33,11 @@ class CandidateTest extends TestCase
      */
     public function test_candidate_can_get_all(): void
     {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $response = $this->getJson("api/v1/candidates/");
 
         $response
@@ -73,6 +75,11 @@ class CandidateTest extends TestCase
      */
     public function test_candidate_can_show(): void
     {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidateId = Candidate::inRandomOrder()->first()->id;
 
         $response = $this->getJson('/api/v1/candidates/' . $candidateId);
@@ -154,6 +161,11 @@ class CandidateTest extends TestCase
      */
     public function test_candidate_can_be_created(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $photo = UploadedFile::fake()->image('photo.jpg');
 
         $payload = [
@@ -178,7 +190,6 @@ class CandidateTest extends TestCase
             'achievments' => "diplom, Sertificate ...",
             'comment' => "some text",
             'description' => "description",
-            'user_id' => 1,
             'photo' => $photo,
         ];
 
@@ -211,7 +222,7 @@ class CandidateTest extends TestCase
             'achievments' => "diplom, Sertificate ...",
             'comment' => "some text",
             'description' => "description",
-            'user_id' => 1,
+            'user_id' => $user->id,
         ]);
     }
 
@@ -221,6 +232,11 @@ class CandidateTest extends TestCase
      */
     public function test_candidate_can_updated_with_new_photo(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->photo()->create([
@@ -255,7 +271,6 @@ class CandidateTest extends TestCase
             'achievments' => "diplom, Sertificate ...",
             'comment' => "some text",
             'description' => "description",
-            'user_id' => 1,
         ];
 
         if (Storage::disk('public')->exists($candidate->photo->path)) {
@@ -299,7 +314,7 @@ class CandidateTest extends TestCase
             'achievments' => "diplom, Sertificate ...",
             'comment' => "some text",
             'description' => "description",
-            'user_id' => 1,
+            'user_id' => $user->id,
         ]);
     }
 
@@ -309,6 +324,11 @@ class CandidateTest extends TestCase
      */
     public function test_candidate_can_be_deleted(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $response = $this->deleteJson("/api/v1/candidates/delete/{$candidate->id}");
@@ -322,6 +342,11 @@ class CandidateTest extends TestCase
      */
     public function test_add_contact_to_candidate()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $data = [
@@ -345,6 +370,11 @@ class CandidateTest extends TestCase
      */
     public function test_update_contact_to_candidate()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->contacts()->create([
@@ -375,6 +405,11 @@ class CandidateTest extends TestCase
      */
     public function test_delete_contact_in_candidate(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->contacts()->create([
@@ -399,6 +434,11 @@ class CandidateTest extends TestCase
      */
     public function test_add_education_to_candidate()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $data = [
@@ -427,6 +467,11 @@ class CandidateTest extends TestCase
      */
     public function test_update_education_to_candidate()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->educations()->create([
@@ -467,6 +512,11 @@ class CandidateTest extends TestCase
      */
     public function test_delete_education_in_candidate(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->educations()->create([
@@ -506,6 +556,11 @@ class CandidateTest extends TestCase
      */
     public function test_add_experience_to_candidate()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $data = [
@@ -540,6 +595,11 @@ class CandidateTest extends TestCase
      */
     public function test_update_experience_to_candidate()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->workExperience()->create([
@@ -585,6 +645,11 @@ class CandidateTest extends TestCase
      */
     public function test_delete_experience_in_candidate(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->workExperience()->create([
@@ -617,6 +682,11 @@ class CandidateTest extends TestCase
      */
     public function test_add_language_to_candidate()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $data = [
@@ -649,6 +719,11 @@ class CandidateTest extends TestCase
      */
     public function test_update_language_to_candidate()
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->languages()->create([
@@ -690,6 +765,11 @@ class CandidateTest extends TestCase
      */
     public function test_delete_language_in_candidate(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->languages()->create([
@@ -720,6 +800,11 @@ class CandidateTest extends TestCase
      */
     public function test_add_skill_to_candidate(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $data = [
@@ -746,6 +831,11 @@ class CandidateTest extends TestCase
      */
     public function test_update_skill_to_candidate(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->skills()->create([
@@ -779,6 +869,11 @@ class CandidateTest extends TestCase
      */
     public function test_delete_skill_in_candidate(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $candidate->skills()->create([
@@ -806,11 +901,16 @@ class CandidateTest extends TestCase
      */
     public function test_upload_file_to_candidate(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $file = UploadedFile::fake()->create(
             'document.pdf',
-            200, // 200 KB
+            200,
             'application/pdf'
         );
 
@@ -833,6 +933,11 @@ class CandidateTest extends TestCase
      */
     public function test_delete_file_in_candidate(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $candidate = Candidate::inRandomOrder()->first();
 
         $file = UploadedFile::fake()->create(
@@ -857,5 +962,41 @@ class CandidateTest extends TestCase
         $this->assertSoftDeleted('files', [
             'id' => $fileId,
         ]);
+    }
+
+    /**
+     * Summary of test_can_download_file_in_candidate
+     * @return void
+     */
+    public function test_can_download_file_in_candidate()
+    {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $file = File::inRandomOrder()->where('fileable_type', Candidate::class)->first();
+
+        $response = $this->get("/api/v1/candidates/$file->fileable_id/download/$file->id");
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Summary of test_can_download_file_in_candidate_list_to_excel
+     * @return void
+     */
+    public function test_can_download_file_in_candidate_list_to_excel()
+    {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $this->withoutExceptionHandling();
+
+        $response = $this->get("/api/v1/candidates/export");
+
+        $response->assertStatus(200);
     }
 }

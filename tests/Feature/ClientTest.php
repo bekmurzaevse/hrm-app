@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Enums\Client\ClientStatusEnum;
 use App\Enums\Client\EmlpoyeeCountEnum;
 use App\Models\Client;
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -21,9 +22,6 @@ class ClientTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->seed();
-
-        $user = User::find(1);
-        Sanctum::actingAs($user, ['access-token']);
     }
 
     /**
@@ -32,6 +30,11 @@ class ClientTest extends TestCase
      */
     public function test_client_can_get_all(): void
     {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $response = $this->getJson("/api/v1/clients");
 
         $response
@@ -69,6 +72,11 @@ class ClientTest extends TestCase
      */
     public function test_client_can_show(): void
     {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $clientId = Client::inRandomOrder()->first()->id;
 
         $response = $this->getJson('/api/v1/clients/' . $clientId);
@@ -83,6 +91,11 @@ class ClientTest extends TestCase
      */
     public function test_client_can_create(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $name = "Artel";
         $status = "Potential";
         $leader = "Donald Trump";
@@ -99,7 +112,6 @@ class ClientTest extends TestCase
         $activity = "Programming";
         $description = "description";
         $notes = "notes";
-        $userId = auth()->user()->id;
 
         $data = [
             'name' => $name,
@@ -112,7 +124,6 @@ class ClientTest extends TestCase
             'phone' => $phone,
             'email' => $email,
             'address' => $address,
-            'user_id' => $userId,
             'INN' => $INN,
             'employee_count' => $employeeCount,
             'source' => $source,
@@ -136,7 +147,7 @@ class ClientTest extends TestCase
             'phone' => $phone,
             'email' => $email,
             'address' => $address,
-            'user_id' => $userId,
+            'user_id' => $user->id,
             'INN' => $INN,
             'employee_count' => $employeeCount,
             'source' => $source,
@@ -152,6 +163,11 @@ class ClientTest extends TestCase
      */
     public function test_client_can_update(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $client = Client::inRandomOrder()->first();
 
         $name = "Asus";
@@ -170,7 +186,6 @@ class ClientTest extends TestCase
         $activity = "Politics";
         $description = "new description";
         $notes = "new notes";
-        $userId = auth()->user()->id;
 
         $data = [
             'name' => $name,
@@ -183,7 +198,6 @@ class ClientTest extends TestCase
             'phone' => $phone,
             'email' => $email,
             'address' => $address,
-            'user_id' => $userId,
             'INN' => $INN,
             'employee_count' => $employeeCount,
             'source' => $source,
@@ -208,7 +222,7 @@ class ClientTest extends TestCase
             'phone' => $phone,
             'email' => $email,
             'address' => $address,
-            'user_id' => $userId,
+            'user_id' => $user->id,
             'INN' => $INN,
             'employee_count' => $employeeCount,
             'source' => $source,
@@ -224,6 +238,11 @@ class ClientTest extends TestCase
      */
     public function test_client_can_delete(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $clientId = Client::inRandomOrder()->first()->id;
 
         $response = $this->deleteJson('/api/v1/clients/delete/' . $clientId);
@@ -242,6 +261,11 @@ class ClientTest extends TestCase
      */
     public function test_upload_file_to_client(): void
     {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
         $client = Client::inRandomOrder()->first();
 
         $file = UploadedFile::fake()->create(
@@ -265,16 +289,12 @@ class ClientTest extends TestCase
      */
     public function test_delete_file_in_client(): void
     {
-        $client = Client::inRandomOrder()->first();
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
 
-        $file = UploadedFile::fake()->create(
-            'document.pdf',
-            200, // 200 KB
-            'application/pdf'
-        );
-        $payload = [
-            'files' => [$file],
-        ];
+        $client = Client::inRandomOrder()->first();
 
         $fileId = $client->files()->inRandomOrder()->first()->id;
 
@@ -285,5 +305,41 @@ class ClientTest extends TestCase
         $this->assertSoftDeleted('files', [
             'id' => $fileId,
         ]);
+    }
+
+    /**
+     * Summary of test_can_download_file_in_client
+     * @return void
+     */
+    public function test_can_download_file_in_client()
+    {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $file = File::inRandomOrder()->where('fileable_type', Client::class)->first();
+
+        $response = $this->get("/api/v1/clients/$file->fileable_id/files/download/$file->id");
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Summary of test_can_download_file_in_client_list_to_excel
+     * @return void
+     */
+    public function test_can_download_file_in_client_list_to_excel()
+    {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $this->withoutExceptionHandling();
+
+        $response = $this->get("/api/v1/clients/export");
+
+        $response->assertStatus(200);
     }
 }

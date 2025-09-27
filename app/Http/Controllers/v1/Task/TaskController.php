@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v1\Task;
 
+use App\Actions\v1\Task\Accept\AcceptAction;
 use App\Actions\v1\Task\Complete\CompleteAction;
 use App\Actions\v1\Task\CreateAction;
 use App\Actions\v1\Task\Executor\AddExecutorAction;
@@ -169,6 +170,17 @@ class TaskController extends Controller
     public function reject(RejectRequest $request, RejectAction $action): JsonResponse
     {
         return $action(RejectDto::from($request));
+    }
+
+    /**
+     * Summary of accept
+     * @param int $id
+     * @param \App\Actions\v1\Task\Accept\AcceptAction $action
+     * @return JsonResponse
+     */
+    public function accept(int $id, AcceptAction $action): JsonResponse
+    {
+        return $action($id);
     }
 
 }

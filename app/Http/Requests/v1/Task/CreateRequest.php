@@ -30,10 +30,7 @@ class CreateRequest extends FormRequest
         return [
             'title' => 'required|string|min:2|max:255',
             'description' => 'nullable|string',
-            // 'deadline' => 'required|date_format:m-d-Y',
-            'deadline' => 'required|date_format:Y-m-d H:i',
-            //'deadline' => 'required|date_format:Y-m-d',
-            'status' => ['required', Rule::enum(TaskStatusEnum::class)],
+            'deadline' => 'required|date_format:Y-m-d',
             'priority' => ['required', Rule::enum(TaskPriorityEnum::class)],
             'comment' => 'nullable|string|max:1000',
         ];

@@ -4,6 +4,7 @@ namespace App\Actions\v1\Task;
 
 use App\Dto\v1\Task\CreateDto;
 use App\Enums\Task\TaskHistoryType;
+use App\Enums\Task\TaskStatusEnum;
 use App\Models\Task;
 use App\Models\TaskHistory;
 use App\Traits\ResponseTrait;
@@ -25,7 +26,7 @@ class CreateAction
             'description' => $dto->description,
             'deadline' => $dto->deadline,
             'created_by' => auth()->user()->id,
-            'status' => $dto->status,
+            'status' => TaskStatusEnum::OPEN,
             'priority' => $dto->priority,
             'comment' => $dto->comment,
         ];
