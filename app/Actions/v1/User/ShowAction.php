@@ -28,11 +28,11 @@ class ShowAction
                 return User::with([
                     'activities',
                     'projects.stages',
-                    'projects.performers',
+                    'projects.executor',
                     'projects.stages.executor',
                     'projects.client',
                     'projects.vacancy',
-                    ])->findOrFail($id);
+                ])->findOrFail($id);
             });
 
             return static::toResponse(

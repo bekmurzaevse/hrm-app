@@ -51,11 +51,13 @@ class Vacancy extends Model
 
     /**
      * Summary of casts
-     * @return array{created_at: string, currency: string, education: string, period: string, status: string, type_employment: string, updated_at: string, work_experience: string, work_schedule: string}
+     * @return array{created_at: string, currency: string, education: string, period: string, salary_from: string, salary_to: string, status: string, type_employment: string, updated_at: string, work_experience: string, work_schedule: string}
      */
     protected function casts(): array
     {
         return [
+            'salary_from' => 'integer',
+            'salary_to' => 'integer',
             'type_employment' => EmploymentTypeEnum::class,
             'work_schedule' => WorkScheduleEnum::class,
             'work_experience' => WorkExperienceEnum::class,

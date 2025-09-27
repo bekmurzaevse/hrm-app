@@ -49,18 +49,18 @@ class VacancyResource extends JsonResource
             'region' => $this->district?->region?->title,
             'district' => $this->district?->title,
             'key_data' => [
-                'created_at' => $this->created_at->format('Y-m-d'),
+                'created_at' => $this->created_at?->format('Y-m-d'),
                 'created_by' => $this->createdBy?->shortFio,
             ],
             'files' => $this->files?->map(function ($file) {
-                $fileExists = Storage::disk('public')->exists($file?->path);
+                $fileExists = Storage::disk('public')->exists($file->path);
                 return [
                     'id' => $file->id,
                     'name' => $file->name,
                     'type' => $file->type,
                     'size' => round($file->size / 1024, 2) . ' KB',
                     // TODO: add creator of File
-                    'created_at' => $file?->created_at->format('Y-m-d'),
+                    'created_at' => $file->created_at->format('Y-m-d'),
                     'download_url' => $fileExists ? url("/api/v1/vacancies/{$this->id}/download/{$file->id}") : null,
                 ];
             }),

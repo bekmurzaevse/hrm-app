@@ -43,7 +43,7 @@ class UserTest extends TestCase
                         [
                             'full_name',
                             'position',
-                            'role',
+                            'roles',
                             'status',
                             'email',
                             'phone',

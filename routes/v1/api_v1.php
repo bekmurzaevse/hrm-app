@@ -98,7 +98,6 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         Route::prefix('projects')->group(function () {
             Route::post('/create', [ProjectController::class, 'create']);
             Route::patch('/{id}/create-contract', [ProjectController::class, 'createContract']);
-            Route::put('/{id}/update-performers', [ProjectController::class, 'updatePerformers']);
             Route::put('/update/{id}', [ProjectController::class, 'update']);
             Route::patch('/{id}/close', [ProjectController::class, 'close']);
             // File
@@ -193,7 +192,15 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
         });
     });
 
-    Route::patch('projects/stage/{stageId}/require', [ProjectStageController::class, 'setRequire'])->middleware(['role:admin']);
+    /**
+     * Routs for Auth & Admin
+     */
+    Route::middleware(['role:admin'])->group(function () {
+        Route::prefix('projects')->group(function () {
+            Route::patch('/stage/{stageId}/require', [ProjectStageController::class, 'setRequire']);
+            Route::patch('/{id}/update-executor', [ProjectController::class, 'updateExecutor']);
+        });
+    });
 
     /**
      * Routs for Auth & Admin & Manager & Recruiter

@@ -27,7 +27,6 @@ class CreateAction
             'work_schedule' => $dto->workSchedule,
             'work_experience' => $dto->workExperience,
             'education' => $dto->education,
-            'status' => $dto->status,
             'position_count' => $dto->positionCount,
             'created_by' => auth()->id(),
             'salary' => $dto->salary,
@@ -41,7 +40,6 @@ class CreateAction
             'responsibilities' => $dto->responsibilities,
             'work_conditions' => $dto->workConditions,
             'benefits' => $dto->benefits,
-            // TODO: Add skills if exists in request
         ];
 
         // Log user activity

@@ -36,7 +36,7 @@ class UploadAction
 
             // Log user activity
             $title = 'Файл загружен';
-            $text = "Файл был загружен в вакансию «{$vacancy->title}».";
+            $text = "Файл «{$uploadedFile['name']}» был загружен в вакансию «{$vacancy->title}».";
             logActivity($title, $text);
 
             return static::toResponse(

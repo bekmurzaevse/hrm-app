@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->string('work_schedule');
             $table->string('work_experience');
             $table->string('education');
-            $table->string('status')->default(VacancyStatusEnum::NOT_ACTIVE);
+            $table->string('status')->default(VacancyStatusEnum::NOT_ACTIVE->value);
             $table->unsignedTinyInteger('position_count')->default(1);
             $table->foreignId('created_by')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->unsignedInteger('salary_from');

@@ -6,9 +6,9 @@ use App\Enums\Vacancy\CurrencyEnum;
 use App\Enums\Vacancy\EducationEnum;
 use App\Enums\Vacancy\EmploymentTypeEnum;
 use App\Enums\Vacancy\PeriodEnum;
-use App\Enums\Vacancy\VacancyStatusEnum;
 use App\Enums\Vacancy\WorkExperienceEnum;
 use App\Enums\Vacancy\WorkScheduleEnum;
+use App\Exceptions\ApiResponseException;
 use App\Http\Requests\v1\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -41,7 +41,6 @@ class CreateRequest extends FormRequest
             'work_schedule' => ['required', Rule::enum(WorkScheduleEnum::class)],
             'work_experience' => ['required', Rule::enum(WorkExperienceEnum::class)],
             'education' => ['required', Rule::enum(EducationEnum::class)],
-            'status' => ['required', Rule::enum(VacancyStatusEnum::class)],
             'position_count' => 'required|integer|min:1',
             'salary' => 'required|regex:/^\d+(-\d+)?$/',
             'currency' => ['required', Rule::enum(CurrencyEnum::class)],
@@ -55,5 +54,33 @@ class CreateRequest extends FormRequest
             'work_conditions' => 'required|string|max:1000',
             'benefits' => 'nullable|string|max:1000',
         ];
+    }
+
+    /**
+     * Summary of withValidator
+     * @param mixed $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $salary = $this->input('salary');
+
+            if ($salary) {
+                $value = trim($salary);
+                $parts = explode('-', $value);
+
+                $from = (int) trim($parts[0]);
+                $to = isset($parts[1]) ? (int) trim($parts[1]) : null;
+
+                if ($from === 0) {
+                    throw new ApiResponseException('Baslanǵısh is haqı 0 bolıwı múmkin emes', 422);
+                }
+
+                if ($to !== null && $from >= $to) {
+                    throw new ApiResponseException('Baslanǵısh is haqı tamamlanıwshı is haqıdan kem bolıwı kerek', 422);
+                }
+            }
+        });
     }
 }

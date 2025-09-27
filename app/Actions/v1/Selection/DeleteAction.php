@@ -21,6 +21,11 @@ class DeleteAction
     {
         try {
             $selection = Selection::findOrFail($id);
+
+            if ($selection->created_by !== auth()->id()) {
+                throw new ApiResponseException('You are not allowed to access this selection', 403);
+            }
+
             $selection->delete();
 
             // Log user activity

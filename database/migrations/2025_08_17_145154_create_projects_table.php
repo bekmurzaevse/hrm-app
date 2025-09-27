@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('title');
             $table->foreignId('client_id')->constrained('clients')->cascadeOnUpdate()->restrictOnDelete();
             $table->foreignId('vacancy_id')->constrained('vacancies')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId('executor_id')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
             $table->date('deadline');
             $table->string('contract_number')->nullable();
             $table->unsignedInteger('contract_budget')->nullable();

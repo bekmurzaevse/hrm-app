@@ -20,14 +20,14 @@ class CreateAction
     {
         $selection = Selection::create([
             'title' => $dto->title,
-            'created_by' => auth()->user()->id
+            'created_by' => auth()->id()
         ]);
 
         // Log user activity
         $title = 'Создал подборку';
         $text = "Подборка «{$selection->title}» была создана.";
         logActivity($title, $text);
-      
+
         return static::toResponse(
             message: 'Selection created',
         );

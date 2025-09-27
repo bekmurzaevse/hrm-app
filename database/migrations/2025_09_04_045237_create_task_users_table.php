@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->foreignId('task_id')->constrained('tasks')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamp('accepted_at')->nullable();
-            $table->string('status')->default(TaskStatusEnum::OPEN);
+            $table->string('status')->default(TaskStatusEnum::OPEN->value);
             $table->softDeletes();
             $table->timestamps();
         });
