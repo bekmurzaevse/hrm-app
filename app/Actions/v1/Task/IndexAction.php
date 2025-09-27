@@ -19,7 +19,7 @@ class IndexAction
      */
     public function __invoke(): JsonResponse
     {
-        $key = 'tasks:' . app()->getLocale() . ':' . md5(request()->fullUrl());
+        $key = 'tasks:' . auth()->id() . ':' . app()->getLocale() . ':' . md5(request()->fullUrl());
         $tasks = Cache::remember($key, now()->addDay(), function () {
             return Task::with(['createdBy', 'taskUsers.user'])
                 ->whereHas('taskUsers', function ($q) {
@@ -27,9 +27,9 @@ class IndexAction
                       ->whereNotNull('accepted_at'); 
                 })
                 ->whereNotIn('status', [
-                    TaskStatusEnum::COMPLETED->value,
-                    TaskStatusEnum::REJECTED->value
-                ]) // ✅ tek aktiv tasklar
+                    TaskStatusEnum::COMPLETED,
+                    TaskStatusEnum::REJECTED
+                ])
                 ->orderBy('deadline', 'asc')
                 ->paginate(10);
         });

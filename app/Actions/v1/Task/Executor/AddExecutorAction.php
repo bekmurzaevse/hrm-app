@@ -48,7 +48,7 @@ class AddExecutorAction
                 TaskUser::create([
                     'task_id' => $task->id,
                     'user_id' => $user->id,
-                    'status' => TaskStatusEnum::OPEN->value,
+                    'status' => TaskStatusEnum::OPEN,
                 ]);
 
                 TaskHistory::create([

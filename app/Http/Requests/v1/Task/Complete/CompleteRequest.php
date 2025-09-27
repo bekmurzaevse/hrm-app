@@ -18,7 +18,10 @@ class CompleteRequest extends FormRequest
         return true;
     }
 
-
+    /**
+     * Summary of rules
+     * @return array{comment: string, task_id: string}
+     */
     public function rules(): array
     {
         return [

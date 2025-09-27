@@ -6,13 +6,14 @@ use App\Enums\Task\TaskHistoryType;
 use App\Exceptions\ApiResponseException;
 use App\Models\TaskHistory;
 use App\Models\TaskUser;
+use App\Traits\ClearCache;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
 class AcceptAction
 {
-    use ResponseTrait;
+    use ResponseTrait, ClearCache;
 
     /**
      * Summary of __invoke
@@ -32,6 +33,10 @@ class AcceptAction
             }
 
             $executor->update(['accepted_at' => now()]);
+
+            $this->clear([
+                'tasks',
+            ]);
 
             TaskHistory::create([
                 'task_id' => $taskId,
