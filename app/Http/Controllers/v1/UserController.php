@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Actions\v1\User\Activity\IndexAction as ActivityIndexAction;
+use App\Actions\v1\User\Activity\ShowAction as ActivityShowAction;
 use App\Actions\v1\User\CreateAction;
 use App\Actions\v1\User\DeleteAction;
 use App\Actions\v1\User\IndexAction;
@@ -90,8 +92,34 @@ class UserController extends Controller
         return $action($id, UpdateStatusDto::from($request));
     }
 
+    /**
+     * Summary of list
+     * @param \App\Actions\v1\User\ListAction $action
+     * @return JsonResponse
+     */
     public function list(ListAction $action): JsonResponse
     {
         return $action();
+    }
+
+    /**
+     * Summary of activities
+     * @param \App\Actions\v1\User\Activity\IndexAction $action
+     * @return JsonResponse
+     */
+    public function activities(ActivityIndexAction $action): JsonResponse
+    {
+        return $action();
+    }
+
+    /**
+     * Summary of activityById
+     * @param int $id
+     * @param \App\Actions\v1\User\Activity\ShowAction $action
+     * @return JsonResponse
+     */
+    public function activityById(int $userId, ActivityShowAction $action): JsonResponse
+    {
+        return $action($userId);
     }
 }

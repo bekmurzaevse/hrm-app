@@ -993,10 +993,37 @@ class CandidateTest extends TestCase
             ->first();
         Sanctum::actingAs($user, ['access-token']);
 
-        $this->withoutExceptionHandling();
-
         $response = $this->get("/api/v1/candidates/export");
 
         $response->assertStatus(200);
+    }
+
+    /**
+     * Summary of test_candidate_can_get_all_list
+     * @return void
+     */
+    public function test_candidate_can_get_all_list(): void
+    {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $response = $this->getJson("api/v1/candidates/list");
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "status",
+                "message",
+                "data" => [
+                    "*" => [
+                        "id",
+                        "first_name",
+                        "last_name",
+                        "patronymic",
+                    ],
+                ],
+            ]);
     }
 }
