@@ -18,7 +18,7 @@ class ClientVacancyResource extends JsonResource
             'title' => $this->title,
             'status' => $this->status,
             'salary' => $this->salary,
-            'created_at' => $this->created_at->format('Y-m-d'),
+            'created_at' => $this->created_at?->format('Y-m-d'),
         ];
     }
 }

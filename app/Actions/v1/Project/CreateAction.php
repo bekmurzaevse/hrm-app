@@ -4,6 +4,7 @@ namespace App\Actions\v1\Project;
 
 use App\Dto\v1\Project\CreateDto;
 use App\Enums\StageStatusEnum;
+use App\Enums\Vacancy\VacancyStatusEnum;
 use App\Models\Project;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -33,6 +34,11 @@ class CreateAction
         ];
 
         $project = Project::create($data);
+
+        // Set vacancy status
+        $project->vacancy()->update([
+            'status' => VacancyStatusEnum::OPEN,
+        ]);
 
         // Default stages
         $defaultStages = [
