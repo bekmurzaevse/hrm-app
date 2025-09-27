@@ -75,12 +75,12 @@ class User extends Authenticatable
     }
 
     /**
-     * Summary of project
-     * @return HasMany<Project, User>
+     * Summary of projects
+     * @return BelongsToMany<Project, User, \Illuminate\Database\Eloquent\Relations\Pivot>
      */
-    public function projects(): HasMany
+    public function projects(): BelongsToMany
     {
-        return $this->hasMany(Project::class, 'executor_id');
+        return $this->belongsToMany(Project::class, 'project_user', 'user_id', 'project_id');
     }
 
     /**

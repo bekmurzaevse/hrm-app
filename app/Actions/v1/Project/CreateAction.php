@@ -24,7 +24,6 @@ class CreateAction
             'title' => $dto->title,
             'client_id' => $dto->clientId,
             'vacancy_id' => $dto->vacancyId,
-            'executor_id' => auth()->id(),
             'deadline' => $dto->deadline,
             'contract_number' => $dto->contractNumber,
             'contract_budget' => $dto->contractBudget,
@@ -34,6 +33,12 @@ class CreateAction
         ];
 
         $project = Project::create($data);
+
+        // Set project performers
+        $performers = !empty($dto->performers)
+            ? $dto->performers
+            : [auth()->id()];
+        $project->performers()->attach($performers);
 
         // Set vacancy status
         $project->vacancy()->update([

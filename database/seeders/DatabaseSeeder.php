@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             StageSeeder::class,
             StageCompletionSeeder::class,
             StageTaskSeeder::class,
+            ProjectUserSeeder::class,
             FinanceSeeder::class,
             SelectionSeeder::class,
             SelectionItemSeeder::class,

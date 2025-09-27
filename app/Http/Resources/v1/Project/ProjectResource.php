@@ -29,7 +29,9 @@ class ProjectResource extends JsonResource
                     'id' => $this->vacancy?->id,
                     'title' => $this->vacancy?->title,
                 ],
-                'executor' => $this->executor->shortFio,
+                'performers' => $this->performers?->map(function ($performer) {
+                    return $performer->shortFio;
+                }),
                 'description' => $this->description,
                 'comment' => $this->comment,
             ],

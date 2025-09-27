@@ -28,6 +28,8 @@ class UpdateRequest extends FormRequest
             'title' => 'required|string|min:2|max:255',
             'client_id' => 'required|integer|exists:clients,id',
             'vacancy_id' => 'required|integer|exists:vacancies,id',
+            'performers' => 'nullable|array',
+            'performers.*' => 'required|integer|exists:users,id',
             'deadline' => 'required|date_format:m-d-Y',
             'contract_number' => 'nullable|string',
             'contract_budget' => 'nullable|numeric|required_with:contract_number',

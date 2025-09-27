@@ -28,7 +28,7 @@ class ShowAction
                 return User::with([
                     'activities',
                     'projects.stages',
-                    'projects.executor',
+                    'projects.performers',
                     'projects.stages.executor',
                     'projects.client',
                     'projects.vacancy',

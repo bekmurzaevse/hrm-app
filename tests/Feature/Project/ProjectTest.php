@@ -48,10 +48,10 @@ class ProjectTest extends TestCase
                             'id',
                             'client_name',
                             'vacancy_title',
-                            'executor',
                             'status',
                             'created_at',
                             'deadline',
+                            'performers',
                             'contract_number',
                             'contract_budget',
                             'progress',
@@ -122,7 +122,6 @@ class ProjectTest extends TestCase
             // 'contract_currency' => 'USD',
             'description' => 'test description',
             'comment' => 'test comment',
-            'performers' => [1, 2],
         ];
 
         $response = $this->postJson('/api/v1/projects/create', $data);
@@ -138,7 +137,6 @@ class ProjectTest extends TestCase
             'title' => $data['title'],
             'client_id' => $data['client_id'],
             'vacancy_id' => $data['vacancy_id'],
-            'executor_id' => $user->id,
             'contract_number' => $data['contract_number'],
             'contract_budget' => $data['contract_budget'],
             // 'contract_currency' => $data['contract_currency'],
@@ -267,7 +265,7 @@ class ProjectTest extends TestCase
      * Summary of test_admin_manager_can_update_project_performers
      * @return void
      */
-    public function test_admin_manager_can_update_project_executor(): void
+    public function test_admin_manager_can_update_project_performers(): void
     {
         $user = User::role(['admin'])
             ->inRandomOrder()
@@ -275,23 +273,25 @@ class ProjectTest extends TestCase
         Sanctum::actingAs($user, ['access-token']);
 
         $project = Project::find(1);
+        $performers = User::role(['admin', 'manager'])->limit(2)->pluck('id')->toArray();
+        $data = [
+            'performers' => $performers
+        ];
 
-
-        $response = $this->patchJson("/api/v1/projects/{$project->id}/update-executor", [
-            'executor_id' => 2,
-        ]);
+        $response = $this->putJson("/api/v1/projects/{$project->id}/update-performers", $data);
 
         $response
             ->assertStatus(200)
             ->assertJson([
                 'status' => 200,
-                'message' => 'Executor updated successfully for project',
+                'message' => 'Performers updated successfully for project',
             ]);
 
-        $this->assertDatabaseHas('projects', [
-            'id' => $project->id,
-            'executor_id' => 2,
-        ]);
-
+        foreach ($performers as $performer) {
+            $this->assertDatabaseHas('project_user', [
+                'project_id' => $project->id,
+                'user_id' => $performer,
+            ]);
+        }
     }
 }

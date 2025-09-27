@@ -2,25 +2,19 @@
 
 namespace App\Actions\v1\Project;
 
-use App\Dto\v1\Project\UpdateExecutorDto;
+use App\Dto\v1\Project\UpdatePerformersDto;
 use App\Exceptions\ApiResponseException;
 use App\Models\Project;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-class UpdateExecutorAction
+class UpdatePerformersAction
 {
     use ResponseTrait;
 
-    /**
-     * Summary of __invoke
-     * @param int $id
-     * @param \App\Dto\v1\Project\UpdateExecutorDto $dto
-     * @throws \App\Exceptions\ApiResponseException
-     * @return JsonResponse
-     */
-    public function __invoke(int $id, UpdateExecutorDto $dto): JsonResponse
+
+    public function __invoke(int $id, UpdatePerformersDto $dto): JsonResponse
     {
         try {
             $project = Project::findOrFail($id);
@@ -30,11 +24,10 @@ class UpdateExecutorAction
             $text = "Исполнители проекта «{$project->title}» были обновлены.";
             logActivity($title, $text);
 
-            $project->update([
-                'executor_id' => $dto->executorId
-            ]);
+            $project->performers()->sync($dto->performers);
+
             return static::toResponse(
-                message: 'Executor updated successfully for project'
+                message: 'Performers updated successfully for project'
             );
         } catch (ModelNotFoundException $e) {
             throw new ApiResponseException('Project not found', 404);

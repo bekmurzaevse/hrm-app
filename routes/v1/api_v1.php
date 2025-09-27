@@ -198,7 +198,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
     Route::middleware(['role:admin'])->group(function () {
         Route::prefix('projects')->group(function () {
             Route::patch('/stage/{stageId}/require', [ProjectStageController::class, 'setRequire']);
-            Route::patch('/{id}/update-executor', [ProjectController::class, 'updateExecutor']);
+            Route::put('/{id}/update-performers', [ProjectController::class, 'updatePerformers']);
         });
     });
 
