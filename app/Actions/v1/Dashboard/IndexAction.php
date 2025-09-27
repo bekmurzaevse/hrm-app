@@ -240,7 +240,7 @@ class IndexAction
                 ],
             ];
 
-            if (auth()->user()->hasAnyRole(['admin', 'manager'])) {
+            if ($user->hasAnyRole(['admin', 'manager'])) {
                 $result = array_merge($result, [
                             'projects' => Project::with([
                             'client:id,name',
@@ -257,9 +257,9 @@ class IndexAction
                             'status' => $item->inProgressStage?->title,
                             'created_at' => $item->created_at->format('Y-m-d'),
                             'deadline' => $item->deadline->format('Y-m-d'),
-                            // 'performers' => $item->performers?->map(function ($performer) {
-                            //     return $performer?->shortFio;
-                            // }),
+                            'performers' => $item->performers?->map(function ($performer) {
+                                return $performer?->shortFio;
+                            }),
                             'contract_number' => $item->contract_number,
                             'contract_budget' => $item->contract_budget !== null ? ($item->contract_budget . ' ' . $item->contract_currency) : null,
                             'progress' => $item->progress,
