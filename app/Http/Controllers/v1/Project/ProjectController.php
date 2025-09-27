@@ -8,19 +8,19 @@ use App\Actions\v1\Project\CreateContractAction;
 use App\Actions\v1\Project\IndexAction;
 use App\Actions\v1\Project\ShowAction;
 use App\Actions\v1\Project\UpdateAction;
-use App\Actions\v1\Project\UpdatePerformerAction;
+use App\Actions\v1\Project\UpdateExecutorAction;
 use App\Dto\v1\Project\CloseDto;
 use App\Dto\v1\Project\CreateContractDto;
 use App\Dto\v1\Project\CreateDto;
 use App\Dto\v1\Project\IndexDto;
 use App\Dto\v1\Project\UpdateDto;
-use App\Dto\v1\Project\UpdatePerformerDto;
+use App\Dto\v1\Project\UpdateExecutorDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Project\CloseRequest;
 use App\Http\Requests\v1\Project\CreateContractRequest;
 use App\Http\Requests\v1\Project\CreateRequest;
 use App\Http\Requests\v1\Project\IndexRequest;
-use App\Http\Requests\v1\Project\UpdatePerformerRequest;
+use App\Http\Requests\v1\Project\UpdateExecutorRequest;
 use App\Http\Requests\v1\Project\UpdateRequest;
 use Illuminate\Http\JsonResponse;
 
@@ -70,9 +70,16 @@ class ProjectController extends Controller
         return $action($id, CreateContractDto::from($request));
     }
 
-    public function updatePerformers(int $id, UpdatePerformerRequest $request, UpdatePerformerAction $action): JsonResponse
+    /**
+     * Summary of updateExecutor
+     * @param int $id
+     * @param \App\Http\Requests\v1\Project\UpdateExecutorRequest $request
+     * @param \App\Actions\v1\Project\UpdateExecutorAction $action
+     * @return JsonResponse
+     */
+    public function updateExecutor(int $id, UpdateExecutorRequest $request, UpdateExecutorAction $action): JsonResponse
     {
-        return $action($id, UpdatePerformerDto::from($request));
+        return $action($id, UpdateExecutorDto::from($request));
     }
 
     /**

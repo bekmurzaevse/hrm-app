@@ -7,7 +7,7 @@ use App\Http\Requests\v1\Project\Stage\CreateRequest;
 readonly class CreateDto
 {
     public function __construct(
-        public int $stageId,
+        public ?int $stageId,
         public string $title,
         public ?string $description,
         public int $executorId,

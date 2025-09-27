@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Vacancy;
 
+use App\Enums\Vacancy\VacancyStatusEnum;
 use App\Models\User;
 use App\Models\Vacancy;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -156,7 +157,6 @@ class VacancyTest extends TestCase
             'work_schedule' => 'full_time',
             'work_experience' => 'no_experience',
             'education' => 'secondary',
-            'status' => 'not_active',
             'position_count' => 2,
             'salary' => '1000-2000',
             'currency' => 'USD',
@@ -189,7 +189,7 @@ class VacancyTest extends TestCase
             'work_schedule' => 'full_time',
             'work_experience' => 'no_experience',
             'education' => 'secondary',
-            'status' => 'not_active',
+            'status' => VacancyStatusEnum::NOT_ACTIVE->value,
             'position_count' => $data['position_count'],
             'created_by' => $user->id,
             'salary_from' => '1000',
@@ -218,8 +218,10 @@ class VacancyTest extends TestCase
             ->first();
         Sanctum::actingAs($user, ['access-token']);
 
-        $vacancy = Vacancy::find(1);
+        $vacancy = Vacancy::where('status', '!=', VacancyStatusEnum::CLOSED)->inRandomOrder()
+            ->first();
 
+        $status = $vacancy->status->value;
         $data = [
             'title' => 'Test vacancy',
             'client_id' => 1,
@@ -229,7 +231,6 @@ class VacancyTest extends TestCase
             'work_schedule' => 'full_time',
             'work_experience' => 'no_experience',
             'education' => 'secondary',
-            'status' => 'not_active',
             'position_count' => 2,
             'salary' => '1000-2000',
             'currency' => 'USD',
@@ -263,7 +264,7 @@ class VacancyTest extends TestCase
             'work_schedule' => 'full_time',
             'work_experience' => 'no_experience',
             'education' => 'secondary',
-            'status' => 'not_active',
+            'status' => $status,
             'position_count' => $data['position_count'],
             'created_by' => $user->id,
             'salary_from' => 1000,

@@ -4,21 +4,19 @@ namespace App\Http\Controllers\v1\Vacancy;
 
 use App\Actions\v1\Vacancy\CreateAction;
 use App\Actions\v1\Vacancy\DeleteAction;
+use App\Actions\v1\Vacancy\ExportIndexAction;
 use App\Actions\v1\Vacancy\IndexAction;
 use App\Actions\v1\Vacancy\ShowAction;
 use App\Actions\v1\Vacancy\UpdateAction;
 use App\Dto\v1\Vacancy\CreateDto;
 use App\Dto\v1\Vacancy\IndexDto;
 use App\Dto\v1\Vacancy\UpdateDto;
-use App\Exports\VacancyExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Vacancy\CreateRequest;
 use App\Http\Requests\v1\Vacancy\IndexRequest;
 use App\Http\Requests\v1\Vacancy\UpdateRequest;
-use App\Imports\VacancyImport;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class VacancyController extends Controller
 {
@@ -80,12 +78,11 @@ class VacancyController extends Controller
 
     /**
      * Summary of export
+     * @param \App\Actions\v1\Vacancy\ExportIndexAction $action
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function export()
+    public function export(ExportIndexAction $action): BinaryFileResponse
     {
-        $fileName = 'vacancies_' . now()->format('Y_m_d_His') . '.xlsx';
-        return Excel::download(new VacancyExport, $fileName);
+        return $action();
     }
-
 }

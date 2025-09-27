@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -22,6 +21,7 @@ class Project extends Model
         'title',
         'client_id',
         'vacancy_id',
+        'executor_id',
         'deadline',
         'contract_number',
         'contract_budget',
@@ -115,12 +115,12 @@ class Project extends Model
     }
 
     /**
-     * Summary of performers
-     * @return BelongsToMany<User, Project> Pivot
+     * Summary of executor
+     * @return BelongsTo<User, Project>
      */
-    public function performers(): BelongsToMany
+    public function executor(): BelongsTo
     {
-        return $this->belongsToMany(User::class, 'project_user', 'project_id', 'user_id');
+        return $this->belongsTo(User::class, 'executor_id');
     }
 
     /**

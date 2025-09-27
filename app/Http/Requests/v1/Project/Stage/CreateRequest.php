@@ -25,7 +25,7 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'stage_id' => 'required|integer|exists:stages,id',
+            'stage_id' => 'nullable|integer|exists:stages,id',
             'title' => 'required|string|min:2|max:255',
             'description' => 'nullable|string',
             'executor_id' => 'required|integer|exists:users,id',

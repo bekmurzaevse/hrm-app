@@ -17,8 +17,8 @@ return new class extends Migration {
             $table->string('title');
             $table->text('description')->nullable();
             $table->date('deadline');
-            $table->string('status')->default(TaskStatusEnum::IN_PROGRESS);
-            $table->string('priority')->default(TaskPriorityEnum::MEDIUM);
+            $table->string('status')->default(TaskStatusEnum::IN_PROGRESS->value);
+            $table->string('priority')->default(TaskPriorityEnum::MEDIUM->value);
             $table->foreignId('created_by')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
             $table->text('comment');
             $table->softDeletes();

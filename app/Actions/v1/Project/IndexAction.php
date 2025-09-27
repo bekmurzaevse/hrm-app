@@ -28,7 +28,7 @@ class IndexAction
                 'client:id,name',
                 'inProgressStage',
                 'vacancy:id,title',
-                'performers:id,first_name,last_name,patronymic',
+                'executor:id,first_name,last_name,patronymic',
                 'stages:id,project_id,status',
             ]);
 

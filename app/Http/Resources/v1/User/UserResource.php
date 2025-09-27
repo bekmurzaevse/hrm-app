@@ -27,7 +27,7 @@ class UserResource extends JsonResource
             ],
             'work_info' => [
                 'position' => $this->position,
-                'role' => null,
+                'roles' => $this->getRoleNames(),
                 'created_at' => $this->created_at->format('Y-m-d'),
             ],
             'projects' => ProjectResource::collection($this->projects),

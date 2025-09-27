@@ -21,7 +21,6 @@ class SelectionStatusValueTest extends TestCase
 
         $user = User::find(1);
         Sanctum::actingAs($user, ['access-token']);
-        // TODO: Need test with unauthorized user by role, actingAs * 
     }
 
     /**

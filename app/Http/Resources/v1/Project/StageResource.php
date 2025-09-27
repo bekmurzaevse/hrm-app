@@ -24,12 +24,12 @@ class StageResource extends JsonResource
             'is_required' => $this->is_required,
             'status' => $this->status,
             'task_count' => $this->stageTasks->count(),
-            'tasks' => $this->stageTasks->map(function ($task) {
+            'tasks' => $this->stageTasks?->map(function ($task) {
                 return [
                     'id' => $task->id,
                     'title' => $task->title,
                     'description' => $task->description,
-                    'executor' => $task->executor?->shortFio,
+                    'executor' => $task->executor->shortFio,
                     'priority' => $task->priority,
                     'deadline' => $task->deadline,
                 ];

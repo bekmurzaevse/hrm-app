@@ -6,6 +6,7 @@ use App\Dto\v1\Vacancy\IndexDto;
 use App\Http\Resources\v1\Vacancy\VacancyCollection;
 use App\Models\Vacancy;
 use App\Traits\ResponseTrait;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 
@@ -41,36 +42,36 @@ class IndexAction
                 });
             }
 
-            if ($dto->salaryFrom) {
-                $query->where('salary_from', '>=', $dto->salaryFrom);
+            if ($dto->salaryFrom !== null) {
+                $query->where('salary_to', '>=', $dto->salaryFrom);
             }
 
-            if ($dto->salaryTo) {
-                $query->where('salary_to', '<=', $dto->salaryTo);
+            if ($dto->salaryTo !== null) {
+                $query->where('salary_from', '<=', $dto->salaryTo);
             }
 
-            if ($dto->regionId) {
+            if ($dto->regionId !== null) {
                 $query->whereHas('district', function ($q) use ($dto) {
                     $q->where('region_id', $dto->regionId);
                 });
             }
 
-            if ($dto->districtId) {
+            if ($dto->districtId !== null) {
                 $query->where('district_id', $dto->districtId);
             }
 
-            if ($dto->userId) {
+            if ($dto->userId !== null) {
                 $query->where('created_by', $dto->userId);
             }
 
-            if ($dto->from) {
+            if ($dto->from !== null && $dto->to !== null) {
                 $query->whereBetween('created_at', [
-                    $dto->from . ' 00:00:00',
-                    $dto->to . ' 23:59:59'
+                    Carbon::parse($dto->from)->startOfDay(),
+                    Carbon::parse($dto->to)->endOfDay(),
                 ]);
             }
 
-            if ($dto->status) {
+            if ($dto->status !== null) {
                 $query->where('status', $dto->status);
             }
 

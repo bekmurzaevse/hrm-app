@@ -25,6 +25,11 @@ class CopyAction
 
         try {
             $selection = Selection::with('items.statusValues', 'statuses')->findOrFail($id);
+
+            if($selection->created_by !== auth()->id()) {
+                throw new ApiResponseException('You are not allowed to access this selection', 403);
+            }
+
             $newSelection = $selection->replicate();
             $newSelection->title = $dto->title;
             $newSelection->created_by = auth()->id();
@@ -77,7 +82,7 @@ class CopyAction
 
         } catch (ModelNotFoundException $e) {
             DB::rollBack();
-            throw new ApiResponseException("Selection Not Found: ID {$id}", 404);
+            throw new ApiResponseException("Selection Not Found", 404);
         } catch (\Exception $e) {
             DB::rollBack();
             throw new ApiResponseException(

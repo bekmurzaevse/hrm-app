@@ -23,7 +23,7 @@ class IndexAction
         $key = 'selections:' . app()->getLocale() . ':' . md5(request()->fullUrl());
         $selections = Cache::remember($key, now()->addDay(), function () use ($dto) {
             $query = Selection::with(['createdBy:id,first_name,last_name,patronymic'])
-                ->where('created_by', auth()->user()->id);
+                ->where('created_by', auth()->id());
 
             if ($dto->search) {
                 $query->where('title', 'like', '%' . $dto->search . '%');
