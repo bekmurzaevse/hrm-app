@@ -32,7 +32,7 @@ class CreateRequest extends FormRequest
             'description' => 'nullable|string',
             'deadline' => 'required|date_format:Y-m-d',
             'priority' => ['required', Rule::enum(TaskPriorityEnum::class)],
-            'comment' => 'nullable|string|max:1000',
+            'comment' => 'required|string|max:1000',
         ];
     }
 }

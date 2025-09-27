@@ -11,7 +11,7 @@ readonly class CreateDto
         public ?string $description,
         public string $deadline,
         public string $priority,
-        public ?string $comment,
+        public string $comment,
     ) {
     }
 

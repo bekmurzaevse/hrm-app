@@ -9,7 +9,7 @@ readonly class TransferDto
     public function __construct(
         public int $task_id,
         public int $user_id,
-        public ?string $comment,
+        public string $comment,
     ) {
     }
 

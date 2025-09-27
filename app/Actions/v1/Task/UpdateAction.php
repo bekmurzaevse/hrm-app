@@ -3,6 +3,7 @@
 namespace App\Actions\v1\Task;
 
 use App\Enums\Task\TaskHistoryType;
+use App\Enums\Task\TaskStatusEnum;
 use App\Models\TaskHistory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -28,6 +29,14 @@ class UpdateAction
         try {
             $task = Task::with(['createdBy'])->findOrFail($id);
             $user = auth()->user();
+
+            if ($task->created_by !== $user->id) {
+                throw new ApiResponseException('Вы не являетесь автором задачи', 403);
+            }
+
+            if (in_array($task->status, [TaskStatusEnum::COMPLETED, TaskStatusEnum::REJECTED])) {
+                throw new ApiResponseException('Завершенную или отклоненную задачу нельзя редактировать', 403);
+            }
 
             $task->update([
                 'title' => $dto->title,
