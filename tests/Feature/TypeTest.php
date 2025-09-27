@@ -166,4 +166,31 @@ class TypeTest extends TestCase
             'id' => $typeId,
         ]);
     }
+
+    /**
+     * Summary of test_type_can_get_all_list
+     * @return void
+     */
+    public function test_type_can_get_all_list(): void
+    {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $response = $this->getJson("api/v1/types/list");
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "status",
+                "message",
+                "data" => [
+                    "*" => [
+                        "id",
+                        "title",
+                    ],
+                ],
+            ]);
+    }
 }

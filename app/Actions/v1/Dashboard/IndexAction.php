@@ -242,6 +242,30 @@ class IndexAction
 
             if (auth()->user()->hasAnyRole(['admin', 'manager'])) {
                 $result = array_merge($result, [
+                            'projects' => Project::with([
+                            'client:id,name',
+                            'inProgressStage',
+                            'vacancy:id,title',
+                            'performers:id,first_name,last_name,patronymic',
+                            'stages:id,project_id,status',
+                        ])
+                        ->get()->map( function ($item) {
+                        return [
+                            'id' => $item->id,
+                            'client_name' => $item->client?->name,
+                            'vacancy_title' => $item->vacancy?->title,
+                            'status' => $item->inProgressStage?->title,
+                            'created_at' => $item->created_at->format('Y-m-d'),
+                            'deadline' => $item->deadline->format('Y-m-d'),
+                            // 'performers' => $item->performers?->map(function ($performer) {
+                            //     return $performer?->shortFio;
+                            // }),
+                            'contract_number' => $item->contract_number,
+                            'contract_budget' => $item->contract_budget !== null ? ($item->contract_budget . ' ' . $item->contract_currency) : null,
+                            'progress' => $item->progress,
+                            'comment' => $item->comment,
+                        ];
+                    }),
                     'fin_stats' => [
                         'vacancies' => $buildList($vacanciesRaw),
                         'projects' => $buildList($projectsRaw),

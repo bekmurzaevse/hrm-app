@@ -336,10 +336,35 @@ class ClientTest extends TestCase
             ->first();
         Sanctum::actingAs($user, ['access-token']);
 
-        $this->withoutExceptionHandling();
-
         $response = $this->get("/api/v1/clients/export");
 
         $response->assertStatus(200);
+    }
+
+    /**
+     * Summary of test_client_can_get_all_list
+     * @return void
+     */
+    public function test_client_can_get_all_list(): void
+    {
+        $user = User::role(['recruiter'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $response = $this->getJson("api/v1/clients/list");
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "status",
+                "message",
+                "data" => [
+                    "*" => [
+                        "id",
+                        "name",
+                    ],
+                ],
+            ]);
     }
 }

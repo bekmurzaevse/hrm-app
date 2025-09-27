@@ -34,8 +34,8 @@ class CreateRequest extends FormRequest
             'address' => 'required|string',
             'position' => 'required|string',
             'status' => ['required', Rule::enum(UserStatusEnum::class)],
-            'phone' => 'required|string',
-            'email' => 'required|string|email',
+            'phone' => 'required|string|unique:users,phone',
+            'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6',
         ];
     }

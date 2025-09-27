@@ -229,4 +229,90 @@ class UserTest extends TestCase
             'status' => $status,
         ]);
     }
+
+    /**
+     * Summary of test_user_can_get_all_list
+     * @return void
+     */
+    public function test_user_can_get_all_list(): void
+    {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $response = $this->getJson("api/v1/users/list");
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "status",
+                "message",
+                "data" => [
+                    "*" => [
+                        "id",
+                        "first_name",
+                        "last_name",
+                        "patronymic",
+                    ],
+                ],
+            ]);
+    }
+
+    /**
+     * Summary of test_user_can_get_all_activities
+     * @return void
+     */
+    public function test_user_can_get_all_activities(): void
+    {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $response = $this->getJson("api/v1/users/activities");
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "status",
+                "message",
+                "data" => [
+                    "*" => [
+                        "id",
+                        "title",
+                        "user",
+                        "text",
+                    ],
+                ],
+            ]);
+    }
+
+    /**
+     * Summary of test_user_can_get_all_activity_by_user_id
+     * @return void
+     */
+    public function test_user_can_get_all_activity_by_user_id(): void
+    {
+        $user = User::role(['admin', 'manager'])
+            ->inRandomOrder()
+            ->first();
+        Sanctum::actingAs($user, ['access-token']);
+
+        $response = $this->getJson("api/v1/users/activities");
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "status",
+                "message",
+                "data" => [
+                    "*" => [
+                        "id",
+                        "title",
+                        "text",
+                    ],
+                ],
+            ]);
+    }
 }

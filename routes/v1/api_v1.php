@@ -177,6 +177,9 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->
             Route::post('/create', [UserController::class, 'create']);
             Route::put('/update/{id}', [UserController::class, 'update']);
             Route::delete('/delete/{id}', [UserController::class, 'delete']);
+            //Activities
+            Route::get('/activities', [UserController::class, 'activities']);
+            Route::get('/activities/{userId}', [UserController::class, 'activityById']);
         });
 
         //Types
